@@ -1,3 +1,5 @@
-const enTranslation = {};
+const enTranslation = {
+  hello: 'Hello world!',
+};
 
 export default enTranslation;

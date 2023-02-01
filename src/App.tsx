@@ -1,11 +1,12 @@
-import {Text} from 'native-base';
 import React from 'react';
 import RootProvider from './providers';
+import AppRoutes from './routes';
+import './i18n';
 
 const App = () => {
   return (
     <RootProvider>
-      <Text>Hello world!</Text>
+      <AppRoutes />
     </RootProvider>
   );
 };
