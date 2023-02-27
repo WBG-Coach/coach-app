@@ -1,6 +1,7 @@
 const Routes = {
-  stacks: {
-    home: 'HomeStack',
+  setupUserData: {
+    SchoolSelect: 'SchoolSelect',
+    ProfileSelect: 'ProfileSelect',
   },
   splash: 'SplashScreen',
 };

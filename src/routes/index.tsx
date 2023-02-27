@@ -3,7 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Routes from './paths';
 import SplashScreen from '../screens/Splash';
-import HomeScreen from '../screens/Home';
+import Header from '../components/Header';
+import ProfileSelectScreen from '../screens/ProfileSelect';
+import SchoolSelectScreen from '../screens/SchoolSelect';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +20,9 @@ const AppRoutes = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.splash}>
+      <Stack.Navigator
+        initialRouteName={Routes.splash}
+        screenOptions={{header: Header}}>
         {isLoading && (
           <Stack.Screen
             name={Routes.splash}
@@ -29,12 +33,19 @@ const AppRoutes = () => {
             }}
           />
         )}
-
         <Stack.Screen
-          name={Routes.stacks.home}
-          component={HomeScreen}
+          name={Routes.setupUserData.SchoolSelect}
+          component={SchoolSelectScreen}
           options={{
-            headerShown: false,
+            headerShown: true,
+            contentStyle: {backgroundColor: 'white'},
+          }}
+        />
+        <Stack.Screen
+          name={Routes.setupUserData.ProfileSelect}
+          component={ProfileSelectScreen}
+          options={{
+            headerShown: true,
             contentStyle: {backgroundColor: 'white'},
           }}
         />

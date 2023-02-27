@@ -1,10 +1,8 @@
-import {Center, HStack, Image, Text, VStack} from 'native-base';
+import {HStack, Image, Text, VStack} from 'native-base';
 import React from 'react';
-import {ImageStyle} from 'react-native/types';
-import {LogoXXXS} from '../../assets/images/logos';
 import Icon from '../../components/Icon';
 
-const HomeScreen = () => {
+const ProfileSelectScreen = () => {
   const mock = [
     {
       name: 'Jane Cooper',
@@ -21,15 +19,7 @@ const HomeScreen = () => {
   ];
 
   return (
-    <VStack flex={1} safeArea>
-      <Center w={'100%'} p={'16px'}>
-        <Image
-          source={LogoXXXS}
-          style={{height: 24, width: 64} as ImageStyle}
-          alt={'Coach logo'}
-        />
-      </Center>
-
+    <VStack flex={1}>
       <VStack w={'100%'} alignItems={'flex-start'} px={'16px'} mt={'24px'}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'24px'}>
           Select your profile
@@ -66,4 +56,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default ProfileSelectScreen;
