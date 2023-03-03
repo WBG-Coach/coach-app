@@ -1,6 +1,7 @@
 import {HStack, Image, Text, VStack} from 'native-base';
 import React from 'react';
-import Icon from '../../components/Icon';
+import Icon from '../../components/base/Icon';
+import Input from '../../components/base/Input';
 
 const ProfileSelectScreen = () => {
   const mock = [
@@ -21,36 +22,40 @@ const ProfileSelectScreen = () => {
   return (
     <VStack flex={1}>
       <VStack w={'100%'} alignItems={'flex-start'} px={'16px'} mt={'24px'}>
-        <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'24px'}>
+        <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
           Select your profile
         </Text>
 
-        {mock.map((user, index) => (
-          <HStack
-            key={index}
-            w={'100%'}
-            py={'18px'}
-            borderBottomWidth={'1px'}
-            alignItems={'center'}
-            borderBottomColor={
-              mock.length - 1 === index ? 'transparent' : 'gray.200'
-            }>
-            <Image
-              w={'40px'}
-              h={'40px'}
-              src={user.image_url}
-              alt={`Image of ${user.name}`}
-              borderRadius={'20px'}
-            />
+        <Input icon="search" marginBottom={2} placeholder={'Search'} />
 
-            <VStack flex={1} ml={'8px'} space={'4px'}>
-              <Text color={'gray.700'}>{user.name}</Text>
-              <Text color={'gray.600'}>{user.description}</Text>
-            </VStack>
+        <VStack w={'100%'} px={'16px'}>
+          {mock.map((user, index) => (
+            <HStack
+              key={index}
+              w={'100%'}
+              py={'18px'}
+              borderBottomWidth={'1px'}
+              alignItems={'center'}
+              borderBottomColor={
+                mock.length - 1 === index ? 'transparent' : 'gray.200'
+              }>
+              <Image
+                w={'40px'}
+                h={'40px'}
+                src={user.image_url}
+                alt={`Image of ${user.name}`}
+                borderRadius={'20px'}
+              />
 
-            <Icon name={'angle-right'} />
-          </HStack>
-        ))}
+              <VStack flex={1} ml={'8px'} space={'4px'}>
+                <Text color={'gray.700'}>{user.name}</Text>
+                <Text color={'gray.600'}>{user.description}</Text>
+              </VStack>
+
+              <Icon name={'angle-right'} />
+            </HStack>
+          ))}
+        </VStack>
       </VStack>
     </VStack>
   );

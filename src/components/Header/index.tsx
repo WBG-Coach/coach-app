@@ -4,14 +4,12 @@ import {useTranslation} from 'react-i18next';
 import {ImageStyle} from 'react-native/types';
 import {LogoXXXS} from '../../assets/images/logos';
 import i18n, {resources} from '../../i18n';
-import Icon from '../Icon';
+import Icon from '../base/Icon';
 
 const Header: React.FC = () => {
   const currentLanguage = i18n.languages[0];
   const theme = useTheme();
   useTranslation();
-
-  console.log(currentLanguage);
 
   return (
     <Center w={'100%'} p={'16px'} safeAreaTop>

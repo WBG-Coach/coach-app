@@ -6,6 +6,7 @@ import SplashScreen from '../screens/Splash';
 import Header from '../components/Header';
 import ProfileSelectScreen from '../screens/ProfileSelect';
 import SchoolSelectScreen from '../screens/SchoolSelect';
+import {navigationRef} from '../services/navigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ const AppRoutes = () => {
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         initialRouteName={Routes.splash}
         screenOptions={{header: Header}}>
