@@ -3,6 +3,7 @@ const Routes = {
     SchoolSelect: 'SchoolSelect',
     ProfileSelect: 'ProfileSelect',
   },
+  home: 'HomeScreen',
   splash: 'SplashScreen',
 };
 
