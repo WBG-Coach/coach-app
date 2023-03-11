@@ -13,6 +13,8 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import {UserContext} from '../../providers/contexts/UserContext';
 import {ISession, ITeacher} from '../../types';
+import Navigation from '../../services/navigation';
+import Routes from '../../routes/paths';
 
 const HomeScreen = () => {
   const {user} = useContext(UserContext);
@@ -149,7 +151,10 @@ const HomeScreen = () => {
           data={teachers}
           mb={5}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                Navigation.navigate(Routes.teacher, {teacher: item})
+              }>
               <HStack
                 py={3}
                 px={4}

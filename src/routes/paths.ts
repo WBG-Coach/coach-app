@@ -4,7 +4,11 @@ const Routes = {
     ProfileSelect: 'ProfileSelect',
   },
   home: 'HomeScreen',
+  teacher: 'TeacherScreen',
   splash: 'SplashScreen',
+  classObservation: {
+    create: 'ClassObservationCreate',
+  },
 };
 
 export default Routes;

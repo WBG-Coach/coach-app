@@ -9,6 +9,8 @@ import SchoolSelectScreen from '../screens/SchoolSelect';
 import {navigationRef} from '../services/navigation';
 import {UserContext} from '../providers/contexts/UserContext';
 import HomeScreen from '../screens/Home';
+import TeacherView from '../screens/TeacherView';
+import ClassObservationCreate from '../screens/ClassObservation/Create';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +67,28 @@ const AppRoutes = () => {
             component={HomeScreen}
             options={{
               header: () => <Header hideBack />,
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.teacher}
+            component={TeacherView}
+            options={{
+              header: () => <Header title={'Teacher'} />,
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.classObservation.create}
+            component={ClassObservationCreate}
+            options={{
+              header: () => (
+                <Header hideConfig title={'New class observation'} />
+              ),
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},
             }}
