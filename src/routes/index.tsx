@@ -37,11 +37,12 @@ const AppRoutes = () => {
         )}
 
         {!user && (
-          <Stack.Group screenOptions={{header: Header}}>
+          <Stack.Group>
             <Stack.Screen
               name={Routes.setupUserData.SchoolSelect}
               component={SchoolSelectScreen}
               options={{
+                header: () => <Header hideBack />,
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},
               }}
@@ -50,6 +51,7 @@ const AppRoutes = () => {
               name={Routes.setupUserData.ProfileSelect}
               component={ProfileSelectScreen}
               options={{
+                header: () => <Header />,
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},
               }}
@@ -57,11 +59,12 @@ const AppRoutes = () => {
           </Stack.Group>
         )}
 
-        <Stack.Group screenOptions={{header: Header}}>
+        <Stack.Group>
           <Stack.Screen
             name={Routes.home}
             component={HomeScreen}
             options={{
+              header: () => <Header hideBack />,
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},
             }}

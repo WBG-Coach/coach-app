@@ -11,22 +11,19 @@ const SchoolSelectScreen = () => {
     {
       id: '1',
       name: 'Bayshore High',
-      image_url:
-        'https://i.ibb.co/5Fhsdrp/avatar-1168c22a404d4e1acfc83d4bc35c9527.jpg',
+      image_url: 'https://i.ibb.co/VqKhx46/Image-12.png',
       description: '4 coaches here',
     },
     {
       id: '2',
       name: 'Angelwood Elementary',
-      image_url:
-        'https://i.ibb.co/PTB0MwJ/avatar-111332073ddbd15ba0d337e8ca0818d3.jpg',
+      image_url: 'https://i.ibb.co/X8r613d/Image-15.png',
       description: '5 coaches here',
     },
     {
-      id: "3",
+      id: '3',
       name: 'Pine Hill Charter School',
-      image_url:
-        'https://i.ibb.co/PTB0MwJ/avatar-111332073ddbd15ba0d337e8ca0818d3.jpg',
+      image_url: 'https://i.ibb.co/tPVsMTY/Image-13.png',
       description: '1 coach here',
     },
   ];
@@ -45,7 +42,7 @@ const SchoolSelectScreen = () => {
             <TouchableOpacity
               key={index}
               onPress={() =>
-                Navigation.push(Routes.setupUserData.ProfileSelect, { school })
+                Navigation.push(Routes.setupUserData.ProfileSelect, {school})
               }>
               <HStack
                 w={'100%'}
