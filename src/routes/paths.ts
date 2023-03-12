@@ -8,6 +8,7 @@ const Routes = {
   splash: 'SplashScreen',
   classObservation: {
     create: 'ClassObservationCreate',
+    onboarding: 'ClassOnboarding',
   },
 };
 

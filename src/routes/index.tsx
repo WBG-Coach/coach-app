@@ -11,6 +11,7 @@ import {UserContext} from '../providers/contexts/UserContext';
 import HomeScreen from '../screens/Home';
 import TeacherView from '../screens/TeacherView';
 import ClassObservationCreate from '../screens/ClassObservation/Create';
+import ClassOnboarding from '../screens/ClassObservation/Onboarding';
 
 const Stack = createNativeStackNavigator();
 
@@ -88,6 +89,22 @@ const AppRoutes = () => {
             options={{
               header: () => (
                 <Header hideConfig title={'New class observation'} />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.classObservation.onboarding}
+            component={ClassOnboarding}
+            options={{
+              header: () => (
+                <Header
+                  hideConfig
+                  title={'Preparation'}
+                  background={'primary.100'}
+                />
               ),
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},

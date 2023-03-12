@@ -7,7 +7,7 @@ import Navigation from '../../services/navigation';
 import Icon from '../base/Icon';
 import {Props} from './types';
 
-const Header: React.FC<Props> = ({hideBack, hideConfig, title}) => {
+const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
   /*   const currentLanguage = i18n.languages[0]; */
   const theme = useTheme();
 
@@ -17,6 +17,7 @@ const Header: React.FC<Props> = ({hideBack, hideConfig, title}) => {
       p={'16px'}
       alignItems={'center'}
       justifyContent={'center'}
+      {...(background && {background: background})}
       safeAreaTop>
       {!hideBack && (
         <Box position={'absolute'} alignItems={'center'} left={'16px'}>
