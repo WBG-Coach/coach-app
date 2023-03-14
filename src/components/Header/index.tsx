@@ -1,4 +1,4 @@
-import {Box, Text, HStack, Image, useTheme} from 'native-base';
+import {Box, Text, HStack, Image, useTheme, Stack} from 'native-base';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ImageStyle} from 'react-native/types';
@@ -12,42 +12,42 @@ const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
   const theme = useTheme();
 
   return (
-    <HStack
-      w={'100%'}
-      p={'16px'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      {...(background && {background: background})}
-      safeAreaTop>
-      {!hideBack && (
-        <Box position={'absolute'} alignItems={'center'} left={'16px'}>
-          <TouchableOpacity onPress={() => Navigation.goBack()}>
-            <Icon name={'angle-left'} color={theme.colors.primary[200]} />
-          </TouchableOpacity>
-        </Box>
-      )}
+    <Stack safeAreaTop {...(background && {background: background})} p={'16px'}>
+      <HStack
+        w={'100%'}
+        alignItems={'center'}
+        justifyContent={'center'}
+        position={'relative'}>
+        {!hideBack && (
+          <Box position={'absolute'} left={0}>
+            <TouchableOpacity onPress={() => Navigation.goBack()}>
+              <Icon name={'angle-left'} color={theme.colors.primary[200]} />
+            </TouchableOpacity>
+          </Box>
+        )}
 
-      {title ? (
-        <Text color={'primary.200'} fontSize={'TMD'} fontWeight={700}>
-          {title}
-        </Text>
-      ) : (
-        <Image
-          alignSelf={'center'}
-          source={LogoXXXS}
-          style={{height: 24, width: 64} as ImageStyle}
-          alt={'Coach logo'}
-        />
-      )}
+        {title ? (
+          <Text color={'primary.200'} fontSize={'TMD'} fontWeight={700}>
+            {title}
+          </Text>
+        ) : (
+          <Image
+            alignSelf={'center'}
+            source={LogoXXXS}
+            style={{height: 24, width: 64} as ImageStyle}
+            alt={'Coach logo'}
+          />
+        )}
 
-      {!hideConfig && (
-        <Box position={'absolute'} alignItems={'center'} right={'16px'}>
-          <TouchableOpacity>
-            <Icon name={'setting'} color={theme.colors.primary[200]} />
-          </TouchableOpacity>
-        </Box>
-      )}
-    </HStack>
+        {!hideConfig && (
+          <Box position={'absolute'} right={0}>
+            <TouchableOpacity>
+              <Icon name={'setting'} color={theme.colors.primary[200]} />
+            </TouchableOpacity>
+          </Box>
+        )}
+      </HStack>
+    </Stack>
   );
 };
 
