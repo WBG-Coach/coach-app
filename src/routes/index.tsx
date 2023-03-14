@@ -103,11 +103,10 @@ const AppRoutes = () => {
                 <Header
                   hideConfig
                   title={'Preparation'}
-                  background={'primary.100'}
+                  background={'primary.0'}
                 />
               ),
               headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
             }}
           />
         </Stack.Group>
