@@ -3,6 +3,7 @@ apply plugin: "com.facebook.react"
 
 import com.android.build.OutputFile
 
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -102,6 +103,10 @@ android {
         versionName "1.0"
     }
 
+    packagingOptions {
+     pickFirst '**/libc++_shared.so' 
+    }
+
     splits {
         abi {
             reset()
@@ -151,6 +156,8 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+
+    implementation project(':watermelondb-jsi') 
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 
