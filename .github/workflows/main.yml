@@ -2,6 +2,8 @@ name: Build Android APK and upload to Play Store
 
 on:
   push:
+    branches:
+      - main
     tags:
       - beta-*
 
