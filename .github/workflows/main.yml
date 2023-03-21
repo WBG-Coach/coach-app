@@ -2,10 +2,8 @@ name: Build Android APK and upload to Play Store
 
 on:
   push:
-    branches:
-      - main
     tags:
-      - beta-*
+      - v-*
 
 jobs:
   beta-android:
@@ -39,3 +37,9 @@ jobs:
       - name: Build APK
         run: ./gradlew clean assembleRelease --no-daemon
         working-directory: android
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/app-release.apk
