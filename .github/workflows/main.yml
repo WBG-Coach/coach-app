@@ -30,12 +30,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Bundle install
-        run: |
-          gem install bundler
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-          chmod a+x ./gradlew
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
         working-directory: android
 
       - name: Build APK
