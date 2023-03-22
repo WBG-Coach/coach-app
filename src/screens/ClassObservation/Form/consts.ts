@@ -7,6 +7,7 @@ const MockCompetence: ICompetence[] = [
     questions: [
       {
         id: 'ex1',
+        competence_id: '1',
         title: 'The students are working',
         description: 'In the first 10 minutes of the class',
         type: 'option',
@@ -14,6 +15,7 @@ const MockCompetence: ICompetence[] = [
       },
       {
         id: 'ex2',
+        competence_id: '1',
         title: 'The students are working',
         description: 'In the second 10 minutes of the class',
         type: 'option',
@@ -21,6 +23,7 @@ const MockCompetence: ICompetence[] = [
       },
       {
         id: 'ex3',
+        competence_id: '1',
         title: 'The students are working',
         description: 'In the third 10 minutes of the class',
         type: 'option',
@@ -34,6 +37,7 @@ const MockCompetence: ICompetence[] = [
     questions: [
       {
         id: 'ex5',
+        competence_id: '2',
         title: 'All students are treated respectfully',
         description: 'In the first 10 minutes of the class',
         type: 'option',
@@ -41,18 +45,21 @@ const MockCompetence: ICompetence[] = [
       },
       {
         id: 'ex6',
+        competence_id: '2',
         title: 'The teacher uses positive language',
         type: 'option',
         tooltipData: '',
       },
       {
         id: 'ex7',
+        competence_id: '2',
         title: 'The teacher responds to students’ needs',
         type: 'option',
         tooltipData: '',
       },
       {
         id: 'ex8',
+        competence_id: '2',
         title: 'All gender groups are treated fairly in the classroom',
         type: 'option',
         tooltipData: '',
@@ -65,6 +72,7 @@ const MockCompetence: ICompetence[] = [
     questions: [
       {
         id: 'ex1',
+        competence_id: '3',
         title: 'The students are working',
         description: 'In the first 10 minutes of the class',
         type: 'option',
@@ -72,6 +80,7 @@ const MockCompetence: ICompetence[] = [
       },
       {
         id: 'ex2',
+        competence_id: '3',
         title: 'The students are working',
         description: 'In the second 10 minutes of the class',
         type: 'option',
@@ -79,6 +88,7 @@ const MockCompetence: ICompetence[] = [
       },
       {
         id: 'ex3',
+        competence_id: '3',
         title: 'The students are working',
         description: 'In the third 10 minutes of the class',
         type: 'option',

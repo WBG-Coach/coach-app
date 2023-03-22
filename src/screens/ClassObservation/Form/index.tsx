@@ -1,16 +1,52 @@
-import {Button, Collapse, FlatList, Text, TextArea, VStack} from 'native-base';
+import {
+  Button,
+  Center,
+  HStack,
+  Radio,
+  Text,
+  TextArea,
+  VStack,
+} from 'native-base';
 import React from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {SimpleAccordion} from 'react-native-simple-accordion';
-
-import {ICompetence} from '../../../types';
+import Icon from '../../../components/base/Icon';
+import {IAnswer, IQuestion} from '../../../types';
 import MockCompetence from './consts';
 
 const ObservationForm = () => {
+  const questions = MockCompetence.reduce(
+    (acc, item) => [...acc, ...item.questions],
+    [] as IQuestion[],
+  );
+
+  const defaultValues = questions.reduce(
+    (acc, item) => ({...acc, [item.id]: ''}),
+    {} as {[key: string]: string},
+  );
+
+  const {control, handleSubmit} = useForm({
+    defaultValues,
+  });
+
+  const options = ['Low', 'Medium', 'High'];
+
+  const handleSubmitForm: SubmitHandler<typeof defaultValues> = values => {
+    const answers: IAnswer[] = Object.keys(values).map((key, index) => ({
+      id: index.toString(),
+      question_id: key,
+      value: values[key],
+      session_id: 'example of same id =)',
+    }));
+
+    console.log('answers ->', answers);
+  };
+
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
       <VStack flex={1} px={4}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
             Class evaluation
           </Text>
@@ -27,16 +63,99 @@ const ObservationForm = () => {
                 bannerStyle={{
                   backgroundColor: 'white',
                   paddingHorizontal: 0,
+                  paddingVertical: 0,
                 }}
                 viewContainerStyle={{
-                  elevation: 0,
                   shadowColor: 'white',
+                  paddingHorizontal: 0,
+                  paddingVertical: 0,
                 }}
                 viewInside={
-                  <VStack>
-                    <Text>hello world</Text>
-                    <Text>hello world</Text>
-                    <Text>hello world</Text>
+                  <VStack space={4}>
+                    {questions
+                      .filter(
+                        question => question.competence_id === competence.id,
+                      )
+                      .map(question => (
+                        <Controller
+                          key={question.id}
+                          name={question.id}
+                          rules={{required: true}}
+                          control={control}
+                          render={({
+                            field: {value, name, onChange},
+                            fieldState,
+                          }) => (
+                            <VStack>
+                              <HStack>
+                                <VStack flex={1}>
+                                  <Text
+                                    fontSize={'LMD'}
+                                    fontWeight={500}
+                                    color={'gray.700'}>
+                                    {question.title}
+                                  </Text>
+
+                                  {question.description && (
+                                    <Text
+                                      mt={'1'}
+                                      fontSize={'TXS'}
+                                      fontWeight={400}
+                                      color={'gray.600'}>
+                                      {question.description}
+                                    </Text>
+                                  )}
+                                </VStack>
+
+                                <TouchableOpacity>
+                                  <Center
+                                    background={'primary.200'}
+                                    borderRadius={'10px'}
+                                    width={'20px'}
+                                    height={'20px'}>
+                                    <Icon color="white" name="question" />
+                                  </Center>
+                                </TouchableOpacity>
+                              </HStack>
+
+                              <Radio.Group
+                                name={name}
+                                accessibilityLabel="favorite number"
+                                value={value}
+                                flex={1}
+                                mb={1}
+                                onChange={onChange}>
+                                <HStack
+                                  mt={2}
+                                  justifyContent={'space-evenly'}
+                                  alignItems={'center'}>
+                                  {options.map(option => (
+                                    <VStack
+                                      key={option}
+                                      flex={1}
+                                      alignItems={'center'}>
+                                      <Text
+                                        fontSize={'TXS'}
+                                        fontWeight={400}
+                                        color={'gray.600'}
+                                        mb={1}>
+                                        {option}
+                                      </Text>
+                                      <Radio
+                                        isInvalid={!!fieldState.error}
+                                        bg={'white'}
+                                        aria-label={option}
+                                        value={option}>
+                                        <></>
+                                      </Radio>
+                                    </VStack>
+                                  ))}
+                                </HStack>
+                              </Radio.Group>
+                            </VStack>
+                          )}
+                        />
+                      ))}
                   </VStack>
                 }
               />
@@ -69,6 +188,7 @@ const ObservationForm = () => {
         px={4}
         borderRadius={'8px 8px 0px 0px'}>
         <Button
+          onPress={handleSubmit(handleSubmitForm)}
           marginTop={'auto'}
           variant={'solid'}
           borderRadius={'8px'}

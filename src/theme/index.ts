@@ -47,6 +47,7 @@ const theme = extendTheme({
     HSM: 24,
     HXS: 20,
     LLG: 16,
+    LMD: 16,
     LSM: 14,
     TXL: 18,
     TMD: 16,

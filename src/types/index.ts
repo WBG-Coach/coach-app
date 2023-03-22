@@ -31,7 +31,7 @@ export interface IQuestion {
   description?: string;
   tooltipData: string;
   type: 'text' | 'option';
-  competence_id?: ICompetence['id'];
+  competence_id: ICompetence['id'];
 }
 
 /* export interface IQuestionnaire {
