@@ -45,7 +45,7 @@ const AppRoutes = () => {
           <Stack.Group>
             <Stack.Screen
               name={Routes.setupUserData.SchoolSelect}
-              component={ObservationForm}
+              component={SchoolSelectScreen}
               options={{
                 header: () => <Header hideBack />,
                 headerShown: true,

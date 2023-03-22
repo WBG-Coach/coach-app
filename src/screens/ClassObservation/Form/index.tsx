@@ -12,10 +12,13 @@ import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {SimpleAccordion} from 'react-native-simple-accordion';
 import Icon from '../../../components/base/Icon';
+import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
 import {IAnswer, IQuestion} from '../../../types';
+import BottomSheetTooltip from './BottomSheetTooltip';
 import MockCompetence from './consts';
 
-const ObservationForm = () => {
+const ObservationForm: React.FC<any> = () => {
+  const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const questions = MockCompetence.reduce(
     (acc, item) => [...acc, ...item.questions],
     [] as IQuestion[],
@@ -107,7 +110,14 @@ const ObservationForm = () => {
                                   )}
                                 </VStack>
 
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    setBottomSheetContent(
+                                      <BottomSheetTooltip
+                                        content={question.tooltipData}
+                                      />,
+                                    )
+                                  }>
                                   <Center
                                     background={'primary.200'}
                                     borderRadius={'10px'}
