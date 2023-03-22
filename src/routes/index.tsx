@@ -12,6 +12,8 @@ import HomeScreen from '../screens/Home';
 import TeacherView from '../screens/TeacherView';
 import ClassObservationCreate from '../screens/ClassObservation/Create';
 import ClassOnboarding from '../screens/ClassObservation/Onboarding';
+import ObservationSetup from '../screens/ClassObservation/Setup';
+import ObservationForm from '../screens/ClassObservation/Form';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,13 +45,14 @@ const AppRoutes = () => {
           <Stack.Group>
             <Stack.Screen
               name={Routes.setupUserData.SchoolSelect}
-              component={SchoolSelectScreen}
+              component={ObservationForm}
               options={{
                 header: () => <Header hideBack />,
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},
               }}
             />
+
             <Stack.Screen
               name={Routes.setupUserData.ProfileSelect}
               component={ProfileSelectScreen}
@@ -104,6 +107,30 @@ const AppRoutes = () => {
                   hideConfig
                   title={'Preparation'}
                   background={'primary.0'}
+                />
+              ),
+              headerShown: true,
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.classObservation.setup}
+            component={ObservationSetup}
+            options={{
+              header: () => <Header hideConfig title={'Class Observation'} />,
+              headerShown: true,
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.classObservation.form}
+            component={ObservationForm}
+            options={{
+              header: () => (
+                <Header
+                  background="gray.0"
+                  hideConfig
+                  title={'Class Observation'}
                 />
               ),
               headerShown: true,

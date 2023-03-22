@@ -6,6 +6,8 @@ import Carousel from 'react-native-reanimated-carousel';
 import * as OnboardingImages from '../../../assets/images/onboarding';
 import CarouselPaginate from '../../../components/Carousel/CarouselPaginate';
 import {ImageStyle} from 'react-native/types';
+import Navigation from '../../../services/navigation';
+import Routes from '../../../routes/paths';
 
 const data = [
   {
@@ -105,7 +107,8 @@ const ClassOnboarding: React.FC<any> = () => {
           variant={'solid'}
           borderRadius={'8px'}
           color={'white'}
-          background={'primary.200'}>
+          background={'primary.200'}
+          onPress={() => Navigation.navigate(Routes.classObservation.setup)}>
           Next
         </Button>
       </HStack>

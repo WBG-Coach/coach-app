@@ -9,6 +9,8 @@ const Routes = {
   classObservation: {
     create: 'ClassObservationCreate',
     onboarding: 'ClassOnboarding',
+    setup: 'SetupObservation',
+    form: 'FormObservation',
   },
 };
 

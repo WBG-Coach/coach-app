@@ -101,7 +101,34 @@ const theme = extendTheme({
       700: '#111417',
     },
   },
-  components: {},
+  components: {
+    Input: {
+      defaultProps: {
+        borderColor: 'gray.300',
+        borderRadius: '8px',
+        fontSize: 'TMD',
+        placeholderTextColor: 'gray.500',
+        color: 'gray.700',
+        _focus: {
+          borderColor: 'primary.200',
+          bg: 'inherit',
+        },
+      },
+    },
+    TextArea: {
+      defaultProps: {
+        borderColor: 'gray.300',
+        borderRadius: '8px',
+        fontSize: 'TMD',
+        placeholderTextColor: 'gray.500',
+        color: 'gray.700',
+        _focus: {
+          borderColor: 'primary.200',
+          bg: 'inherit',
+        },
+      },
+    },
+  },
   config: {
     initialColorMode: 'dark',
   },

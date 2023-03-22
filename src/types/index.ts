@@ -19,17 +19,22 @@ export interface IGuide {
 export interface ICompetence {
   id: string;
   title: string;
-  guide_id: IGuide['id'];
+  questions: IQuestion[];
+  competence_id?: ICompetence['id'];
+  children?: ICompetence[];
+  guide_id?: IGuide['id'];
 }
 
 export interface IQuestion {
   id: string;
   title: string;
-  questionnaire_id: IQuestionnaire['id'];
-  competence_id: ICompetence['id'];
+  description?: string;
+  tooltipData: string;
+  type: 'text' | 'option';
+  competence_id?: ICompetence['id'];
 }
 
-export interface IQuestionnaire {
+/* export interface IQuestionnaire {
   id: string;
   title: string;
   active: boolean;
@@ -39,13 +44,12 @@ export interface IOption {
   id: string;
   title: string;
   question_id: IQuestion['id'];
-}
+} */
 
 export interface IAnswer {
   id: string;
   value: string;
   question_id: IQuestion['id'];
-  option_id: IOption['id'];
   session_id: ISession['id'];
 }
 
@@ -61,7 +65,6 @@ export interface ISession {
   name: string;
   status: string;
   applicationDate: string;
-  questionnaire_id: IQuestionnaire['id'];
   coach_id: IUser['id'];
   school_id: ISchool['id'];
   teacher_id: ITeacher['id'];
