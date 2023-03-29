@@ -6,13 +6,19 @@ import {LogoXXXS} from '../../assets/images/logos';
 import Navigation from '../../services/navigation';
 import Icon from '../base/Icon';
 import {Props} from './types';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
   /*   const currentLanguage = i18n.languages[0]; */
+  const isTablet = Tablet();
   const theme = useTheme();
 
   return (
-    <Stack safeAreaTop {...(background && {background: background})} p={'16px'}>
+    <Stack
+      safeAreaTop
+      {...(background && {background: background})}
+      p={'16px'}
+      px={isTablet ? '64px' : '16px'}>
       <HStack
         w={'100%'}
         alignItems={'center'}
@@ -34,7 +40,12 @@ const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
           <Image
             alignSelf={'center'}
             source={LogoXXXS}
-            style={{height: 24, width: 64} as ImageStyle}
+            style={
+              {
+                height: isTablet ? 32 : 24,
+                width: isTablet ? 100 : 64,
+              } as ImageStyle
+            }
             alt={'Coach logo'}
           />
         )}

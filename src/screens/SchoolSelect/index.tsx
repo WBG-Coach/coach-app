@@ -7,9 +7,11 @@ import Routes from '../../routes/paths';
 import Input from '../../components/base/Input';
 import {getWatermelon} from '../../database';
 import School from '../../database/models/School';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 const SchoolSelectScreen = () => {
   const [schoolList, setSchoolList] = useState<School[]>();
+  const isTablet = Tablet();
 
   useEffect(() => {
     (async () => {
@@ -23,7 +25,11 @@ const SchoolSelectScreen = () => {
   return (
     <VStack flex={1}>
       {schoolList ? (
-        <VStack w={'100%'} alignItems={'flex-start'} px={'16px'} mt={'24px'}>
+        <VStack
+          w={'100%'}
+          alignItems={'flex-start'}
+          px={isTablet ? '64px' : '16px'}
+          mt={isTablet ? '64px' : '24px'}>
           <Text
             fontSize={'HSM'}
             fontWeight={600}

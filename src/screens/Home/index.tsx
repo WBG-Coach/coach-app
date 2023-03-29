@@ -15,10 +15,12 @@ import {UserContext} from '../../providers/contexts/UserContext';
 import {ISession, ITeacher} from '../../types';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 const HomeScreen = () => {
   const {user} = useContext(UserContext);
   const theme = useTheme();
+  const isTablet = Tablet();
 
   const data = [
     {
@@ -83,7 +85,11 @@ const HomeScreen = () => {
   ];
 
   return (
-    <VStack safeAreaBottom mt={6} px={4} flex={1}>
+    <VStack
+      safeAreaBottom
+      mt={isTablet ? '64px' : 6}
+      px={isTablet ? '64px' : 4}
+      flex={1}>
       <HStack space={2}>
         <Image
           src={user?.school?.image_url}

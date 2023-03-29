@@ -7,6 +7,7 @@ import {TouchableOpacity} from 'react-native';
 import {ISchool, IUser} from '../../types';
 import User from '../../database/models/User';
 import {getWatermelon} from '../../database';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 type Props = {
   route: {
@@ -19,6 +20,7 @@ type Props = {
 const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
   const {handleLogin} = useContext(UserContext);
   const [usersList, setUsersList] = useState<User[]>();
+  const isTablet = Tablet();
 
   useEffect(() => {
     (async () => {
@@ -32,7 +34,11 @@ const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
   return (
     <VStack flex={1}>
       {usersList ? (
-        <VStack w={'100%'} alignItems={'flex-start'} px={'16px'} mt={'24px'}>
+        <VStack
+          w={'100%'}
+          alignItems={'flex-start'}
+          px={isTablet ? '64px' : '16px'}
+          mt={isTablet ? '64px' : '24px'}>
           <Text
             fontSize={'HSM'}
             fontWeight={600}
