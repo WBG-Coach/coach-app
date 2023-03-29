@@ -29,15 +29,7 @@ export default appSchema({
           name: 'image_url',
           type: 'string',
         },
-        {name: 'created_at', type: 'number'},
-        {name: 'updated_at', type: 'number'},
       ],
     }),
   ],
 });
-
-/* 
-id: string;
-name: string;
-image_url: string;
-school?: ISchool; //added! */

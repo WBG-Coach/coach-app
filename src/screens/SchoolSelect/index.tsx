@@ -1,10 +1,11 @@
 import {HStack, Image, Text, VStack} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Icon from '../../components/base/Icon';
 import {TouchableOpacity} from 'react-native';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import Input from '../../components/base/Input';
+import {getWatermelon} from '../../database';
 
 const SchoolSelectScreen = () => {
   const mock = [
@@ -27,6 +28,17 @@ const SchoolSelectScreen = () => {
       description: '1 coach here',
     },
   ];
+
+  useEffect(() => {
+    (async () => {
+      await getWatermelon();
+      /*   const list = await (await getWatermelon()).collections
+        .get('school')
+        .query()
+        .fetch();
+      console.log('all values =>', list); */
+    })();
+  }, []);
 
   return (
     <VStack flex={1}>
