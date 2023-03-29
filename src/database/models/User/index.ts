@@ -7,7 +7,6 @@ export default class User extends Model {
 
   @text('name') name: any;
   @text('image_url') image_url: any;
-  /* 
   @readonly @date('created_at') createdAt: any;
-  @readonly @date('updated_at') updatedAt: any; */
+  @readonly @date('updated_at') updatedAt: any;
 }

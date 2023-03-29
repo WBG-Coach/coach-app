@@ -1,4 +1,6 @@
 import React, {useContext, useState} from 'react';
+import {getWatermelon} from '../../../database';
+import School from '../../../database/models/School';
 import {IUser} from '../../../types';
 
 export type UserContextProps = {
@@ -17,9 +19,8 @@ interface Props {
 const UserContextProvider = ({children}: Props) => {
   const [user, setUser] = useState<IUser>();
 
-  const handleLogin = async (user: IUser) => {
-    setUser(user);
-    console.log(user)
+  const handleLogin = async (newUser: IUser) => {
+    setUser(newUser);
   };
 
   return (

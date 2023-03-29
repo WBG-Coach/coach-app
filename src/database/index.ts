@@ -61,9 +61,6 @@ export const getWatermelon = async () => {
     });
   }
 
-  /*  const uslist = await database.collections.get('user').query().fetch();
-  console.log('user list', uslist); */
-
   /*   console.log(
     '-->',
     await database.write(
