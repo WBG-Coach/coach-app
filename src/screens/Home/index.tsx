@@ -90,16 +90,16 @@ const HomeScreen = () => {
       mt={isTablet ? '64px' : 6}
       px={isTablet ? '64px' : 4}
       flex={1}>
-      <HStack space={2}>
+      <HStack space={2} alignItems={'center'}>
         <Image
           src={user?.school?.image_url}
           alt={'School image'}
-          w={'56px'}
-          h={'56px'}
+          w={isTablet ? '64px' : '56px'}
+          h={isTablet ? '64px' : '56px'}
           borderRadius={'500px'}
         />
 
-        <VStack space={2}>
+        <VStack space={1}>
           <Text fontSize={'TMD'} fontWeight={600} color={'gray.800'}>
             {user?.school?.name}
           </Text>
@@ -122,12 +122,12 @@ const HomeScreen = () => {
               borderWidth={'1px'}
               alignItems={'center'}
               borderColor={'gray.300'}
-              maxW={'130px'}>
+              maxW={isTablet ? '176px' : '130px'}>
               <TouchableOpacity onPress={item.onPress}>
                 <VStack p={'12px 8px'} space={2}>
                   <Center
-                    py={3}
-                    px={9}
+                    py={isTablet ? 6 : 3}
+                    px={isTablet ? '64px' : 9}
                     borderRadius={'8px'}
                     background={'primary.100'}>
                     <Icon name={item.icon} color={'#264673'} />
@@ -172,8 +172,8 @@ const HomeScreen = () => {
                   <Image
                     src={item.image_url}
                     alt={'Teacher image'}
-                    w={'40px'}
-                    h={'40px'}
+                    w={isTablet ? '56px' : '40px'}
+                    h={isTablet ? '56px' : '40px'}
                     borderRadius={'500px'}
                   />
 

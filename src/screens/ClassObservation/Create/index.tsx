@@ -13,6 +13,7 @@ import React from 'react';
 import Icon from '../../../components/base/Icon';
 import Routes from '../../../routes/paths';
 import Navigation from '../../../services/navigation';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 const process = [
   {
@@ -43,9 +44,10 @@ const process = [
 
 const ClassObservationCreate: React.FC<any> = () => {
   const theme = useTheme();
+  const isTablet = Tablet();
 
   return (
-    <VStack flex={1} px={4} safeAreaBottom>
+    <VStack flex={1} mt={6} px={isTablet ? '64px' : 4} safeAreaBottom>
       <VStack flex={1} position={'relative'}>
         <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
           Mentoring process

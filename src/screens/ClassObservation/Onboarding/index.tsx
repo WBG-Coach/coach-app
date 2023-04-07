@@ -1,13 +1,21 @@
-import {Button, HStack, useTheme, VStack, Text, Image} from 'native-base';
+import {
+  Button,
+  HStack,
+  useTheme,
+  VStack,
+  Text,
+  Image,
+  Center,
+} from 'native-base';
 import React from 'react';
 import {Dimensions} from 'react-native';
 import {useSharedValue, withTiming} from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import * as OnboardingImages from '../../../assets/images/onboarding';
 import CarouselPaginate from '../../../components/Carousel/CarouselPaginate';
-import {ImageStyle} from 'react-native/types';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 const data = [
   {
@@ -34,6 +42,7 @@ const ClassOnboarding: React.FC<any> = () => {
   const {width: PAGE_WIDTH} = Dimensions.get('window');
   const progressValue = useSharedValue<number>(0);
   const pressAnim = useSharedValue<number>(0);
+  const isTablet = Tablet();
   const theme = useTheme();
 
   return (
@@ -53,29 +62,33 @@ const ClassOnboarding: React.FC<any> = () => {
             progressValue.value = absoluteProgress;
           }}
           renderItem={({item, index}) => (
-            <VStack key={index} flex={1} alignItems={'center'}>
-              <Image
-                alignSelf={'center'}
-                source={item.image}
-                alt={'Coach logo'}
-              />
+            <Center key={index} flex={1} justifyContent={'flex-start'}>
+              <VStack
+                alignItems={'center'}
+                maxW={isTablet ? '500px' : 'inherit'}>
+                <Image
+                  alignSelf={'center'}
+                  source={item.image}
+                  alt={'Coach logo'}
+                />
 
-              <Text
-                fontSize={'HSM'}
-                fontWeight={600}
-                color={'gray.800'}
-                mb={'16px'}
-                textAlign={'center'}>
-                {item.title}
-              </Text>
-              <Text
-                fontSize={'TMD'}
-                fontWeight={400}
-                color={'gray.800'}
-                textAlign={'center'}>
-                {item.subtitle}
-              </Text>
-            </VStack>
+                <Text
+                  fontSize={'HSM'}
+                  fontWeight={600}
+                  color={'gray.800'}
+                  mb={'16px'}
+                  textAlign={'center'}>
+                  {item.title}
+                </Text>
+                <Text
+                  fontSize={'TMD'}
+                  fontWeight={400}
+                  color={'gray.800'}
+                  textAlign={'center'}>
+                  {item.subtitle}
+                </Text>
+              </VStack>
+            </Center>
           )}
         />
       </VStack>
@@ -93,7 +106,7 @@ const ClassOnboarding: React.FC<any> = () => {
         ))}
       </HStack>
 
-      <HStack px={4} space={'8px'} mb={6}>
+      <HStack px={isTablet ? '64px' : 4} space={'8px'} mb={6}>
         <Button
           flex={1}
           borderRadius={'8px'}

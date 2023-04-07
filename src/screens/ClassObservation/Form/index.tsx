@@ -16,9 +16,12 @@ import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetCon
 import {IAnswer, IQuestion} from '../../../types';
 import BottomSheetTooltip from './BottomSheetTooltip';
 import MockCompetence from './consts';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 const ObservationForm: React.FC<any> = () => {
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
+  const isTablet = Tablet();
+
   const questions = MockCompetence.reduce(
     (acc, item) => [...acc, ...item.questions],
     [] as IQuestion[],
@@ -48,7 +51,7 @@ const ObservationForm: React.FC<any> = () => {
 
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
-      <VStack flex={1} px={4}>
+      <VStack flex={1} px={isTablet ? '64px' : 4}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
             Class evaluation
@@ -193,9 +196,9 @@ const ObservationForm: React.FC<any> = () => {
       </VStack>
 
       <VStack
+        px={isTablet ? '64px' : 4}
         background={'white'}
         pt={3}
-        px={4}
         borderRadius={'8px 8px 0px 0px'}>
         <Button
           onPress={handleSubmit(handleSubmitForm)}

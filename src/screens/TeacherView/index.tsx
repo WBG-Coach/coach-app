@@ -5,6 +5,7 @@ import Icon from '../../components/base/Icon';
 import {UserContext} from '../../providers/contexts/UserContext';
 import {ITeacher} from '../../types';
 import SessionTab from './Tabs/Session';
+import {isTablet as Tablet} from 'react-native-device-info';
 
 type Props = {
   route: {
@@ -29,11 +30,12 @@ const TeacherView: React.FC<any> = ({route}: Props) => {
   const [tabSelected, setTabSelected] = useState(tabs[0]);
   const {user} = useContext(UserContext);
   const {teacher} = route.params;
+  const isTablet = Tablet();
   const theme = useTheme();
 
   return (
     <VStack flex={1} mt={6}>
-      <VStack px={4}>
+      <VStack px={isTablet ? '64px' : 4}>
         <Image
           src={teacher.image_url}
           alt={'Teacher image'}
@@ -70,7 +72,7 @@ const TeacherView: React.FC<any> = ({route}: Props) => {
         mt={4}
         pb={2}
         borderBottomWidth={'2px'}
-        px={4}
+        px={isTablet ? '64px' : 4}
         w={'100%'}
         borderBottomColor={'gray.200'}>
         {tabs.map((item, index) => (
