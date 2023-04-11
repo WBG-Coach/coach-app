@@ -2,7 +2,6 @@ import {
   Button,
   Center,
   HStack,
-  Radio,
   Text,
   TextArea,
   VStack,
@@ -19,6 +18,7 @@ import BottomSheetTooltip from './BottomSheetTooltip';
 import MockCompetence from './consts';
 import {isTablet as Tablet} from 'react-native-device-info';
 import StarRating from '../../../components/base/StarRating';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const ObservationForm: React.FC<any> = () => {
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
@@ -48,6 +48,10 @@ const ObservationForm: React.FC<any> = () => {
     }));
 
     console.log('answers ->', answers);
+  };
+
+  const handleAddImage = async () => {
+    const img = await launchImageLibrary({mediaType: 'photo'});
   };
 
   return (
@@ -181,7 +185,11 @@ const ObservationForm: React.FC<any> = () => {
               class observation and mentoring session
             </Text>
 
-            <Button mt={2} variant={'outline'} borderColor={'primary.200'}>
+            <Button
+              mt={2}
+              variant={'outline'}
+              borderColor={'primary.200'}
+              onPress={handleAddImage}>
               <HStack>
                 <Icon name={'image'} color={theme.colors.primary['200']} />
                 <Text
