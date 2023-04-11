@@ -65,7 +65,7 @@ const ClassOnboarding: React.FC<any> = () => {
             <Center key={index} flex={1} justifyContent={'flex-start'}>
               <VStack
                 alignItems={'center'}
-                maxW={isTablet ? '500px' : 'inherit'}>
+                {...(isTablet && {maxWidth: '500px'})}>
                 <Image
                   alignSelf={'center'}
                   source={item.image}

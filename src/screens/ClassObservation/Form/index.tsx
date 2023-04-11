@@ -6,6 +6,7 @@ import {
   Text,
   TextArea,
   VStack,
+  useTheme,
 } from 'native-base';
 import React from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
@@ -17,10 +18,12 @@ import {IAnswer, IQuestion} from '../../../types';
 import BottomSheetTooltip from './BottomSheetTooltip';
 import MockCompetence from './consts';
 import {isTablet as Tablet} from 'react-native-device-info';
+import StarRating from '../../../components/base/StarRating';
 
 const ObservationForm: React.FC<any> = () => {
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const isTablet = Tablet();
+  const theme = useTheme();
 
   const questions = MockCompetence.reduce(
     (acc, item) => [...acc, ...item.questions],
@@ -28,21 +31,19 @@ const ObservationForm: React.FC<any> = () => {
   );
 
   const defaultValues = questions.reduce(
-    (acc, item) => ({...acc, [item.id]: ''}),
-    {} as {[key: string]: string},
+    (acc, item) => ({...acc, [item.id]: 0}),
+    {} as {[key: string]: number},
   );
 
   const {control, handleSubmit} = useForm({
     defaultValues,
   });
 
-  const options = ['Low', 'Medium', 'High'];
-
   const handleSubmitForm: SubmitHandler<typeof defaultValues> = values => {
     const answers: IAnswer[] = Object.keys(values).map((key, index) => ({
       id: index.toString(),
       question_id: key,
-      value: values[key],
+      value: values[key].toString(),
       session_id: 'example of same id =)',
     }));
 
@@ -89,11 +90,11 @@ const ObservationForm: React.FC<any> = () => {
                           rules={{required: true}}
                           control={control}
                           render={({
-                            field: {value, name, onChange},
-                            fieldState,
+                            field: {value, onChange},
+                            fieldState: {error},
                           }) => (
                             <VStack>
-                              <HStack>
+                              <HStack mb={1}>
                                 <VStack flex={1}>
                                   <Text
                                     fontSize={'LMD'}
@@ -131,40 +132,11 @@ const ObservationForm: React.FC<any> = () => {
                                 </TouchableOpacity>
                               </HStack>
 
-                              <Radio.Group
-                                name={name}
-                                accessibilityLabel="favorite number"
+                              <StarRating
                                 value={value}
-                                flex={1}
-                                mb={1}
-                                onChange={onChange}>
-                                <HStack
-                                  mt={2}
-                                  justifyContent={'space-evenly'}
-                                  alignItems={'center'}>
-                                  {options.map(option => (
-                                    <VStack
-                                      key={option}
-                                      flex={1}
-                                      alignItems={'center'}>
-                                      <Text
-                                        fontSize={'TXS'}
-                                        fontWeight={400}
-                                        color={'gray.600'}
-                                        mb={1}>
-                                        {option}
-                                      </Text>
-                                      <Radio
-                                        isInvalid={!!fieldState.error}
-                                        bg={'white'}
-                                        aria-label={option}
-                                        value={option}>
-                                        <></>
-                                      </Radio>
-                                    </VStack>
-                                  ))}
-                                </HStack>
-                              </Radio.Group>
+                                onPress={onChange}
+                                isInvalid={!!error}
+                              />
                             </VStack>
                           )}
                         />
@@ -191,6 +163,36 @@ const ObservationForm: React.FC<any> = () => {
               Use this space for additional annotations that you'd like to
               discuss with the teacher
             </Text>
+
+            <HStack alignItems={'center'} mt={6}>
+              <Text
+                fontSize={'TXL'}
+                flex={1}
+                fontWeight={700}
+                color={'gray.700'}>
+                Upload a image
+              </Text>
+              <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+                Optional
+              </Text>
+            </HStack>
+            <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+              You can also send a picture of the annotations you made during the
+              class observation and mentoring session
+            </Text>
+
+            <Button mt={2} variant={'outline'} borderColor={'primary.200'}>
+              <HStack>
+                <Icon name={'image'} color={theme.colors.primary['200']} />
+                <Text
+                  ml={2}
+                  fontSize={'LMD'}
+                  fontWeight={500}
+                  color={'primary.200'}>
+                  Upload a photo
+                </Text>
+              </HStack>
+            </Button>
           </VStack>
         </ScrollView>
       </VStack>
