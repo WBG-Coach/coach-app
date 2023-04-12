@@ -6,6 +6,7 @@ import {
   TextArea,
   VStack,
   useTheme,
+  Box,
 } from 'native-base';
 import React from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
@@ -35,9 +36,11 @@ const ObservationForm: React.FC<any> = () => {
     {} as {[key: string]: number},
   );
 
-  const {control, handleSubmit} = useForm({
+  const {control, handleSubmit, watch} = useForm({
     defaultValues,
   });
+
+  const formValues = watch();
 
   const handleSubmitForm: SubmitHandler<typeof defaultValues> = values => {
     const answers: IAnswer[] = Object.keys(values).map((key, index) => ({
@@ -67,87 +70,102 @@ const ObservationForm: React.FC<any> = () => {
 
           <VStack>
             {MockCompetence.map((competence, index) => (
-              <SimpleAccordion
-                key={competence.id}
-                title={competence.title}
-                startCollapsed={index !== 0}
-                bannerStyle={{
-                  backgroundColor: 'white',
-                  paddingHorizontal: 0,
-                  paddingVertical: 0,
-                }}
-                viewContainerStyle={{
-                  shadowColor: 'white',
-                  paddingHorizontal: 0,
-                  paddingVertical: 0,
-                }}
-                viewInside={
-                  <VStack space={4}>
-                    {questions
-                      .filter(
-                        question => question.competence_id === competence.id,
-                      )
-                      .map(question => (
-                        <Controller
-                          key={question.id}
-                          name={question.id}
-                          rules={{required: true}}
-                          control={control}
-                          render={({
-                            field: {value, onChange},
-                            fieldState: {error},
-                          }) => (
-                            <VStack>
-                              <HStack mb={1}>
-                                <VStack flex={1}>
-                                  <Text
-                                    fontSize={'LMD'}
-                                    fontWeight={500}
-                                    color={'gray.700'}>
-                                    {question.title}
-                                  </Text>
+              <Box key={competence.id} position={'relative'}>
+                {!competence.questions.find(({id}) => formValues[id] === 0) && (
+                  <Center
+                    position={'absolute'}
+                    zIndex={10}
+                    top={5}
+                    right={10}
+                    background={'green.200'}
+                    w={'20px'}
+                    h={'20px'}
+                    borderRadius={'10px'}>
+                    <Icon name={'check'} color={theme.colors.white} size={16} />
+                  </Center>
+                )}
 
-                                  {question.description && (
+                <SimpleAccordion
+                  title={competence.title}
+                  startCollapsed={index !== 0}
+                  bannerStyle={{
+                    backgroundColor: 'white',
+                    paddingHorizontal: 0,
+                    paddingVertical: 0,
+                  }}
+                  viewContainerStyle={{
+                    shadowColor: 'white',
+                    paddingHorizontal: 0,
+                    paddingVertical: 0,
+                  }}
+                  viewInside={
+                    <VStack space={4}>
+                      {questions
+                        .filter(
+                          question => question.competence_id === competence.id,
+                        )
+                        .map(question => (
+                          <Controller
+                            key={question.id}
+                            name={question.id}
+                            rules={{required: true}}
+                            control={control}
+                            render={({
+                              field: {value, onChange},
+                              fieldState: {error},
+                            }) => (
+                              <VStack>
+                                <HStack mb={1}>
+                                  <VStack flex={1}>
                                     <Text
-                                      mt={'1'}
-                                      fontSize={'TXS'}
-                                      fontWeight={400}
-                                      color={'gray.600'}>
-                                      {question.description}
+                                      fontSize={'LMD'}
+                                      fontWeight={500}
+                                      color={'gray.700'}>
+                                      {question.title}
                                     </Text>
-                                  )}
-                                </VStack>
 
-                                <TouchableOpacity
-                                  onPress={() =>
-                                    setBottomSheetContent(
-                                      <BottomSheetTooltip
-                                        content={question.tooltipData}
-                                      />,
-                                    )
-                                  }>
-                                  <Center
-                                    background={'primary.200'}
-                                    borderRadius={'10px'}
-                                    width={'20px'}
-                                    height={'20px'}>
-                                    <Icon color="white" name="question" />
-                                  </Center>
-                                </TouchableOpacity>
-                              </HStack>
+                                    {question.description && (
+                                      <Text
+                                        mt={'1'}
+                                        fontSize={'TXS'}
+                                        fontWeight={400}
+                                        color={'gray.600'}>
+                                        {question.description}
+                                      </Text>
+                                    )}
+                                  </VStack>
 
-                              <StarRating
-                                value={value}
-                                onPress={onChange}
-                                isInvalid={!!error}
-                              />
-                            </VStack>
-                          )}
-                        />
-                      ))}
-                  </VStack>
-                }
-              />
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      setBottomSheetContent(
+                                        <BottomSheetTooltip
+                                          content={question.tooltipData}
+                                        />,
+                                      )
+                                    }>
+                                    <Center
+                                      background={'primary.200'}
+                                      borderRadius={'10px'}
+                                      width={'20px'}
+                                      height={'20px'}>
+                                      <Icon color="white" name="question" />
+                                    </Center>
+                                  </TouchableOpacity>
+                                </HStack>
+
+                                <StarRating
+                                  value={value}
+                                  onPress={onChange}
+                                  isInvalid={!!error}
+                                />
+                              </VStack>
+                            )}
+                          />
+                        ))}
+                    </VStack>
+                  }
+                />
+              </Box>
             ))}
           </VStack>
 
@@ -168,7 +186,7 @@ const ObservationForm: React.FC<any> = () => {
               discuss with the teacher
             </Text>
 
-            <HStack alignItems={'center'} mt={6}>
+            {/*   <HStack alignItems={'center'} mt={6}>
               <Text
                 fontSize={'TXL'}
                 flex={1}
@@ -200,25 +218,39 @@ const ObservationForm: React.FC<any> = () => {
                   Upload a photo
                 </Text>
               </HStack>
-            </Button>
+            </Button> */}
           </VStack>
         </ScrollView>
       </VStack>
 
-      <VStack
-        px={isTablet ? '64px' : 4}
-        background={'white'}
-        pt={3}
-        borderRadius={'8px 8px 0px 0px'}>
-        <Button
-          onPress={handleSubmit(handleSubmitForm)}
-          marginTop={'auto'}
-          variant={'solid'}
-          borderRadius={'8px'}
-          color={'white'}
-          background={'primary.200'}>
-          Finish observation
-        </Button>
+      <VStack w={'100%'}>
+        <HStack
+          alignItems={'center'}
+          px={isTablet ? '64px' : 4}
+          background={'gray.100'}
+          borderRadius={'8px 8px 0px 0px'}
+          py={1}
+          space={1}>
+          <Icon name="star" color={theme.colors.gray['600']} size={20} />
+          <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
+            0 of 5 competencies rated
+          </Text>
+        </HStack>
+        <VStack
+          px={isTablet ? '64px' : 4}
+          background={'white'}
+          pt={3}
+          borderRadius={'8px 8px 0px 0px'}>
+          <Button
+            onPress={handleSubmit(handleSubmitForm)}
+            marginTop={'auto'}
+            variant={'solid'}
+            borderRadius={'8px'}
+            color={'white'}
+            background={'primary.200'}>
+            Finish observation
+          </Button>
+        </VStack>
       </VStack>
     </VStack>
   );
