@@ -14,6 +14,7 @@ import ClassObservationCreate from '../screens/ClassObservation/Create';
 import ClassOnboarding from '../screens/ClassObservation/Onboarding';
 import ObservationSetup from '../screens/ClassObservation/Setup';
 import ObservationForm from '../screens/ClassObservation/Form';
+import FormConfirmation from '../screens/ClassObservation/FormConfirmation';
 
 const Stack = createNativeStackNavigator();
 
@@ -131,6 +132,20 @@ const AppRoutes = () => {
                   background="gray.0"
                   hideConfig
                   title={'Class Observation'}
+                />
+              ),
+              headerShown: true,
+            }}
+          />
+          <Stack.Screen
+            name={Routes.classObservation.formConfirmaton}
+            component={FormConfirmation}
+            options={{
+              header: () => (
+                <Header
+                  background="gray.0"
+                  hideConfig
+                  title={'Observation summary'}
                 />
               ),
               headerShown: true,

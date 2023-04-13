@@ -20,6 +20,8 @@ import MockCompetence from './consts';
 import {isTablet as Tablet} from 'react-native-device-info';
 import StarRating from '../../../components/base/StarRating';
 import {launchImageLibrary} from 'react-native-image-picker';
+import Navigation from '../../../services/navigation';
+import Routes from '../../../routes/paths';
 
 const ObservationForm: React.FC<any> = () => {
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
@@ -32,25 +34,35 @@ const ObservationForm: React.FC<any> = () => {
   );
 
   const defaultValues = questions.reduce(
-    (acc, item) => ({...acc, [item.id]: 0}),
-    {} as {[key: string]: number},
+    (acc, item) => ({...acc, [item.id]: undefined}),
+    {} as {[key: string]: undefined | string},
   );
 
   const {control, handleSubmit, watch} = useForm({
-    defaultValues,
+    defaultValues: {...defaultValues, points: ''} as {
+      [key: string]: undefined | string;
+    },
   });
 
   const formValues = watch();
+
+  const competenciesFinished = MockCompetence.reduce((acc, item) => {
+    if (!item.questions.find(({id}) => !formValues[id])) {
+      return [...acc, ...item.id];
+    }
+
+    return acc;
+  }, [] as string[]);
 
   const handleSubmitForm: SubmitHandler<typeof defaultValues> = values => {
     const answers: IAnswer[] = Object.keys(values).map((key, index) => ({
       id: index.toString(),
       question_id: key,
-      value: values[key].toString(),
+      value: values[key]?.toString() || '',
       session_id: 'example of same id =)',
     }));
 
-    console.log('answers ->', answers);
+    Navigation.navigate(Routes.classObservation.formConfirmaton, {answers});
   };
 
   const handleAddImage = async () => {
@@ -71,7 +83,7 @@ const ObservationForm: React.FC<any> = () => {
           <VStack>
             {MockCompetence.map((competence, index) => (
               <Box key={competence.id} position={'relative'}>
-                {!competence.questions.find(({id}) => formValues[id] === 0) && (
+                {competenciesFinished.includes(competence.id) && (
                   <Center
                     position={'absolute'}
                     zIndex={10}
@@ -154,7 +166,7 @@ const ObservationForm: React.FC<any> = () => {
                                 </HStack>
 
                                 <StarRating
-                                  value={value}
+                                  value={parseInt(value || '0')}
                                   onPress={onChange}
                                   isInvalid={!!error}
                                 />
@@ -176,11 +188,22 @@ const ObservationForm: React.FC<any> = () => {
             <Text mt={4} fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
               What you want to discuss with the teacher?
             </Text>
-            <TextArea
-              mt={2}
-              autoCompleteType={'off'}
-              placeholder={'Positive and negative points'}
+            <Controller
+              name={'points'}
+              rules={{required: true}}
+              control={control}
+              render={({field: {value, onChange}, fieldState: {error}}) => (
+                <TextArea
+                  mt={2}
+                  onChangeText={onChange}
+                  value={value}
+                  isInvalid={!!error}
+                  autoCompleteType={'off'}
+                  placeholder={'Positive and negative points'}
+                />
+              )}
             />
+
             <Text mt={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
               Use this space for additional annotations that you'd like to
               discuss with the teacher
@@ -198,6 +221,7 @@ const ObservationForm: React.FC<any> = () => {
                 Optional
               </Text>
             </HStack>
+
             <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
               You can also send a picture of the annotations you made during the
               class observation and mentoring session
@@ -233,7 +257,8 @@ const ObservationForm: React.FC<any> = () => {
           space={1}>
           <Icon name="star" color={theme.colors.gray['600']} size={20} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            0 of 5 competencies rated
+            {competenciesFinished.length} of {MockCompetence.length}{' '}
+            competencies rated
           </Text>
         </HStack>
         <VStack

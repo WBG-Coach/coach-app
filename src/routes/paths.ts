@@ -7,6 +7,7 @@ const Routes = {
   teacher: 'TeacherScreen',
   splash: 'SplashScreen',
   classObservation: {
+    formConfirmaton: 'FormObservationConfirmation',
     create: 'ClassObservationCreate',
     onboarding: 'ClassOnboarding',
     setup: 'SetupObservation',

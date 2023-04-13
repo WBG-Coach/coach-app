@@ -71,7 +71,7 @@ const MockCompetence: ICompetence[] = [
     title: '3. Positive behavioral expectations',
     questions: [
       {
-        id: 'ex8',
+        id: 'ex20',
         competence_id: '3',
         title: 'A clear behavioral expectations for class activities is set',
         type: 'option',
