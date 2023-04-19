@@ -159,8 +159,7 @@ const HomeScreen = () => {
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() =>
-                /* Navigation.navigate(Routes.teacher, {teacher: item}) */
-                Navigation.navigate(Routes.feedback.mentoringSection)
+                Navigation.navigate(Routes.teacher, {teacher: item})
               }>
               <HStack
                 py={3}

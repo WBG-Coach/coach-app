@@ -11,7 +11,6 @@ import React from 'react';
 import {isTablet as Tablet} from 'react-native-device-info';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
-import {BestPratices} from '../../../assets/images/mentoring';
 import Icon from '../../../components/base/Icon';
 import {FeedbackCompletedImg} from '../../../assets/images/feedback';
 

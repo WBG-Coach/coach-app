@@ -1,5 +1,6 @@
 import {
   Button,
+  Center,
   HStack,
   ScrollView,
   Text,
@@ -8,7 +9,7 @@ import {
   VStack,
 } from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
-import React from 'react';
+import React, {useState} from 'react';
 import {ICompetence} from '../../../types';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {SimpleAccordion} from 'react-native-simple-accordion';
@@ -16,6 +17,8 @@ import Icon from '../../../components/base/Icon';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
+import Image from '../../../database/models/Image';
+import {getWatermelon} from '../../../database';
 
 type Props = {
   route: {
@@ -25,7 +28,10 @@ type Props = {
   };
 };
 
+type ImageCustom = Partial<Image> & {loaded: boolean};
+
 const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
+  const [images, setImages] = useState<Image[]>([]);
   const {competencies} = params;
   const defaultValues = competencies.reduce(
     (acc, item) => ({...acc, [item.id]: ''}),
@@ -46,7 +52,36 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
   };
 
   const handleAddImage = async () => {
-    const img = await launchImageLibrary({mediaType: 'photo'});
+    const db = await getWatermelon();
+
+    const {assets} = await launchImageLibrary({
+      mediaType: 'photo',
+      includeBase64: true,
+    });
+
+    console.log(assets);
+
+    if (assets) {
+      const assetsInDb = await Promise.all(
+        assets?.map(
+          async asset =>
+            await db.write(
+              async () =>
+                await db.collections.get<Image>('image').create(record => {
+                  record.name = asset.fileName;
+                  record.value = asset.base64;
+                }),
+            ),
+        ),
+      );
+
+      setImages([
+        ...images,
+        ...assetsInDb.reduce((acc, item) => {
+          return [...acc, {...item._raw} as any];
+        }, [] as Image[]),
+      ]);
+    }
   };
 
   return (
@@ -144,6 +179,49 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                 </Text>
               </HStack>
             </Button>
+
+            <VStack flex={1} space={2} mt={6} background={'red'}>
+              {images.map((image, index) => (
+                <HStack
+                  key={index}
+                  py={2}
+                  px={3}
+                  borderRadius={'8px'}
+                  borderColor={'gray.200'}
+                  borderWidth={'2px'}>
+                  <Center w={'64px'} h={'64px'} background={'primary.0'}>
+                    <Icon name={'image'} />
+                  </Center>
+                  <VStack ml={2} maxW={'50%'} overflow={'hidden'} space={0.5}>
+                    <Text
+                      numberOfLines={1}
+                      fontSize={'LMD'}
+                      fontWeight={500}
+                      color={'gray.700'}>
+                      {image.name}
+                    </Text>
+                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+                      {(image as any).created_at.toString()}
+                    </Text>
+
+                    <HStack space={1} alignItems={'center'}>
+                      <Icon
+                        name={'check-circle-solid'}
+                        color={theme.colors.green['200']}
+                        size={16}
+                      />
+
+                      <Text
+                        fontSize={'TXS'}
+                        fontWeight={400}
+                        color={'green.300'}>
+                        Image sent
+                      </Text>
+                    </HStack>
+                  </VStack>
+                </HStack>
+              ))}
+            </VStack>
           </VStack>
         </ScrollView>
       </VStack>

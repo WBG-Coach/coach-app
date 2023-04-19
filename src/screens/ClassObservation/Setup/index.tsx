@@ -48,6 +48,7 @@ const ObservationSetup: React.FC<any> = () => {
               render={({field, fieldState: {error}}) => (
                 <Input
                   {...field}
+                  onChangeText={field.onChange}
                   isInvalid={!!error}
                   placeholder={'15'}
                   variant={'outline'}
@@ -64,10 +65,11 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
-              name={'students_quantity'}
+              name={'subject'}
               render={({field, fieldState: {error}}) => (
                 <Input
                   {...field}
+                  onChangeText={field.onChange}
                   isInvalid={!!error}
                   variant={'outline'}
                   placeholder={'Math'}
@@ -83,10 +85,11 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
-              name={'students_quantity'}
+              name={'lesson_time'}
               render={({field, fieldState: {error}}) => (
                 <Input
                   {...field}
+                  onChangeText={field.onChange}
                   isInvalid={!!error}
                   variant={'outline'}
                   placeholder={'30 min'}
@@ -102,10 +105,11 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
-              name={'students_quantity'}
+              name={'teacher_objective'}
               render={({field, fieldState: {error}}) => (
                 <TextArea
                   {...field}
+                  onChangeText={field.onChange}
                   isInvalid={!!error}
                   autoCompleteType={'off'}
                   variant={'outline'}

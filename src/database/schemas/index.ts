@@ -33,5 +33,20 @@ export default appSchema({
         {name: 'updated_at', type: 'number'},
       ],
     }),
+    tableSchema({
+      name: 'image',
+      columns: [
+        {
+          name: 'name',
+          type: 'string',
+        },
+        {
+          name: 'value',
+          type: 'string',
+        },
+        {name: 'created_at', type: 'number'},
+        {name: 'updated_at', type: 'number'},
+      ],
+    }),
   ],
 });

@@ -77,7 +77,8 @@ const ObservationCompleted: React.FC = () => {
           variant={'solid'}
           borderRadius={'8px'}
           color={'white'}
-          background={'primary.200'}>
+          background={'primary.200'}
+          onPress={() => Navigation.reset(Routes.feedback.mentoringSection)}>
           Start feedback preparation
         </Button>
 
@@ -85,12 +86,9 @@ const ObservationCompleted: React.FC = () => {
           marginTop={'auto'}
           variant={'outline'}
           borderRadius={'8px'}
-          borderColor={'white'}>
-          <Text
-            color={'primary.200'}
-            onPress={() => Navigation.reset(Routes.home)}>
-            Go back to home
-          </Text>
+          borderColor={'white'}
+          onPress={() => Navigation.reset(Routes.home)}>
+          <Text color={'primary.200'}>Go back to home</Text>
         </Button>
       </VStack>
     </VStack>

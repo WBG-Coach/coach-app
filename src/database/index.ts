@@ -5,23 +5,7 @@ import schema from './schemas';
 import migrations from './migrations';
 import User from './models/User';
 import School from './models/School';
-
-/* export const adapter = new SQLiteAdapter({
-  schema,
-  migrations,
-  dbName: 'coachappsl-db',
-  jsi: true,
-  onSetUpError: () => {
-    console.log("Error, database can't be initialized.");
-  },
-}); */
-
-/* 
-// Then, make a Watermelon database from it!
-export const database = new Database({
-  adapter,
-  modelClasses: [User, School],
-}); */
+import Image from './models/Image';
 
 let database: Database;
 
@@ -57,19 +41,9 @@ export const getWatermelon = async () => {
 
     database = new Database({
       adapter,
-      modelClasses: [School, User],
+      modelClasses: [School, User, Image],
     });
   }
 
-  /*   console.log(
-    '-->',
-    await database.write(
-      async () =>
-        await database.collections.get<School>('school').create(record => {
-          record.name = 'Test School!';
-          record.image_url = 'Image url';
-        }),
-    ),
-  ); */
   return database;
 };
