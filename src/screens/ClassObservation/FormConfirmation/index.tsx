@@ -7,6 +7,7 @@ import {Button, HStack, ScrollView, Text, useTheme, VStack} from 'native-base';
 import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
 import StarView from '../../../components/StarView';
+import Routes from '../../../routes/paths';
 
 type Props = {
   route: {
@@ -128,38 +129,39 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
         </ScrollView>
       </VStack>
 
-      <VStack w={'100%'}>
-        <VStack
-          px={isTablet ? '64px' : 4}
-          background={'white'}
-          pt={3}
-          space={4}
-          borderRadius={'8px 8px 0px 0px'}>
-          <Button
-            onPress={() => {}}
-            marginTop={'auto'}
-            variant={'solid'}
-            borderRadius={'8px'}
-            color={'white'}
-            background={'primary.200'}>
-            <HStack alignItems={'center'} space={2}>
-              <Icon name={'check'} color={theme.colors.white} />
-              <Text>Finish observation</Text>
-            </HStack>
-          </Button>
+      <VStack
+        w={'100%'}
+        px={isTablet ? '64px' : 4}
+        background={'white'}
+        pt={3}
+        space={4}
+        borderRadius={'8px 8px 0px 0px'}>
+        <Button
+          onPress={() =>
+            Navigation.navigate(Routes.classObservation.observationCompleted)
+          }
+          marginTop={'auto'}
+          variant={'solid'}
+          borderRadius={'8px'}
+          color={'white'}
+          background={'primary.200'}>
+          <HStack alignItems={'center'} space={2}>
+            <Icon name={'check'} color={theme.colors.white} />
+            <Text>Finish observation</Text>
+          </HStack>
+        </Button>
 
-          <Button
-            onPress={Navigation.goBack}
-            marginTop={'auto'}
-            variant={'outline'}
-            borderRadius={'8px'}
-            borderColor={'primary.200'}>
-            <HStack alignItems={'center'} space={2}>
-              <Icon name={'pen'} color={theme.colors.primary['200']} />
-              <Text color={'primary.200'}>Edit evaluation</Text>
-            </HStack>
-          </Button>
-        </VStack>
+        <Button
+          onPress={Navigation.goBack}
+          marginTop={'auto'}
+          variant={'outline'}
+          borderRadius={'8px'}
+          borderColor={'primary.200'}>
+          <HStack alignItems={'center'} space={2}>
+            <Icon name={'pen'} color={theme.colors.primary['200']} />
+            <Text color={'primary.200'}>Edit evaluation</Text>
+          </HStack>
+        </Button>
       </VStack>
     </VStack>
   );

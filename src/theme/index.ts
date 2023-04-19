@@ -129,6 +129,19 @@ const theme = extendTheme({
         },
       },
     },
+    Checkbox: {
+      defaultProps: {
+        background: 'transparent',
+        borderColor: 'primary.200',
+        _icon: {
+          color: 'white',
+        },
+        _checked: {
+          borderColor: 'primary.200',
+          background: 'primary.200',
+        },
+      },
+    },
   },
   config: {
     initialColorMode: 'dark',

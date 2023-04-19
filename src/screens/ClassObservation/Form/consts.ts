@@ -3,7 +3,7 @@ import {ICompetence} from '../../../types';
 const MockCompetence: ICompetence[] = [
   {
     id: '1',
-    title: '1. Time on learning',
+    title: 'Time on learning',
     questions: [
       {
         id: 'ex1',
@@ -33,7 +33,7 @@ const MockCompetence: ICompetence[] = [
   },
   {
     id: '2',
-    title: '2. Supportive learning environment',
+    title: 'Supportive learning environment',
     questions: [
       {
         id: 'ex5',
@@ -68,7 +68,7 @@ const MockCompetence: ICompetence[] = [
   },
   {
     id: '3',
-    title: '3. Positive behavioral expectations',
+    title: 'Positive behavioral expectations',
     questions: [
       {
         id: 'ex20',
@@ -81,7 +81,7 @@ const MockCompetence: ICompetence[] = [
   },
   {
     id: '4',
-    title: '4. Effective teaching',
+    title: 'Effective teaching',
     questions: [
       {
         id: 'ex9',
@@ -117,7 +117,7 @@ const MockCompetence: ICompetence[] = [
   },
   {
     id: '5',
-    title: '5. Positive behavioral expectations',
+    title: 'Positive behavioral expectations',
     questions: [
       {
         id: 'ex13',
