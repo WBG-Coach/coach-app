@@ -6,6 +6,10 @@ import migrations from './migrations';
 import User from './models/User';
 import School from './models/School';
 import Image from './models/Image';
+import Guide from './models/Guide';
+import Competence from './models/Competence';
+import Question from './models/Question';
+import Answer from './models/Answer';
 
 let database: Database;
 
@@ -41,7 +45,7 @@ export const getWatermelon = async () => {
 
     database = new Database({
       adapter,
-      modelClasses: [School, User, Image],
+      modelClasses: [School, User, Image, Guide, Competence, Question, Answer],
     });
   }
 

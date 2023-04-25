@@ -14,14 +14,14 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {SimpleAccordion} from 'react-native-simple-accordion';
 import Icon from '../../../components/base/Icon';
 import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
-import {IAnswer, IQuestion} from '../../../types';
+import {IQuestion} from '../../../types';
 import BottomSheetTooltip from './BottomSheetTooltip';
 import MockCompetence from './consts';
 import {isTablet as Tablet} from 'react-native-device-info';
 import StarRating from '../../../components/base/StarRating';
-import {launchImageLibrary} from 'react-native-image-picker';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
+import Answer from '../../../database/models/Answer';
 
 const ObservationForm: React.FC<any> = () => {
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
@@ -54,19 +54,19 @@ const ObservationForm: React.FC<any> = () => {
     return acc;
   }, [] as string[]);
 
-  const handleSubmitForm: SubmitHandler<typeof defaultValues> = values => {
-    const answers: IAnswer[] = Object.keys(values).map((key, index) => ({
-      id: index.toString(),
-      question_id: key,
-      value: values[key]?.toString() || '',
-      session_id: 'example of same id =)',
-    }));
+  const handleSubmitForm: SubmitHandler<
+    typeof defaultValues
+  > = async values => {
+    const answers: Partial<Answer>[] = Object.keys(values).map(
+      (key, index) => ({
+        id: index.toString(),
+        question_id: key,
+        value: values[key]?.toString() || '',
+        session_id: 'example of same id =)',
+      }),
+    );
 
     Navigation.navigate(Routes.classObservation.formConfirmaton, {answers});
-  };
-
-  const handleAddImage = async () => {
-    const img = await launchImageLibrary({mediaType: 'photo'});
   };
 
   return (
@@ -151,7 +151,7 @@ const ObservationForm: React.FC<any> = () => {
                                     onPress={() =>
                                       setBottomSheetContent(
                                         <BottomSheetTooltip
-                                          content={question.tooltipData}
+                                          content={question.tooltip_data}
                                         />,
                                       )
                                     }>
@@ -208,41 +208,6 @@ const ObservationForm: React.FC<any> = () => {
               Use this space for additional annotations that you'd like to
               discuss with the teacher
             </Text>
-
-            {/*   <HStack alignItems={'center'} mt={6}>
-              <Text
-                fontSize={'TXL'}
-                flex={1}
-                fontWeight={700}
-                color={'gray.700'}>
-                Upload a image
-              </Text>
-              <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                Optional
-              </Text>
-            </HStack>
-
-            <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              You can also send a picture of the annotations you made during the
-              class observation and mentoring session
-            </Text>
-
-            <Button
-              mt={2}
-              variant={'outline'}
-              borderColor={'primary.200'}
-              onPress={handleAddImage}>
-              <HStack>
-                <Icon name={'image'} color={theme.colors.primary['200']} />
-                <Text
-                  ml={2}
-                  fontSize={'LMD'}
-                  fontWeight={500}
-                  color={'primary.200'}>
-                  Upload a photo
-                </Text>
-              </HStack>
-            </Button> */}
           </VStack>
         </ScrollView>
       </VStack>

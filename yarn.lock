@@ -1601,7 +1601,7 @@
     rxjs "^7.4.0"
     sql-escape-string "^1.1.0"
 
-"@nozbe/with-observables@1.4.1":
+"@nozbe/with-observables@1.4.1", "@nozbe/with-observables@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@nozbe/with-observables/-/with-observables-1.4.1.tgz#e24680e57ae235e53db6ed7600494d7d0a8d36c2"
   integrity sha512-xsYrSeSzelFiWF/BXFZW+khFAqJdet22Egt6nhVLHGF2GmYbV5kxv8om0Wh2om4OXK6IM0UAU3pwk+nX5GLsUw==

@@ -59,8 +59,6 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
       includeBase64: true,
     });
 
-    console.log(assets);
-
     if (assets) {
       const assetsInDb = await Promise.all(
         assets?.map(

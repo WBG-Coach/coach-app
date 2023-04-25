@@ -20,8 +20,6 @@ export interface ICompetence {
   id: string;
   title: string;
   questions: IQuestion[];
-  competence_id?: ICompetence['id'];
-  children?: ICompetence[];
   guide_id?: IGuide['id'];
 }
 
@@ -29,7 +27,7 @@ export interface IQuestion {
   id: string;
   title: string;
   description?: string;
-  tooltipData: string;
+  tooltip_data: string;
   type: 'text' | 'option';
   competence_id: ICompetence['id'];
 }

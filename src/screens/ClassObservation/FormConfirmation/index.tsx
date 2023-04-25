@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {IAnswer, IQuestion} from '../../../types';
 import MockCompetence from '../Form/consts';
 import {ICompetence} from '../../../types';
@@ -8,6 +8,8 @@ import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
 import StarView from '../../../components/StarView';
 import Routes from '../../../routes/paths';
+import Answer from '../../../database/models/Answer';
+import {getWatermelon} from '../../../database';
 
 type Props = {
   route: {
@@ -18,6 +20,7 @@ type Props = {
 };
 
 const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -45,6 +48,27 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
 
     return [...acc, competence];
   }, [] as Array<ICompetence & {overall_rating: number; questions: Array<IQuestion & {value: number}>}>);
+
+  const handlePressContinue = async () => {
+    const db = await getWatermelon();
+    const {answers} = params;
+    setIsLoading(true);
+
+    await Promise.all(
+      answers?.map(
+        async answer =>
+          await db.write(
+            async () =>
+              await db.collections.get<Answer>('answer').create(record => {
+                record.value = answer.value;
+                record.question_id = answer.question_id;
+              }),
+          ),
+      ),
+    );
+
+    Navigation.navigate(Routes.classObservation.observationCompleted);
+  };
 
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
@@ -137,13 +161,12 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
         space={4}
         borderRadius={'8px 8px 0px 0px'}>
         <Button
-          onPress={() =>
-            Navigation.navigate(Routes.classObservation.observationCompleted)
-          }
+          onPress={handlePressContinue}
           marginTop={'auto'}
           variant={'solid'}
           borderRadius={'8px'}
           color={'white'}
+          isLoading={isLoading}
           background={'primary.200'}>
           <HStack alignItems={'center'} space={2}>
             <Icon name={'check'} color={theme.colors.white} />
@@ -156,6 +179,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
           marginTop={'auto'}
           variant={'outline'}
           borderRadius={'8px'}
+          isLoading={isLoading}
           borderColor={'primary.200'}>
           <HStack alignItems={'center'} space={2}>
             <Icon name={'pen'} color={theme.colors.primary['200']} />
