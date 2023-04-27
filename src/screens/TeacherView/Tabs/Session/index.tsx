@@ -1,11 +1,11 @@
 import {
+  Text,
+  Image,
   Button,
   Center,
-  HStack,
-  Image,
-  Text,
-  useTheme,
   VStack,
+  HStack,
+  useTheme,
 } from 'native-base';
 import React from 'react';
 import {SessionDefault} from '../../../../assets/images/logos';

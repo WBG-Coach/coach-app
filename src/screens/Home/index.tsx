@@ -16,6 +16,7 @@ import {ISession, ITeacher} from '../../types';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {syncWatermelon} from '../../database';
 
 const HomeScreen = () => {
   const {user} = useContext(UserContext);
@@ -36,7 +37,9 @@ const HomeScreen = () => {
     {
       icon: 'wifi-slash',
       label: 'Offline sync',
-      onPress: () => {},
+      onPress: async () => {
+        await syncWatermelon();
+      },
     },
     {
       icon: 'plus',

@@ -4,20 +4,41 @@ import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import Routes from '../../../routes/paths';
 import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {getWatermelon} from '../../../database';
+import Session from '../../../database/models/Session';
+// import {v4 as uuidv4} from 'uuid';
 
 const defaultValues = {
-  students_quantity: '',
+  boys_count: '',
+  girls_count: '',
   subject: '',
   lesson_time: '',
-  teacher_objective: '',
+  objective: '',
 };
 
 const ObservationSetup: React.FC<any> = () => {
   const {control, handleSubmit} = useForm({defaultValues});
   const isTablet = Tablet();
 
-  const handleSubmitForm: SubmitHandler<typeof defaultValues> = values => {
-    console.log(values);
+  const handleSubmitForm: SubmitHandler<
+    typeof defaultValues
+  > = async values => {
+    const db = await getWatermelon();
+    await db.write(
+      async () =>
+        await db.collections.get<Session>('session').create(record => {
+          record.status = '';
+          record.boys_count = values.boys_count;
+          record.girls_count = values.girls_count;
+          record.subject = values.subject;
+          record.lesson_time = values.lesson_time;
+          record.objective = values.objective;
+          record.key_points = '';
+          record.coach = {};
+          record.school = {};
+          record.teacher = {};
+        }),
+    );
     Navigation.navigate(Routes.classObservation.form);
   };
 
@@ -39,12 +60,33 @@ const ObservationSetup: React.FC<any> = () => {
         <VStack space={4} mt={6}>
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              How many students are in the class?
+              How many students are boys?
             </Text>
 
             <Controller
               control={control}
-              name={'students_quantity'}
+              name={'boys_count'}
+              render={({field, fieldState: {error}}) => (
+                <Input
+                  {...field}
+                  onChangeText={field.onChange}
+                  isInvalid={!!error}
+                  placeholder={'15'}
+                  variant={'outline'}
+                  keyboardType={'number-pad'}
+                />
+              )}
+            />
+          </VStack>
+
+          <VStack space={2}>
+            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+              How many students are girls?
+            </Text>
+
+            <Controller
+              control={control}
+              name={'girls_count'}
               render={({field, fieldState: {error}}) => (
                 <Input
                   {...field}
@@ -105,7 +147,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
-              name={'teacher_objective'}
+              name={'objective'}
               render={({field, fieldState: {error}}) => (
                 <TextArea
                   {...field}

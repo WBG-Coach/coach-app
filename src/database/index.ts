@@ -10,6 +10,11 @@ import Guide from './models/Guide';
 import Competence from './models/Competence';
 import Question from './models/Question';
 import Answer from './models/Answer';
+import {synchronize} from '@nozbe/watermelondb/sync';
+import DeviceInfo from 'react-native-device-info';
+import axios from 'axios';
+// import {setGenerator} from '@nozbe/watermelondb/utils/common/randomId';
+// import {v4 as uuidv4} from 'uuid';
 
 let database: Database;
 
@@ -38,10 +43,13 @@ export const getWatermelon = async () => {
       migrations,
       dbName: `${RNFS.DocumentDirectoryPath}/../${dbName.replace('.db', '')}`,
       jsi: false,
+
       onSetUpError: () => {
         console.log("Error, database can't be initialized.");
       },
     });
+
+    // setGenerator(() => uuidv4());
 
     database = new Database({
       adapter,
@@ -50,4 +58,61 @@ export const getWatermelon = async () => {
   }
 
   return database;
+};
+
+export const syncWatermelon = async () => {
+  const database = await getWatermelon();
+
+  try {
+    let log = {};
+
+    await synchronize({
+      log,
+      database,
+      pullChanges: async ({lastPulledAt}) => {
+        console.log('1 - pullChanges');
+        try {
+          const urlParams = `last_pulled_at=${lastPulledAt}`;
+
+          const {data} = await axios.get(
+            `http://10.0.2.2:3000/sync?${urlParams}`,
+          );
+
+          return data;
+        } catch (err) {
+          console.log({err});
+          throw new Error(JSON.stringify(err));
+        }
+      },
+
+      onDidPullChanges: async (object: Object) => {
+        console.log('2 - onDidPullChanges', {object});
+      },
+
+      pushChanges: async ({changes, lastPulledAt}) => {
+        console.log('3 - pushChanges', {changes, lastPulledAt});
+        try {
+          await axios.post(`http://10.0.2.2:3000/sync`, {
+            changes,
+            lastPulledAt,
+            model: DeviceInfo.getDeviceId(),
+            apiLevel: DeviceInfo.getApiLevel(),
+            deviceId: await DeviceInfo.getUniqueId(),
+          });
+        } catch (err) {
+          console.log({err});
+          throw new Error(JSON.stringify(err));
+        }
+      },
+
+      conflictResolver: () => {
+        console.log('4 - conflictResolver');
+        return {};
+      },
+    });
+
+    console.log('LOGS - ', JSON.stringify(log));
+  } catch (err) {
+    console.log('ERROR OF SYNC - ', {err});
+  }
 };
