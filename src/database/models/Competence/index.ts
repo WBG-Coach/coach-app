@@ -12,13 +12,13 @@ export default class Competence extends Model {
   static table = 'competence';
 
   static associations = {
-    questions: {type: 'has_many', foreignKey: 'competence_id'},
+    question: {type: 'has_many', foreignKey: 'competence_id'},
   } as const;
 
   @lazy
   questions = this.collections
     .get('question')
-    .query(Q.on('questions', 'competence_id', this.id));
+    .query(Q.where('competence_id', this.id));
 
   @text('title') title: any;
   @relation('guide', 'guide_id') guide: any;

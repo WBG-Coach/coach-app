@@ -13,6 +13,7 @@ import Answer from './models/Answer';
 import {synchronize} from '@nozbe/watermelondb/sync';
 import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
+import Feedback from './models/Feedback';
 // import {setGenerator} from '@nozbe/watermelondb/utils/common/randomId';
 // import {v4 as uuidv4} from 'uuid';
 
@@ -53,7 +54,16 @@ export const getWatermelon = async () => {
 
     database = new Database({
       adapter,
-      modelClasses: [School, User, Image, Guide, Competence, Question, Answer],
+      modelClasses: [
+        School,
+        User,
+        Image,
+        Guide,
+        Competence,
+        Question,
+        Answer,
+        Feedback,
+      ],
     });
   }
 

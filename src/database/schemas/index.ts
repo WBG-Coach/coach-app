@@ -116,5 +116,20 @@ export default appSchema({
         {name: 'updated_at', type: 'number'},
       ],
     }),
+    tableSchema({
+      name: 'feedback',
+      columns: [
+        {
+          name: 'value',
+          type: 'string',
+        },
+        {
+          name: 'session_id',
+          type: 'string',
+        },
+        {name: 'created_at', type: 'number'},
+        {name: 'updated_at', type: 'number'},
+      ],
+    }),
   ],
 });

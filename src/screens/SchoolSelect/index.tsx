@@ -8,9 +8,13 @@ import Input from '../../components/base/Input';
 import {getWatermelon} from '../../database';
 import School from '../../database/models/School';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {Q} from '@nozbe/watermelondb';
+import Question from '../../database/models/Question';
+import Competence from '../../database/models/Competence';
 
 const SchoolSelectScreen = () => {
   const [schoolList, setSchoolList] = useState<School[]>();
+  const [Comp, setComp] = useState<any>({});
   const isTablet = Tablet();
 
   useEffect(() => {

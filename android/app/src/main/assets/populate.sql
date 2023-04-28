@@ -6,6 +6,8 @@ drop table competence;
 drop table question;
 drop table answer;
 drop table local_storage;
+drop table feedback;
+
 
 CREATE TABLE local_storage (
     key TEXT,
@@ -130,6 +132,16 @@ CREATE TABLE answer (
     id TEXT,
   	value TEXT,
     question_id TEXT,
+    _changed TEXT,
+    _status TEXT,
+   	created_at INTEGER DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER DEFAULT (strftime('%s', 'now'))
+);
+
+CREATE TABLE feedback (
+    id TEXT,
+  	value TEXT,
+    session_id TEXT NULL,
     _changed TEXT,
     _status TEXT,
    	created_at INTEGER DEFAULT (strftime('%s', 'now')),

@@ -8,7 +8,7 @@ import {
   useTheme,
   Box,
 } from 'native-base';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {SimpleAccordion} from 'react-native-simple-accordion';
@@ -22,11 +22,36 @@ import StarRating from '../../../components/base/StarRating';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import Answer from '../../../database/models/Answer';
+import Competence from '../../../database/models/Competence';
+import {getWatermelon} from '../../../database';
 
 const ObservationForm: React.FC<any> = () => {
+  const [competences, setCompetences] = useState<Competence[]>();
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const isTablet = Tablet();
   const theme = useTheme();
+
+  useEffect(() => {
+    (async () => {
+      const db = await getWatermelon();
+      const competences = await db.collections
+        .get<Competence>('competence')
+        .query()
+        .fetch();
+
+      const updatedCompetences: Competence[] = await Promise.all(
+        competences.map(
+          async competence =>
+            ({
+              ...competence,
+              questions: await competence.questions.fetch(),
+            } as any),
+        ),
+      );
+
+      setCompetences(updatedCompetences);
+    })();
+  }, []);
 
   const questions = MockCompetence.reduce(
     (acc, item) => [...acc, ...item.questions],
