@@ -8,18 +8,19 @@ import {
   VStack,
 } from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
-import React, {useState} from 'react';
-import MockCompetence from '../../ClassObservation/Form/consts';
+import React, {useContext, useState} from 'react';
 import {ICompetence} from '../../../types';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
+import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 
 const FeedbackPreparation: React.FC = () => {
   const [competenciesSelected, setCompetenciesSelected] = useState<
     ICompetence[]
   >([]);
+  const {competences} = useContext(CompetenceContext);
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -62,7 +63,7 @@ const FeedbackPreparation: React.FC = () => {
           </Text>
 
           <VStack mt={7} space={5}>
-            {MockCompetence.map((competence, index) => {
+            {competences.map((competence, index) => {
               //only a example to select tag
               const cTags = [
                 tags.recommended,

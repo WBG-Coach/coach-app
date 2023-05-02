@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {IAnswer, IQuestion} from '../../../types';
-import MockCompetence from '../Form/consts';
+import React, {useContext, useState} from 'react';
+import {IAnswer} from '../../../types';
 import {ICompetence} from '../../../types';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {Button, HStack, ScrollView, Text, useTheme, VStack} from 'native-base';
@@ -10,6 +9,8 @@ import StarView from '../../../components/StarView';
 import Routes from '../../../routes/paths';
 import Answer from '../../../database/models/Answer';
 import {getWatermelon} from '../../../database';
+import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
+import Question from '../../../database/models/Question';
 
 type Props = {
   route: {
@@ -21,11 +22,12 @@ type Props = {
 
 const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const {competences} = useContext(CompetenceContext);
   const isTablet = Tablet();
   const theme = useTheme();
 
   const {answers} = params;
-  const competencyFormatted = MockCompetence.reduce((acc, item) => {
+  const competencyFormatted = competences.reduce((acc, item) => {
     let questionsMax = 0;
 
     const questions = item.questions.map(question => {
@@ -38,7 +40,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
         ...question,
         value,
       };
-    }) as Array<IQuestion & {value: number}>;
+    }) as Array<Question & {value: number}>;
 
     const competence = {
       ...item,
@@ -47,7 +49,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
     };
 
     return [...acc, competence];
-  }, [] as Array<ICompetence & {overall_rating: number; questions: Array<IQuestion & {value: number}>}>);
+  }, [] as Array<ICompetence & {overall_rating: number; questions: Array<Question & {value: number}>}>);
 
   const handlePressContinue = async () => {
     const db = await getWatermelon();
@@ -82,9 +84,9 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
           </Text>
 
           <VStack space={6} mt={6}>
-            {competencyFormatted.map(competency => (
+            {competencyFormatted.map((competency, i) => (
               <VStack
-                key={competency.id}
+                key={i}
                 borderRadius={'16px'}
                 borderWidth={'1px'}
                 borderColor={'gray.200'}>

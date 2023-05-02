@@ -37,7 +37,11 @@ const SessionTab = () => {
           variant={'outline'}
           borderRadius={'8px'}
           borderColor={theme.colors.primary['200']}
-          onPress={() => Navigation.navigate(Routes.classObservation.create)}>
+          onPress={() =>
+            Navigation.navigate('WithCompetenceContext', {
+              screen: Routes.classObservation.onboarding,
+            })
+          }>
           <HStack alignItems={'center'}>
             <Icon name={'plus'} color={theme.colors.primary['200']} />
             <Text

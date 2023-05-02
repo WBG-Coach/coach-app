@@ -1,66 +1,37 @@
-import {
-  Button,
-  Center,
-  HStack,
-  Text,
-  TextArea,
-  VStack,
-  useTheme,
-  Box,
-} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import {Button, HStack, Text, TextArea, VStack, useTheme} from 'native-base';
+import React, {useContext, useMemo} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {SimpleAccordion} from 'react-native-simple-accordion';
+import {ScrollView} from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
-import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
 import {IQuestion} from '../../../types';
-import BottomSheetTooltip from './BottomSheetTooltip';
-import MockCompetence from './consts';
 import {isTablet as Tablet} from 'react-native-device-info';
-import StarRating from '../../../components/base/StarRating';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import Answer from '../../../database/models/Answer';
-import Competence from '../../../database/models/Competence';
-import {getWatermelon} from '../../../database';
+import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
+import CompetenceAccordion from './CompetenceAccordion';
 
 const ObservationForm: React.FC<any> = () => {
-  const [competences, setCompetences] = useState<Competence[]>();
-  const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
+  const {competences} = useContext(CompetenceContext);
   const isTablet = Tablet();
   const theme = useTheme();
 
-  useEffect(() => {
-    (async () => {
-      const db = await getWatermelon();
-      const competences = await db.collections
-        .get<Competence>('competence')
-        .query()
-        .fetch();
-
-      const updatedCompetences: Competence[] = await Promise.all(
-        competences.map(
-          async competence =>
-            ({
-              ...competence,
-              questions: await competence.questions.fetch(),
-            } as any),
-        ),
-      );
-
-      setCompetences(updatedCompetences);
-    })();
-  }, []);
-
-  const questions = MockCompetence.reduce(
-    (acc, item) => [...acc, ...item.questions],
-    [] as IQuestion[],
+  const questions = useMemo(
+    () =>
+      competences.reduce(
+        (acc, item) => [...acc, ...(item.questions as any)],
+        [] as IQuestion[],
+      ),
+    [competences],
   );
 
-  const defaultValues = questions.reduce(
-    (acc, item) => ({...acc, [item.id]: undefined}),
-    {} as {[key: string]: undefined | string},
+  const defaultValues = useMemo(
+    () =>
+      questions.reduce(
+        (acc, item) => ({...acc, [item.id]: undefined}),
+        {} as {[key: string]: undefined | string},
+      ),
+    [questions],
   );
 
   const {control, handleSubmit, watch} = useForm({
@@ -71,13 +42,16 @@ const ObservationForm: React.FC<any> = () => {
 
   const formValues = watch();
 
-  const competenciesFinished = MockCompetence.reduce((acc, item) => {
-    if (!item.questions.find(({id}) => !formValues[id])) {
-      return [...acc, ...item.id];
-    }
-
-    return acc;
-  }, [] as string[]);
+  const competenciesFinished = useMemo(
+    () =>
+      competences.reduce((acc, item) => {
+        if (!item.questions.find(({id}) => !formValues[id])) {
+          return [...acc, ...item.id];
+        }
+        return acc;
+      }, [] as string[]),
+    [competences, formValues],
+  );
 
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
@@ -94,6 +68,23 @@ const ObservationForm: React.FC<any> = () => {
     Navigation.navigate(Routes.classObservation.formConfirmaton, {answers});
   };
 
+  const CompetenceComponent = useMemo(
+    () => (
+      <>
+        {competences.map((competence, index) => (
+          <CompetenceAccordion
+            key={competence.id}
+            control={control}
+            competence={competence}
+            isFinished={competenciesFinished.includes(competence.id)}
+            startCollapsed={index !== 0}
+          />
+        ))}
+      </>
+    ),
+    [],
+  );
+
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
       <VStack flex={1} px={isTablet ? '64px' : 4}>
@@ -105,106 +96,7 @@ const ObservationForm: React.FC<any> = () => {
             Rate each topic with your observation
           </Text>
 
-          <VStack>
-            {MockCompetence.map((competence, index) => (
-              <Box key={competence.id} position={'relative'}>
-                {competenciesFinished.includes(competence.id) && (
-                  <Center
-                    position={'absolute'}
-                    zIndex={10}
-                    top={5}
-                    right={10}
-                    background={'green.200'}
-                    w={'20px'}
-                    h={'20px'}
-                    borderRadius={'10px'}>
-                    <Icon name={'check'} color={theme.colors.white} size={16} />
-                  </Center>
-                )}
-
-                <SimpleAccordion
-                  title={competence.title}
-                  startCollapsed={index !== 0}
-                  bannerStyle={{
-                    backgroundColor: 'white',
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                  }}
-                  viewContainerStyle={{
-                    shadowColor: 'white',
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                  }}
-                  viewInside={
-                    <VStack space={4}>
-                      {questions
-                        .filter(
-                          question => question.competence_id === competence.id,
-                        )
-                        .map(question => (
-                          <Controller
-                            key={question.id}
-                            name={question.id}
-                            rules={{required: true}}
-                            control={control}
-                            render={({
-                              field: {value, onChange},
-                              fieldState: {error},
-                            }) => (
-                              <VStack>
-                                <HStack mb={1}>
-                                  <VStack flex={1}>
-                                    <Text
-                                      fontSize={'LMD'}
-                                      fontWeight={500}
-                                      color={'gray.700'}>
-                                      {question.title}
-                                    </Text>
-
-                                    {question.description && (
-                                      <Text
-                                        mt={'1'}
-                                        fontSize={'TXS'}
-                                        fontWeight={400}
-                                        color={'gray.600'}>
-                                        {question.description}
-                                      </Text>
-                                    )}
-                                  </VStack>
-
-                                  <TouchableOpacity
-                                    onPress={() =>
-                                      setBottomSheetContent(
-                                        <BottomSheetTooltip
-                                          content={question.tooltip_data}
-                                        />,
-                                      )
-                                    }>
-                                    <Center
-                                      background={'primary.200'}
-                                      borderRadius={'10px'}
-                                      width={'20px'}
-                                      height={'20px'}>
-                                      <Icon color="white" name="question" />
-                                    </Center>
-                                  </TouchableOpacity>
-                                </HStack>
-
-                                <StarRating
-                                  value={parseInt(value || '0')}
-                                  onPress={onChange}
-                                  isInvalid={!!error}
-                                />
-                              </VStack>
-                            )}
-                          />
-                        ))}
-                    </VStack>
-                  }
-                />
-              </Box>
-            ))}
-          </VStack>
+          <VStack>{CompetenceComponent}</VStack>
 
           <VStack py={4}>
             <Text fontSize={'TXL'} fontWeight={700} color={'gray.700'}>
@@ -247,8 +139,8 @@ const ObservationForm: React.FC<any> = () => {
           space={1}>
           <Icon name="star" color={theme.colors.gray['600']} size={20} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            {competenciesFinished.length} of {MockCompetence.length}{' '}
-            competencies rated
+            {competenciesFinished.length} of {competences.length} competencies
+            rated
           </Text>
         </HStack>
         <VStack

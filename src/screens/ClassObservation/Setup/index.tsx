@@ -23,7 +23,7 @@ const ObservationSetup: React.FC<any> = () => {
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
-    const db = await getWatermelon();
+    /*     const db = await getWatermelon();
     await db.write(
       async () =>
         await db.collections.get<Session>('session').create(record => {
@@ -38,7 +38,7 @@ const ObservationSetup: React.FC<any> = () => {
           record.school = {};
           record.teacher = {};
         }),
-    );
+    ); */
     Navigation.navigate(Routes.classObservation.form);
   };
 
