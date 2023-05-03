@@ -6,7 +6,8 @@ import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {getWatermelon} from '../../../database';
 import Session from '../../../database/models/Session';
-// import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+import {RecordId} from '@nozbe/watermelondb';
 
 const defaultValues = {
   boys_count: '',
@@ -23,22 +24,19 @@ const ObservationSetup: React.FC<any> = () => {
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
-    /*     const db = await getWatermelon();
+    const db = await getWatermelon();
     await db.write(
       async () =>
         await db.collections.get<Session>('session').create(record => {
-          record.status = '';
+          record.session_status = '';
           record.boys_count = values.boys_count;
           record.girls_count = values.girls_count;
           record.subject = values.subject;
           record.lesson_time = values.lesson_time;
           record.objective = values.objective;
           record.key_points = '';
-          record.coach = {};
-          record.school = {};
-          record.teacher = {};
         }),
-    ); */
+    );
     Navigation.navigate(Routes.classObservation.form);
   };
 

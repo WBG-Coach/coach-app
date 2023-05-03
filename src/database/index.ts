@@ -14,8 +14,10 @@ import {synchronize} from '@nozbe/watermelondb/sync';
 import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 import Feedback from './models/Feedback';
-// import {setGenerator} from '@nozbe/watermelondb/utils/common/randomId';
-// import {v4 as uuidv4} from 'uuid';
+import {setGenerator} from '@nozbe/watermelondb/utils/common/randomId';
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
+import Session from './models/Session';
 
 let database: Database;
 
@@ -50,7 +52,7 @@ export const getWatermelon = async () => {
       },
     });
 
-    // setGenerator(() => uuidv4());
+    setGenerator(() => uuidv4());
 
     database = new Database({
       adapter,
@@ -63,6 +65,7 @@ export const getWatermelon = async () => {
         Question,
         Answer,
         Feedback,
+        Session,
       ],
     });
   }
@@ -104,9 +107,9 @@ export const syncWatermelon = async () => {
         try {
           await axios.post(`http://10.0.2.2:3000/sync`, {
             changes,
-            lastPulledAt,
+            lastPulledAt: new Date(lastPulledAt).toJSON(),
             model: DeviceInfo.getDeviceId(),
-            apiLevel: DeviceInfo.getApiLevel(),
+            apiLevel: await DeviceInfo.getApiLevel(),
             deviceId: await DeviceInfo.getUniqueId(),
           });
         } catch (err) {

@@ -131,5 +131,22 @@ export default appSchema({
         {name: 'updated_at', type: 'number'},
       ],
     }),
+    tableSchema({
+      name: 'session',
+      columns: [
+        {name: 'session_status', type: 'string'},
+        {name: 'boys_count', type: 'string'},
+        {name: 'girls_count', type: 'string'},
+        {name: 'subject', type: 'string'},
+        {name: 'lesson_time', type: 'string'},
+        {name: 'objective', type: 'string'},
+        {name: 'key_points', type: 'string'},
+        {name: 'coach_id', type: 'string'},
+        {name: 'school_id', type: 'string'},
+        {name: 'teacher_id', type: 'string'},
+        {name: 'created_at', type: 'number'},
+        {name: 'updated_at', type: 'number'},
+      ],
+    }),
   ],
 });

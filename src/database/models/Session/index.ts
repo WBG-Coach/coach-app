@@ -4,7 +4,7 @@ import {relation, text} from '@nozbe/watermelondb/decorators';
 export default class Session extends Model {
   static table = 'session';
 
-  @text('status') status?: string;
+  @text('session_status') session_status?: string;
   @text('boys_count') boys_count?: string;
   @text('girls_count') girls_count?: string;
   @text('subject') subject?: string;

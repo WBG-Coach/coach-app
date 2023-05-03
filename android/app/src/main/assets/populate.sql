@@ -7,7 +7,27 @@ drop table question;
 drop table answer;
 drop table local_storage;
 drop table feedback;
+drop table session;
 
+CREATE TABLE session (
+    id TEXT not null,
+    _changed TEXT,
+    _status TEXT,
+    session_status TEXT null,
+    boys_count TEXT null,
+    girls_count TEXT null,
+    subject TEXT null,
+    lesson_time TEXT null,
+    objective TEXT null,
+    key_points TEXT null,
+    coach_id TEXT null,
+    school_id TEXT null,
+    teacher_id TEXT null,
+   	created_at INTEGER DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+    primary key (`id`)
+);
+  
 
 CREATE TABLE local_storage (
     key TEXT,
@@ -147,3 +167,12 @@ CREATE TABLE feedback (
    	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER DEFAULT (strftime('%s', 'now'))
 );
+
+
+
+
+
+
+
+
+
