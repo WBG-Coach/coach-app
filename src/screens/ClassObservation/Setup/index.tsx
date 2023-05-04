@@ -24,20 +24,7 @@ const ObservationSetup: React.FC<any> = () => {
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
-    const db = await getWatermelon();
-    await db.write(
-      async () =>
-        await db.collections.get<Session>('session').create(record => {
-          record.session_status = '';
-          record.boys_count = values.boys_count;
-          record.girls_count = values.girls_count;
-          record.subject = values.subject;
-          record.lesson_time = values.lesson_time;
-          record.objective = values.objective;
-          record.key_points = '';
-        }),
-    );
-    Navigation.navigate(Routes.classObservation.form);
+    Navigation.navigate(Routes.classObservation.form, {session: values});
   };
 
   return (

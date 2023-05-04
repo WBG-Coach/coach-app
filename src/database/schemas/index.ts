@@ -106,10 +106,14 @@ export default appSchema({
       columns: [
         {
           name: 'value',
-          type: 'string',
+          type: 'number',
         },
         {
           name: 'question_id',
+          type: 'string',
+        },
+        {
+          name: 'session_id',
           type: 'string',
         },
         {name: 'created_at', type: 'number'},

@@ -150,8 +150,9 @@ VALUES ('13', 'The teacher provides critical thinking tasks', NULL, '{"title":"T
 
 CREATE TABLE answer (
     id TEXT,
-  	value TEXT,
+  	value INTEGER,
     question_id TEXT,
+    session_id TEXT,
     _changed TEXT,
     _status TEXT,
    	created_at INTEGER DEFAULT (strftime('%s', 'now')),
@@ -167,12 +168,3 @@ CREATE TABLE feedback (
    	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER DEFAULT (strftime('%s', 'now'))
 );
-
-
-
-
-
-
-
-
-

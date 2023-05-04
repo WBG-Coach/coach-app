@@ -1,8 +1,17 @@
-import {Model} from '@nozbe/watermelondb';
-import {relation, text} from '@nozbe/watermelondb/decorators';
+import {Model, Q} from '@nozbe/watermelondb';
+import {lazy, relation, text} from '@nozbe/watermelondb/decorators';
 
 export default class Session extends Model {
   static table = 'session';
+
+  static associations = {
+    answers: {type: 'has_many', foreignKey: 'competence_id'},
+  } as const;
+
+  @lazy
+  answers = this.collections
+    .get('answer')
+    .query(Q.where('session_id', this.id));
 
   @text('session_status') session_status?: string;
   @text('boys_count') boys_count?: string;
@@ -11,6 +20,9 @@ export default class Session extends Model {
   @text('lesson_time') lesson_time?: string;
   @text('objective') objective?: string;
   @text('key_points') key_points?: string;
+  @text('school_id') school_id: any;
+  @text('coach_id') coach_id: any;
+  @text('teacher_id') teacher_id: any;
   @relation('coach', 'coach_id') coach?: any;
   @relation('school', 'school_id') school?: any;
   @relation('teacher', 'teacher_id') teacher?: any;

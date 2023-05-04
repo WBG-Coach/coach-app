@@ -10,8 +10,17 @@ import Routes from '../../../routes/paths';
 import Answer from '../../../database/models/Answer';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import CompetenceAccordion from './CompetenceAccordion';
+import Session from '../../../database/models/Session';
 
-const ObservationForm: React.FC<any> = () => {
+type Props = {
+  route: {
+    params: {
+      session: Session;
+    };
+  };
+};
+
+const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
   const {competences} = useContext(CompetenceContext);
   const isTablet = Tablet();
   const theme = useTheme();
@@ -65,7 +74,10 @@ const ObservationForm: React.FC<any> = () => {
       }),
     );
 
-    Navigation.navigate(Routes.classObservation.formConfirmaton, {answers});
+    Navigation.navigate(Routes.classObservation.formConfirmaton, {
+      answers,
+      session: params.session,
+    });
   };
 
   const CompetenceComponent = useMemo(

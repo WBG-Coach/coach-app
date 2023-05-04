@@ -11,11 +11,14 @@ import Answer from '../../../database/models/Answer';
 import {getWatermelon} from '../../../database';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import Question from '../../../database/models/Question';
+import Session from '../../../database/models/Session';
+import {UserContext} from '../../../providers/contexts/UserContext';
 
 type Props = {
   route: {
     params: {
       answers: IAnswer[];
+      session: Session;
     };
   };
 };
@@ -23,6 +26,7 @@ type Props = {
 const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const {competences} = useContext(CompetenceContext);
+  const {user} = useContext(UserContext);
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -53,8 +57,23 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
 
   const handlePressContinue = async () => {
     const db = await getWatermelon();
-    const {answers} = params;
     setIsLoading(true);
+    const {session, answers} = params;
+
+    const {_raw} = await db.write(
+      async () =>
+        await db.collections.get<Session>('session').create(record => {
+          record.session_status = '';
+          record.boys_count = session.boys_count;
+          record.girls_count = session.girls_count;
+          record.subject = session.subject;
+          record.lesson_time = session.lesson_time;
+          record.objective = session.objective;
+          record.school_id = user?.school?.id;
+          record.coach_id = user?.id;
+          record.key_points = '';
+        }),
+    );
 
     await Promise.all(
       answers?.map(
@@ -64,6 +83,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
               await db.collections.get<Answer>('answer').create(record => {
                 record.value = answer.value;
                 record.question_id = answer.question_id;
+                record.session_id = _raw.id;
               }),
           ),
       ),
