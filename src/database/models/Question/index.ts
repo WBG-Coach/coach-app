@@ -4,7 +4,6 @@ import {
   date,
   immutableRelation,
   readonly,
-  relation,
   text,
 } from '@nozbe/watermelondb/decorators';
 

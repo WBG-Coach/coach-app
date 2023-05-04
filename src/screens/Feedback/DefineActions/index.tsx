@@ -28,8 +28,6 @@ type Props = {
   };
 };
 
-type ImageCustom = Partial<Image> & {loaded: boolean};
-
 const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
   const [images, setImages] = useState<Image[]>([]);
   const {competencies} = params;
@@ -46,8 +44,6 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
-    console.log(values);
-
     Navigation.navigate(Routes.feedback.feedbackCompleted);
   };
 

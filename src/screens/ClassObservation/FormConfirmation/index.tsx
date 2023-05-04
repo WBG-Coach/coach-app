@@ -13,6 +13,7 @@ import {CompetenceContext} from '../../../providers/contexts/CompetencesContext'
 import Question from '../../../database/models/Question';
 import Session from '../../../database/models/Session';
 import {UserContext} from '../../../providers/contexts/UserContext';
+import {getTags} from '../../../components/StarsTag/common';
 
 type Props = {
   route: {
@@ -29,6 +30,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const {user} = useContext(UserContext);
   const isTablet = Tablet();
   const theme = useTheme();
+  const tags = getTags(theme);
 
   const {session, answers} = params;
   const competencyFormatted = competences.reduce((acc, item) => {
@@ -57,7 +59,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
 
   const handlePressContinue = async () => {
     const db = await getWatermelon();
-    /*     setIsLoading(true); */
+    setIsLoading(true);
 
     const {_raw} = await db.write(
       async () =>
@@ -88,7 +90,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
       ),
     );
 
-    /*     Navigation.navigate(Routes.classObservation.observationCompleted); */
+    Navigation.navigate(Routes.classObservation.observationCompleted);
   };
 
   return (
@@ -130,7 +132,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
                       flex={1}
                       fontWeight={400}
                       color={'gray.600'}>
-                      Doing great
+                      {tags[competency.overall_rating]?.label}
                     </Text>
                   </VStack>
                 </HStack>
