@@ -30,7 +30,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
   const theme = useTheme();
 
-  const {answers} = params;
+  const {session, answers} = params;
   const competencyFormatted = competences.reduce((acc, item) => {
     let questionsMax = 0;
 
@@ -57,8 +57,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
 
   const handlePressContinue = async () => {
     const db = await getWatermelon();
-    setIsLoading(true);
-    const {session, answers} = params;
+    /*     setIsLoading(true); */
 
     const {_raw} = await db.write(
       async () =>
@@ -71,7 +70,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
           record.objective = session.objective;
           record.school_id = user?.school?.id;
           record.coach_id = user?.id;
-          record.key_points = '';
+          record.key_points = session.key_points;
         }),
     );
 
@@ -89,7 +88,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
       ),
     );
 
-    Navigation.navigate(Routes.classObservation.observationCompleted);
+    /*     Navigation.navigate(Routes.classObservation.observationCompleted); */
   };
 
   return (

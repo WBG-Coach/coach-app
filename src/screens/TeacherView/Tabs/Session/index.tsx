@@ -46,7 +46,7 @@ const SessionTab = () => {
               ...session._raw,
               overall_rating: (
                 await session.answers.fetch()
-              ).reduce((acc, item: any) => acc + parseInt(item._raw.value), 0),
+              )?.reduce((acc, item: any) => acc + item._raw.value, 0),
             } as any),
         ),
       );

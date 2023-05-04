@@ -44,7 +44,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
   );
 
   const {control, handleSubmit, watch} = useForm({
-    defaultValues: {...defaultValues, points: ''} as {
+    defaultValues: {...defaultValues, key_points: ''} as {
       [key: string]: undefined | string;
     },
   });
@@ -65,18 +65,32 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
-    const answers: Partial<Answer>[] = Object.keys(values).map(
-      (key, index) => ({
-        id: index.toString(),
-        question_id: key,
-        value: values[key]?.toString() || '',
-        session_id: 'example of same id =)',
-      }),
+    const formData = Object.keys(values).reduce(
+      (acc, item) => {
+        if (item === 'key_points') {
+          return {...acc, session: {[item]: values[item] as string}};
+        } else {
+          return {
+            ...acc,
+            answers: [
+              ...acc.answers,
+              {
+                question_id: item,
+                value: values[item],
+              },
+            ],
+          };
+        }
+      },
+      {answers: [], session: {}} as {
+        answers: Partial<Answer>[];
+        session: {[x: string]: string};
+      },
     );
 
     Navigation.navigate(Routes.classObservation.formConfirmaton, {
-      answers,
-      session: params.session,
+      answers: formData.answers,
+      session: {...params.session, ...formData.session},
     });
   };
 
@@ -118,7 +132,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
               What you want to discuss with the teacher?
             </Text>
             <Controller
-              name={'points'}
+              name={'key_points'}
               rules={{required: true}}
               control={control}
               render={({field: {value, onChange}, fieldState: {error}}) => (
