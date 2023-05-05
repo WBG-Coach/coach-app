@@ -2,26 +2,35 @@ import {
   Center,
   FlatList,
   HStack,
-  Image,
+  Image as CImage,
+  Spinner,
   Text,
   useTheme,
   View,
   VStack,
 } from 'native-base';
-import React, {useContext} from 'react';
+import React, {useContext, useCallback, useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
-import {UserContext} from '../../providers/contexts/UserContext';
-import {ISession, ITeacher} from '../../types';
+import {
+  TeachersWithSession,
+  UserContext,
+} from '../../providers/contexts/UserContext';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {syncWatermelon} from '../../database';
+import {getWatermelon, syncWatermelon} from '../../database';
+import Teacher from '../../database/models/Teacher';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HomeScreen = () => {
-  const {user} = useContext(UserContext);
+  const {user, setTeacher} = useContext(UserContext);
   const theme = useTheme();
   const isTablet = Tablet();
+  const [teachers, setTeachers] = useState({
+    isLoading: true,
+    data: [] as [] | TeachersWithSession[],
+  });
 
   const data = [
     {
@@ -48,44 +57,32 @@ const HomeScreen = () => {
     },
   ];
 
-  const teachers: Array<ITeacher & {sessions: Partial<ISession>[]}> = [
-    {
-      id: '0',
-      name: 'Jane Cooper',
-      subject: 'Math',
-      image_url: 'https://i.ibb.co/64f9VR1/Image-17.png',
-      sessions: [
-        {
-          id: '0',
-        },
-      ],
-    },
-    {
-      id: '1',
-      name: 'Wade Warren',
-      subject: 'Math',
-      image_url: 'https://i.ibb.co/64f9VR1/Image-17.png',
-      sessions: [
-        {
-          id: '0',
-        },
-        {
-          id: '0',
-        },
-      ],
-    },
-    {
-      id: '2',
-      name: 'Esther Howard',
-      subject: 'History',
-      image_url: 'https://i.ibb.co/1GsTbDq/Image-18.png',
-      sessions: [
-        {
-          id: '0',
-        },
-      ],
-    },
-  ];
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const db = await getWatermelon();
+        const allTeachers = await db.collections
+          .get<Teacher>('teacher')
+          .query()
+          .fetch();
+
+        const teachersUpdated: TeachersWithSession[] = await Promise.all(
+          allTeachers.map(
+            async teacher =>
+              ({
+                ...teacher._raw,
+                sessions: await teacher.sessions.fetch(),
+                image: (await teacher.image.fetch())._raw,
+              } as any),
+          ),
+        );
+
+        console.log(teachersUpdated[0]);
+
+        setTeachers({isLoading: false, data: teachersUpdated});
+      })();
+    }, []),
+  );
 
   return (
     <VStack
@@ -94,7 +91,7 @@ const HomeScreen = () => {
       px={isTablet ? '64px' : 4}
       flex={1}>
       <HStack space={2} alignItems={'center'}>
-        <Image
+        <CImage
           src={user?.school?.image_url}
           alt={'School image'}
           w={isTablet ? '64px' : '56px'}
@@ -150,109 +147,130 @@ const HomeScreen = () => {
         />
       </HStack>
 
-      <VStack>
-        <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-          Teachers
-        </Text>
+      <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
+        Teachers
+      </Text>
 
-        <FlatList
-          keyExtractor={({id}) => id}
-          data={teachers}
-          mb={5}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() =>
-                Navigation.navigate(Routes.teacher, {teacher: item})
-              }>
-              <HStack
-                py={3}
-                px={4}
-                w={'100%'}
-                alignItems={'center'}
-                borderBottomWidth={'1px'}
-                borderBottomColor={'gray.300'}>
-                <HStack flex={1} space={2} alignItems={'center'}>
-                  <Image
-                    src={item.image_url}
-                    alt={'Teacher image'}
-                    w={isTablet ? '56px' : '40px'}
-                    h={isTablet ? '56px' : '40px'}
-                    borderRadius={'500px'}
-                  />
+      {teachers.isLoading ? (
+        <Center flex={1} bg={'white'}>
+          <Spinner size={'lg'} />
+        </Center>
+      ) : (
+        <>
+          {teachers.data.length < 1 ? (
+            <></>
+          ) : (
+            <VStack>
+              <FlatList
+                keyExtractor={({id}) => id}
+                data={teachers.data}
+                mb={5}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setTeacher(item as any);
+                      Navigation.navigate(Routes.teacher);
+                    }}>
+                    <HStack
+                      py={3}
+                      px={4}
+                      w={'100%'}
+                      alignItems={'center'}
+                      borderBottomWidth={'1px'}
+                      borderBottomColor={'gray.300'}>
+                      <HStack flex={1} space={2} alignItems={'center'}>
+                        <CImage
+                          src={item.image.value}
+                          alt={'Teacher image'}
+                          w={isTablet ? '56px' : '40px'}
+                          h={isTablet ? '56px' : '40px'}
+                          borderRadius={'500px'}
+                        />
 
-                  <VStack space={1}>
-                    <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
-                      {item.name}
-                    </Text>
-                    <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-                      {item.subject}
-                    </Text>
+                        <VStack space={1}>
+                          <Text
+                            fontSize={'LLG'}
+                            fontWeight={500}
+                            color={'gray.800'}>
+                            {item.name}
+                          </Text>
+                          <Text
+                            fontSize={'TSM'}
+                            fontWeight={500}
+                            color={'gray.700'}>
+                            Math
+                          </Text>
 
-                    <HStack space={1}>
-                      <HStack
-                        alignItems={'center'}
-                        borderRadius={'4px'}
-                        background={'green.100'}
-                        px={2}
-                        py={1}
-                        space={1}>
-                        <Icon name={'thumbs-up'} size={15} />
-                        <Text
-                          fontSize={'TSM'}
-                          fontWeight={500}
-                          color={'gray.700'}>
-                          1
-                        </Text>
+                          <HStack space={1}>
+                            <HStack
+                              alignItems={'center'}
+                              borderRadius={'4px'}
+                              background={'green.100'}
+                              px={2}
+                              py={1}
+                              space={1}>
+                              <Icon name={'thumbs-up'} size={15} />
+                              <Text
+                                fontSize={'TSM'}
+                                fontWeight={500}
+                                color={'gray.700'}>
+                                1
+                              </Text>
+                            </HStack>
+
+                            <HStack
+                              alignItems={'center'}
+                              borderRadius={'4px'}
+                              background={'red.100'}
+                              px={2}
+                              py={1}
+                              space={1}>
+                              <Icon name={'thumbs-up'} size={15} />
+                              <Text
+                                fontSize={'TSM'}
+                                fontWeight={500}
+                                color={'gray.700'}>
+                                1
+                              </Text>
+                            </HStack>
+
+                            <HStack
+                              alignItems={'center'}
+                              borderRadius={'4px'}
+                              background={'primary.100'}
+                              px={2}
+                              py={1}
+                              space={1}>
+                              <Icon name={'clipboard-notes'} size={15} />
+                              <Text
+                                fontSize={'TSM'}
+                                fontWeight={500}
+                                color={'gray.700'}>
+                                {item.sessions.length}{' '}
+                                {item.sessions.length > 1
+                                  ? 'Sessions'
+                                  : 'Session'}
+                              </Text>
+                            </HStack>
+                          </HStack>
+                        </VStack>
                       </HStack>
-
-                      <HStack
-                        alignItems={'center'}
-                        borderRadius={'4px'}
-                        background={'red.100'}
-                        px={2}
-                        py={1}
-                        space={1}>
-                        <Icon name={'thumbs-up'} size={15} />
-                        <Text
-                          fontSize={'TSM'}
-                          fontWeight={500}
-                          color={'gray.700'}>
-                          1
-                        </Text>
-                      </HStack>
-
-                      <HStack
-                        alignItems={'center'}
-                        borderRadius={'4px'}
-                        background={'primary.100'}
-                        px={2}
-                        py={1}
-                        space={1}>
-                        <Icon name={'clipboard-notes'} size={15} />
-                        <Text
-                          fontSize={'TSM'}
-                          fontWeight={500}
-                          color={'gray.700'}>
-                          {item.sessions.length}{' '}
-                          {item.sessions.length > 1 ? 'Sessions' : 'Session'}
-                        </Text>
-                      </HStack>
+                      <Icon name={'angle-right'} />
                     </HStack>
-                  </VStack>
-                </HStack>
-                <Icon name={'angle-right'} />
-              </HStack>
-            </TouchableOpacity>
-          )}
-        />
+                  </TouchableOpacity>
+                )}
+              />
 
-        <TouchableOpacity>
-          <HStack alignSelf={'center'} space={3} alignItems={'center'}>
-            <Icon name={'plus'} color={theme.colors.primary[200]} />
-            <Text color={'primary.200'}>Add new teacher</Text>
-          </HStack>
-        </TouchableOpacity>
-      </VStack>
+              <TouchableOpacity>
+                <HStack alignSelf={'center'} space={3} alignItems={'center'}>
+                  <Icon name={'plus'} color={theme.colors.primary[200]} />
+                  <Text color={'primary.200'}>Add new teacher</Text>
+                </HStack>
+              </TouchableOpacity>
+            </VStack>
+          )}
+        </>
+      )}
     </VStack>
   );
 };

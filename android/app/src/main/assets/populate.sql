@@ -8,6 +8,7 @@ drop table answer;
 drop table local_storage;
 drop table feedback;
 drop table session;
+drop table teacher;
 
 CREATE TABLE session (
     id TEXT not null,
@@ -78,6 +79,11 @@ CREATE TABLE image (
    	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER DEFAULT (strftime('%s', 'now'))
 );
+
+INSERT INTO image (id, name, value, _changed, _status)
+VALUES 
+    ('1', 'Fred Williamson Image', 'https://i.ibb.co/hHw0K9B/download-3.jpg', '', 'created');
+
     
 CREATE TABLE guide (
     id TEXT,
@@ -168,3 +174,18 @@ CREATE TABLE feedback (
    	created_at INTEGER DEFAULT (strftime('%s', 'now')),
     updated_at INTEGER DEFAULT (strftime('%s', 'now'))
 );
+
+CREATE TABLE teacher (
+    id TEXT,
+  	name TEXT,
+    coach_id TEXT,
+    image_id TEXT,
+    _changed TEXT,
+    _status TEXT,
+   	created_at INTEGER DEFAULT (strftime('%s', 'now')),
+    updated_at INTEGER DEFAULT (strftime('%s', 'now'))
+);
+
+INSERT INTO teacher (id, name, image_id, _changed, _status)
+VALUES 
+    ('1', 'Fred Williamson', '1', '', 'created');

@@ -1,5 +1,5 @@
 import {Button, HStack, Text, TextArea, VStack, useTheme} from 'native-base';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
@@ -108,7 +108,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
         ))}
       </>
     ),
-    [],
+    [competenciesFinished],
   );
 
   return (

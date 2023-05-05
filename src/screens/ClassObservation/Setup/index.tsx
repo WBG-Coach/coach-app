@@ -1,13 +1,20 @@
-import {Button, Input, ScrollView, Text, TextArea, VStack} from 'native-base';
-import React from 'react';
+import {
+  Button,
+  Input,
+  ScrollView,
+  Text,
+  TextArea,
+  VStack,
+  Select,
+  Box,
+} from 'native-base';
+import React, {useContext} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import Routes from '../../../routes/paths';
 import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {getWatermelon} from '../../../database';
-import Session from '../../../database/models/Session';
-import {v4 as uuidv4} from 'uuid';
-import {RecordId} from '@nozbe/watermelondb';
+import {UserContext} from '../../../providers/contexts/UserContext';
+import {Picker} from '@react-native-picker/picker';
 
 const defaultValues = {
   boys_count: '',
@@ -19,12 +26,15 @@ const defaultValues = {
 
 const ObservationSetup: React.FC<any> = () => {
   const {control, handleSubmit} = useForm({defaultValues});
+  const {teacher} = useContext(UserContext);
   const isTablet = Tablet();
 
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
-    Navigation.navigate(Routes.classObservation.form, {session: values});
+    Navigation.navigate(Routes.classObservation.form, {
+      session: {...values, teacher_id: teacher?.id},
+    });
   };
 
   return (
@@ -114,13 +124,22 @@ const ObservationSetup: React.FC<any> = () => {
               control={control}
               name={'lesson_time'}
               render={({field, fieldState: {error}}) => (
-                <Input
-                  {...field}
-                  onChangeText={field.onChange}
-                  isInvalid={!!error}
-                  variant={'outline'}
-                  placeholder={'30 min'}
-                />
+                <Box
+                  borderColor={!!error ? 'red' : 'gray.300'}
+                  borderWidth={'1px'}
+                  borderRadius={'12px'}>
+                  <Picker
+                    selectedValue={field.value}
+                    placeholder={'30 min'}
+                    onValueChange={itemValue => field.onChange(itemValue)}>
+                    <Picker.Item label="10 Min" value="10" />
+                    <Picker.Item label="20 Minuts" value="20" />
+                    <Picker.Item label="30 Minuts" value="30" />
+                    <Picker.Item label="40 Minuts" value="40" />
+                    <Picker.Item label="50 Minuts" value="50" />
+                    <Picker.Item label="60 Minuts" value="60" />
+                  </Picker>
+                </Box>
               )}
             />
           </VStack>

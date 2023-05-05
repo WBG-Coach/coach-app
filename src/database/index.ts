@@ -18,6 +18,7 @@ import {setGenerator} from '@nozbe/watermelondb/utils/common/randomId';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import Session from './models/Session';
+import Teacher from './models/Teacher';
 
 let database: Database;
 
@@ -66,6 +67,7 @@ export const getWatermelon = async () => {
         Answer,
         Feedback,
         Session,
+        Teacher,
       ],
     });
   }

@@ -3,33 +3,24 @@ import React, {useContext, useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import {UserContext} from '../../providers/contexts/UserContext';
-import {ITeacher} from '../../types';
 import SessionTab from './Tabs/Session';
 import {isTablet as Tablet} from 'react-native-device-info';
 
-type Props = {
-  route: {
-    params: {
-      teacher: ITeacher;
-    };
-  };
-};
+const TeacherView: React.FC<any> = () => {
+  const {teacher} = useContext(UserContext);
+  const tabs = [
+    {
+      Component: <SessionTab />,
+      label: 'Sessions',
+    },
+    {
+      Component: <></>,
+      label: "Teacher's stats",
+    },
+  ];
 
-const tabs = [
-  {
-    Component: <SessionTab />,
-    label: 'Sessions',
-  },
-  {
-    Component: <></>,
-    label: "Teacher's stats",
-  },
-];
-
-const TeacherView: React.FC<any> = ({route}: Props) => {
   const [tabSelected, setTabSelected] = useState(tabs[0]);
   const {user} = useContext(UserContext);
-  const {teacher} = route.params;
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -37,7 +28,7 @@ const TeacherView: React.FC<any> = ({route}: Props) => {
     <VStack flex={1} mt={6}>
       <VStack px={isTablet ? '64px' : 4}>
         <Image
-          src={teacher.image_url}
+          src={teacher?.image.value}
           alt={'Teacher image'}
           w={'48px'}
           h={'48px'}
@@ -47,11 +38,11 @@ const TeacherView: React.FC<any> = ({route}: Props) => {
         <HStack mt={2} alignItems={'center'}>
           <VStack flex={1} space={2}>
             <Text fontSize={'HXS'} fontWeight={600} color={'gray.800'}>
-              {teacher.name}
+              {teacher?.name}
             </Text>
 
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {teacher.subject} teacher at {user?.school?.name}
+              {teacher?.name} teacher at {user?.school?.name}
             </Text>
           </VStack>
 

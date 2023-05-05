@@ -152,5 +152,15 @@ export default appSchema({
         {name: 'updated_at', type: 'number'},
       ],
     }),
+    tableSchema({
+      name: 'teacher',
+      columns: [
+        {name: 'name', type: 'string'},
+        {name: 'coach_id', type: 'string'},
+        {name: 'image_id', type: 'string'},
+        {name: 'created_at', type: 'number'},
+        {name: 'updated_at', type: 'number'},
+      ],
+    }),
   ],
 });

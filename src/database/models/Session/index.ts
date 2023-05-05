@@ -1,5 +1,11 @@
 import {Model, Q} from '@nozbe/watermelondb';
-import {lazy, relation, text} from '@nozbe/watermelondb/decorators';
+import {
+  date,
+  lazy,
+  readonly,
+  relation,
+  text,
+} from '@nozbe/watermelondb/decorators';
 
 export default class Session extends Model {
   static table = 'session';
@@ -26,4 +32,7 @@ export default class Session extends Model {
   @relation('coach', 'coach_id') coach?: any;
   @relation('school', 'school_id') school?: any;
   @relation('teacher', 'teacher_id') teacher?: any;
+
+  @readonly @date('created_at') createdAt: any;
+  @readonly @date('updated_at') updatedAt: any;
 }

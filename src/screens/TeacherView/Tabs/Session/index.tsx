@@ -20,14 +20,13 @@ import Navigation from '../../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import StarsTag from '../../../../components/StarsTag';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Answer from '../../../../database/models/Answer';
 import moment from 'moment';
 
 export type SessionWithAnswers = Omit<Session, 'answers'> & {
   overall_rating: number;
 };
 
-const SessionTab = () => {
+const SessionTab: React.FC = () => {
   const theme = useTheme();
   const isTablet = Tablet();
   const [sessions, setSessions] = useState({
@@ -43,7 +42,6 @@ const SessionTab = () => {
       const sessions: SessionWithAnswers[] = await Promise.all(
         list.map(async session => {
           const questions = await session.answers.fetch();
-          console.log((session as any)._raw);
           const questionSum = questions?.reduce(
             (acc, item: any) => acc + item._raw.value,
             0,
@@ -93,9 +91,9 @@ const SessionTab = () => {
                           fontSize={'TSM'}
                           fontWeight={400}
                           color={'gray.500'}>
-                          {moment
-                            .unix((item as any).created_at)
-                            .format('DD MMM, YYYY')}
+                          {moment(new Date((item as any).created_at)).format(
+                            'DD MMM, YYYY - HH:mm',
+                          )}
                         </Text>
 
                         <StarsTag value={item.overall_rating} />

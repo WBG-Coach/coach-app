@@ -73,6 +73,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
           record.school_id = user?.school?.id;
           record.coach_id = user?.id;
           record.key_points = session.key_points;
+          record.teacher_id = session.teacher_id;
         }),
     );
 
