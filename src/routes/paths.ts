@@ -6,6 +6,7 @@ const Routes = {
   home: 'HomeScreen',
   teacher: 'TeacherScreen',
   splash: 'SplashScreen',
+  settings: 'SettingsScreen',
   classObservation: {
     observationCompleted: 'ObservationCompleted',
     formConfirmaton: 'FormObservationConfirmation',

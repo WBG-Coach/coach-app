@@ -11,6 +11,7 @@ import {UserContext} from '../providers/contexts/UserContext';
 import HomeScreen from '../screens/Home';
 import TeacherView from '../screens/TeacherView';
 import WithCompetenceContext from './WithCompetenceContext';
+import SettingsScreen from '../screens/Settings';
 
 const Stack = createNativeStackNavigator();
 
@@ -78,6 +79,16 @@ const AppRoutes = () => {
             component={TeacherView}
             options={{
               header: () => <Header title={'Teacher'} />,
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.settings}
+            component={SettingsScreen}
+            options={{
+              header: () => <Header title={'Settings'} hideConfig />,
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},
             }}

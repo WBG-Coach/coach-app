@@ -108,7 +108,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
         ))}
       </>
     ),
-    [competenciesFinished],
+    [],
   );
 
   return (

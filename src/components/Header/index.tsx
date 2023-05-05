@@ -7,6 +7,7 @@ import Navigation from '../../services/navigation';
 import Icon from '../base/Icon';
 import {Props} from './types';
 import {isTablet as Tablet} from 'react-native-device-info';
+import Routes from '../../routes/paths';
 
 const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
   /*   const currentLanguage = i18n.languages[0]; */
@@ -52,7 +53,8 @@ const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
 
         {!hideConfig && (
           <Box position={'absolute'} right={0}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => Navigation.navigate(Routes.settings)}>
               <Icon name={'setting'} color={theme.colors.primary[200]} />
             </TouchableOpacity>
           </Box>
