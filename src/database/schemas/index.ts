@@ -156,6 +156,9 @@ export default appSchema({
       name: 'teacher',
       columns: [
         {name: 'name', type: 'string'},
+        {name: 'surname', type: 'string'},
+        {name: 'subject', type: 'string'},
+        {name: 'emis_number', type: 'number'},
         {name: 'coach_id', type: 'string'},
         {name: 'image_id', type: 'string'},
         {name: 'created_at', type: 'number'},

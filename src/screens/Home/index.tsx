@@ -174,7 +174,7 @@ const HomeScreen = () => {
                   <TouchableOpacity
                     onPress={() => {
                       setTeacher(item as any);
-                      Navigation.navigate(Routes.teacher);
+                      Navigation.navigate(Routes.teacher.teacher);
                     }}>
                     <HStack
                       py={3}
@@ -266,7 +266,8 @@ const HomeScreen = () => {
                 )}
               />
 
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => Navigation.navigate(Routes.teacher.create)}>
                 <HStack alignSelf={'center'} space={3} alignItems={'center'}>
                   <Icon name={'plus'} color={theme.colors.primary[200]} />
                   <Text color={'primary.200'}>{t('home.teachers.addNew')}</Text>

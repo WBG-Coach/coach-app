@@ -4,7 +4,10 @@ const Routes = {
     profileSelect: 'ProfileSelect',
   },
   home: 'HomeScreen',
-  teacher: 'TeacherScreen',
+  teacher: {
+    teacher: 'TeacherScreen',
+    create: 'TeacherCreateScreen',
+  },
   splash: 'SplashScreen',
   settings: {
     settings: 'SettingsScreen',

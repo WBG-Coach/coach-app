@@ -178,6 +178,10 @@ CREATE TABLE feedback (
 CREATE TABLE teacher (
     id TEXT,
   	name TEXT,
+ 	surname TEXT,
+  	emis_number INTEGER,
+  	subject TEXT,
+  	birthdate TEXT,
     coach_id TEXT,
     image_id TEXT,
     _changed TEXT,
@@ -186,6 +190,6 @@ CREATE TABLE teacher (
     updated_at INTEGER DEFAULT (strftime('%s', 'now'))
 );
 
-INSERT INTO teacher (id, name, image_id, _changed, _status)
+INSERT INTO teacher (id, name, surname, emis_number, subject, birthdate, image_id, _changed, _status)
 VALUES 
-    ('1', 'Fred Williamson', '1', '', 'created');
+    ('1', 'Fred', 'Williamson', 0101010101, 'Math', 'Mon May 08 2023 12:12:34 GMT-0300 (Horário Padrão de Brasília)', '1', '', 'created');
