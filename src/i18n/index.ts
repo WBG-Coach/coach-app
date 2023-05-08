@@ -4,8 +4,9 @@ import enTranslation from './langs/en';
 import ptTranslation from './langs/pt';
 
 export const resources: {[lang: string]: {translation: any; label: string}} = {
-  en: {translation: enTranslation, label: 'English'},
-  pt: {translation: ptTranslation, label: 'Portuguese'},
+  en: {translation: enTranslation, label: 'English (US)'},
+  pt: {translation: ptTranslation, label: 'Krio'},
+  kr: {translation: ptTranslation, label: 'Portuguese (BR)'},
 };
 
 i18n.use(initReactI18next).init({

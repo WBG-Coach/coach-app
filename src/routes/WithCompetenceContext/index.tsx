@@ -1,4 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
 import Header from '../../components/Header';
 import CompetenceContextProvider from '../../providers/contexts/CompetencesContext';
 import ClassObservationCreate from '../../screens/ClassObservation/Create';
@@ -15,6 +16,8 @@ import Routes from '../paths';
 const Stack = createNativeStackNavigator();
 
 export default function WithCompetenceContext() {
+  const {t} = useTranslation();
+
   return (
     <CompetenceContextProvider>
       <Stack.Navigator initialRouteName={Routes.classObservation.create}>
@@ -24,7 +27,12 @@ export default function WithCompetenceContext() {
             component={ClassObservationCreate}
             options={{
               header: () => (
-                <Header hideConfig title={'New class observation'} />
+                <Header
+                  hideConfig
+                  title={
+                    t('header.newClassObservation') || 'New class observation'
+                  }
+                />
               ),
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},
@@ -38,7 +46,7 @@ export default function WithCompetenceContext() {
               header: () => (
                 <Header
                   hideConfig
-                  title={'Preparation'}
+                  title={t('header.preparation') || 'Preparation'}
                   background={'primary.0'}
                 />
               ),
@@ -50,7 +58,12 @@ export default function WithCompetenceContext() {
             name={Routes.classObservation.setup}
             component={ObservationSetup}
             options={{
-              header: () => <Header hideConfig title={'Class Observation'} />,
+              header: () => (
+                <Header
+                  hideConfig
+                  title={t('header.classObservation') || 'Class Observation'}
+                />
+              ),
               headerShown: true,
             }}
           />
@@ -63,7 +76,7 @@ export default function WithCompetenceContext() {
                 <Header
                   background="gray.0"
                   hideConfig
-                  title={'Class Observation'}
+                  title={t('header.classObservation') || 'Class Observation'}
                 />
               ),
               headerShown: true,
@@ -78,7 +91,9 @@ export default function WithCompetenceContext() {
                 <Header
                   background="gray.0"
                   hideConfig
-                  title={'Observation summary'}
+                  title={
+                    t('header.observationSummary') || 'Observation summary'
+                  }
                 />
               ),
               headerShown: true,
@@ -94,7 +109,9 @@ export default function WithCompetenceContext() {
                   background="gray.0"
                   hideConfig
                   hideBack
-                  title={'Observation complete'}
+                  title={
+                    t('header.observationComplete') || 'Observation complete'
+                  }
                 />
               ),
               headerShown: true,
@@ -110,7 +127,7 @@ export default function WithCompetenceContext() {
               header: () => (
                 <Header
                   hideConfig
-                  title={'Mentoring session'}
+                  title={t('header.mentoringSession') || 'Mentoring session'}
                   background={'primary.0'}
                 />
               ),
@@ -125,7 +142,9 @@ export default function WithCompetenceContext() {
               header: () => (
                 <Header
                   hideConfig
-                  title={'Feedback preparation'}
+                  title={
+                    t('header.feedbackPreparation') || 'Feedback preparation'
+                  }
                   background="gray.0"
                 />
               ),
@@ -140,7 +159,9 @@ export default function WithCompetenceContext() {
               header: () => (
                 <Header
                   hideConfig
-                  title={'Feedback preparation'}
+                  title={
+                    t('header.feedbackPreparation') || 'Feedback preparation'
+                  }
                   background="gray.0"
                 />
               ),
@@ -156,7 +177,7 @@ export default function WithCompetenceContext() {
                 <Header
                   hideBack
                   hideConfig
-                  title={'Feedback complete'}
+                  title={t('header.feedbackComplete') || 'Feedback complete'}
                   background="gray.0"
                 />
               ),

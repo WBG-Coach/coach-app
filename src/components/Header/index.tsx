@@ -54,7 +54,7 @@ const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
         {!hideConfig && (
           <Box position={'absolute'} right={0}>
             <TouchableOpacity
-              onPress={() => Navigation.navigate(Routes.settings)}>
+              onPress={() => Navigation.navigate(Routes.settings.settings)}>
               <Icon name={'setting'} color={theme.colors.primary[200]} />
             </TouchableOpacity>
           </Box>

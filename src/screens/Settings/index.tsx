@@ -1,10 +1,17 @@
 import {HStack, Text, VStack} from 'native-base';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
+import i18n, {resources} from '../../i18n';
+import Routes from '../../routes/paths';
+import Navigation from '../../services/navigation';
 
 const SettingsScreen: React.FC = () => {
+  const {t} = useTranslation(); // T must be in context to refresh currentLanguage.
+  console.log('current language =>', t);
+  const currentLanguage = i18n.languages[0];
   const isTablet = Tablet();
 
   const options = [
@@ -12,7 +19,7 @@ const SettingsScreen: React.FC = () => {
       icon: 'globe',
       label: 'Language',
       description: 'English (US)',
-      onPress: () => {},
+      onPress: () => Navigation.navigate(Routes.settings.changeLanguage),
     },
   ];
 
@@ -25,7 +32,7 @@ const SettingsScreen: React.FC = () => {
       flex={1}>
       <VStack flex={1}>
         {options.map((option, index) => (
-          <TouchableOpacity key={index}>
+          <TouchableOpacity key={index} onPress={option.onPress}>
             <HStack
               alignItems={'center'}
               space={2}
@@ -38,7 +45,7 @@ const SettingsScreen: React.FC = () => {
                   Language
                 </Text>
                 <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                  English (US)
+                  {resources[currentLanguage].label}
                 </Text>
               </VStack>
               <Icon name={'angle-right'} />

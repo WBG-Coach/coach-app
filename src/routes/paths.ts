@@ -1,12 +1,15 @@
 const Routes = {
   setupUserData: {
-    SchoolSelect: 'SchoolSelect',
-    ProfileSelect: 'ProfileSelect',
+    schoolSelect: 'SchoolSelect',
+    profileSelect: 'ProfileSelect',
   },
   home: 'HomeScreen',
   teacher: 'TeacherScreen',
   splash: 'SplashScreen',
-  settings: 'SettingsScreen',
+  settings: {
+    settings: 'SettingsScreen',
+    changeLanguage: 'ChangeLanguageScreen',
+  },
   classObservation: {
     observationCompleted: 'ObservationCompleted',
     formConfirmaton: 'FormObservationConfirmation',

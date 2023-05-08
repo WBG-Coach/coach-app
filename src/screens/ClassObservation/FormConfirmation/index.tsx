@@ -14,6 +14,7 @@ import Question from '../../../database/models/Question';
 import Session from '../../../database/models/Session';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import {getTags} from '../../../components/StarsTag/common';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -30,7 +31,8 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const {user} = useContext(UserContext);
   const isTablet = Tablet();
   const theme = useTheme();
-  const tags = getTags(theme);
+  const {t} = useTranslation();
+  const tags = getTags(theme, t);
 
   const {session, answers} = params;
   const competencyFormatted = competences.reduce((acc, item) => {

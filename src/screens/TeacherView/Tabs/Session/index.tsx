@@ -21,6 +21,7 @@ import {isTablet as Tablet} from 'react-native-device-info';
 import StarsTag from '../../../../components/StarsTag';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 
 export type SessionWithAnswers = Omit<Session, 'answers'> & {
   overall_rating: number;
@@ -29,6 +30,7 @@ export type SessionWithAnswers = Omit<Session, 'answers'> & {
 const SessionTab: React.FC = () => {
   const theme = useTheme();
   const isTablet = Tablet();
+  const {t} = useTranslation();
   const [sessions, setSessions] = useState({
     isLoading: true,
     data: [] as [] | SessionWithAnswers[],
@@ -85,7 +87,7 @@ const SessionTab: React.FC = () => {
                           fontSize={'LMD'}
                           fontWeight={500}
                           color={'gray.700'}>
-                          Session {index + 1}
+                          {t('teacher.tabs.session.session')} {index + 1}
                         </Text>
                         <Text
                           fontSize={'TSM'}
@@ -124,7 +126,7 @@ const SessionTab: React.FC = () => {
                     fontSize={'TMD'}
                     fontWeight={500}
                     color={'primary.200'}>
-                    New class observation
+                    {t('teacher.tabs.session.newClassObservation')}
                   </Text>
                 </HStack>
               </Button>
@@ -138,7 +140,7 @@ const SessionTab: React.FC = () => {
                   fontSize={'HXS'}
                   fontWeight={600}
                   color={'gray.800'}>
-                  Still no session
+                  {t('teacher.tabs.session.stillNoSession')}
                 </Text>
                 <Text
                   textAlign={'center'}
@@ -146,7 +148,7 @@ const SessionTab: React.FC = () => {
                   fontSize={'TMD'}
                   fontWeight={400}
                   color={'gray.700'}>
-                  You can start a new class observation with this teacher
+                  {t('teacher.tabs.session.stillNoSessionDescription')}
                 </Text>
 
                 <Button
@@ -167,7 +169,7 @@ const SessionTab: React.FC = () => {
                       fontSize={'TMD'}
                       fontWeight={500}
                       color={'primary.200'}>
-                      New class observation
+                      {t('teacher.tabs.session.newClassObservation')}
                     </Text>
                   </HStack>
                 </Button>

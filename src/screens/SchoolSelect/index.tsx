@@ -8,9 +8,11 @@ import Input from '../../components/base/Input';
 import {getWatermelon} from '../../database';
 import School from '../../database/models/School';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
 
 const SchoolSelectScreen = () => {
   const [schoolList, setSchoolList] = useState<School[]>();
+  const {t} = useTranslation();
   const isTablet = Tablet();
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const SchoolSelectScreen = () => {
             fontWeight={600}
             color={'gray.700'}
             mb={'16px'}>
-            Select the school
+            {t('setupUserData.schoolSelect.title')}
           </Text>
 
           <Input icon="search" marginBottom={2} mb={2} placeholder={'Search'} />
@@ -45,7 +47,7 @@ const SchoolSelectScreen = () => {
               <TouchableOpacity
                 key={index}
                 onPress={() =>
-                  Navigation.push(Routes.setupUserData.ProfileSelect, {
+                  Navigation.push(Routes.setupUserData.profileSelect, {
                     school: school._raw,
                   })
                 }>
@@ -67,7 +69,9 @@ const SchoolSelectScreen = () => {
 
                   <VStack flex={1} ml={'8px'} space={'4px'}>
                     <Text color={'gray.700'}>{school.name}</Text>
-                    <Text color={'gray.600'}>4 Coaches here</Text>
+                    <Text color={'gray.600'}>
+                      4 {t('setupUserData.schoolSelect.lineDesc')}
+                    </Text>
                   </VStack>
 
                   <Icon name={'angle-right'} />

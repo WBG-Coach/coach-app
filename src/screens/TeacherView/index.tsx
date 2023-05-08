@@ -5,17 +5,19 @@ import Icon from '../../components/base/Icon';
 import {UserContext} from '../../providers/contexts/UserContext';
 import SessionTab from './Tabs/Session';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
 
 const TeacherView: React.FC<any> = () => {
   const {teacher} = useContext(UserContext);
+  const {t} = useTranslation();
   const tabs = [
     {
       Component: <SessionTab />,
-      label: 'Sessions',
+      label: t('teacher.tabs.session.title'),
     },
     {
       Component: <></>,
-      label: "Teacher's stats",
+      label: t('teacher.tabs.stats.title'),
     },
   ];
 
@@ -42,7 +44,9 @@ const TeacherView: React.FC<any> = () => {
             </Text>
 
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {teacher?.name} teacher at {user?.school?.name}
+              {t('teacher.description')
+                .replace('$name', teacher?.name)
+                .replace('$school', user?.school?.name as string)}
             </Text>
           </VStack>
 

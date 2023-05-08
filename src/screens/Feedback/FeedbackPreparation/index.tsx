@@ -1,17 +1,8 @@
-import {
-  Button,
-  Checkbox,
-  HStack,
-  ScrollView,
-  Text,
-  useTheme,
-  VStack,
-} from 'native-base';
+import {Button, Checkbox, HStack, ScrollView, Text, VStack} from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
 import React, {useContext, useState} from 'react';
 import {ICompetence} from '../../../types';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';

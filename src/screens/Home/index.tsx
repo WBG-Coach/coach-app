@@ -22,9 +22,11 @@ import {isTablet as Tablet} from 'react-native-device-info';
 import {getWatermelon, syncWatermelon} from '../../database';
 import Teacher from '../../database/models/Teacher';
 import {useFocusEffect} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const HomeScreen = () => {
   const {user, setTeacher} = useContext(UserContext);
+  const {t} = useTranslation();
   const theme = useTheme();
   const isTablet = Tablet();
   const [teachers, setTeachers] = useState({
@@ -35,24 +37,24 @@ const HomeScreen = () => {
   const data = [
     {
       icon: 'graph-bar',
-      label: 'Start new session',
+      label: t('home.items.newSession'),
       onPress: () => {},
     },
     {
       icon: 'university',
-      label: 'Switch schools',
+      label: t('home.items.switchSchools'),
       onPress: () => {},
     },
     {
       icon: 'wifi-slash',
-      label: 'Offline sync',
+      label: t('home.items.offlineSync'),
       onPress: async () => {
         await syncWatermelon();
       },
     },
     {
       icon: 'plus',
-      label: 'Statistics',
+      label: t('home.items.statics'),
       onPress: () => {},
     },
   ];
@@ -76,8 +78,6 @@ const HomeScreen = () => {
               } as any),
           ),
         );
-
-        console.log(teachersUpdated[0]);
 
         setTeachers({isLoading: false, data: teachersUpdated});
       })();
@@ -104,7 +104,12 @@ const HomeScreen = () => {
             {user?.school?.name}
           </Text>
           <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-            3 Teachers being coached
+            {teachers.data.length >= 1
+              ? t('home.teachersLength').replace(
+                  '$teacherslength',
+                  teachers.data.length.toString(),
+                )
+              : t('home.noTeachersLength')}
           </Text>
         </VStack>
       </HStack>
@@ -148,7 +153,7 @@ const HomeScreen = () => {
       </HStack>
 
       <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-        Teachers
+        {t('home.teachers.title')}
       </Text>
 
       {teachers.isLoading ? (
@@ -248,8 +253,8 @@ const HomeScreen = () => {
                                 color={'gray.700'}>
                                 {item.sessions.length}{' '}
                                 {item.sessions.length > 1
-                                  ? 'Sessions'
-                                  : 'Session'}
+                                  ? t('home.teachers.sessions')
+                                  : t('home.teachers.session')}
                               </Text>
                             </HStack>
                           </HStack>
@@ -264,7 +269,7 @@ const HomeScreen = () => {
               <TouchableOpacity>
                 <HStack alignSelf={'center'} space={3} alignItems={'center'}>
                   <Icon name={'plus'} color={theme.colors.primary[200]} />
-                  <Text color={'primary.200'}>Add new teacher</Text>
+                  <Text color={'primary.200'}>{t('home.teachers.addNew')}</Text>
                 </HStack>
               </TouchableOpacity>
             </VStack>

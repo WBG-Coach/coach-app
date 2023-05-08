@@ -12,12 +12,15 @@ import HomeScreen from '../screens/Home';
 import TeacherView from '../screens/TeacherView';
 import WithCompetenceContext from './WithCompetenceContext';
 import SettingsScreen from '../screens/Settings';
+import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
+import {useTranslation} from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
 
 const AppRoutes = () => {
   const [isLoading, setIsLoading] = useState(true);
   const {user} = useContext(UserContext);
+  const {t} = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
@@ -42,7 +45,7 @@ const AppRoutes = () => {
         {!user && (
           <Stack.Group>
             <Stack.Screen
-              name={Routes.setupUserData.SchoolSelect}
+              name={Routes.setupUserData.schoolSelect}
               component={SchoolSelectScreen}
               options={{
                 header: () => <Header hideBack />,
@@ -52,7 +55,7 @@ const AppRoutes = () => {
             />
 
             <Stack.Screen
-              name={Routes.setupUserData.ProfileSelect}
+              name={Routes.setupUserData.profileSelect}
               component={ProfileSelectScreen}
               options={{
                 header: () => <Header />,
@@ -78,17 +81,31 @@ const AppRoutes = () => {
             name={Routes.teacher}
             component={TeacherView}
             options={{
-              header: () => <Header title={'Teacher'} />,
+              header: () => <Header title={t('header.teacher') || 'Teacher'} />,
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},
             }}
           />
 
           <Stack.Screen
-            name={Routes.settings}
+            name={Routes.settings.settings}
             component={SettingsScreen}
             options={{
-              header: () => <Header title={'Settings'} hideConfig />,
+              header: () => (
+                <Header title={t('header.settings') || 'Settings'} hideConfig />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.settings.changeLanguage}
+            component={ChangeLanguageScreen}
+            options={{
+              header: () => (
+                <Header title={t('header.settings') || 'Settings'} hideConfig />
+              ),
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},
             }}

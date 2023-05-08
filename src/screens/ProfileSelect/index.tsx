@@ -8,6 +8,7 @@ import {ISchool} from '../../types';
 import User from '../../database/models/User';
 import {getWatermelon} from '../../database';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -20,6 +21,7 @@ type Props = {
 const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
   const {handleLogin} = useContext(UserContext);
   const [usersList, setUsersList] = useState<User[]>();
+  const {t} = useTranslation();
   const isTablet = Tablet();
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
             fontWeight={600}
             color={'gray.700'}
             mb={'16px'}>
-            Select your profile
+            {t('setupUserData.profileSelect.title')}
           </Text>
 
           <Input icon="search" marginBottom={2} placeholder={'Search'} />
@@ -78,7 +80,12 @@ const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
 
                   <VStack flex={1} ml={'8px'} space={'4px'}>
                     <Text color={'gray.700'}>{user.name}</Text>
-                    <Text color={'gray.600'}>Coaching 3 teachers</Text>
+                    <Text color={'gray.600'}>
+                      {t('setupUserData.profileSelect.lineDesc').replace(
+                        '$val',
+                        '3',
+                      )}
+                    </Text>
                   </VStack>
 
                   <Icon name={'angle-right'} />
