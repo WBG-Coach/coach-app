@@ -185,7 +185,7 @@ const HomeScreen = () => {
                       borderBottomColor={'gray.300'}>
                       <HStack flex={1} space={2} alignItems={'center'}>
                         <CImage
-                          src={item.image.value}
+                          source={{uri: item.image.value}}
                           alt={'Teacher image'}
                           w={isTablet ? '56px' : '40px'}
                           h={isTablet ? '56px' : '40px'}
@@ -203,7 +203,7 @@ const HomeScreen = () => {
                             fontSize={'TSM'}
                             fontWeight={500}
                             color={'gray.700'}>
-                            Math
+                            {item.subject}
                           </Text>
 
                           <HStack space={1}>

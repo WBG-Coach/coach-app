@@ -15,6 +15,7 @@ import SettingsScreen from '../screens/Settings';
 import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
 import {useTranslation} from 'react-i18next';
 import TeacherCreateScreen from '../screens/Home/CreateTeacher';
+import TeacherCreatedScreen from '../screens/Home/CreateTeacher/TeacherCreated';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,21 @@ const AppRoutes = () => {
           <Stack.Screen
             name={Routes.teacher.create}
             component={TeacherCreateScreen}
+            options={{
+              header: () => (
+                <Header
+                  title={t('header.newTeacher') || 'New teacher'}
+                  hideConfig
+                />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.teacher.created}
+            component={TeacherCreatedScreen}
             options={{
               header: () => (
                 <Header
