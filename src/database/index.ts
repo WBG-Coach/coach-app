@@ -98,12 +98,12 @@ export const syncWatermelon = async () => {
         }
       },
 
-      onDidPullChanges: async (object: Object) => {
-        console.log('2 - onDidPullChanges', {object});
+      onDidPullChanges: async () => {
+        console.log('2 - onDidPullChanges');
       },
 
       pushChanges: async ({changes, lastPulledAt}) => {
-        console.log('3 - pushChanges', {changes, lastPulledAt});
+        console.log('3 - pushChanges');
         try {
           await axios.post(`http://10.0.2.2:3000/sync`, {
             changes,

@@ -51,9 +51,9 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
     value: string;
   }>();
 
-  const handleSubmitTeacher: SubmitHandler<
-    typeof defaultValues
-  > = async values => {
+  const handleSubmitTeacher: SubmitHandler<typeof defaultValues> = async (
+    values: Partial<Teacher>,
+  ) => {
     if (user && user.school) {
       const db = await getWatermelon();
       let image = values.image;
