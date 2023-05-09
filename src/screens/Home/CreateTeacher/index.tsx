@@ -49,9 +49,9 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
     value: string;
   }>();
 
-  const handleSubmitTeacher: SubmitHandler<
-    typeof defaultValues
-  > = async values => {
+  const handleSubmitTeacher: SubmitHandler<typeof defaultValues> = async (
+    values: Partial<Teacher>,
+  ) => {
     if (user && user.school) {
       const db = await getWatermelon();
       let image = values.image;
@@ -84,7 +84,6 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
               record.subject = values.subject;
               record.birthdate = values.birthdate.toString();
               record.image_id = image.id;
-              record.coach_id = user.id;
               record.school_id = (user.school as School).id;
             }),
         );
