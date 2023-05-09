@@ -6,6 +6,8 @@ import {UserContext} from '../../providers/contexts/UserContext';
 import SessionTab from './Tabs/Session';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
+import Navigation from '../../services/navigation';
+import Routes from '../../routes/paths';
 
 const TeacherView: React.FC<any> = () => {
   const {teacher} = useContext(UserContext);
@@ -50,7 +52,12 @@ const TeacherView: React.FC<any> = () => {
             </Text>
           </VStack>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              Navigation.navigate(Routes.teacher.create, {
+                teacher_id: teacher?.id,
+              })
+            }>
             <Center
               w={'40px'}
               h={'40px'}

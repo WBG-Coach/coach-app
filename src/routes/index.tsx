@@ -16,6 +16,7 @@ import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
 import {useTranslation} from 'react-i18next';
 import TeacherCreateScreen from '../screens/Home/CreateTeacher';
 import TeacherCreatedScreen from '../screens/Home/CreateTeacher/TeacherCreated';
+import SessionViewerScreen from '../screens/TeacherView/Tabs/Session/SessionViewer';
 
 const Stack = createNativeStackNavigator();
 
@@ -111,6 +112,22 @@ const AppRoutes = () => {
               header: () => (
                 <Header
                   title={t('header.newTeacher') || 'New teacher'}
+                  hideConfig
+                  hideBack
+                />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.teacher.sessionViewer}
+            component={SessionViewerScreen}
+            options={{
+              header: () => (
+                <Header
+                  title={t('header.previousSession') || 'Previous session'}
                   hideConfig
                 />
               ),

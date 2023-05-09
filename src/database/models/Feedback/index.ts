@@ -6,7 +6,7 @@ export default class Feedback extends Model {
   static table = 'feedback';
 
   @text('value') value: any;
-  @text('s_id') s_id?: any;
+  @text('session_id') session_id?: any;
   @readonly @date('created_at') createdAt: any;
   @readonly @date('updated_at') updatedAt: any;
 }

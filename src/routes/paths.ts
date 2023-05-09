@@ -8,6 +8,7 @@ const Routes = {
     teacher: 'TeacherScreen',
     create: 'TeacherCreateScreen',
     created: 'TeacherCreatedScreen',
+    sessionViewer: 'SessionViewerScreen',
   },
   splash: 'SplashScreen',
   settings: {

@@ -7,7 +7,7 @@ import {
   Image,
   Center,
 } from 'native-base';
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {Dimensions} from 'react-native';
 import {useSharedValue, withTiming} from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
@@ -40,8 +40,10 @@ const data = [
 
 const ClassOnboarding: React.FC<any> = () => {
   const {width: PAGE_WIDTH} = Dimensions.get('window');
+  const [lowProgress, setLowProgress] = useState(0);
   const progressValue = useSharedValue<number>(0);
   const pressAnim = useSharedValue<number>(0);
+  const carouselRef = useRef<any>();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -50,6 +52,7 @@ const ClassOnboarding: React.FC<any> = () => {
       <VStack flex={1} mt={6}>
         <Carousel
           loop={false}
+          ref={carouselRef}
           onScrollBegin={() => {
             pressAnim.value = withTiming(1);
           }}
@@ -61,8 +64,9 @@ const ClassOnboarding: React.FC<any> = () => {
           onProgressChange={(_, absoluteProgress) => {
             progressValue.value = absoluteProgress;
           }}
+          onSnapToItem={setLowProgress}
           renderItem={({item, index}) => (
-            <Center key={index} flex={1} justifyContent={'flex-start'}>
+            <Center key={index} flex={1}>
               <VStack
                 alignItems={'center'}
                 {...(isTablet && {maxWidth: '500px'})}>
@@ -112,8 +116,8 @@ const ClassOnboarding: React.FC<any> = () => {
           borderRadius={'8px'}
           borderWidth={0}
           variant={'outline'}
-          color={'primary.200'}>
-          Skip
+          onPress={() => Navigation.navigate(Routes.classObservation.setup)}>
+          <Text color={'primary.200'}>Skip</Text>
         </Button>
         <Button
           flex={1}
@@ -121,8 +125,12 @@ const ClassOnboarding: React.FC<any> = () => {
           borderRadius={'8px'}
           color={'white'}
           background={'primary.200'}
-          onPress={() => Navigation.navigate(Routes.classObservation.setup)}>
-          Next
+          onPress={
+            lowProgress !== data.length - 1
+              ? () => carouselRef.current.next()
+              : () => Navigation.navigate(Routes.classObservation.setup)
+          }>
+          {lowProgress === data.length - 1 ? 'Start' : 'Next'}
         </Button>
       </HStack>
     </VStack>

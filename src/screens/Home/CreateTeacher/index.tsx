@@ -24,6 +24,8 @@ import {getWatermelon} from '../../../database';
 import Image from '../../../database/models/Image';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import School from '../../../database/models/School';
+import Navigation from '../../../services/navigation';
+import Routes from '../../../routes/paths';
 
 type Props = {
   route: {
@@ -84,12 +86,13 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
               record.subject = values.subject;
               record.birthdate = values.birthdate.toString();
               record.image_id = image.id;
-              record.coach_id = user.id;
               record.school_id = (user.school as School).id;
             }),
         );
       }
     }
+
+    Navigation.reset(Routes.teacher.created);
   };
 
   return (

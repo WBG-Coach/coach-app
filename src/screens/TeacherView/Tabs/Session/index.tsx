@@ -10,7 +10,7 @@ import {
   Box,
   ScrollView,
 } from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {SessionDefault} from '../../../../assets/images/logos';
 import Icon from '../../../../components/base/Icon';
 import {getWatermelon} from '../../../../database';
@@ -22,45 +22,56 @@ import StarsTag from '../../../../components/StarsTag';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
+import Answer from '../../../../database/models/Answer';
+import {Q} from '@nozbe/watermelondb';
+import Teacher from '../../../../database/models/Teacher';
+import {UserContext} from '../../../../providers/contexts/UserContext';
 
 export type SessionWithAnswers = Omit<Session, 'answers'> & {
   overall_rating: number;
+  answers: Answer[];
 };
 
 const SessionTab: React.FC = () => {
   const theme = useTheme();
   const isTablet = Tablet();
   const {t} = useTranslation();
+  const {teacher} = useContext(UserContext);
   const [sessions, setSessions] = useState({
     isLoading: true,
     data: [] as [] | SessionWithAnswers[],
   });
 
   useEffect(() => {
-    (async () => {
-      const db = await getWatermelon();
-      const list = await db.collections.get<Session>('session').query().fetch();
+    if (teacher) {
+      (async () => {
+        const db = await getWatermelon();
+        const list = await db.collections
+          .get<Session>('session')
+          .query(Q.where('teacher_id', teacher.id))
+          .fetch();
 
-      const sessions: SessionWithAnswers[] = await Promise.all(
-        list.map(async session => {
-          const questions = await session.answers.fetch();
-          const questionSum = questions?.reduce(
-            (acc, item: any) => acc + item._raw.value,
-            0,
-          );
+        const sessions: SessionWithAnswers[] = await Promise.all(
+          list.map(async session => {
+            const answers = await session.answers.fetch();
+            const answersSum = answers?.reduce(
+              (acc, item: any) => acc + item._raw.value,
+              0,
+            );
 
-          return {
-            ...session._raw,
-            overall_rating: Math.round(questionSum / questions.length),
-          } as any;
-        }),
-      );
+            return {
+              ...session._raw,
+              overall_rating: Math.round(answersSum / answers.length),
+            } as any;
+          }),
+        );
 
-      setSessions({
-        isLoading: false,
-        data: sessions,
-      });
-    })();
+        setSessions({
+          isLoading: false,
+          data: sessions,
+        });
+      })();
+    }
   }, []);
 
   return (
@@ -75,7 +86,13 @@ const SessionTab: React.FC = () => {
             <VStack flex={1} px={isTablet ? '64px' : 4} mt={'24px'}>
               <ScrollView flexGrow={0}>
                 {sessions.data.map((item, index) => (
-                  <TouchableOpacity key={item.id}>
+                  <TouchableOpacity
+                    key={item.id}
+                    onPress={() =>
+                      Navigation.navigate(Routes.teacher.sessionViewer, {
+                        session_id: item.id,
+                      })
+                    }>
                     <HStack
                       w={'100%'}
                       py={3}
@@ -98,7 +115,7 @@ const SessionTab: React.FC = () => {
                           )}
                         </Text>
 
-                        <StarsTag value={item.overall_rating} />
+                        <StarsTag value={item.overall_rating - 1} />
                       </VStack>
                       <Box>
                         <Icon name={'angle-right'} />

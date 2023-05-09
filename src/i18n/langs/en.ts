@@ -72,6 +72,7 @@ const enTranslation = {
     mentoringSession: 'Mentoring session',
     feedbackPreparation: 'Feedback preparation',
     feedbackComplete: 'Feedback complete',
+    previousSession: 'Previous session',
   },
   components: {
     starsTag: {
