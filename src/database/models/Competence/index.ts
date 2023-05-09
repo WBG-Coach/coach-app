@@ -21,7 +21,6 @@ export default class Competence extends Model {
     .query(Q.where('competence_id', this.id));
 
   @text('title') title: any;
-  @relation('guide', 'guide_id') guide: any;
   @readonly @date('created_at') createdAt: any;
   @readonly @date('updated_at') updatedAt: any;
 }

@@ -49,25 +49,10 @@ export default appSchema({
       ],
     }),
     tableSchema({
-      name: 'guide',
-      columns: [
-        {
-          name: 'content',
-          type: 'string',
-        },
-        {name: 'created_at', type: 'number'},
-        {name: 'updated_at', type: 'number'},
-      ],
-    }),
-    tableSchema({
       name: 'competence',
       columns: [
         {
           name: 'title',
-          type: 'string',
-        },
-        {
-          name: 'guide_id',
           type: 'string',
         },
         {name: 'created_at', type: 'number'},
@@ -159,7 +144,6 @@ export default appSchema({
         {name: 'surname', type: 'string'},
         {name: 'subject', type: 'string'},
         {name: 'emis_number', type: 'number'},
-        {name: 'coach_id', type: 'string'},
         {name: 'school_id', type: 'string'},
         {name: 'image_id', type: 'string'},
         {name: 'birthdate', type: 'string'},
