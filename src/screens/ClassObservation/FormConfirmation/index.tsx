@@ -32,7 +32,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
   const theme = useTheme();
   const {t} = useTranslation();
-  const tags = getTags(theme, t);
+  const tags = getTags(t, theme);
 
   const {session, answers} = params;
   const competencyFormatted = competences.reduce((acc, item) => {

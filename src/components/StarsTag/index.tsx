@@ -8,7 +8,7 @@ import {Props} from './types';
 const StarsTag: React.FC<Props> = ({value}) => {
   const theme = useTheme();
   const {t} = useTranslation();
-  const tag = getTags(theme, t)[value];
+  const tag = getTags(t, theme)[value];
 
   return (
     <HStack alignItems={'center'} bg={tag.background} space={1} py={1} px={2}>
