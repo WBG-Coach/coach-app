@@ -48,9 +48,7 @@ const HomeScreen = () => {
     {
       icon: 'wifi-slash',
       label: t('home.items.offlineSync'),
-      onPress: async () => {
-        await syncWatermelon();
-      },
+      onPress: async () => {},
     },
     {
       icon: 'plus',
