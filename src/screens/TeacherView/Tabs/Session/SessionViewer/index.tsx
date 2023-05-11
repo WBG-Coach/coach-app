@@ -10,6 +10,9 @@ import {getTags} from '../../../../../components/StarsTag/common';
 import {useTranslation} from 'react-i18next';
 import Icon from '../../../../../components/base/Icon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Navigation from '../../../../../services/navigation';
+import Routes from '../../../../../routes/paths';
+import Answer from '../../../../../database/models/Answer';
 
 type Props = {
   route: {
@@ -23,19 +26,6 @@ type SessionWithRelations = Omit<Session, 'questions'> & {
   overall_rating: number;
   competences: Competence[];
 };
-
-const options = [
-  {
-    icon: 'clipboard-notes',
-    label: 'Observation',
-    onPress: () => {},
-  },
-  {
-    icon: 'comment-verify',
-    label: 'Feedback',
-    onPress: () => {},
-  },
-];
 
 const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
@@ -52,9 +42,13 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
         .get<Session>('session')
         .find(params.session_id)) as Session;
 
-      const answers = await sessionDb.answers.fetch();
+      const answers = (await sessionDb.answers.fetch()).reduce(
+        (acc, item) => [...acc, item._raw as any],
+        [] as Answer[],
+      );
+
       const answersSum = answers?.reduce(
-        (acc, item: any) => acc + item._raw.value,
+        (acc, item: any) => acc + item.value,
         0,
       );
 
@@ -62,11 +56,28 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
         isLoading: false,
         data: {
           ...(sessionDb._raw as any),
+          answers,
           overall_rating: Math.round(answersSum / answers.length),
         },
       });
     })();
   }, []);
+
+  const options = [
+    {
+      icon: 'clipboard-notes',
+      label: 'Observation',
+      onPress: () =>
+        Navigation.navigate(Routes.teacher.observationViewer, {
+          answers: session.data.answers,
+        }),
+    },
+    {
+      icon: 'comment-verify',
+      label: 'Feedback',
+      onPress: () => {},
+    },
+  ];
 
   return (
     <VStack flex={1} background={'gray.100'} space={1}>

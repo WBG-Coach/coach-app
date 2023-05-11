@@ -1,11 +1,16 @@
-import React, {useContext, useState} from 'react';
-import {IAnswer} from '../../../types';
-import {ICompetence} from '../../../types';
+import React, {useContext, useMemo, useState} from 'react';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {Button, HStack, ScrollView, Text, useTheme, VStack} from 'native-base';
+import {
+  Button,
+  Center,
+  HStack,
+  Spinner,
+  Text,
+  useTheme,
+  VStack,
+} from 'native-base';
 import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
-import StarView from '../../../components/StarView';
 import Routes from '../../../routes/paths';
 import Answer from '../../../database/models/Answer';
 import {getWatermelon} from '../../../database';
@@ -13,13 +18,12 @@ import {CompetenceContext} from '../../../providers/contexts/CompetencesContext'
 import Question from '../../../database/models/Question';
 import Session from '../../../database/models/Session';
 import {UserContext} from '../../../providers/contexts/UserContext';
-import {getTags} from '../../../components/StarsTag/common';
-import {useTranslation} from 'react-i18next';
+import CompetenceView from './CompetenceView';
 
 type Props = {
   route: {
     params: {
-      answers: IAnswer[];
+      answers: Answer[];
       session: Session;
     };
   };
@@ -31,33 +35,35 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const {user} = useContext(UserContext);
   const isTablet = Tablet();
   const theme = useTheme();
-  const {t} = useTranslation();
-  const tags = getTags(t, theme);
 
   const {session, answers} = params;
-  const competencyFormatted = competences.reduce((acc, item) => {
-    let questionsMax = 0;
+  const competencyFormatted = useMemo(
+    () =>
+      competences.reduce((acc, item) => {
+        let questionsMax = 0;
 
-    const questions = item.questions.map(question => {
-      const value = parseInt(
-        answers.find(answer => answer.question_id === question.id)?.value ||
-          '0',
-      );
-      questionsMax += value;
-      return {
-        ...question,
-        value,
-      };
-    }) as Array<Question & {value: number}>;
+        const questions = item.questions.map(question => {
+          const value = parseInt(
+            answers.find(answer => answer.question_id === question.id)?.value ||
+              '0',
+          );
+          questionsMax += value;
+          return {
+            ...question,
+            value,
+          };
+        }) as Array<Question & {value: number}>;
 
-    const competence = {
-      ...item,
-      questions: questions,
-      overall_rating: Math.round(questionsMax / item.questions.length),
-    };
+        const competence = {
+          ...item,
+          questions: questions,
+          overall_rating: Math.round(questionsMax / item.questions.length) - 1,
+        };
 
-    return [...acc, competence];
-  }, [] as Array<ICompetence & {overall_rating: number; questions: Array<Question & {value: number}>}>);
+        return [...acc, competence];
+      }, [] as Array<(typeof competences)[0] & {overall_rating: number}>),
+    [],
+  );
 
   const handlePressContinue = async () => {
     const db = await getWatermelon();
@@ -98,121 +104,52 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
 
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
-      <VStack flex={1} px={isTablet ? '64px' : 4}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            Class observation summary
-          </Text>
-          <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            Review how you rated the class
-          </Text>
-
-          <VStack space={6} mt={6}>
-            {competencyFormatted.map((competency, i) => (
-              <VStack
-                key={i}
-                borderRadius={'16px'}
-                borderWidth={'1px'}
-                borderColor={'gray.200'}>
-                <HStack
-                  borderTopLeftRadius={'16px'}
-                  borderTopRightRadius={'16px'}
-                  background={'gray.200'}
-                  alignItems={'center'}
-                  py={3}
-                  px={4}>
-                  <Text
-                    fontSize={'TSM'}
-                    flex={1}
-                    fontWeight={400}
-                    color={'gray.700'}>
-                    Overall rating
-                  </Text>
-                  <VStack alignItems={'flex-end'} space={1}>
-                    <StarView maxLength={5} value={competency.overall_rating} />
-                    <Text
-                      fontSize={'LSM'}
-                      flex={1}
-                      fontWeight={400}
-                      color={'gray.600'}>
-                      {tags[competency.overall_rating]?.label}
-                    </Text>
-                  </VStack>
-                </HStack>
-
-                <VStack p={4}>
-                  <Text fontSize={'TMD'} fontWeight={700} color={'gray.700'}>
-                    {competency.title}
-                  </Text>
-
-                  <VStack mt={4} space={4}>
-                    {competency.questions.map(question => (
-                      <HStack key={question.id} alignItems={'center'}>
-                        <VStack flex={1} space={1} mr={2}>
-                          <Text
-                            fontSize={'TSM'}
-                            fontWeight={400}
-                            color={'gray.700'}>
-                            {question.title}
-                          </Text>
-                          {question.description && (
-                            <Text
-                              fontSize={'TSM'}
-                              fontWeight={400}
-                              color={'gray.600'}>
-                              {question.description}
-                            </Text>
-                          )}
-                        </VStack>
-
-                        <StarView
-                          maxLength={5}
-                          value={(question as any).value}
-                        />
-                      </HStack>
-                    ))}
-                  </VStack>
-                </VStack>
-              </VStack>
-            ))}
+      {!competencyFormatted ? (
+        <Center flex={1}>
+          <Spinner size={'lg'} />
+        </Center>
+      ) : (
+        <>
+          <VStack flex={1} px={isTablet ? '64px' : 4}>
+            <CompetenceView competences={competencyFormatted} />
           </VStack>
-        </ScrollView>
-      </VStack>
 
-      <VStack
-        w={'100%'}
-        px={isTablet ? '64px' : 4}
-        background={'white'}
-        pt={3}
-        space={4}
-        borderRadius={'8px 8px 0px 0px'}>
-        <Button
-          onPress={handlePressContinue}
-          marginTop={'auto'}
-          variant={'solid'}
-          borderRadius={'8px'}
-          color={'white'}
-          isLoading={isLoading}
-          background={'primary.200'}>
-          <HStack alignItems={'center'} space={2}>
-            <Icon name={'check'} color={theme.colors.white} />
-            <Text>Finish observation</Text>
-          </HStack>
-        </Button>
+          <VStack
+            w={'100%'}
+            px={isTablet ? '64px' : 4}
+            background={'white'}
+            pt={3}
+            space={4}
+            borderRadius={'8px 8px 0px 0px'}>
+            <Button
+              onPress={handlePressContinue}
+              marginTop={'auto'}
+              variant={'solid'}
+              borderRadius={'8px'}
+              color={'white'}
+              isLoading={isLoading}
+              background={'primary.200'}>
+              <HStack alignItems={'center'} space={2}>
+                <Icon name={'check'} color={theme.colors.white} />
+                <Text>Finish observation</Text>
+              </HStack>
+            </Button>
 
-        <Button
-          onPress={Navigation.goBack}
-          marginTop={'auto'}
-          variant={'outline'}
-          borderRadius={'8px'}
-          isLoading={isLoading}
-          borderColor={'primary.200'}>
-          <HStack alignItems={'center'} space={2}>
-            <Icon name={'pen'} color={theme.colors.primary['200']} />
-            <Text color={'primary.200'}>Edit evaluation</Text>
-          </HStack>
-        </Button>
-      </VStack>
+            <Button
+              onPress={Navigation.goBack}
+              marginTop={'auto'}
+              variant={'outline'}
+              borderRadius={'8px'}
+              isLoading={isLoading}
+              borderColor={'primary.200'}>
+              <HStack alignItems={'center'} space={2}>
+                <Icon name={'pen'} color={theme.colors.primary['200']} />
+                <Text color={'primary.200'}>Edit evaluation</Text>
+              </HStack>
+            </Button>
+          </VStack>
+        </>
+      )}
     </VStack>
   );
 };

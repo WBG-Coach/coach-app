@@ -20,11 +20,6 @@ export default class Session extends Model {
     .get('answer')
     .query(Q.where('session_id', this.id));
 
-  @lazy
-  competences = this.collections
-    .get('competence')
-    .query(Q.where('session_id', this.id));
-
   @text('session_status') session_status?: string;
   @text('boys_count') boys_count?: string;
   @text('girls_count') girls_count?: string;
