@@ -88,7 +88,7 @@ export const syncWatermelon = async () => {
           const urlParams = `last_pulled_at=${lastPulledAt}`;
 
           const {data} = await axios.get(
-            `http://44.213.115.141:3000/sync?${urlParams}`,
+            `http://3.237.104.145:3000/sync?${urlParams}`,
           );
 
           return data;
@@ -105,7 +105,7 @@ export const syncWatermelon = async () => {
       pushChanges: async ({changes, lastPulledAt}) => {
         console.log('3 - pushChanges');
         try {
-          await axios.post(`http://44.213.115.141:3000/sync`, {
+          await axios.post(`http://3.237.104.145:3000/sync`, {
             changes,
             lastPulledAt: new Date(lastPulledAt).toJSON(),
             model: DeviceInfo.getDeviceId(),
