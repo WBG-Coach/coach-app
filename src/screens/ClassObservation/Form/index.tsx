@@ -43,7 +43,12 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
     [questions],
   );
 
-  const {control, handleSubmit, watch} = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: {isSubmitting},
+  } = useForm({
     defaultValues: {...defaultValues, key_points: ''} as {
       [key: string]: undefined | string;
     },
@@ -176,6 +181,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
           borderRadius={'8px 8px 0px 0px'}>
           <Button
             onPress={handleSubmit(handleSubmitForm)}
+            isLoading={isSubmitting}
             marginTop={'auto'}
             variant={'solid'}
             borderRadius={'8px'}
