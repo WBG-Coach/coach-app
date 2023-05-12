@@ -7,6 +7,7 @@ import Icon from '../../components/base/Icon';
 import i18n, {resources} from '../../i18n';
 import Routes from '../../routes/paths';
 import Navigation from '../../services/navigation';
+var pkg = require('../../../package.json');
 
 const SettingsScreen: React.FC = () => {
   const {t} = useTranslation(); // T must be in context to refresh currentLanguage.
@@ -65,7 +66,7 @@ const SettingsScreen: React.FC = () => {
         <HStack alignItems={'center'} py={'16px'} space={2}>
           <Icon name={'mobile-android'} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            App version v1.0.2
+            App version v{pkg.version}
           </Text>
         </HStack>
       </VStack>
