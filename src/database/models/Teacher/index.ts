@@ -11,6 +11,10 @@ import {
 export default class Teacher extends Model {
   static table = 'teacher';
 
+  static associations = {
+    sessions: {type: 'has_many', foreignKey: 'session_id'},
+  } as const;
+
   @lazy
   sessions = this.collections
     .get('session')

@@ -13,11 +13,17 @@ export default class Session extends Model {
   static associations = {
     answers: {type: 'has_many', foreignKey: 'session_id'},
     competences: {type: 'has_many', foreignKey: 'session_id'},
+    feedbacks: {type: 'has_many', foreignKey: 'session_id'},
   } as const;
 
   @lazy
   answers = this.collections
     .get('answer')
+    .query(Q.where('session_id', this.id));
+
+  @lazy
+  feedbacks = this.collections
+    .get('feedback')
     .query(Q.where('session_id', this.id));
 
   @text('session_status') session_status?: string;

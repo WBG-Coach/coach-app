@@ -18,6 +18,7 @@ import TeacherCreateScreen from '../screens/Home/CreateTeacher';
 import TeacherCreatedScreen from '../screens/Home/CreateTeacher/TeacherCreated';
 import SessionViewerScreen from '../screens/TeacherView/Tabs/Session/SessionViewer';
 import ObservationViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewer/Observation';
+import PendingSessions from '../screens/PendingSessions';
 
 const Stack = createNativeStackNavigator();
 
@@ -172,6 +173,21 @@ const AppRoutes = () => {
             options={{
               header: () => (
                 <Header title={t('header.settings') || 'Settings'} hideConfig />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.pendingSessions}
+            component={PendingSessions}
+            options={{
+              header: () => (
+                <Header
+                  title={t('header.pendingSession') || 'Pending sessions'}
+                  hideConfig
+                />
               ),
               headerShown: true,
               contentStyle: {backgroundColor: 'white'},

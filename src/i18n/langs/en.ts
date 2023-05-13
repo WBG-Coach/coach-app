@@ -15,6 +15,7 @@ const enTranslation = {
       switchSchools: 'Switch schools',
       offlineSync: 'Offline sync',
       statics: 'Statistics',
+      pendingSession: 'Pending sessions',
     },
     teachersLength: '$teacherslength Teachers being coached',
     noTeachersLength: 'No teachers',
@@ -73,6 +74,7 @@ const enTranslation = {
     feedbackPreparation: 'Feedback preparation',
     feedbackComplete: 'Feedback complete',
     previousSession: 'Previous session',
+    pendingSession: 'Pending sessions',
   },
   components: {
     starsTag: {

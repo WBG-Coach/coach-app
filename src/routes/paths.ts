@@ -4,6 +4,7 @@ const Routes = {
     profileSelect: 'ProfileSelect',
   },
   home: 'HomeScreen',
+  pendingSessions: 'PendingSessions',
   teacher: {
     teacher: 'TeacherScreen',
     create: 'TeacherCreateScreen',

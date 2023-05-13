@@ -19,7 +19,7 @@ import {
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {getWatermelon, syncWatermelon} from '../../database';
+import {getWatermelon} from '../../database';
 import Teacher from '../../database/models/Teacher';
 import {useFocusEffect} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
@@ -39,6 +39,11 @@ const HomeScreen = () => {
       icon: 'graph-bar',
       label: t('home.items.newSession'),
       onPress: () => {},
+    },
+    {
+      icon: 'comment-dots',
+      label: t('home.items.pendingSession'),
+      onPress: () => Navigation.navigate(Routes.pendingSessions),
     },
     {
       icon: 'university',
