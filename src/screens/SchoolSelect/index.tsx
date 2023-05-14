@@ -1,5 +1,5 @@
 import {HStack, Image, Text, VStack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Icon from '../../components/base/Icon';
 import {TouchableOpacity} from 'react-native';
 import Navigation from '../../services/navigation';
@@ -9,9 +9,11 @@ import {getWatermelon} from '../../database';
 import School from '../../database/models/School';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
+import {UserContext} from '../../providers/contexts/UserContext';
 
 const SchoolSelectScreen = () => {
   const [schoolList, setSchoolList] = useState<School[]>();
+  const {handleSelectSchool} = useContext(UserContext);
   const {t} = useTranslation();
   const isTablet = Tablet();
 
@@ -46,11 +48,7 @@ const SchoolSelectScreen = () => {
             {schoolList.map((school, index) => (
               <TouchableOpacity
                 key={index}
-                onPress={() =>
-                  Navigation.push(Routes.setupUserData.profileSelect, {
-                    school: school._raw,
-                  })
-                }>
+                onPress={() => handleSelectSchool(school._raw as any)}>
                 <HStack
                   w={'100%'}
                   py={'18px'}

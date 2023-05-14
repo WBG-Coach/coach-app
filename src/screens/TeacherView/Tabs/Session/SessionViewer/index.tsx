@@ -1,6 +1,6 @@
 import {isTablet as Tablet} from 'react-native-device-info';
 import {FlatList, HStack, Text, View, VStack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Session from '../../../../../database/models/Session';
 import Competence from '../../../../../database/models/Competence';
 import {getWatermelon} from '../../../../../database';
@@ -13,6 +13,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Navigation from '../../../../../services/navigation';
 import Routes from '../../../../../routes/paths';
 import Answer from '../../../../../database/models/Answer';
+import {useFocusEffect} from '@react-navigation/native';
 
 type Props = {
   route: {
@@ -35,7 +36,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
     data: {} as SessionWithRelations,
   });
 
-  useEffect(() => {
+  useFocusEffect(() => {
     (async () => {
       const db = await getWatermelon();
       const sessionDb = (await db.collections
@@ -61,7 +62,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
         },
       });
     })();
-  }, []);
+  });
 
   const options = [
     {

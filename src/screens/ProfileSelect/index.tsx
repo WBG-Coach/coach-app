@@ -10,16 +10,8 @@ import {getWatermelon} from '../../database';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 
-type Props = {
-  route: {
-    params: {
-      school: ISchool;
-    };
-  };
-};
-
-const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
-  const {handleLogin} = useContext(UserContext);
+const ProfileSelectScreen: React.FC = () => {
+  const {handleSelectProfile} = useContext(UserContext);
   const [usersList, setUsersList] = useState<User[]>();
   const {t} = useTranslation();
   const isTablet = Tablet();
@@ -55,12 +47,7 @@ const ProfileSelectScreen: React.FC<any> = ({route}: Props) => {
             {usersList.map((user, index) => (
               <TouchableOpacity
                 key={index}
-                onPress={() =>
-                  handleLogin({
-                    ...user._raw,
-                    school: route.params.school,
-                  } as any)
-                }>
+                onPress={() => handleSelectProfile(user._raw as any)}>
                 <HStack
                   key={index}
                   w={'100%'}

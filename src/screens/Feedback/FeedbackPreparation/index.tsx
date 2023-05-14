@@ -27,55 +27,72 @@ const FeedbackPreparation: React.FC = () => {
           </Text>
 
           <VStack mt={7} space={5}>
-            {competences.map(competence => (
-              <TouchableOpacity
-                key={competence.id}
-                onPress={() => {
-                  const exists = !!competenciesSelected.find(
-                    ({id}) => id === competence.id,
-                  );
+            {competences.map(competence => {
+              const isChecked = competenciesSelected.find(
+                ({id}) => competence.id === id,
+              );
 
-                  if (exists) {
+              return (
+                <TouchableOpacity
+                  key={competence.id}
+                  onPress={() => {
+                    const exists = !!competenciesSelected.find(
+                      ({id}) => id === competence.id,
+                    );
+
+                    if (!exists && competenciesSelected.length < 1) {
+                      setCompetenciesSelected([
+                        ...competenciesSelected,
+                        competence,
+                      ]);
+
+                      return;
+                    }
+
                     setCompetenciesSelected(
                       competenciesSelected.filter(
                         ({id}) => id !== competence.id,
                       ),
                     );
-                  } else {
-                    setCompetenciesSelected([
-                      ...competenciesSelected,
-                      competence,
-                    ]);
-                  }
-                }}>
-                <HStack alignItems={'center'}>
-                  <VStack flex={1} space={2}>
-                    <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      {competence.title}
-                    </Text>
-                    <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                      Teaching practice 2
-                    </Text>
+                  }}>
+                  <HStack alignItems={'center'}>
+                    <VStack flex={1} space={2}>
+                      <Text
+                        fontSize={'LMD'}
+                        fontWeight={500}
+                        color={'gray.700'}>
+                        {competence.title}
+                      </Text>
+                      <Text
+                        fontSize={'TSM'}
+                        fontWeight={400}
+                        color={'gray.600'}>
+                        Teaching practice 2
+                      </Text>
 
-                    <HStack space={1}>
-                      <StarsTag value={0} />
-                    </HStack>
-                  </VStack>
+                      <HStack space={1}>
+                        <StarsTag value={0} />
+                      </HStack>
+                    </VStack>
 
-                  <Checkbox
-                    size={'md'}
-                    color={'white'}
-                    aria-label={`${competence.title} checkbox`}
-                    value={competence.title}
-                    isChecked={
-                      !!competenciesSelected.find(
-                        comp => comp.id === competence.id,
-                      )
-                    }
-                  />
-                </HStack>
-              </TouchableOpacity>
-            ))}
+                    <Checkbox
+                      size={'md'}
+                      color={'white'}
+                      isDisabled={
+                        competenciesSelected.length >= 1 && !isChecked
+                      }
+                      aria-label={`${competence.title} checkbox`}
+                      value={competence.title}
+                      isChecked={
+                        !!competenciesSelected.find(
+                          comp => comp.id === competence.id,
+                        )
+                      }
+                    />
+                  </HStack>
+                </TouchableOpacity>
+              );
+            })}
           </VStack>
         </ScrollView>
       </VStack>

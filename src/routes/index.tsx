@@ -29,7 +29,6 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -47,11 +46,35 @@ const AppRoutes = () => {
           />
         )}
 
-        {!user && (
+        {!user?.school && (
+          <Stack.Screen
+            name={Routes.setupUserData.schoolSelect}
+            component={SchoolSelectScreen}
+            options={{
+              header: () => <Header hideBack />,
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+        )}
+
+        {!user?.id && (
+          <Stack.Screen
+            name={Routes.setupUserData.profileSelect}
+            component={ProfileSelectScreen}
+            options={{
+              header: () => <Header hideBack />,
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+        )}
+
+        {user && user.school && (
           <Stack.Group>
             <Stack.Screen
-              name={Routes.setupUserData.schoolSelect}
-              component={SchoolSelectScreen}
+              name={Routes.home}
+              component={HomeScreen}
               options={{
                 header: () => <Header hideBack />,
                 headerShown: true,
@@ -60,148 +83,134 @@ const AppRoutes = () => {
             />
 
             <Stack.Screen
-              name={Routes.setupUserData.profileSelect}
-              component={ProfileSelectScreen}
+              name={Routes.teacher.teacher}
+              component={TeacherView}
               options={{
-                header: () => <Header />,
+                header: () => (
+                  <Header title={t('header.teacher') || 'Teacher'} />
+                ),
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},
               }}
             />
+
+            <Stack.Screen
+              name={Routes.teacher.create}
+              component={TeacherCreateScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.newTeacher') || 'New teacher'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.teacher.created}
+              component={TeacherCreatedScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.newTeacher') || 'New teacher'}
+                    hideConfig
+                    hideBack
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.teacher.sessionViewer}
+              component={SessionViewerScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.previousSession') || 'Previous session'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.teacher.observationViewer}
+              component={ObservationViewScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={
+                      t('header.observationSummary') || 'Observation summary'
+                    }
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.settings.settings}
+              component={SettingsScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.settings') || 'Settings'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.settings.changeLanguage}
+              component={ChangeLanguageScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.settings') || 'Settings'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.pendingSessions}
+              component={PendingSessions}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.pendingSession') || 'Pending sessions'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name="WithCompetenceContext"
+              component={WithCompetenceContext}
+              options={{
+                headerShown: false,
+              }}
+            />
           </Stack.Group>
         )}
-
-        <Stack.Group>
-          <Stack.Screen
-            name={Routes.home}
-            component={HomeScreen}
-            options={{
-              header: () => <Header hideBack />,
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.teacher.teacher}
-            component={TeacherView}
-            options={{
-              header: () => <Header title={t('header.teacher') || 'Teacher'} />,
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.teacher.create}
-            component={TeacherCreateScreen}
-            options={{
-              header: () => (
-                <Header
-                  title={t('header.newTeacher') || 'New teacher'}
-                  hideConfig
-                />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.teacher.created}
-            component={TeacherCreatedScreen}
-            options={{
-              header: () => (
-                <Header
-                  title={t('header.newTeacher') || 'New teacher'}
-                  hideConfig
-                  hideBack
-                />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.teacher.sessionViewer}
-            component={SessionViewerScreen}
-            options={{
-              header: () => (
-                <Header
-                  title={t('header.previousSession') || 'Previous session'}
-                  hideConfig
-                />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.teacher.observationViewer}
-            component={ObservationViewScreen}
-            options={{
-              header: () => (
-                <Header
-                  title={
-                    t('header.observationSummary') || 'Observation summary'
-                  }
-                  hideConfig
-                />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.settings.settings}
-            component={SettingsScreen}
-            options={{
-              header: () => (
-                <Header title={t('header.settings') || 'Settings'} hideConfig />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.settings.changeLanguage}
-            component={ChangeLanguageScreen}
-            options={{
-              header: () => (
-                <Header title={t('header.settings') || 'Settings'} hideConfig />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name={Routes.pendingSessions}
-            component={PendingSessions}
-            options={{
-              header: () => (
-                <Header
-                  title={t('header.pendingSession') || 'Pending sessions'}
-                  hideConfig
-                />
-              ),
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
-
-          <Stack.Screen
-            name="WithCompetenceContext"
-            component={WithCompetenceContext}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

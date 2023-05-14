@@ -23,9 +23,11 @@ import {getWatermelon} from '../../database';
 import Teacher from '../../database/models/Teacher';
 import {useFocusEffect} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
+import {Q} from '@nozbe/watermelondb';
+import Session from '../../database/models/Session';
 
 const HomeScreen = () => {
-  const {user, setTeacher} = useContext(UserContext);
+  const {user, setTeacher, handleSwitchSchool} = useContext(UserContext);
   const {t} = useTranslation();
   const theme = useTheme();
   const isTablet = Tablet();
@@ -48,7 +50,7 @@ const HomeScreen = () => {
     {
       icon: 'university',
       label: t('home.items.switchSchools'),
-      onPress: () => {},
+      onPress: handleSwitchSchool,
     },
     {
       icon: 'wifi-slash',
@@ -68,18 +70,28 @@ const HomeScreen = () => {
         const db = await getWatermelon();
         const allTeachers = await db.collections
           .get<Teacher>('teacher')
-          .query()
+          .query(Q.where('school_id', Q.eq(user?.school?.id as string)))
           .fetch();
 
         const teachersUpdated: TeachersWithSession[] = await Promise.all(
-          allTeachers.map(
-            async teacher =>
-              ({
-                ...teacher._raw,
-                sessions: await teacher.sessions.fetch(),
-                image: (await teacher.image.fetch())._raw,
-              } as any),
-          ),
+          allTeachers.map(async teacher => {
+            const sessions = (await teacher.sessions.fetch()) as Session[];
+            const feedbacksLength = (
+              await Promise.all(
+                sessions.map(async session => ({
+                  ...session,
+                  feedbacks: await session.feedbacks.fetch(),
+                })),
+              )
+            ).reduce((acc, item) => acc + (item.feedbacks as any).length, 0);
+
+            return {
+              ...teacher._raw,
+              sessions,
+              feedbacksLength: feedbacksLength,
+              image: (await teacher.image.fetch())._raw,
+            } as any;
+          }),
         );
 
         setTeachers({isLoading: false, data: teachersUpdated});
@@ -210,56 +222,47 @@ const HomeScreen = () => {
                           </Text>
 
                           <HStack space={1}>
-                            <HStack
-                              alignItems={'center'}
-                              borderRadius={'4px'}
-                              background={'green.100'}
-                              px={2}
-                              py={1}
-                              space={1}>
-                              <Icon name={'thumbs-up'} size={15} />
-                              <Text
-                                fontSize={'TSM'}
-                                fontWeight={500}
-                                color={'gray.700'}>
-                                1
-                              </Text>
-                            </HStack>
+                            {item.sessions.length >= 1 && (
+                              <HStack
+                                alignItems={'center'}
+                                borderRadius={'4px'}
+                                background={'primary.100'}
+                                px={2}
+                                py={1}
+                                space={1}>
+                                <Icon
+                                  name={'clipboard-notes-solid'}
+                                  size={15}
+                                />
+                                <Text
+                                  fontSize={'TSM'}
+                                  fontWeight={500}
+                                  color={'gray.700'}>
+                                  {item.sessions.length}{' '}
+                                  {item.sessions.length > 1
+                                    ? t('home.teachers.sessions')
+                                    : t('home.teachers.session')}
+                                </Text>
+                              </HStack>
+                            )}
 
-                            <HStack
-                              alignItems={'center'}
-                              borderRadius={'4px'}
-                              background={'red.100'}
-                              px={2}
-                              py={1}
-                              space={1}>
-                              <Icon name={'thumbs-up'} size={15} />
-                              <Text
-                                fontSize={'TSM'}
-                                fontWeight={500}
-                                color={'gray.700'}>
-                                1
-                              </Text>
-                            </HStack>
-
-                            <HStack
-                              alignItems={'center'}
-                              borderRadius={'4px'}
-                              background={'primary.100'}
-                              px={2}
-                              py={1}
-                              space={1}>
-                              <Icon name={'clipboard-notes'} size={15} />
-                              <Text
-                                fontSize={'TSM'}
-                                fontWeight={500}
-                                color={'gray.700'}>
-                                {item.sessions.length}{' '}
-                                {item.sessions.length > 1
-                                  ? t('home.teachers.sessions')
-                                  : t('home.teachers.session')}
-                              </Text>
-                            </HStack>
+                            {(item as any).feedbacksLength >= 1 && (
+                              <HStack
+                                alignItems={'center'}
+                                borderRadius={'4px'}
+                                background={'green.100'}
+                                px={2}
+                                py={1}
+                                space={1}>
+                                <Icon name={'comment-verify-solid'} size={15} />
+                                <Text
+                                  fontSize={'TSM'}
+                                  fontWeight={500}
+                                  color={'gray.700'}>
+                                  {(item as any).feedbacksLength} 'Feedbacks'
+                                </Text>
+                              </HStack>
+                            )}
                           </HStack>
                         </VStack>
                       </HStack>

@@ -24,12 +24,12 @@ import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import Answer from '../../../../database/models/Answer';
 import {Q} from '@nozbe/watermelondb';
-import Teacher from '../../../../database/models/Teacher';
 import {UserContext} from '../../../../providers/contexts/UserContext';
 
 export type SessionWithAnswers = Omit<Session, 'answers'> & {
   overall_rating: number;
   answers: Answer[];
+  feedbackPending: boolean;
 };
 
 const SessionTab: React.FC = () => {
@@ -54,6 +54,7 @@ const SessionTab: React.FC = () => {
         const sessions: SessionWithAnswers[] = await Promise.all(
           list.map(async session => {
             const answers = await session.answers.fetch();
+            const feedbacks = await session.feedbacks.fetch();
             const answersSum = answers?.reduce(
               (acc, item: any) => acc + item._raw.value,
               0,
@@ -62,6 +63,7 @@ const SessionTab: React.FC = () => {
             return {
               ...session._raw,
               overall_rating: Math.round(answersSum / answers.length),
+              feedbackPending: feedbacks.length < 1,
             } as any;
           }),
         );
@@ -83,8 +85,42 @@ const SessionTab: React.FC = () => {
       ) : (
         <>
           {sessions.data.length >= 1 ? (
-            <VStack flex={1} px={isTablet ? '64px' : 4} mt={'24px'}>
-              <ScrollView flexGrow={0}>
+            <VStack flex={1} px={isTablet ? '64px' : 4}>
+              {sessions.data[sessions.data.length - 1].feedbackPending && (
+                <HStack background={'yellow.100'} p={4} space={2}>
+                  <Icon
+                    name={'exclamation-circle'}
+                    color={theme.colors.yellow['300']}
+                  />
+                  <VStack flex={1} alignItems={'baseline'}>
+                    <Text fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
+                      Pending feedback session
+                    </Text>
+                    <Text
+                      mt={2}
+                      fontSize={'TSM'}
+                      fontWeight={400}
+                      color={'gray.700'}>
+                      You still haven't done the feedback of the last class
+                      observation with this teacher
+                    </Text>
+
+                    <Button
+                      onPress={() =>
+                        Navigation.navigate('WithCompetenceContext', {
+                          screen: Routes.feedback.mentoringSection,
+                        })
+                      }
+                      mt={3}
+                      borderColor={'white'}
+                      background={'white'}>
+                      <Text color={'primary.200'}>Start feedback now</Text>
+                    </Button>
+                  </VStack>
+                </HStack>
+              )}
+
+              <ScrollView flexGrow={0} mt={'24px'}>
                 {sessions.data.map((item, index) => (
                   <TouchableOpacity
                     key={item.id}
@@ -117,9 +153,13 @@ const SessionTab: React.FC = () => {
 
                         <StarsTag value={item.overall_rating - 1} />
                       </VStack>
-                      <Box>
+                      <HStack space={1}>
+                        <Icon
+                          name={'exclamation-circle-solid'}
+                          color={theme.colors.yellow['200']}
+                        />
                         <Icon name={'angle-right'} />
-                      </Box>
+                      </HStack>
                     </HStack>
                   </TouchableOpacity>
                 ))}

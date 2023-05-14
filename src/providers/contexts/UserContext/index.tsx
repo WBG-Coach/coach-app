@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import Image from '../../../database/models/Image';
+import School from '../../../database/models/School';
 import Session from '../../../database/models/Session';
 import Teacher from '../../../database/models/Teacher';
 import {IUser} from '../../../types';
@@ -10,9 +11,11 @@ export type TeachersWithSession = Omit<Teacher, 'sessions'> & {
 };
 
 export type UserContextProps = {
-  handleLogin: (user: IUser) => Promise<void>;
+  handleSelectProfile: (user: IUser) => Promise<void>;
+  handleSelectSchool: (school: School) => Promise<void>;
   teacher?: TeachersWithSession;
   setTeacher: (teacher: TeachersWithSession) => void;
+  handleSwitchSchool: () => void;
   user?: IUser;
 };
 
@@ -28,12 +31,30 @@ const UserContextProvider = ({children}: Props) => {
   const [user, setUser] = useState<IUser>();
   const [teacher, setTeacher] = useState<TeachersWithSession>();
 
-  const handleLogin = async (newUser: IUser) => {
-    setUser(newUser);
+  const handleSelectProfile = async (newUser: IUser) => {
+    setUser({...user, ...newUser});
+  };
+
+  const handleSelectSchool = async (school: School) => {
+    setUser({...((user || {}) as any), school});
+  };
+
+  const handleSwitchSchool = async () => {
+    if (user) {
+      setUser({...user, school: undefined});
+    }
   };
 
   return (
-    <UserContext.Provider value={{handleLogin, user, teacher, setTeacher}}>
+    <UserContext.Provider
+      value={{
+        handleSelectProfile,
+        handleSelectSchool,
+        user,
+        teacher,
+        setTeacher,
+        handleSwitchSchool,
+      }}>
       {children}
     </UserContext.Provider>
   );

@@ -8,61 +8,68 @@ import {
   VStack,
 } from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import Teacher from '../../database/models/Teacher';
 import {getWatermelon} from '../../database';
 import {UserContext} from '../../providers/contexts/UserContext';
 import {Q} from '@nozbe/watermelondb';
 import Session from '../../database/models/Session';
-import Feedback from '../../database/models/Feedback';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
+import Navigation from '../../services/navigation';
+import Routes from '../../routes/paths';
+import {useFocusEffect} from '@react-navigation/native';
 
 const PendingSessions: React.FC = () => {
-  const {user} = useContext(UserContext);
+  const {user, setTeacher} = useContext(UserContext);
   const [teachers, setTeachers] = useState({
     isLoading: true,
     data: [] as Teacher[],
   });
 
-  useEffect(() => {
+  const refreshSessions = useCallback(async () => {
     if (user && user.school) {
-      (async () => {
-        const db = await getWatermelon();
-        const allTeachers = await db.collections
-          .get<Teacher>('teacher')
-          .query(Q.where('school_id', user?.school?.id as string))
-          .fetch();
+      const db = await getWatermelon();
+      const allTeachers = await db.collections
+        .get<Teacher>('teacher')
+        .query(Q.where('school_id', Q.eq(user?.school?.id as string)))
+        .fetch();
 
-        const teachersWithSessions = await Promise.all(
-          allTeachers.map(async teacher => ({
-            ...teacher,
-            image: await teacher.image.fetch(),
-            sessions: await Promise.all(
-              ((await teacher.sessions.fetch()) as Session[]).map(
-                async session => ({
-                  ...session,
-                  feedbacks: await session.feedbacks.fetch(),
-                }),
-              ),
+      console.log(user?.school?.id);
+
+      const teachersWithSessions = await Promise.all(
+        allTeachers.map(async teacher => ({
+          ...teacher,
+          image: await teacher.image.fetch(),
+          sessions: await Promise.all(
+            ((await teacher.sessions.fetch()) as Session[]).map(
+              async session => ({
+                ...session,
+                feedbacks: await session.feedbacks.fetch(),
+              }),
             ),
-          })),
-        );
+          ),
+        })),
+      );
 
-        const data = teachersWithSessions.reduce((acc, item) => {
-          if (
-            item.sessions.find(session => (session.feedbacks as any).length < 1)
-          ) {
-            return [...acc, {...(item as any)._raw, image: item.image}];
-          }
+      const data = teachersWithSessions.reduce((acc, item) => {
+        if (
+          item.sessions.find(session => (session.feedbacks as any).length < 1)
+        ) {
+          return [...acc, {...(item as any)._raw, image: item.image}];
+        }
 
-          return acc;
-        }, [] as Teacher[]);
+        return acc;
+      }, [] as Teacher[]);
 
-        setTeachers({isLoading: false, data});
-      })();
+      console.log('helo worrld  ', teachersWithSessions);
+      setTeachers({isLoading: false, data});
     }
-  }, []);
+  }, [user]);
+
+  useEffect(() => {
+    refreshSessions();
+  }, [refreshSessions]);
 
   const isTablet = Tablet();
 
@@ -87,8 +94,16 @@ const PendingSessions: React.FC = () => {
           <FlatList
             data={teachers.data}
             renderItem={({item}) => (
-              <TouchableOpacity>
-                <HStack py={4} alignItems={'center'}>
+              <TouchableOpacity
+                onPress={() => {
+                  setTeacher(item as any);
+                  Navigation.navigate(Routes.teacher.teacher);
+                }}>
+                <HStack
+                  py={4}
+                  alignItems={'center'}
+                  borderBottomColor={'gray.200'}
+                  borderBottomWidth={'1px'}>
                   <Image
                     source={{uri: item.image.value}}
                     alt={'Teacher image'}
