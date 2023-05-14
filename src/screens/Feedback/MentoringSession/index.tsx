@@ -13,8 +13,17 @@ import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import {BestPratices} from '../../../assets/images/mentoring';
 import Icon from '../../../components/base/Icon';
+import Session from '../../../database/models/Session';
 
-const MentoringSection: React.FC = () => {
+type Props = {
+  route: {
+    params: {
+      session_id: Session['id'];
+    };
+  };
+};
+
+const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -77,7 +86,9 @@ const MentoringSection: React.FC = () => {
           borderRadius={'8px'}
           color={'white'}
           background={'primary.200'}
-          onPress={() => Navigation.reset(Routes.feedback.feedbackPreparation)}>
+          onPress={() =>
+            Navigation.reset(Routes.feedback.feedbackPreparation, {...params})
+          }>
           Continue to feedback preparation
         </Button>
 

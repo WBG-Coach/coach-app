@@ -19,6 +19,7 @@ import TeacherCreatedScreen from '../screens/Home/CreateTeacher/TeacherCreated';
 import SessionViewerScreen from '../screens/TeacherView/Tabs/Session/SessionViewer';
 import ObservationViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewer/Observation';
 import PendingSessions from '../screens/PendingSessions';
+import FeedbackViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewer/Feedback';
 
 const Stack = createNativeStackNavigator();
 
@@ -143,6 +144,23 @@ const AppRoutes = () => {
             <Stack.Screen
               name={Routes.teacher.observationViewer}
               component={ObservationViewScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={
+                      t('header.observationSummary') || 'Observation summary'
+                    }
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.teacher.feedbackViewer}
+              component={FeedbackViewScreen}
               options={{
                 header: () => (
                   <Header

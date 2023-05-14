@@ -4,8 +4,17 @@ import React from 'react';
 import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
+import Session from '../../../database/models/Session';
 
-const ObservationCompleted: React.FC = () => {
+type Props = {
+  route: {
+    params: {
+      session_id: Session['id'];
+    };
+  };
+};
+
+const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
   const starsLength = Array(5).fill({});
   const isTablet = Tablet();
   const theme = useTheme();
@@ -78,7 +87,9 @@ const ObservationCompleted: React.FC = () => {
           borderRadius={'8px'}
           color={'white'}
           background={'primary.200'}
-          onPress={() => Navigation.reset(Routes.feedback.mentoringSection)}>
+          onPress={() =>
+            Navigation.reset(Routes.feedback.mentoringSection, {...params})
+          }>
           Start feedback preparation
         </Button>
 

@@ -45,7 +45,7 @@ const PendingSessions: React.FC = () => {
             ((await teacher.sessions.fetch()) as Session[]).map(
               async session => ({
                 ...session,
-                feedbacks: await session.feedbacks.fetch(),
+                feedbacks: await session.feedback.fetch(),
               }),
             ),
           ),

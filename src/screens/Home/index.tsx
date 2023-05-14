@@ -80,7 +80,7 @@ const HomeScreen = () => {
               await Promise.all(
                 sessions.map(async session => ({
                   ...session,
-                  feedbacks: await session.feedbacks.fetch(),
+                  feedbacks: await session.feedback.fetch(),
                 })),
               )
             ).reduce((acc, item) => acc + (item.feedbacks as any).length, 0);
@@ -222,7 +222,7 @@ const HomeScreen = () => {
                           </Text>
 
                           <HStack space={1}>
-                            {item.sessions.length >= 1 && (
+                            {item.sessions.length >= 1 ? (
                               <HStack
                                 alignItems={'center'}
                                 borderRadius={'4px'}
@@ -244,6 +244,26 @@ const HomeScreen = () => {
                                     : t('home.teachers.session')}
                                 </Text>
                               </HStack>
+                            ) : (
+                              <HStack
+                                alignItems={'center'}
+                                borderRadius={'4px'}
+                                background={'yellow.100'}
+                                px={2}
+                                py={1}
+                                space={1}>
+                                <Icon
+                                  name={'favorite-solid'}
+                                  size={15}
+                                  color={theme.colors.yellow['300']}
+                                />
+                                <Text
+                                  fontSize={'TSM'}
+                                  fontWeight={500}
+                                  color={'yellow.300'}>
+                                  New teacher
+                                </Text>
+                              </HStack>
                             )}
 
                             {(item as any).feedbacksLength >= 1 && (
@@ -259,7 +279,7 @@ const HomeScreen = () => {
                                   fontSize={'TSM'}
                                   fontWeight={500}
                                   color={'gray.700'}>
-                                  {(item as any).feedbacksLength} 'Feedbacks'
+                                  {(item as any).feedbacksLength} Feedbacks
                                 </Text>
                               </HStack>
                             )}

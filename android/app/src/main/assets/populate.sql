@@ -151,6 +151,7 @@
       id TEXT,
       value TEXT,
       session_id TEXT NULL,
+      competence_id TEXT NULL,
       _changed TEXT,
       _status TEXT,
       created_at INTEGER DEFAULT (strftime('%s', 'now')),

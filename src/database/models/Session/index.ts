@@ -22,9 +22,9 @@ export default class Session extends Model {
     .query(Q.where('session_id', this.id));
 
   @lazy
-  feedbacks = this.collections
+  feedback = this.collections
     .get('feedback')
-    .query(Q.where('session_id', this.id));
+    .query(Q.where('session_id', Q.eq(this.id)));
 
   @text('session_status') session_status?: string;
   @text('boys_count') boys_count?: string;

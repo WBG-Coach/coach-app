@@ -2,8 +2,6 @@ import {HStack, Image, Text, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import Icon from '../../components/base/Icon';
 import {TouchableOpacity} from 'react-native';
-import Navigation from '../../services/navigation';
-import Routes from '../../routes/paths';
 import Input from '../../components/base/Input';
 import {getWatermelon} from '../../database';
 import School from '../../database/models/School';

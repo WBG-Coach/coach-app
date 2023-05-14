@@ -11,6 +11,7 @@ const Routes = {
     created: 'TeacherCreatedScreen',
     sessionViewer: 'SessionViewerScreen',
     observationViewer: 'ObservationViewerScreen',
+    feedbackViewer: 'FeedbackViewerScreen',
   },
   splash: 'SplashScreen',
   settings: {

@@ -1,5 +1,5 @@
 import {Box, Center, HStack, Text, useTheme, VStack} from 'native-base';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Controller} from 'react-hook-form';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SimpleAccordion} from 'react-native-simple-accordion';
@@ -18,22 +18,8 @@ const CompetenceAccordion: React.FC<Props> = ({
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const theme = useTheme();
 
-  return (
-    <Box position={'relative'}>
-      {isFinished && (
-        <Center
-          position={'absolute'}
-          zIndex={10}
-          top={5}
-          right={10}
-          background={'green.200'}
-          w={'20px'}
-          h={'20px'}
-          borderRadius={'10px'}>
-          <Icon name={'check'} color={theme.colors.white} size={16} />
-        </Center>
-      )}
-
+  const Form = useMemo(
+    () => (
       <SimpleAccordion
         title={competence.title}
         startCollapsed={startCollapsed}
@@ -107,6 +93,27 @@ const CompetenceAccordion: React.FC<Props> = ({
           </VStack>
         }
       />
+    ),
+    [],
+  );
+
+  return (
+    <Box position={'relative'}>
+      {isFinished && (
+        <Center
+          position={'absolute'}
+          zIndex={10}
+          top={5}
+          right={10}
+          background={'green.200'}
+          w={'20px'}
+          h={'20px'}
+          borderRadius={'10px'}>
+          <Icon name={'check'} color={theme.colors.white} size={16} />
+        </Center>
+      )}
+
+      {Form}
     </Box>
   );
 };

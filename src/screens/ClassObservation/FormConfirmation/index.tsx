@@ -99,7 +99,9 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
       ),
     );
 
-    Navigation.navigate(Routes.classObservation.observationCompleted);
+    Navigation.navigate(Routes.classObservation.observationCompleted, {
+      session_id: _raw.id,
+    });
   };
 
   return (

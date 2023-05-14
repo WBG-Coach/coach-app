@@ -4,7 +4,6 @@ import Icon from '../../components/base/Icon';
 import Input from '../../components/base/Input';
 import {UserContext} from '../../providers/contexts/UserContext';
 import {TouchableOpacity} from 'react-native';
-import {ISchool} from '../../types';
 import User from '../../database/models/User';
 import {getWatermelon} from '../../database';
 import {isTablet as Tablet} from 'react-native-device-info';

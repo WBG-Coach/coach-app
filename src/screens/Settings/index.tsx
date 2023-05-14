@@ -11,7 +11,6 @@ var pkg = require('../../../package.json');
 
 const SettingsScreen: React.FC = () => {
   const {t} = useTranslation(); // T must be in context to refresh currentLanguage.
-  console.log('current language =>', t);
   const currentLanguage = i18n.languages[0];
   const isTablet = Tablet();
 

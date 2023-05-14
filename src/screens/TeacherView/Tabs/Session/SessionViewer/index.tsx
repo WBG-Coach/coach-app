@@ -58,6 +58,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
         data: {
           ...(sessionDb._raw as any),
           answers,
+          feedback: (await sessionDb.feedback.fetch())[0],
           overall_rating: Math.round(answersSum / answers.length),
         },
       });
@@ -76,7 +77,18 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
     {
       icon: 'comment-verify',
       label: 'Feedback',
-      onPress: () => {},
+      onPress: !(session.data.feedback as any)?.id
+        ? () =>
+            Navigation.navigate('WithCompetenceContext', {
+              screen: Routes.feedback.mentoringSection,
+              params: {
+                session_id: session.data.id,
+              },
+            })
+        : () =>
+            Navigation.navigate(Routes.teacher.feedbackViewer, {
+              feedback_id: (session.data.feedback as any)?.id,
+            }),
     },
   ];
 

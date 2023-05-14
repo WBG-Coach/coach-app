@@ -116,6 +116,10 @@ export default appSchema({
           name: 'session_id',
           type: 'string',
         },
+        {
+          name: 'competence_id',
+          type: 'string',
+        },
         {name: 'created_at', type: 'number'},
         {name: 'updated_at', type: 'number'},
       ],

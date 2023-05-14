@@ -7,8 +7,17 @@ import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import StarsTag from '../../../components/StarsTag';
+import Session from '../../../database/models/Session';
 
-const FeedbackPreparation: React.FC = () => {
+type Props = {
+  route: {
+    params: {
+      session_id: Session['id'];
+    };
+  };
+};
+
+const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
   const [competenciesSelected, setCompetenciesSelected] = useState<
     ICompetence[]
   >([]);
@@ -107,6 +116,7 @@ const FeedbackPreparation: React.FC = () => {
           onPress={() =>
             Navigation.navigate(Routes.feedback.defineActions, {
               competencies: competenciesSelected,
+              ...params,
             })
           }
           marginTop={'auto'}

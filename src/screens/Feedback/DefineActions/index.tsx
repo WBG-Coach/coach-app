@@ -19,11 +19,14 @@ import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import Image from '../../../database/models/Image';
 import {getWatermelon} from '../../../database';
+import Session from '../../../database/models/Session';
+import Feedback from '../../../database/models/Feedback';
 
 type Props = {
   route: {
     params: {
       competencies: ICompetence[];
+      session_id: Session['id'];
     };
   };
 };
@@ -39,11 +42,31 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
   const theme = useTheme();
 
-  const {handleSubmit, control} = useForm(defaultValues);
+  const {
+    handleSubmit,
+    control,
+    formState: {isSubmitting},
+  } = useForm(defaultValues);
 
   const handleSubmitForm: SubmitHandler<
     typeof defaultValues
   > = async values => {
+    const db = await getWatermelon();
+
+    await Promise.all(
+      Object.keys(values).map(
+        async key =>
+          await db.write(
+            async () =>
+              await db.collections.get<Feedback>('feedback').create(record => {
+                record.value = values[key];
+                record.competence_id = key;
+                record.session_id = params.session_id;
+              }),
+          ),
+      ),
+    );
+
     Navigation.navigate(Routes.feedback.feedbackCompleted);
   };
 
@@ -231,6 +254,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
           variant={'solid'}
           borderRadius={'8px'}
           color={'white'}
+          isLoading={isSubmitting}
           background={'primary.200'}>
           Finish coach session
         </Button>

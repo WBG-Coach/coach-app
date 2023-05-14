@@ -7,7 +7,6 @@ import {
   HStack,
   useTheme,
   Spinner,
-  Box,
   ScrollView,
 } from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
@@ -54,7 +53,7 @@ const SessionTab: React.FC = () => {
         const sessions: SessionWithAnswers[] = await Promise.all(
           list.map(async session => {
             const answers = await session.answers.fetch();
-            const feedbacks = await session.feedbacks.fetch();
+            const feedbacks = await session.feedback.fetch();
             const answersSum = answers?.reduce(
               (acc, item: any) => acc + item._raw.value,
               0,
@@ -109,6 +108,10 @@ const SessionTab: React.FC = () => {
                       onPress={() =>
                         Navigation.navigate('WithCompetenceContext', {
                           screen: Routes.feedback.mentoringSection,
+                          params: {
+                            session_id:
+                              sessions.data[sessions.data.length - 1].id,
+                          },
                         })
                       }
                       mt={3}
@@ -154,10 +157,13 @@ const SessionTab: React.FC = () => {
                         <StarsTag value={item.overall_rating - 1} />
                       </VStack>
                       <HStack space={1}>
-                        <Icon
-                          name={'exclamation-circle-solid'}
-                          color={theme.colors.yellow['200']}
-                        />
+                        {item.feedbackPending && (
+                          <Icon
+                            name={'exclamation-circle-solid'}
+                            color={theme.colors.yellow['200']}
+                          />
+                        )}
+
                         <Icon name={'angle-right'} />
                       </HStack>
                     </HStack>

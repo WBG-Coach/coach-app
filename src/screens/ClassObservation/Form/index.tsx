@@ -60,11 +60,11 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
     () =>
       competences.reduce((acc, item) => {
         if (!item.questions.find(({id}) => !formValues[id])) {
-          return [...acc, ...item.id];
+          return [...acc, item.id];
         }
         return acc;
       }, [] as string[]),
-    [competences, formValues],
+    [formValues],
   );
 
   const handleSubmitForm: SubmitHandler<
@@ -104,8 +104,8 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
       <>
         {competences.map((competence, index) => (
           <CompetenceAccordion
-            key={competence.id}
             control={control}
+            key={competence.id}
             competence={competence}
             isFinished={competenciesFinished.includes(competence.id)}
             startCollapsed={index !== 0}
@@ -113,7 +113,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
         ))}
       </>
     ),
-    [],
+    [competenciesFinished],
   );
 
   return (
