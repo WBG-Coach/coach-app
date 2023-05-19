@@ -17,10 +17,10 @@ const TeacherView: React.FC<any> = () => {
       Component: <SessionTab />,
       label: t('teacher.tabs.session.title'),
     },
-    {
+    /*     {
       Component: <></>,
       label: t('teacher.tabs.stats.title'),
-    },
+    }, */
   ];
 
   const [tabSelected, setTabSelected] = useState(tabs[0]);
