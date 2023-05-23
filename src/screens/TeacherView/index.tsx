@@ -31,13 +31,23 @@ const TeacherView: React.FC<any> = () => {
   return (
     <VStack flex={1} mt={6}>
       <VStack px={isTablet ? '64px' : 4}>
-        <Image
-          src={teacher?.image.value}
-          alt={'Teacher image'}
-          w={'48px'}
-          h={'48px'}
+        <Center
+          w={isTablet ? '48px' : '40px'}
+          h={isTablet ? '48px' : '40px'}
           borderRadius={'500px'}
-        />
+          background={'primary.100'}>
+          {teacher?.image?.value ? (
+            <Image
+              source={{uri: teacher.image.value}}
+              alt={'Teacher image'}
+              w={'100%'}
+              h={'100%'}
+              borderRadius={'500px'}
+            />
+          ) : (
+            <Icon name={'user'} />
+          )}
+        </Center>
 
         <HStack mt={2} alignItems={'center'}>
           <VStack flex={1} space={2}>
