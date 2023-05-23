@@ -71,6 +71,7 @@
       id TEXT,
       name TEXT,
       value TEXT,
+      external_id TEXT null,
       _changed TEXT,
       _status TEXT,
       created_at INTEGER DEFAULT (strftime('%s', 'now')),
