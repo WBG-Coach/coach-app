@@ -20,16 +20,18 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useClickOutside} from 'react-native-click-outside';
 import {View} from 'react-native';
+import RNFS from 'react-native-fs';
 
 const ImageCard: React.FC<Props> = ({
   name,
   created_at,
   handleDelete,
+  transformBase,
   value,
 }) => {
   const theme = useTheme();
   const opacity = useSharedValue(0);
-  const [showImage, setShowImage] = useState(false);
+  const [showImage, setShowImage] = useState<string>();
   const dropdownStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
@@ -40,14 +42,22 @@ const ImageCard: React.FC<Props> = ({
   const closeDropdown = () => (opacity.value = withTiming(0));
   const ref = useClickOutside<View>(closeDropdown);
 
+  const getImage = async () => {
+    let file = value;
+    if (transformBase)
+      file = 'data:image/png;base64,' + (await RNFS.readFile(value, 'base64'));
+
+    setShowImage(file);
+  };
+
   const options = [
     {
       label: 'View',
       icon: 'eye',
-      onPress: () => setShowImage(true),
+      onPress: async () => await getImage(),
     },
     ...(handleDelete
-      ? [{label: 'Delete', icon: 'trash-alt', onPress: handleDelete}]
+      ? [{label: 'Delete', icon: 'trash-alt', onPress: () => handleDelete()}]
       : []),
   ];
 
@@ -137,22 +147,26 @@ const ImageCard: React.FC<Props> = ({
             )}
           />
         </VStack>
-        <TouchableOpacity onPress={closeDropdown}></TouchableOpacity>
       </Animated.View>
 
-      <Modal isOpen={showImage} onClose={() => setShowImage(false)} size={'lg'}>
+      <Modal
+        isOpen={!!showImage}
+        onClose={() => setShowImage(undefined)}
+        size={'lg'}>
         <Modal.Content background={'white'}>
           <Modal.CloseButton />
           <Modal.Header color={'black'}>Image view</Modal.Header>
           <Modal.Body p={0}>
-            <Center h={'lg'}>
-              <Image
-                source={{uri: 'data:image/png;base64,' + value}}
-                alt={'Teacher image'}
-                w={'100%'}
-                h={'100%'}
-              />
-            </Center>
+            {showImage && (
+              <Center h={'lg'}>
+                <Image
+                  source={{uri: showImage}}
+                  alt={'Teacher image'}
+                  w={'100%'}
+                  h={'100%'}
+                />
+              </Center>
+            )}
           </Modal.Body>
         </Modal.Content>
       </Modal>

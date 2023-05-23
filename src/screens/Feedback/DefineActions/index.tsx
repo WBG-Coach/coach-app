@@ -21,7 +21,6 @@ import Session from '../../../database/models/Session';
 import Feedback from '../../../database/models/Feedback';
 import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
 import ImagePicker from '../../../components/ImagePicker';
-import moment from 'moment';
 import RNFS from 'react-native-fs';
 import Image from '../../../database/models/Image';
 import ImageCard from '../../../components/ImageCard';
@@ -78,7 +77,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
           async () =>
             await db.collections.get<Image>('image').create(record => {
               record.name = image.name;
-              record.value = base64;
+              record.value = 'data:image/png;base64,' + base64;
               record.external_id = feedback.id;
             }),
         );
@@ -195,7 +194,16 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
 
             <VStack flex={1} space={2} mt={6}>
               {images.map((image, index) => (
-                <ImageCard {...image} key={index} />
+                <ImageCard
+                  {...image}
+                  key={index}
+                  transformBase
+                  handleDelete={() => {
+                    const imageCopy = images;
+                    imageCopy.splice(index, 1);
+                    setImages(JSON.parse(JSON.stringify(imageCopy)));
+                  }}
+                />
               ))}
             </VStack>
           </VStack>
