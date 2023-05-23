@@ -14,13 +14,16 @@ import {ICompetence} from '../../../types';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {SimpleAccordion} from 'react-native-simple-accordion';
 import Icon from '../../../components/base/Icon';
-import {launchImageLibrary} from 'react-native-image-picker';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
-import Image from '../../../database/models/Image';
 import {getWatermelon} from '../../../database';
 import Session from '../../../database/models/Session';
 import Feedback from '../../../database/models/Feedback';
+import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
+import ImagePicker from '../../../components/ImagePicker';
+import moment from 'moment';
+import RNFS from 'react-native-fs';
+import Image from '../../../database/models/Image';
 
 type Props = {
   route: {
@@ -32,7 +35,10 @@ type Props = {
 };
 
 const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<
+    {name: string; value: string; created_at: number}[]
+  >([]);
+  const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const {competencies} = params;
   const defaultValues = competencies.reduce(
     (acc, item) => ({...acc, [item.id]: ''}),
@@ -52,53 +58,33 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
     typeof defaultValues
   > = async values => {
     const db = await getWatermelon();
+    const first_key = Object.keys(values)[0];
+
+    const feedback = await db.write(
+      async () =>
+        await db.collections.get<Feedback>('feedback').create(record => {
+          record.value = values[first_key];
+          record.competence_id = first_key;
+          record.session_id = params.session_id;
+        }),
+    );
 
     await Promise.all(
-      Object.keys(values).map(
-        async key =>
-          await db.write(
-            async () =>
-              await db.collections.get<Feedback>('feedback').create(record => {
-                record.value = values[key];
-                record.competence_id = key;
-                record.session_id = params.session_id;
-              }),
-          ),
-      ),
+      images.map(async image => {
+        const base64 = await RNFS.readFile(image.value, 'base64');
+
+        return await db.write(
+          async () =>
+            await db.collections.get<Image>('image').create(record => {
+              record.name = image.name;
+              record.value = base64;
+              record.external_id = feedback.id;
+            }),
+        );
+      }),
     );
 
     Navigation.navigate(Routes.feedback.feedbackCompleted);
-  };
-
-  const handleAddImage = async () => {
-    const db = await getWatermelon();
-
-    const {assets} = await launchImageLibrary({
-      mediaType: 'photo',
-      includeBase64: true,
-    });
-
-    if (assets) {
-      const assetsInDb = await Promise.all(
-        assets?.map(
-          async asset =>
-            await db.write(
-              async () =>
-                await db.collections.get<Image>('image').create(record => {
-                  record.name = asset.fileName;
-                  record.value = asset.base64;
-                }),
-            ),
-        ),
-      );
-
-      setImages([
-        ...images,
-        ...assetsInDb.reduce((acc, item) => {
-          return [...acc, {...item._raw} as any];
-        }, [] as Image[]),
-      ]);
-    }
   };
 
   return (
@@ -184,7 +170,16 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
               mt={2}
               variant={'outline'}
               borderColor={'primary.200'}
-              onPress={handleAddImage}>
+              onPress={() =>
+                setBottomSheetContent(
+                  <ImagePicker
+                    handleSelectImage={asset =>
+                      setImages([...images, {...asset, created_at: Date.now()}])
+                    }
+                    handleClose={() => setBottomSheetContent(undefined)}
+                  />,
+                )
+              }>
               <HStack>
                 <Icon name={'image'} color={theme.colors.primary['200']} />
                 <Text
@@ -205,6 +200,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                   px={3}
                   borderRadius={'8px'}
                   borderColor={'gray.200'}
+                  alignItems={'center'}
                   borderWidth={'2px'}>
                   <Center w={'64px'} h={'64px'} background={'primary.0'}>
                     <Icon name={'image'} />
@@ -218,7 +214,9 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                       {image.name}
                     </Text>
                     <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                      {(image as any).created_at.toString()}
+                      {moment(
+                        new Date(new Date((image as any).created_at)),
+                      ).format('DD MMM, YYYY - HH:mm')}
                     </Text>
 
                     <HStack space={1} alignItems={'center'}>

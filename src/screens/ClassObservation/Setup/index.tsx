@@ -60,6 +60,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
+              rules={{required: true}}
               name={'boys_count'}
               render={({field, fieldState: {error}}) => (
                 <Input
@@ -81,6 +82,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
+              rules={{required: true}}
               name={'girls_count'}
               render={({field, fieldState: {error}}) => (
                 <Input
@@ -102,6 +104,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
+              rules={{required: true}}
               name={'subject'}
               render={({field, fieldState: {error}}) => (
                 <Input
@@ -122,6 +125,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
+              rules={{required: true}}
               name={'lesson_time'}
               render={({field, fieldState: {error}}) => (
                 <Box
@@ -132,7 +136,7 @@ const ObservationSetup: React.FC<any> = () => {
                     selectedValue={field.value}
                     placeholder={'30 min'}
                     onValueChange={itemValue => field.onChange(itemValue)}>
-                    <Picker.Item label="10 Min" value="10" />
+                    <Picker.Item label="10 Minuts" value="10" />
                     <Picker.Item label="20 Minuts" value="20" />
                     <Picker.Item label="30 Minuts" value="30" />
                     <Picker.Item label="40 Minuts" value="40" />
@@ -151,6 +155,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
+              rules={{required: true}}
               name={'objective'}
               render={({field, fieldState: {error}}) => (
                 <TextArea

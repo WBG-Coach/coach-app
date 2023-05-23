@@ -41,6 +41,10 @@ export default appSchema({
           type: 'string',
         },
         {
+          name: 'external_id',
+          type: 'string',
+        },
+        {
           name: 'value',
           type: 'string',
         },
