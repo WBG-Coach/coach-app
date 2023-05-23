@@ -176,36 +176,6 @@ const AppRoutes = () => {
             />
 
             <Stack.Screen
-              name={Routes.settings.settings}
-              component={SettingsScreen}
-              options={{
-                header: () => (
-                  <Header
-                    title={t('header.settings') || 'Settings'}
-                    hideConfig
-                  />
-                ),
-                headerShown: true,
-                contentStyle: {backgroundColor: 'white'},
-              }}
-            />
-
-            <Stack.Screen
-              name={Routes.settings.changeLanguage}
-              component={ChangeLanguageScreen}
-              options={{
-                header: () => (
-                  <Header
-                    title={t('header.settings') || 'Settings'}
-                    hideConfig
-                  />
-                ),
-                headerShown: true,
-                contentStyle: {backgroundColor: 'white'},
-              }}
-            />
-
-            <Stack.Screen
               name={Routes.pendingSessions}
               component={PendingSessions}
               options={{
@@ -229,6 +199,32 @@ const AppRoutes = () => {
             />
           </Stack.Group>
         )}
+
+        <Stack.Group>
+          <Stack.Screen
+            name={Routes.settings.settings}
+            component={SettingsScreen}
+            options={{
+              header: () => (
+                <Header title={t('header.settings') || 'Settings'} hideConfig />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+
+          <Stack.Screen
+            name={Routes.settings.changeLanguage}
+            component={ChangeLanguageScreen}
+            options={{
+              header: () => (
+                <Header title={t('header.settings') || 'Settings'} hideConfig />
+              ),
+              headerShown: true,
+              contentStyle: {backgroundColor: 'white'},
+            }}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

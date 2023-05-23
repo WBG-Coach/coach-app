@@ -85,7 +85,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
               record.emis_number = parseInt(values.emis_number);
               record.subject = values.subject;
               record.birthdate = values.birthdate.toString();
-              record.image_id = image.id;
+              record.image_id = image?.id;
               record.school_id = (user.school as School).id;
             }),
         );

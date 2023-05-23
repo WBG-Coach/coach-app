@@ -25,6 +25,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {Q} from '@nozbe/watermelondb';
 import Session from '../../database/models/Session';
+import EmptyStateComponent from './EmptyState';
 
 const HomeScreen = () => {
   const {user, setTeacher, handleSwitchSchool} = useContext(UserContext);
@@ -89,7 +90,7 @@ const HomeScreen = () => {
               ...teacher._raw,
               sessions,
               feedbacksLength: feedbacksLength,
-              image: (await teacher.image.fetch())._raw,
+              image: (await teacher.image.fetch())?._raw,
             } as any;
           }),
         );
@@ -178,7 +179,11 @@ const HomeScreen = () => {
       ) : (
         <>
           {teachers.data.length < 1 ? (
-            <></>
+            <Center flex={1}>
+              <EmptyStateComponent
+                handleCreate={() => Navigation.navigate(Routes.teacher.create)}
+              />
+            </Center>
           ) : (
             <VStack>
               <FlatList
@@ -199,13 +204,23 @@ const HomeScreen = () => {
                       borderBottomWidth={'1px'}
                       borderBottomColor={'gray.300'}>
                       <HStack flex={1} space={2} alignItems={'center'}>
-                        <CImage
-                          source={{uri: item.image.value}}
-                          alt={'Teacher image'}
+                        <Center
                           w={isTablet ? '56px' : '40px'}
                           h={isTablet ? '56px' : '40px'}
                           borderRadius={'500px'}
-                        />
+                          background={'primary.100'}>
+                          {item?.image?.value ? (
+                            <CImage
+                              source={{uri: item.image.value}}
+                              alt={'Teacher image'}
+                              w={'100%'}
+                              h={'100%'}
+                              borderRadius={'500px'}
+                            />
+                          ) : (
+                            <Icon name={'user'} />
+                          )}
+                        </Center>
 
                         <VStack space={1}>
                           <Text
