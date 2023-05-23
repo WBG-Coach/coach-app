@@ -21,9 +21,9 @@ import Session from '../../../database/models/Session';
 import Feedback from '../../../database/models/Feedback';
 import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
 import ImagePicker from '../../../components/ImagePicker';
-import moment from 'moment';
 import RNFS from 'react-native-fs';
 import Image from '../../../database/models/Image';
+import ImageCard from '../../../components/ImageCard';
 
 type Props = {
   route: {
@@ -77,7 +77,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
           async () =>
             await db.collections.get<Image>('image').create(record => {
               record.name = image.name;
-              record.value = base64;
+              record.value = 'data:image/png;base64,' + base64;
               record.external_id = feedback.id;
             }),
         );
@@ -192,49 +192,18 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
               </HStack>
             </Button>
 
-            <VStack flex={1} space={2} mt={6} background={'red'}>
+            <VStack flex={1} space={2} mt={6}>
               {images.map((image, index) => (
-                <HStack
+                <ImageCard
+                  {...image}
                   key={index}
-                  py={2}
-                  px={3}
-                  borderRadius={'8px'}
-                  borderColor={'gray.200'}
-                  alignItems={'center'}
-                  borderWidth={'2px'}>
-                  <Center w={'64px'} h={'64px'} background={'primary.0'}>
-                    <Icon name={'image'} />
-                  </Center>
-                  <VStack ml={2} maxW={'50%'} overflow={'hidden'} space={0.5}>
-                    <Text
-                      numberOfLines={1}
-                      fontSize={'LMD'}
-                      fontWeight={500}
-                      color={'gray.700'}>
-                      {image.name}
-                    </Text>
-                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                      {moment(
-                        new Date(new Date((image as any).created_at)),
-                      ).format('DD MMM, YYYY - HH:mm')}
-                    </Text>
-
-                    <HStack space={1} alignItems={'center'}>
-                      <Icon
-                        name={'check-circle-solid'}
-                        color={theme.colors.green['200']}
-                        size={16}
-                      />
-
-                      <Text
-                        fontSize={'TXS'}
-                        fontWeight={400}
-                        color={'green.300'}>
-                        Image sent
-                      </Text>
-                    </HStack>
-                  </VStack>
-                </HStack>
+                  transformBase
+                  handleDelete={() => {
+                    const imageCopy = images;
+                    imageCopy.splice(index, 1);
+                    setImages(JSON.parse(JSON.stringify(imageCopy)));
+                  }}
+                />
               ))}
             </VStack>
           </VStack>
