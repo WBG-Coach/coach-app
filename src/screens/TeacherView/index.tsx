@@ -32,7 +32,7 @@ const TeacherView: React.FC<any> = () => {
     <VStack flex={1} mt={6}>
       <VStack px={isTablet ? '64px' : 4}>
         <Image
-          src={teacher?.image.value}
+          src={teacher?.image?.value}
           alt={'Teacher image'}
           w={'48px'}
           h={'48px'}
