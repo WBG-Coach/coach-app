@@ -1,4 +1,4 @@
-import {Database} from '@nozbe/watermelondb';
+import {Database, DirtyRaw, TableName} from '@nozbe/watermelondb';
 import RNFS from 'react-native-fs';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 import schema from './schemas';
@@ -85,11 +85,15 @@ export const syncWatermelon = async () => {
       pullChanges: async ({lastPulledAt}) => {
         console.log('1 - pullChanges');
         try {
-          const urlParams = `last_pulled_at=${lastPulledAt}`;
+          const urlParams = lastPulledAt
+            ? `last_pulled_at=${lastPulledAt}`
+            : '';
 
           const {data} = await axios.get(
             `https://api-sl.coachdigital.org/sync?${urlParams}`,
           );
+
+          console.log(data.changes.session.created);
 
           return data;
         } catch (err) {
@@ -118,9 +122,14 @@ export const syncWatermelon = async () => {
         }
       },
 
-      conflictResolver: () => {
+      conflictResolver: (
+        _table: TableName<any>,
+        _local: DirtyRaw,
+        remote: DirtyRaw,
+        _resolved: DirtyRaw,
+      ) => {
         console.log('4 - conflictResolver');
-        return {};
+        return remote;
       },
     });
 
