@@ -68,7 +68,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
             async () =>
               await db.collections.get<Image>('image').create(record => {
                 record.name = teacherImage.name;
-                record.value = 'data:image/png;base64,' + base64;
+                record.value = base64;
               }),
           );
         }

@@ -1,6 +1,15 @@
 import moment from 'moment';
-import {Center, FlatList, HStack, Text, useTheme, VStack} from 'native-base';
-import React from 'react';
+import {
+  Center,
+  FlatList,
+  HStack,
+  Image,
+  Modal,
+  Text,
+  useTheme,
+  VStack,
+} from 'native-base';
+import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../base/Icon';
 import {Props} from './types';
@@ -9,10 +18,18 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import {useClickOutside} from 'react-native-click-outside';
+import {View} from 'react-native';
 
-const ImageCard: React.FC<Props> = ({name, created_at, handleDelete}) => {
+const ImageCard: React.FC<Props> = ({
+  name,
+  created_at,
+  handleDelete,
+  value,
+}) => {
   const theme = useTheme();
   const opacity = useSharedValue(0);
+  const [showImage, setShowImage] = useState(false);
   const dropdownStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
@@ -21,13 +38,17 @@ const ImageCard: React.FC<Props> = ({name, created_at, handleDelete}) => {
 
   const openDropdown = () => (opacity.value = withTiming(1));
   const closeDropdown = () => (opacity.value = withTiming(0));
+  const ref = useClickOutside<View>(closeDropdown);
 
   const options = [
     {
       label: 'View',
       icon: 'eye',
+      onPress: () => setShowImage(true),
     },
-    ...(handleDelete ? [{label: 'Delete', icon: 'trash-alt'}] : []),
+    ...(handleDelete
+      ? [{label: 'Delete', icon: 'trash-alt', onPress: handleDelete}]
+      : []),
   ];
 
   return (
@@ -36,9 +57,10 @@ const ImageCard: React.FC<Props> = ({name, created_at, handleDelete}) => {
       px={3}
       borderRadius={'8px'}
       borderColor={'gray.200'}
-      alignItems={'center'}
       borderWidth={'2px'}
-      position={'relative'}>
+      alignItems={'center'}
+      position={'relative'}
+      ref={ref}>
       <Center w={'64px'} h={'64px'} background={'primary.0'}>
         <Icon name={'image'} />
       </Center>
@@ -77,21 +99,17 @@ const ImageCard: React.FC<Props> = ({name, created_at, handleDelete}) => {
 
       <Animated.View
         style={[
-          {position: 'absolute', right: 42, bottom: 30},
           dropdownStyle,
           {
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
+            position: 'absolute',
+            right: 42,
+            bottom: 30,
           },
         ]}>
         <VStack
           w={'284px'}
+          borderColor={'gray.100'}
+          borderWidth={'1px'}
           background={'white'}
           py={2}
           px={1}
@@ -100,7 +118,10 @@ const ImageCard: React.FC<Props> = ({name, created_at, handleDelete}) => {
             data={options}
             scrollEnabled={false}
             renderItem={({item}) => (
-              <TouchableOpacity onPress={closeDropdown}>
+              <TouchableOpacity
+                onPress={() => {
+                  closeDropdown(), item.onPress();
+                }}>
                 <HStack
                   py={4}
                   px={3}
@@ -118,6 +139,23 @@ const ImageCard: React.FC<Props> = ({name, created_at, handleDelete}) => {
         </VStack>
         <TouchableOpacity onPress={closeDropdown}></TouchableOpacity>
       </Animated.View>
+
+      <Modal isOpen={showImage} onClose={() => setShowImage(false)} size={'lg'}>
+        <Modal.Content background={'white'}>
+          <Modal.CloseButton />
+          <Modal.Header color={'black'}>Image view</Modal.Header>
+          <Modal.Body p={0}>
+            <Center h={'lg'}>
+              <Image
+                source={{uri: 'data:image/png;base64,' + value}}
+                alt={'Teacher image'}
+                w={'100%'}
+                h={'100%'}
+              />
+            </Center>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </HStack>
   );
 };
