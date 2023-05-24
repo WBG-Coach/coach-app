@@ -110,7 +110,10 @@ export const syncWatermelon = async () => {
         console.log('3 - pushChanges');
         try {
           await axios.post(`https://api-sl.coachdigital.org/sync`, {
-            changes,
+            changes: {
+              ...changes,
+              image: {created: [], updated: [], deleted: []},
+            },
             lastPulledAt: new Date(lastPulledAt).toJSON(),
             model: DeviceInfo.getDeviceId(),
             apiLevel: await DeviceInfo.getApiLevel(),
