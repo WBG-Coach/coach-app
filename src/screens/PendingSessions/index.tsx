@@ -19,6 +19,7 @@ import Icon from '../../components/base/Icon';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import {useFocusEffect} from '@react-navigation/native';
+import EmptyStateComponent from './EmptyState';
 
 const PendingSessions: React.FC = () => {
   const {user, setTeacher} = useContext(UserContext);
@@ -91,43 +92,69 @@ const PendingSessions: React.FC = () => {
           <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'} mb={2}>
             Complete the feedback sessions with the following teachers
           </Text>
-          <FlatList
-            data={teachers.data}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setTeacher(item as any);
-                  Navigation.navigate(Routes.teacher.teacher);
-                }}>
-                <HStack
-                  py={4}
-                  alignItems={'center'}
-                  borderBottomColor={'gray.200'}
-                  borderBottomWidth={'1px'}>
-                  <Image
-                    source={{uri: item.image.value}}
-                    alt={'Teacher image'}
-                    w={isTablet ? '56px' : '40px'}
-                    h={isTablet ? '56px' : '40px'}
-                    borderRadius={'500px'}
-                  />
-                  <VStack ml={2} space={0} flex={1}>
-                    <Text fontSize={'LMD'} fontWeight={500} color={'gray.800'}>
-                      {item.name}
-                    </Text>
-                    <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                      Feedback pending
-                    </Text>
-                  </VStack>
+          {teachers.data.length >= 1 ? (
+            <FlatList
+              data={teachers.data}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    setTeacher(item as any);
+                    Navigation.navigate(Routes.teacher.teacher);
+                  }}>
+                  <HStack
+                    py={4}
+                    alignItems={'center'}
+                    borderBottomColor={'gray.200'}
+                    borderBottomWidth={'1px'}>
+                    <Center
+                      w={isTablet ? '56px' : '40px'}
+                      h={isTablet ? '56px' : '40px'}
+                      borderRadius={'500px'}
+                      background={'primary.100'}>
+                      {item?.image?.value ? (
+                        <Image
+                          source={{uri: item?.image?.value}}
+                          alt={'Teacher image'}
+                          w={'100%'}
+                          h={'100%'}
+                          borderRadius={'500px'}
+                        />
+                      ) : (
+                        <Icon name={'user'} />
+                      )}
+                    </Center>
 
-                  <HStack>
-                    <Icon name={'exclamation-circle-solid'} color={'#E89F0C'} />
-                    <Icon name={'angle-right'} />
+                    <VStack ml={2} space={0} flex={1}>
+                      <Text
+                        fontSize={'LMD'}
+                        fontWeight={500}
+                        color={'gray.800'}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        fontSize={'TSM'}
+                        fontWeight={400}
+                        color={'gray.600'}>
+                        Feedback pending
+                      </Text>
+                    </VStack>
+
+                    <HStack>
+                      <Icon
+                        name={'exclamation-circle-solid'}
+                        color={'#E89F0C'}
+                      />
+                      <Icon name={'angle-right'} />
+                    </HStack>
                   </HStack>
-                </HStack>
-              </TouchableOpacity>
-            )}
-          />
+                </TouchableOpacity>
+              )}
+            />
+          ) : (
+            <Center flex={1}>
+              <EmptyStateComponent />
+            </Center>
+          )}
         </VStack>
       )}
     </VStack>
