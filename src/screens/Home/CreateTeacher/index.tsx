@@ -68,7 +68,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
             async () =>
               await db.collections.get<Image>('image').create(record => {
                 record.name = teacherImage.name;
-                record.value = base64;
+                record.value = 'data:image/png;base64,' + base64;
               }),
           );
         }
@@ -86,7 +86,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
               record.subject = values.subject;
               record.birthdate = values.birthdate.toString();
               record.image_id = image?.id;
-              record.school_id = (user.school as School).id;
+              record.school_id = (user.school as any).id;
             }),
         );
       }

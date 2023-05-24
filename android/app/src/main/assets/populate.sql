@@ -36,36 +36,35 @@
   CREATE TABLE school (
       id TEXT,
       name TEXT,
-      image_url TEXT,
       _changed TEXT,
       _status TEXT,
       created_at INTEGER DEFAULT (strftime('%s', 'now')),
       updated_at INTEGER DEFAULT (strftime('%s', 'now'))
   );
 
-  INSERT INTO school (id, name, image_url, _changed, _status)
+  INSERT INTO school (id, name, _changed, _status)
   VALUES 
-      ('475ab284-1603-481a-86c6-e46323564ebb', 'Bayshore High', 'https://i.ibb.co/VqKhx46/Image-12.png', '', 'created'),
-      ('4119412f-70a0-4d78-bd4c-58c0eb03f5ac', 'Angelwood Elementary', 'https://i.ibb.co/X8r613d/Image-15.png', '', 'created'),
-      ('c4999ff6-66c0-4eff-be7a-fffb8851e17c', 'A new school', 'https://i.ibb.co/X8r613d/Image-15.png', '', 'created'),
-      ('01def398-c159-4128-9b09-aec91f8da6c2', 'Pine Hill Charter School', 'https://i.ibb.co/tPVsMTY/Image-13.png', '', 'created');
+      ('475ab284-1603-481a-86c6-e46323564ebb', 'Bayshore High', '', 'created'),
+      ('4119412f-70a0-4d78-bd4c-58c0eb03f5ac', 'Angelwood Elementary', '', 'created'),
+      ('c4999ff6-66c0-4eff-be7a-fffb8851e17c', 'A new school', '', 'created'),
+      ('01def398-c159-4128-9b09-aec91f8da6c2', 'Pine Hill Charter School', '', 'created');
 
   CREATE TABLE user (
       id TEXT,
       name TEXT,
-      image_url TEXT,
+      image_id TEXT,
       _changed TEXT,
       _status TEXT,
       created_at INTEGER DEFAULT (strftime('%s', 'now')),
       updated_at INTEGER DEFAULT (strftime('%s', 'now'))
   );
 
-  INSERT INTO user (id, name, image_url, _changed, _status)
+  INSERT INTO user (id, name, image_id, _changed, _status)
   VALUES 
-      ('33c70236-ece4-487f-85b5-a74065c2a77c', 'Jane Cooper', 'https://i.ibb.co/t2vHr59/Image.png', '', 'created'),
-      ('e8a16cac-2329-4ed4-936a-09096f27799b', 'Wade Warren', 'https://i.ibb.co/3dhwW5V/download.jpg', '', 'created'),
-      ('961d75fb-8c52-404b-9381-319291281660', 'Esther Howard', 'https://i.ibb.co/PTB0MwJ/avatar-111332073ddbd15ba0d337e8ca0818d3.jpg', '', 'created'),
-      ('4c872a8d-e3c2-498d-8a22-2dbace7daaad', 'Cameron Williamson', 'https://i.ibb.co/WnGYgB6/download-2.jpg', '', 'created');
+      ('33c70236-ece4-487f-85b5-a74065c2a77c', 'Jane Cooper', '86c09ba3-8e14-4d06-a5b9-ebc05005538a', '', 'created'),
+      ('e8a16cac-2329-4ed4-936a-09096f27799b', 'Wade Warren', 'f048c415-db7d-44da-ad25-e8a4ceab7e4f', '', 'created'),
+      ('961d75fb-8c52-404b-9381-319291281660', 'Esther Howard', '06822e4e-32e3-4a1b-ad58-27dc7ae9d8fa', '', 'created'),
+      ('4c872a8d-e3c2-498d-8a22-2dbace7daaad', 'Cameron Williamson', '0254f9b0-3328-4413-9dd4-9965bd405683', '', 'created');
 
   CREATE TABLE image (
       id TEXT,
@@ -77,10 +76,6 @@
       created_at INTEGER DEFAULT (strftime('%s', 'now')),
       updated_at INTEGER DEFAULT (strftime('%s', 'now'))
   );
-
-  INSERT INTO image (id, name, value, _changed, _status)
-  VALUES 
-      ('3f0b5974-8461-4442-9595-8db7bb7d16b5', 'Fred Williamson Image', 'https://i.ibb.co/hHw0K9B/download-3.jpg', '', 'created');
 
   CREATE TABLE competence (
       id TEXT,

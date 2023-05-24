@@ -1,4 +1,4 @@
-import {HStack, Image, Text, VStack} from 'native-base';
+import {Center, HStack, Image, Text, VStack} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import Icon from '../../components/base/Icon';
 import Input from '../../components/base/Input';
@@ -12,6 +12,7 @@ import {useTranslation} from 'react-i18next';
 const ProfileSelectScreen: React.FC = () => {
   const {handleSelectProfile} = useContext(UserContext);
   const [usersList, setUsersList] = useState<User[]>();
+  const [filteredUsersList, setFilteredUsersList] = useState<User[]>();
   const {t} = useTranslation();
   const isTablet = Tablet();
 
@@ -19,14 +20,42 @@ const ProfileSelectScreen: React.FC = () => {
     (async () => {
       const db = await getWatermelon();
       const list = await db.collections.get<User>('user').query().fetch();
+      const users = await Promise.all(
+        list.map(async user => ({
+          ...user._raw,
+          image: (await user.image.fetch())?._raw,
+          sessions: await user.sessions.fetch(),
+        })),
+      );
 
-      setUsersList(list);
+      const usersFiltered = users.map(user => ({
+        ...user,
+        sessions: user.sessions.reduce(
+          (acc, item) => [
+            ...acc,
+            ...(acc.includes((item._raw as any).teacher_id)
+              ? []
+              : [(item._raw as any).teacher_id]),
+          ],
+          [] as string[],
+        ),
+      }));
+
+      setUsersList(usersFiltered as any);
+      setFilteredUsersList(usersFiltered as any);
     })();
   }, []);
 
+  const handleFilterProfile = (text: string) => {
+    if (usersList) {
+      const newSchools = usersList.filter(el => el.name.indexOf(text) > -1);
+      setFilteredUsersList(newSchools);
+    }
+  };
+
   return (
     <VStack flex={1}>
-      {usersList ? (
+      {filteredUsersList ? (
         <VStack
           w={'100%'}
           alignItems={'flex-start'}
@@ -40,13 +69,18 @@ const ProfileSelectScreen: React.FC = () => {
             {t('setupUserData.profileSelect.title')}
           </Text>
 
-          <Input icon="search" marginBottom={2} placeholder={'Search'} />
+          <Input
+            icon="search"
+            marginBottom={2}
+            placeholder={'Search'}
+            onChangeText={handleFilterProfile}
+          />
 
           <VStack w={'100%'} px={'16px'}>
-            {usersList.map((user, index) => (
+            {filteredUsersList.map((user, index) => (
               <TouchableOpacity
                 key={index}
-                onPress={() => handleSelectProfile(user._raw as any)}>
+                onPress={() => handleSelectProfile(user as any)}>
                 <HStack
                   key={index}
                   w={'100%'}
@@ -54,22 +88,34 @@ const ProfileSelectScreen: React.FC = () => {
                   borderBottomWidth={'1px'}
                   alignItems={'center'}
                   borderBottomColor={
-                    usersList.length - 1 === index ? 'transparent' : 'gray.200'
+                    filteredUsersList.length - 1 === index
+                      ? 'transparent'
+                      : 'gray.200'
                   }>
-                  <Image
+                  <Center
                     w={'40px'}
                     h={'40px'}
-                    src={user.image_url}
-                    alt={`Image of ${user.name}`}
-                    borderRadius={'20px'}
-                  />
+                    borderRadius={'500px'}
+                    background={'primary.100'}>
+                    {user?.image?.value ? (
+                      <Image
+                        w={'100%'}
+                        h={'100%'}
+                        src={user?.image?.value}
+                        alt={`Image of ${user.name}`}
+                        borderRadius={'20px'}
+                      />
+                    ) : (
+                      <Icon name={'user'} />
+                    )}
+                  </Center>
 
                   <VStack flex={1} ml={'8px'} space={'4px'}>
                     <Text color={'gray.700'}>{user.name}</Text>
                     <Text color={'gray.600'}>
                       {t('setupUserData.profileSelect.lineDesc').replace(
                         '$val',
-                        '3',
+                        (user.sessions as any)?.length,
                       )}
                     </Text>
                   </VStack>

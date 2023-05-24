@@ -2,7 +2,7 @@ const enTranslation = {
   setupUserData: {
     schoolSelect: {
       title: 'Select the school',
-      lineDesc: 'Coaches here',
+      lineDesc: 'Teachers here',
     },
     profileSelect: {
       title: 'Select your profile',

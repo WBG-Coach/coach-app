@@ -107,13 +107,13 @@ const HomeScreen = () => {
       px={isTablet ? '64px' : 4}
       flex={1}>
       <HStack space={2} alignItems={'center'}>
-        <CImage
-          src={user?.school?.image_url}
-          alt={'School image'}
+        <Center
           w={isTablet ? '64px' : '56px'}
           h={isTablet ? '64px' : '56px'}
           borderRadius={'500px'}
-        />
+          background={'primary.100'}>
+          <Icon name={'university'} />
+        </Center>
 
         <VStack space={1}>
           <Text fontSize={'TMD'} fontWeight={600} color={'gray.800'}>
@@ -185,7 +185,7 @@ const HomeScreen = () => {
               />
             </Center>
           ) : (
-            <VStack>
+            <VStack flex={1} pb={4}>
               <FlatList
                 keyExtractor={({id}) => id}
                 data={teachers.data}

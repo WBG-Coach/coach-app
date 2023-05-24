@@ -10,10 +10,6 @@ export default appSchema({
           name: 'name',
           type: 'string',
         },
-        {
-          name: 'image_url',
-          type: 'string',
-        },
         {name: 'created_at', type: 'number'},
         {name: 'updated_at', type: 'number'},
       ],
@@ -26,7 +22,7 @@ export default appSchema({
           type: 'string',
         },
         {
-          name: 'image_url',
+          name: 'image_id',
           type: 'string',
         },
         {name: 'created_at', type: 'number'},
