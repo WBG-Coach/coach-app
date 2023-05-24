@@ -14,10 +14,10 @@ import DeviceInfo from 'react-native-device-info';
 import axios from 'axios';
 import Feedback from './models/Feedback';
 import {setGenerator} from '@nozbe/watermelondb/utils/common/randomId';
-import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import Session from './models/Session';
 import Teacher from './models/Teacher';
+import 'react-native-get-random-values';
 
 let database: Database;
 
@@ -90,10 +90,8 @@ export const syncWatermelon = async () => {
             : '';
 
           const {data} = await axios.get(
-            `https://api-sl.coachdigital.org/sync?${urlParams}`,
+            `http://10.0.2.2:3000/sync?${urlParams}`,
           );
-
-          console.log(data.changes.session.created);
 
           return data;
         } catch (err) {
@@ -109,11 +107,8 @@ export const syncWatermelon = async () => {
       pushChanges: async ({changes, lastPulledAt}) => {
         console.log('3 - pushChanges');
         try {
-          await axios.post(`https://api-sl.coachdigital.org/sync`, {
-            changes: {
-              ...changes,
-              image: {created: [], updated: [], deleted: []},
-            },
+          await axios.post(`http://10.0.2.2:3000/sync`, {
+            changes,
             lastPulledAt: new Date(lastPulledAt).toJSON(),
             model: DeviceInfo.getDeviceId(),
             apiLevel: await DeviceInfo.getApiLevel(),
@@ -128,15 +123,13 @@ export const syncWatermelon = async () => {
       conflictResolver: (
         _table: TableName<any>,
         _local: DirtyRaw,
-        remote: DirtyRaw,
-        _resolved: DirtyRaw,
+        _remote: DirtyRaw,
+        resolved: DirtyRaw,
       ) => {
         console.log('4 - conflictResolver');
-        return remote;
+        return resolved;
       },
     });
-
-    console.log('LOGS - ', JSON.stringify(log));
   } catch (err) {
     console.log('ERROR OF SYNC - ', {err});
   }
