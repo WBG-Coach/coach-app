@@ -12,6 +12,7 @@ const Routes = {
     sessionViewer: 'SessionViewerScreen',
     observationViewer: 'ObservationViewerScreen',
     feedbackViewer: 'FeedbackViewerScreen',
+    competenceStats: 'CompetenceStatsScreen',
   },
   splash: 'SplashScreen',
   settings: {

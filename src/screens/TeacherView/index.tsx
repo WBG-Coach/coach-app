@@ -8,6 +8,7 @@ import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
+import TeacherStatsTab from './Tabs/TeacherStats';
 
 const TeacherView: React.FC<any> = () => {
   const {teacher} = useContext(UserContext);
@@ -17,10 +18,10 @@ const TeacherView: React.FC<any> = () => {
       Component: <SessionTab />,
       label: t('teacher.tabs.session.title'),
     },
-    /*     {
-      Component: <></>,
+    {
+      Component: <TeacherStatsTab />,
       label: t('teacher.tabs.stats.title'),
-    }, */
+    },
   ];
 
   const [tabSelected, setTabSelected] = useState(tabs[0]);

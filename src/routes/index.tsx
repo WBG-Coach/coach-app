@@ -20,6 +20,7 @@ import SessionViewerScreen from '../screens/TeacherView/Tabs/Session/SessionView
 import ObservationViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewer/Observation';
 import PendingSessions from '../screens/PendingSessions';
 import FeedbackViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewer/Feedback';
+import CompetenceStats from '../screens/TeacherView/Tabs/TeacherStats/CompetenceStats';
 
 const Stack = createNativeStackNavigator();
 
@@ -169,6 +170,18 @@ const AppRoutes = () => {
                     }
                     hideConfig
                   />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.teacher.competenceStats}
+              component={CompetenceStats}
+              options={{
+                header: () => (
+                  <Header title={t('header.teacher') || 'Teacher'} hideConfig />
                 ),
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},

@@ -12,7 +12,6 @@ export default class Session extends Model {
 
   static associations = {
     answers: {type: 'has_many', foreignKey: 'session_id'},
-    competences: {type: 'has_many', foreignKey: 'session_id'},
     feedbacks: {type: 'has_many', foreignKey: 'session_id'},
   } as const;
 
