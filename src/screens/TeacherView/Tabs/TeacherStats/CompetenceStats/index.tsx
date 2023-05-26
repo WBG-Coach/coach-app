@@ -1,5 +1,14 @@
 import {Q} from '@nozbe/watermelondb';
-import {Center, FlatList, HStack, Spinner, Text, VStack} from 'native-base';
+import {
+  Center,
+  FlatList,
+  HStack,
+  Spinner,
+  Text,
+  useTheme,
+  View,
+  VStack,
+} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {getWatermelon} from '../../../../../database';
 import Answer from '../../../../../database/models/Answer';
@@ -12,6 +21,11 @@ import moment from 'moment';
 import StarView from '../../../../../components/StarView';
 import {getTags} from '../../../../../components/StarsTag/common';
 import {useTranslation} from 'react-i18next';
+import {Dimensions} from 'react-native';
+import Icon from '../../../../../components/base/Icon';
+import {LineChart} from 'react-native-gifted-charts';
+
+const screenWidth = Dimensions.get('window').width;
 
 type Props = {
   route: {
@@ -24,6 +38,8 @@ type Props = {
 const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
   const {t} = useTranslation();
+  const tags = getTags(t);
+  const theme = useTheme();
   const {teacher} = useContext(UserContext);
   const [sessions, setSessions] = useState({
     isLoading: true,
@@ -64,7 +80,8 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
             return {
               created_at: (session._raw as any).created_at,
               overall_rating: Math.round(
-                answers.reduce((acc, item) => acc + item.value, 0) / 4,
+                answers.reduce((acc, item) => acc + item.value, 0) /
+                  answers.length,
               ),
             };
           }),
@@ -78,7 +95,32 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
     })();
   }, []);
 
-  console.log(sessions);
+  const customDataPoint = () => {
+    return (
+      <View
+        style={{
+          width: 20,
+          height: 20,
+          backgroundColor: 'white',
+          borderWidth: 4,
+          borderRadius: 10,
+          borderColor: '#07BAD1',
+        }}
+      />
+    );
+  };
+
+  const lineData = sessions?.data?.map((session, i) => ({
+    value: session.overall_rating,
+    dataPointText: session.overall_rating,
+    label: i + 1,
+    customDataPoint,
+  }));
+
+  const isCrescent =
+    sessions.data &&
+    sessions?.data[sessions.data.length - 1]?.overall_rating >=
+      sessions?.data[sessions.data.length - 2]?.overall_rating;
 
   return (
     <VStack px={isTablet ? '64px' : 4} mt={6} flex={1}>
@@ -88,7 +130,96 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
         </Center>
       ) : (
         <>
-          <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+          <HStack mb={6} w={'100%'} alignItems={'center'}>
+            <Text fontSize={'HXS'} flex={1} fontWeight={600} color={'gray.700'}>
+              Time to learning
+            </Text>
+
+            <HStack
+              borderRadius={'4px'}
+              bg={isCrescent ? 'green.100' : 'red.100'}
+              p={1}
+              alignItems={'center'}
+              space={1}>
+              <Icon
+                size={14}
+                name={'arrow-growth'}
+                color={
+                  isCrescent
+                    ? theme.colors.green['300']
+                    : theme.colors.red['300']
+                }
+              />
+              <Text
+                fontSize={'TXS'}
+                fontWeight={400}
+                color={isCrescent ? 'green.300' : 'red.300'}>
+                {isCrescent ? 'Got better' : ''}
+              </Text>
+            </HStack>
+          </HStack>
+
+          <LineChart
+            isAnimated
+            thickness={4}
+            maxValue={5}
+            color="#07BAD1"
+            noOfSections={4}
+            animateOnDataChange
+            animationDuration={1000}
+            onDataChangeAnimationDuration={300}
+            areaChart
+            curved
+            yAxisTextStyle={{color: 'lightgray'}}
+            yAxisTextNumberOfLines={1}
+            data={lineData as any}
+            startFillColor={'rgb(84,219,234)'}
+            endFillColor={'rgb(84,219,234)'}
+            startOpacity={0.4}
+            endOpacity={0.1}
+            spacing={(screenWidth - 270) / (lineData as any)?.length}
+            width={isTablet ? screenWidth - 270 : screenWidth - 90}
+            initialSpacing={10}
+            yAxisColor="lightgray"
+            xAxisColor="lightgray"
+            dataPointsHeight={20}
+            dataPointsWidth={20}
+            {...(isTablet && {
+              yAxisLabelTexts: tags.map(tag => tag.label),
+              yAxisLabelWidth: 120,
+            })}
+          />
+
+          {/* 
+          <LineChart
+            data={data as any}
+            width={screenWidth - 120}
+            height={220}
+            bezier
+            withVerticalLines={false}
+            formatYLabel={value =>
+              `${tags[Math.round(parseInt(value)) - 1].label}`
+            }
+            chartConfig={{
+              backgroundGradientTo: '#FFFFFF',
+              backgroundGradientFrom: '#000000',
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: () => theme.colors.gray['500'],
+              propsForDots: {
+                r: '8',
+                strokeWidth: '2',
+                stroke: '#66CCCC',
+                fill: '#FFFFFF',
+              },
+            }}
+            
+            style={{
+              width: '100%',
+            }}
+          /> */}
+
+          <Text mt={6} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
             Rating per session
           </Text>
 
@@ -126,7 +257,6 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
 
                   <Text
                     mt={2}
-                    textAlign={'right'}
                     fontSize={'TSM'}
                     fontWeight={400}
                     color={'gray.600'}>

@@ -10,7 +10,7 @@ import {
   useTheme,
   VStack,
 } from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {needsWorkLow} from '../../../../assets/images/teacherStats/indicator';
 import Competence from '../../../../database/models/Competence';
 import {getWatermelon} from '../../../../database';
@@ -19,8 +19,14 @@ import {low} from '../../../../assets/images/teacherStats/graphSmall';
 import Navigation from '../../../../services/navigation';
 import Routes from '../../../../routes/paths';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Q} from '@nozbe/watermelondb';
+import Answer from '../../../../database/models/Answer';
+import Session from '../../../../database/models/Session';
+import {UserContext} from '../../../../providers/contexts/UserContext';
+import Question from '../../../../database/models/Question';
 
 const TeacherStatsTab = () => {
+  const {teacher} = useContext(UserContext);
   const isTablet = Tablet();
   const theme = useTheme();
   const [competences, setCompetences] = useState({
@@ -30,14 +36,70 @@ const TeacherStatsTab = () => {
 
   useEffect(() => {
     (async () => {
-      const db = await getWatermelon();
+      if (teacher) {
+        const db = await getWatermelon();
 
-      const competencesDb = await db.collections
-        .get<Competence>('competence')
-        .query()
-        .fetch();
+        const sessionsDb = (
+          await db.collections
+            .get<Session>('session')
+            .query(Q.where('teacher_id', teacher?.id))
+            .fetch()
+        ).map(session => session.id);
 
-      setCompetences({isLoading: false, data: competencesDb});
+        const competencesDb = await db.collections
+          .get<Competence>('competence')
+          .query()
+          .fetch();
+
+        await Promise.all(
+          competencesDb.map(async competence => {
+            const questions = (
+              await db.collections
+                .get<Question>('question')
+                .query(Q.where('competence_id', competence.id))
+                .fetch()
+            ).map(question => question.id);
+
+            const answers = (
+              await db.collections.get<Answer>('answer').query().fetch()
+            ).filter(
+              answer =>
+                questions.includes(answer.question_id) &&
+                sessionsDb.includes(answer.session_id),
+            );
+
+            console.log('-->', answers);
+          }),
+        );
+
+        /*         await Promise.all(sessionsDb.map(async session => {
+            const answers = (
+                await db.collections
+                  .get<Answer>('answer')
+                  .query(Q.where('session_id', session.id))
+                  .fetch()
+              ).filter(answer => questions.includes(answer.question_id));
+        })); */
+
+        /*             await Promise.all(
+              competencesDb.map(async competence => {
+                const competenceWithQuestions = {
+                  ...competence,
+                  questions: await competence.questions.fetch(),
+                };
+      
+                const answers = (
+                  await db.collections
+                    .get<Answer>('answer')
+                    .query(Q.where('session_id', session.id))
+                    .fetch()
+                ).filter(answer => questions.includes(answer.question_id));
+      
+              }),
+            ); */
+
+        setCompetences({isLoading: false, data: competencesDb});
+      }
     })();
   }, []);
 
