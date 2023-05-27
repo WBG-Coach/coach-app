@@ -32,23 +32,48 @@ const TeacherView: React.FC<any> = () => {
   return (
     <VStack flex={1} mt={6}>
       <VStack px={isTablet ? '64px' : 4}>
-        <Center
-          w={isTablet ? '48px' : '40px'}
-          h={isTablet ? '48px' : '40px'}
-          borderRadius={'500px'}
-          background={'primary.100'}>
-          {teacher?.image?.value ? (
-            <Image
-              source={{uri: teacher.image.value}}
-              alt={'Teacher image'}
-              w={'100%'}
-              h={'100%'}
-              borderRadius={'500px'}
-            />
-          ) : (
-            <Icon name={'user'} />
-          )}
-        </Center>
+        <HStack
+          alignItems={'center'}
+          w={'100%'}
+          justifyContent={'space-between'}>
+          <Center
+            w={isTablet ? '48px' : '40px'}
+            h={isTablet ? '48px' : '40px'}
+            borderRadius={'500px'}
+            background={'primary.100'}>
+            {teacher?.image?.value ? (
+              <Image
+                source={{uri: teacher.image.value}}
+                alt={'Teacher image'}
+                w={'100%'}
+                h={'100%'}
+                borderRadius={'500px'}
+              />
+            ) : (
+              <Icon name={'user'} />
+            )}
+          </Center>
+
+          <TouchableOpacity
+            onPress={() =>
+              Navigation.navigate(Routes.teacher.create, {
+                teacher_id: teacher?.id,
+              })
+            }>
+            <HStack
+              alignItems={'center'}
+              space={2}
+              borderRadius={'8px'}
+              borderWidth={'1px'}
+              borderColor={'primary.200'}
+              p={3}>
+              <Icon name={'pen'} color={theme.colors.primary['200']} />
+              <Text fontSize={'LMD'} fontWeight={500} color={'primary.200'}>
+                Edit teacher
+              </Text>
+            </HStack>
+          </TouchableOpacity>
+        </HStack>
 
         <HStack mt={2} alignItems={'center'}>
           <VStack flex={1} space={2}>
@@ -62,22 +87,6 @@ const TeacherView: React.FC<any> = () => {
                 .replace('$school', user?.school?.name as string)}
             </Text>
           </VStack>
-
-          <TouchableOpacity
-            onPress={() =>
-              Navigation.navigate(Routes.teacher.create, {
-                teacher_id: teacher?.id,
-              })
-            }>
-            <Center
-              w={'40px'}
-              h={'40px'}
-              borderRadius={'500px'}
-              borderWidth={'1px'}
-              borderColor={'primary.200'}>
-              <Icon name={'pen'} color={theme.colors.primary['200']} />
-            </Center>
-          </TouchableOpacity>
         </HStack>
       </VStack>
 
