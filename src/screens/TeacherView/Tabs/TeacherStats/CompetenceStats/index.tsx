@@ -30,7 +30,7 @@ const screenWidth = Dimensions.get('window').width;
 type Props = {
   route: {
     params: {
-      competence_id: Competence['id'];
+      competence: Competence;
     };
   };
 };
@@ -64,7 +64,7 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
         const questions = (
           await db.collections
             .get<Question>('question')
-            .query(Q.where('competence_id', params.competence_id))
+            .query(Q.where('competence_id', params.competence.id))
             .fetch()
         ).map(question => question.id);
 
@@ -132,7 +132,7 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
         <>
           <HStack mb={6} w={'100%'} alignItems={'center'}>
             <Text fontSize={'HXS'} flex={1} fontWeight={600} color={'gray.700'}>
-              Time to learning
+              {params.competence.title}
             </Text>
 
             <HStack
