@@ -143,7 +143,7 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
               space={1}>
               <Icon
                 size={14}
-                name={'arrow-growth'}
+                name={isCrescent ? 'arrow-growth' : 'chart-down'}
                 color={
                   isCrescent
                     ? theme.colors.green['300']
@@ -154,7 +154,7 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
                 fontSize={'TXS'}
                 fontWeight={400}
                 color={isCrescent ? 'green.300' : 'red.300'}>
-                {isCrescent ? 'Got better' : ''}
+                {isCrescent ? 'Got better' : 'Needs work'}
               </Text>
             </HStack>
           </HStack>
@@ -189,35 +189,6 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
               yAxisLabelWidth: 120,
             })}
           />
-
-          {/* 
-          <LineChart
-            data={data as any}
-            width={screenWidth - 120}
-            height={220}
-            bezier
-            withVerticalLines={false}
-            formatYLabel={value =>
-              `${tags[Math.round(parseInt(value)) - 1].label}`
-            }
-            chartConfig={{
-              backgroundGradientTo: '#FFFFFF',
-              backgroundGradientFrom: '#000000',
-              decimalPlaces: 2, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: () => theme.colors.gray['500'],
-              propsForDots: {
-                r: '8',
-                strokeWidth: '2',
-                stroke: '#66CCCC',
-                fill: '#FFFFFF',
-              },
-            }}
-            
-            style={{
-              width: '100%',
-            }}
-          /> */}
 
           <Text mt={6} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
             Rating per session

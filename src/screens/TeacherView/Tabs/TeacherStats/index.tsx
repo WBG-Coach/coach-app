@@ -1,5 +1,6 @@
 import {isTablet as Tablet} from 'react-native-device-info';
 import {
+  Box,
   Button,
   Center,
   FlatList,
@@ -8,14 +9,13 @@ import {
   Spinner,
   Text,
   useTheme,
+  View,
   VStack,
 } from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
-import {needsWorkLow} from '../../../../assets/images/teacherStats/indicator';
 import Competence from '../../../../database/models/Competence';
 import {getWatermelon} from '../../../../database';
 import Icon from '../../../../components/base/Icon';
-import {low} from '../../../../assets/images/teacherStats/graphSmall';
 import Navigation from '../../../../services/navigation';
 import Routes from '../../../../routes/paths';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -24,6 +24,12 @@ import Answer from '../../../../database/models/Answer';
 import Session from '../../../../database/models/Session';
 import {UserContext} from '../../../../providers/contexts/UserContext';
 import Question from '../../../../database/models/Question';
+import {LineChart} from 'react-native-gifted-charts';
+
+type competenceWithAnswers = {
+  answersValue: number[];
+  isCrescent: boolean;
+} & Partial<Competence>;
 
 const TeacherStatsTab = () => {
   const {teacher} = useContext(UserContext);
@@ -31,7 +37,7 @@ const TeacherStatsTab = () => {
   const theme = useTheme();
   const [competences, setCompetences] = useState({
     isLoading: true,
-    data: undefined as Competence[] | undefined,
+    data: undefined as competenceWithAnswers[] | undefined,
   });
 
   useEffect(() => {
@@ -51,9 +57,9 @@ const TeacherStatsTab = () => {
           .query()
           .fetch();
 
-        await Promise.all(
+        const competencesWithSum = await Promise.all(
           competencesDb.map(async competence => {
-            const questions = (
+            const questionsDb = (
               await db.collections
                 .get<Question>('question')
                 .query(Q.where('competence_id', competence.id))
@@ -61,47 +67,53 @@ const TeacherStatsTab = () => {
             ).map(question => question.id);
 
             const answers = (
-              await db.collections.get<Answer>('answer').query().fetch()
-            ).filter(
-              answer =>
-                questions.includes(answer.question_id) &&
-                sessionsDb.includes(answer.session_id),
+              await db.collections
+                .get<Answer>('answer')
+                .query(
+                  Q.and(
+                    Q.where('session_id', Q.oneOf(sessionsDb)),
+                    Q.where('question_id', Q.oneOf(questionsDb)),
+                  ),
+                )
+                .fetch()
+            ).reduce(
+              (acc, item) => ({
+                ...acc,
+                [item.session_id]: (acc?.session_id || 0) + item.value,
+              }),
+              {} as any,
             );
 
-            console.log('-->', answers);
+            const answersValue = Object.keys(answers).map(key => answers[key]);
+
+            const isCrescent =
+              answersValue[answersValue.length - 1] >=
+              answersValue[answersValue.length - 2];
+
+            return {
+              ...competence._raw,
+              answersValue: answersValue.splice(
+                answersValue.length - 3,
+                answersValue.length,
+              ),
+              isCrescent,
+            } as competenceWithAnswers;
           }),
         );
+        console.log(competencesWithSum[1]);
 
-        /*         await Promise.all(sessionsDb.map(async session => {
-            const answers = (
-                await db.collections
-                  .get<Answer>('answer')
-                  .query(Q.where('session_id', session.id))
-                  .fetch()
-              ).filter(answer => questions.includes(answer.question_id));
-        })); */
-
-        /*             await Promise.all(
-              competencesDb.map(async competence => {
-                const competenceWithQuestions = {
-                  ...competence,
-                  questions: await competence.questions.fetch(),
-                };
-      
-                const answers = (
-                  await db.collections
-                    .get<Answer>('answer')
-                    .query(Q.where('session_id', session.id))
-                    .fetch()
-                ).filter(answer => questions.includes(answer.question_id));
-      
-              }),
-            ); */
-
-        setCompetences({isLoading: false, data: competencesDb});
+        setCompetences({isLoading: false, data: competencesWithSum});
       }
     })();
   }, []);
+
+  const averageAnswers =
+    (competences?.data?.reduce(
+      (acc, item) => acc + item.answersValue[item.answersValue.length - 1],
+      0,
+    ) || 0) / (competences?.data?.length || 0);
+
+  console.log('->', averageAnswers);
 
   return (
     <VStack flex={1} py={6} px={isTablet ? '64px' : 4}>
@@ -123,7 +135,16 @@ const TeacherStatsTab = () => {
             px={4}
             py={6}
             alignItems={'center'}>
-            <Image source={needsWorkLow} alt={'Graph'} />
+            {/*   <Image
+              source={
+                chartData.find(
+                  (el, i) =>
+                    averageAnswers >= el.start &&
+                    averageAnswers < chartData[i + 1]?.start,
+                )?.image
+              }
+              alt={'Graph'}
+            /> */}
             <Text
               mt={6}
               textAlign={'center'}
@@ -152,6 +173,7 @@ const TeacherStatsTab = () => {
           </Text>
 
           <FlatList
+            mt={4}
             data={competences.data}
             renderItem={({item, index}) => (
               <TouchableOpacity
@@ -160,7 +182,7 @@ const TeacherStatsTab = () => {
                     competence_id: item.id,
                   })
                 }>
-                <HStack w={'100%'} alignItems={'center'}>
+                <HStack w={'100%'} alignItems={'center'} position={'relative'}>
                   <VStack flex={1}>
                     <Text
                       mt={8}
@@ -172,15 +194,19 @@ const TeacherStatsTab = () => {
                     <HStack alignItems={'center'}>
                       <Icon
                         size={14}
-                        name={'arrow-growth'}
-                        color={theme.colors.green['200']}
+                        name={item.isCrescent ? 'arrow-growth' : 'chart-down'}
+                        color={
+                          item.isCrescent
+                            ? theme.colors.green['200']
+                            : theme.colors.red['200']
+                        }
                       />
                       <Text
                         ml={1}
                         fontSize={'LSM'}
                         fontWeight={400}
                         color={'gray.700'}>
-                        Improved{' '}
+                        {item.isCrescent ? 'Improved' : 'Needs work'}
                       </Text>
                       <Text
                         fontSize={'TXS'}
@@ -205,7 +231,32 @@ const TeacherStatsTab = () => {
                     </HStack>
                   </VStack>
 
-                  <Image source={low} alt={'Graph'} />
+                  <Box position={'absolute'} right={0} top={12}>
+                    <LineChart
+                      isAnimated
+                      thickness={2}
+                      maxValue={5}
+                      color={item.isCrescent ? '#31C436' : '#E80C76'}
+                      animateOnDataChange
+                      animationDuration={1400}
+                      onDataChangeAnimationDuration={300}
+                      areaChart
+                      curved
+                      data={item.answersValue.map(value => ({value} as any))}
+                      startFillColor={item.isCrescent ? '#31C436' : '#E80C76'}
+                      endFillColor={item.isCrescent ? '#31C436' : '#E80C76'}
+                      startOpacity={0.4}
+                      endOpacity={0.1}
+                      spacing={90 / item.answersValue.length}
+                      width={90}
+                      height={40}
+                      initialSpacing={10}
+                      yAxisColor="white"
+                      xAxisColor="white"
+                      hideDataPoints={true}
+                      hideYAxisText={true}
+                    />
+                  </Box>
                 </HStack>
               </TouchableOpacity>
             )}
