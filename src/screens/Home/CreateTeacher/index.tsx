@@ -25,6 +25,7 @@ import Image from '../../../database/models/Image';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
+import * as RNC from 'react-native-compressor';
 
 type Props = {
   route: {
@@ -82,12 +83,16 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
       let image = values.image;
 
       if (teacherImage) {
+        const newImg = await RNC.Image.compress(teacherImage.value, {
+          maxWidth: 100,
+          maxHeight: 100,
+          quality: 0.8,
+        });
+
         const base64 =
-          'data:image/png;base64,' +
-          (await RNFS.readFile(teacherImage.value, 'base64'));
+          'data:image/png;base64,' + (await RNFS.readFile(newImg, 'base64'));
 
         if (image) {
-          //do logic to update image in bd
           await db.write(async () =>
             (
               await db.collections.get<Image>('image').find(image.id)

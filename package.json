@@ -31,6 +31,7 @@
     "react-native-accordion-list-view": "^2.0.1",
     "react-native-canvas": "^0.1.39",
     "react-native-click-outside": "^0.1.0",
+    "react-native-compressor": "^1.6.1",
     "react-native-device-info": "^10.5.0",
     "react-native-eject": "^0.2.0",
     "react-native-fs": "^2.20.0",

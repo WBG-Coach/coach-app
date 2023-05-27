@@ -7716,6 +7716,11 @@ react-native-collapsible@^1.6.0:
   resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-1.6.1.tgz#27e289831a6955aebde98abff2424a7710f36f02"
   integrity sha512-orF4BeiXd2hZW7fu9YcqIJXzN6TJcFcddY807D3MAOVktLuW9oQ+RIkrTJ5DR3v9ZOFfREkOjEmS79qeUTvkBQ==
 
+react-native-compressor@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-compressor/-/react-native-compressor-1.6.1.tgz#f1e4b765f172c649a453f39b3b7478554f825596"
+  integrity sha512-SmyRPWIQY7RPz50bXkkhLcIjoMMIB62rJJls9cG7XCeMIN/I8TFijmXZjEWrgzRlUMBa0JMr7AIXSLvcMp9hfA==
+
 react-native-device-info@^10.5.0:
   version "10.6.0"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.6.0.tgz#51f1b2ec98abc32747149b0a5b7fb662b44d50e4"
