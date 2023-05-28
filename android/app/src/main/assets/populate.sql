@@ -25,6 +25,8 @@
       teacher_id TEXT null,
       created_at INTEGER DEFAULT (strftime('%s', 'now')),
       updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+      latitude INTEGER,
+      longitude INTEGER,
       primary key (`id`)
   );
 
@@ -158,7 +160,7 @@
       id TEXT,
       name TEXT,
       surname TEXT,
-      emis_number INTEGER,
+      emis_number TEXT,
       subject TEXT,
       birthdate TEXT,
       school_id TEXT,
@@ -171,4 +173,4 @@
 
   INSERT INTO teacher (id, name, surname, emis_number, subject, birthdate, school_id, image_id, _changed, _status)
   VALUES 
-      ('c90cfae3-853d-49b3-a311-6ca20e61eeb6', 'Fred', 'Williamson', 0101010101, 'Math', 'Mon May 08 2023 12:12:34 GMT-0300 (Horário Padrão de Brasília)', '475ab284-1603-481a-86c6-e46323564ebb', '3f0b5974-8461-4442-9595-8db7bb7d16b5', '', 'created');
+      ('c90cfae3-853d-49b3-a311-6ca20e61eeb6', 'Fred', 'Williamson', '0101010101', 'Math', 'Mon May 08 2023 12:12:34 GMT-0300 (Horário Padrão de Brasília)', '475ab284-1603-481a-86c6-e46323564ebb', '3f0b5974-8461-4442-9595-8db7bb7d16b5', '', 'created');

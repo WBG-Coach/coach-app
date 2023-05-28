@@ -18,6 +18,7 @@ import {v4 as uuidv4} from 'uuid';
 import Session from './models/Session';
 import Teacher from './models/Teacher';
 import 'react-native-get-random-values';
+import Geolocation from '../services/geolocation';
 
 let database: Database;
 
@@ -113,6 +114,7 @@ export const syncWatermelon = async () => {
             model: DeviceInfo.getDeviceId(),
             apiLevel: await DeviceInfo.getApiLevel(),
             deviceId: await DeviceInfo.getUniqueId(),
+            ...(await Geolocation.getLocation()),
           });
         } catch (err) {
           console.log({err});
@@ -131,6 +133,8 @@ export const syncWatermelon = async () => {
       },
     });
   } catch (err) {
-    console.log('ERROR OF SYNC - ', {err});
+    if (!Array.isArray(err) || err[0].code !== 'ERR_NETWORK') {
+      console.log('ERROR OF SYNC - ', {err});
+    }
   }
 };

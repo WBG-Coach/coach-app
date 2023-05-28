@@ -19,6 +19,7 @@ import Question from '../../../database/models/Question';
 import Session from '../../../database/models/Session';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import CompetenceView from './CompetenceView';
+import Geolocation from '../../../services/geolocation';
 
 type Props = {
   route: {
@@ -69,6 +70,8 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
     const db = await getWatermelon();
     setIsLoading(true);
 
+    const location = await Geolocation.getLocation();
+
     const {_raw} = await db.write(
       async () =>
         await db.collections.get<Session>('session').create(record => {
@@ -82,6 +85,8 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
           record.coach_id = user?.id;
           record.key_points = session.key_points;
           record.teacher_id = session.teacher_id;
+          record.latitude = location.latitude;
+          record.longitude = location.longitude;
         }),
     );
 

@@ -1,6 +1,7 @@
 import {Model, Q} from '@nozbe/watermelondb';
 import {
   date,
+  field,
   lazy,
   readonly,
   relation,
@@ -25,6 +26,8 @@ export default class Session extends Model {
     .get('feedback')
     .query(Q.where('session_id', Q.eq(this.id)));
 
+  @field('latitude') latitude?: any;
+  @field('longitude') longitude?: any;
   @text('session_status') session_status?: string;
   @text('boys_count') boys_count?: string;
   @text('girls_count') girls_count?: string;

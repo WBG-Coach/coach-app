@@ -3,7 +3,6 @@ import {
   date,
   lazy,
   text,
-  field,
   readonly,
   immutableRelation,
 } from '@nozbe/watermelondb/decorators';
@@ -24,7 +23,7 @@ export default class Teacher extends Model {
   @text('surname') surname: any;
   @text('subject') subject: any;
   @text('birthdate') birthdate: any;
-  @field('emis_number') emis_number: any;
+  @text('emis_number') emis_number: any;
   @text('school_id') school_id: any;
   @text('image_id') image_id: any;
   @immutableRelation('image', 'image_id') image: any;

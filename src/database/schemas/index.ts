@@ -127,6 +127,8 @@ export default appSchema({
     tableSchema({
       name: 'session',
       columns: [
+        {name: 'latitude', type: 'number'},
+        {name: 'longitude', type: 'number'},
         {name: 'session_status', type: 'string'},
         {name: 'boys_count', type: 'string'},
         {name: 'girls_count', type: 'string'},
@@ -147,7 +149,7 @@ export default appSchema({
         {name: 'name', type: 'string'},
         {name: 'surname', type: 'string'},
         {name: 'subject', type: 'string'},
-        {name: 'emis_number', type: 'number'},
+        {name: 'emis_number', type: 'string'},
         {name: 'school_id', type: 'string'},
         {name: 'image_id', type: 'string'},
         {name: 'birthdate', type: 'string'},
