@@ -16,6 +16,7 @@ export type UserContextProps = {
   teacher?: TeachersWithSession;
   setTeacher: (teacher: TeachersWithSession) => void;
   handleSwitchSchool: () => void;
+  handleSwitchProfile: () => void;
   user?: IUser;
 };
 
@@ -45,6 +46,12 @@ const UserContextProvider = ({children}: Props) => {
     }
   };
 
+  const handleSwitchProfile = async () => {
+    if (user && user?.school) {
+      setUser({school: user.school} as any);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -54,6 +61,7 @@ const UserContextProvider = ({children}: Props) => {
         teacher,
         setTeacher,
         handleSwitchSchool,
+        handleSwitchProfile,
       }}>
       {children}
     </UserContext.Provider>

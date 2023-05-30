@@ -28,7 +28,8 @@ import Session from '../../database/models/Session';
 import EmptyStateComponent from './EmptyState';
 
 const HomeScreen = () => {
-  const {user, setTeacher, handleSwitchSchool} = useContext(UserContext);
+  const {user, setTeacher, handleSwitchSchool, handleSwitchProfile} =
+    useContext(UserContext);
   const {t} = useTranslation();
   const theme = useTheme();
   const isTablet = Tablet();
@@ -39,9 +40,9 @@ const HomeScreen = () => {
 
   const data = [
     {
-      icon: 'graph-bar',
+      icon: 'plus',
       label: t('home.items.newSession'),
-      onPress: () => {},
+      onPress: () => Navigation.navigate(Routes.quickAccess.newSession),
     },
     {
       icon: 'comment-dots',
@@ -54,12 +55,12 @@ const HomeScreen = () => {
       onPress: handleSwitchSchool,
     },
     {
-      icon: 'wifi-slash',
-      label: t('home.items.offlineSync'),
-      onPress: async () => {},
+      icon: 'user',
+      label: 'Switch coach profile',
+      onPress: handleSwitchProfile,
     },
     {
-      icon: 'plus',
+      icon: 'chart-line',
       label: t('home.items.statics'),
       onPress: () => {},
     },
