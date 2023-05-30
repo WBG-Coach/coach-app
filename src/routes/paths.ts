@@ -22,7 +22,7 @@ const Routes = {
   classObservation: {
     observationCompleted: 'ObservationCompleted',
     formConfirmaton: 'FormObservationConfirmation',
-    create: 'ClassObservationCreate',
+    about: 'ClassObservationAbout',
     onboarding: 'ClassOnboarding',
     setup: 'SetupObservation',
     form: 'FormObservation',

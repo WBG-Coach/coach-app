@@ -2,7 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useTranslation} from 'react-i18next';
 import Header from '../../components/Header';
 import CompetenceContextProvider from '../../providers/contexts/CompetencesContext';
-import ClassObservationCreate from '../../screens/ClassObservation/Create';
+import ClassObservationAbout from '../../screens/ClassObservation/About';
 import ObservationForm from '../../screens/ClassObservation/Form';
 import FormConfirmation from '../../screens/ClassObservation/FormConfirmation';
 import ObservationCompleted from '../../screens/ClassObservation/ObservationCompleted';
@@ -20,11 +20,11 @@ export default function WithCompetenceContext() {
 
   return (
     <CompetenceContextProvider>
-      <Stack.Navigator initialRouteName={Routes.classObservation.create}>
+      <Stack.Navigator initialRouteName={Routes.classObservation.about}>
         <Stack.Group>
           <Stack.Screen
-            name={Routes.classObservation.create}
-            component={ClassObservationCreate}
+            name={Routes.classObservation.about}
+            component={ClassObservationAbout}
             options={{
               header: () => (
                 <Header

@@ -16,7 +16,7 @@ import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 
-const ClassObservationCreate: React.FC<any> = () => {
+const ClassObservationAbout: React.FC<any> = () => {
   const theme = useTheme();
   const isTablet = Tablet();
   const {t} = useTranslation();
@@ -123,4 +123,4 @@ const ClassObservationCreate: React.FC<any> = () => {
   );
 };
 
-export default ClassObservationCreate;
+export default ClassObservationAbout;

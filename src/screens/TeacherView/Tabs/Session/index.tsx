@@ -178,7 +178,7 @@ const SessionTab: React.FC = () => {
                 borderColor={theme.colors.primary['200']}
                 onPress={() =>
                   Navigation.navigate('WithCompetenceContext', {
-                    screen: Routes.classObservation.onboarding,
+                    screen: Routes.classObservation.about,
                   })
                 }>
                 <HStack alignItems={'center'}>
@@ -221,7 +221,7 @@ const SessionTab: React.FC = () => {
                   borderColor={theme.colors.primary['200']}
                   onPress={() =>
                     Navigation.navigate('WithCompetenceContext', {
-                      screen: Routes.classObservation.onboarding,
+                      screen: Routes.classObservation.about,
                     })
                   }>
                   <HStack alignItems={'center'}>

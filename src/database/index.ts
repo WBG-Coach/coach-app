@@ -91,7 +91,7 @@ export const syncWatermelon = async () => {
             : '';
 
           const {data} = await axios.get(
-            `https://api-sl.coachdigital.org/sync?${urlParams}`,
+            `http://10.0.2.2:3000/sync?${urlParams}`,
           );
 
           return data;
@@ -108,7 +108,7 @@ export const syncWatermelon = async () => {
       pushChanges: async ({changes, lastPulledAt}) => {
         console.log('3 - pushChanges');
         try {
-          await axios.post(`https://api-sl.coachdigital.org/sync`, {
+          await axios.post(`http://10.0.2.2:3000/sync`, {
             changes,
             lastPulledAt: new Date(lastPulledAt).toJSON(),
             model: DeviceInfo.getDeviceId(),
