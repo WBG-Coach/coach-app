@@ -18,7 +18,6 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
-import {useFocusEffect} from '@react-navigation/native';
 import EmptyStateComponent from './EmptyState';
 
 const PendingSessions: React.FC = () => {
@@ -35,8 +34,6 @@ const PendingSessions: React.FC = () => {
         .get<Teacher>('teacher')
         .query(Q.where('school_id', Q.eq(user?.school?.id as string)))
         .fetch();
-
-      console.log(user?.school?.id);
 
       const teachersWithSessions = await Promise.all(
         allTeachers.map(async teacher => ({
@@ -63,7 +60,6 @@ const PendingSessions: React.FC = () => {
         return acc;
       }, [] as Teacher[]);
 
-      console.log('helo worrld  ', teachersWithSessions);
       setTeachers({isLoading: false, data});
     }
   }, [user]);

@@ -4,6 +4,10 @@ const Routes = {
     profileSelect: 'ProfileSelect',
   },
   home: 'HomeScreen',
+  quickAccess: {
+    newSession: 'QuickNewSessionScreen',
+    stats: 'QuickStatsScreen',
+  },
   pendingSessions: 'PendingSessions',
   teacher: {
     teacher: 'TeacherScreen',

@@ -141,6 +141,7 @@ const enTranslation = {
   },
   header: {
     settings: 'Settings',
+    newsession: 'New session',
     teacher: 'Teacher',
     newTeacher: 'New teacher',
     newClassObservation: 'New class observation',
