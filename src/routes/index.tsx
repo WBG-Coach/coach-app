@@ -21,7 +21,8 @@ import ObservationViewScreen from '../screens/TeacherView/Tabs/Session/SessionVi
 import PendingSessions from '../screens/PendingSessions';
 import FeedbackViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewer/Feedback';
 import CompetenceStats from '../screens/TeacherView/Tabs/TeacherStats/CompetenceStats';
-import NewSessionScreen from '../screens/Home/QuickActions/NewSession';
+import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
+import QuickNewSessionScreen from '../screens/Home/QuickActions/NewSession';
 
 const Stack = createNativeStackNavigator();
 
@@ -206,12 +207,26 @@ const AppRoutes = () => {
 
             <Stack.Screen
               name={Routes.quickAccess.newSession}
-              component={NewSessionScreen}
+              component={QuickNewSessionScreen}
               options={{
                 header: () => (
                   <Header
                     title={t('header.newsession') || 'New session'}
-                    hideBack
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.quickAccess.stats}
+              component={QuickStatsScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.teacherstats') || 'Teacher stats'}
                     hideConfig
                   />
                 ),

@@ -19,7 +19,7 @@ import Navigation from '../../../../services/navigation';
 import Routes from '../../../../routes/paths';
 import Icon from '../../../../components/base/Icon';
 
-const QuickNewSessionScreen = () => {
+const QuickStatsScreen = () => {
   const {user, setTeacher} = useContext(UserContext);
   const isTablet = Tablet();
   const [teachers, setTeachers] = useState({
@@ -72,7 +72,7 @@ const QuickNewSessionScreen = () => {
       flex={1}>
       <VStack flex={1}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-          Start new session
+          Check teacher stats
         </Text>
         <Text
           fontSize={'TMD'}
@@ -80,7 +80,7 @@ const QuickNewSessionScreen = () => {
           color={'gray.800'}
           mt={2}
           mb={4}>
-          Select a teacher and start a new observation session
+          Select a teacher to see their progress
         </Text>
 
         <Input
@@ -98,8 +98,8 @@ const QuickNewSessionScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 setTeacher(item as any);
-                Navigation.navigate('WithCompetenceContext', {
-                  screen: Routes.classObservation.about,
+                Navigation.navigate(Routes.teacher.teacher, {
+                  tabIn: 1,
                 });
               }}>
               <HStack
@@ -147,4 +147,4 @@ const QuickNewSessionScreen = () => {
   );
 };
 
-export default QuickNewSessionScreen;
+export default QuickStatsScreen;

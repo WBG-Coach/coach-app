@@ -154,6 +154,7 @@ const enTranslation = {
     feedbackComplete: 'Feedback complete',
     previousSession: 'Previous session',
     pendingSession: 'Pending sessions',
+    teacherstats: 'Teacher stats',
   },
   components: {
     starsTag: {

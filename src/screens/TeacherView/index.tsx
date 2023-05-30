@@ -10,7 +10,15 @@ import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import TeacherStatsTab from './Tabs/TeacherStats';
 
-const TeacherView: React.FC<any> = () => {
+type Props = {
+  route: {
+    params: {
+      tabIn: number;
+    };
+  };
+};
+
+const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
   const {teacher} = useContext(UserContext);
   const {t} = useTranslation();
   const tabs = [
@@ -24,7 +32,7 @@ const TeacherView: React.FC<any> = () => {
     },
   ];
 
-  const [tabSelected, setTabSelected] = useState(tabs[0]);
+  const [tabSelected, setTabSelected] = useState(tabs[params.tabIn || 0]);
   const {user} = useContext(UserContext);
   const isTablet = Tablet();
   const theme = useTheme();

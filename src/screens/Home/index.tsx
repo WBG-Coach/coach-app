@@ -62,7 +62,7 @@ const HomeScreen = () => {
     {
       icon: 'chart-line',
       label: t('home.items.statics'),
-      onPress: () => {},
+      onPress: () => Navigation.navigate(Routes.quickAccess.stats),
     },
   ];
 
