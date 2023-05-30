@@ -16,27 +16,7 @@ import CarouselPaginate from '../../../components/Carousel/CarouselPaginate';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import {isTablet as Tablet} from 'react-native-device-info';
-
-const data = [
-  {
-    image: OnboardingImages['InformTeacherOnboarding'],
-    title: 'Inform the teacher',
-    subtitle:
-      "Make sure to contact the teacher and let they know you're going to observe the class and have a mentoring session",
-  },
-  {
-    image: OnboardingImages['BewareTimeOnboarding'],
-    title: 'Beware of the time',
-    subtitle:
-      'Plan to spend 60 to 75 minutes with the teacher. Use this time to observe their class and to have the mentoring session',
-  },
-  {
-    image: OnboardingImages['MakeNotesOnboarding'],
-    title: 'Make notes',
-    subtitle:
-      'The notes will help you to answer the observation questions and plan the future mentoring sessions',
-  },
-];
+import {useTranslation} from 'react-i18next';
 
 const ClassOnboarding: React.FC<any> = () => {
   const {width: PAGE_WIDTH} = Dimensions.get('window');
@@ -44,8 +24,37 @@ const ClassOnboarding: React.FC<any> = () => {
   const progressValue = useSharedValue<number>(0);
   const pressAnim = useSharedValue<number>(0);
   const carouselRef = useRef<any>();
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
+
+  const data = [
+    {
+      image: OnboardingImages['InformTeacherOnboarding'],
+      title:
+        t('classObservation.onboarding.sections.$1.title') ||
+        'Inform the teacher',
+      subtitle:
+        t('classObservation.onboarding.sections.$1.subtitle') ||
+        "Make sure to contact the teacher and let they know you're going to observe the class and have a mentoring session",
+    },
+    {
+      image: OnboardingImages['BewareTimeOnboarding'],
+      title:
+        t('classObservation.onboarding.sections.$2.title') ||
+        'Beware of the time',
+      subtitle:
+        t('classObservation.onboarding.sections.$2.subtitle') ||
+        'Plan to spend 60 to 75 minutes with the teacher. Use this time to observe their class and to have the mentoring session',
+    },
+    {
+      image: OnboardingImages['MakeNotesOnboarding'],
+      title: t('classObservation.onboarding.sections.$3.title') || 'Make notes',
+      subtitle:
+        t('classObservation.onboarding.sections.$3.subtitle') ||
+        'The notes will help you to answer the observation questions and plan the future mentoring sessions',
+    },
+  ];
 
   return (
     <VStack flex={1} background={'primary.0'} safeAreaBottom>
@@ -117,7 +126,9 @@ const ClassOnboarding: React.FC<any> = () => {
           borderWidth={0}
           variant={'outline'}
           onPress={() => Navigation.navigate(Routes.classObservation.setup)}>
-          <Text color={'primary.200'}>Skip</Text>
+          <Text color={'primary.200'}>
+            {t('classObservation.onboarding.skip') || 'Skip'}
+          </Text>
         </Button>
         <Button
           flex={1}
@@ -130,7 +141,9 @@ const ClassOnboarding: React.FC<any> = () => {
               ? () => carouselRef.current.next()
               : () => Navigation.navigate(Routes.classObservation.setup)
           }>
-          {lowProgress === data.length - 1 ? 'Start' : 'Next'}
+          {lowProgress === data.length - 1
+            ? t('classObservation.onboarding.start') || 'Start'
+            : t('classObservation.onboarding.next') || 'Next'}
         </Button>
       </HStack>
     </VStack>

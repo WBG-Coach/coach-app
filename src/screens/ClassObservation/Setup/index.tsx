@@ -15,6 +15,7 @@ import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import {Picker} from '@react-native-picker/picker';
+import {useTranslation} from 'react-i18next';
 
 const defaultValues = {
   boys_count: '',
@@ -27,6 +28,7 @@ const defaultValues = {
 const ObservationSetup: React.FC<any> = () => {
   const {control, handleSubmit} = useForm({defaultValues});
   const {teacher} = useContext(UserContext);
+  const {t} = useTranslation();
   const isTablet = Tablet();
 
   const handleSubmitForm: SubmitHandler<
@@ -46,16 +48,18 @@ const ObservationSetup: React.FC<any> = () => {
       bg={'gray.0'}>
       <ScrollView flexGrow={0}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-          About the lesson
+          {t('classObservation.setup.title') || 'About the lesson'}
         </Text>
         <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-          Ask the teacher the following questions
+          {t('classObservation.setup.subtitle') ||
+            'Ask the teacher the following questions'}
         </Text>
 
         <VStack space={4} mt={6}>
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              How many students are boys?
+              {t('classObservation.setup.questions.$1.title') ||
+                'How many students are boys?'}
             </Text>
 
             <Controller
@@ -67,7 +71,9 @@ const ObservationSetup: React.FC<any> = () => {
                   {...field}
                   onChangeText={field.onChange}
                   isInvalid={!!error}
-                  placeholder={'15'}
+                  placeholder={
+                    t('classObservation.setup.questions.$1.placeholder') || '15'
+                  }
                   variant={'outline'}
                   keyboardType={'number-pad'}
                 />
@@ -77,7 +83,8 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              How many students are girls?
+              {t('classObservation.setup.questions.$2.title') ||
+                'How many students are girls?'}
             </Text>
 
             <Controller
@@ -89,7 +96,9 @@ const ObservationSetup: React.FC<any> = () => {
                   {...field}
                   onChangeText={field.onChange}
                   isInvalid={!!error}
-                  placeholder={'15'}
+                  placeholder={
+                    t('classObservation.setup.questions.$2.placeholder') || '15'
+                  }
                   variant={'outline'}
                   keyboardType={'number-pad'}
                 />
@@ -99,7 +108,8 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              What's the subject?
+              {t('classObservation.setup.questions.$3.title') ||
+                "What's the subject?"}
             </Text>
 
             <Controller
@@ -112,7 +122,10 @@ const ObservationSetup: React.FC<any> = () => {
                   onChangeText={field.onChange}
                   isInvalid={!!error}
                   variant={'outline'}
-                  placeholder={'Math'}
+                  placeholder={
+                    t('classObservation.setup.questions.$3.placeholder') ||
+                    'Math'
+                  }
                 />
               )}
             />
@@ -120,7 +133,8 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              How long the lesson’s going to last?
+              {t('classObservation.setup.questions.$4.title') ||
+                'How long the lesson’s going to last?'}
             </Text>
 
             <Controller
@@ -134,7 +148,10 @@ const ObservationSetup: React.FC<any> = () => {
                   borderRadius={'12px'}>
                   <Picker
                     selectedValue={field.value}
-                    placeholder={'30 min'}
+                    placeholder={
+                      t('classObservation.setup.questions.$4.placeholder') ||
+                      '30 min'
+                    }
                     onValueChange={itemValue => field.onChange(itemValue)}>
                     <Picker.Item label="10 Minuts" value="10" />
                     <Picker.Item label="20 Minuts" value="20" />
@@ -150,7 +167,8 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              Teacher's description of the class
+              {t('classObservation.setup.questions.$5.title') ||
+                "Teacher's description of the class"}
             </Text>
 
             <Controller
@@ -164,14 +182,18 @@ const ObservationSetup: React.FC<any> = () => {
                   isInvalid={!!error}
                   autoCompleteType={'off'}
                   variant={'outline'}
-                  placeholder={"Teacher's description of the class"}
+                  placeholder={
+                    t('classObservation.setup.questions.$5.placeholder') ||
+                    "Teacher's description of the class"
+                  }
                 />
               )}
             />
           </VStack>
         </VStack>
         <Text my={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-          Ask the teacher the following questions
+          {t('classObservation.setup.description') ||
+            'Ask the teacher the following questions'}
         </Text>
       </ScrollView>
 
@@ -182,7 +204,7 @@ const ObservationSetup: React.FC<any> = () => {
         color={'white'}
         background={'primary.200'}
         onPress={handleSubmit(handleSubmitForm)}>
-        Next
+        {t('classObservation.setup.button') || 'Next'}
       </Button>
     </VStack>
   );
