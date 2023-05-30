@@ -21,7 +21,7 @@ const defaultValues = {
   boys_count: '',
   girls_count: '',
   subject: '',
-  lesson_time: '',
+  lesson_time: '30',
   objective: '',
 };
 
@@ -153,8 +153,6 @@ const ObservationSetup: React.FC<any> = () => {
                       '30 min'
                     }
                     onValueChange={itemValue => field.onChange(itemValue)}>
-                    <Picker.Item label="10 Minuts" value="10" />
-                    <Picker.Item label="20 Minuts" value="20" />
                     <Picker.Item label="30 Minuts" value="30" />
                     <Picker.Item label="40 Minuts" value="40" />
                     <Picker.Item label="50 Minuts" value="50" />
