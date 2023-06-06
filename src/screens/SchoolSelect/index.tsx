@@ -78,9 +78,9 @@ const SchoolSelectScreen = () => {
         emptyMessage={t('setupUserData.schoolSelect.emptyList')}
         renderItem={({item, index}) => (
           <SchoolItem
+            index={index}
             school={item}
             isFirst={index === 0}
-            index={index}
             onPress={() => handleSelectSchool(item)}
           />
         )}
