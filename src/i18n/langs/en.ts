@@ -3,6 +3,7 @@ const enTranslation = {
     schoolSelect: {
       title: 'Select the school',
       lineDesc: 'Teachers here',
+      emptyList: 'No schools for this filter',
     },
     profileSelect: {
       title: 'Select your profile',
