@@ -1,4 +1,4 @@
-import {TouchableOpacity, TouchableOpacityBase} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import School from '../../../database/models/School';
 import {Center, HStack, Text, VStack} from 'native-base';
 import Icon from '../../../components/base/Icon';

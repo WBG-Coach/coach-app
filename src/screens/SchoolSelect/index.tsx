@@ -13,10 +13,10 @@ import SchoolItem from './SchoolItem';
 const ITEMS_PER_PAGE = 20;
 
 const SchoolSelectScreen = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isTheEnd, setIsTheEnd] = useState(false);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
+  const [isTheEnd, setIsTheEnd] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [schoolList, setSchoolList] = useState<School[]>([]);
 
   const isTablet = Tablet();
@@ -24,8 +24,8 @@ const SchoolSelectScreen = () => {
   const {handleSelectSchool} = useContext(UserContext);
 
   const loadFirstPageWithFilter = useCallback((value: string) => {
-    setIsLoading(true);
     setSchoolList([]);
+    setIsLoading(true);
     setIsTheEnd(false);
     SchoolService.findSchools(value, ITEMS_PER_PAGE, 1).then(data => {
       if (data.length < ITEMS_PER_PAGE) setIsTheEnd(true);
@@ -38,8 +38,8 @@ const SchoolSelectScreen = () => {
 
   const loadNextPage = async () => {
     if (!isLoading && !isTheEnd) {
-      setIsLoading(true);
       setPage(page + 1);
+      setIsLoading(true);
       const data = await SchoolService.findSchools(
         filter,
         ITEMS_PER_PAGE,
