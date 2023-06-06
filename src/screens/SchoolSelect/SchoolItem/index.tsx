@@ -21,9 +21,9 @@ const SchoolItem: React.FC<Props> = ({school, index, isFirst, onPress}) => {
         <HStack
           w={'100%'}
           py={'18px'}
-          borderTopWidth={'1px'}
           alignItems={'center'}
-          borderBottomColor={isFirst ? 'transparent' : 'gray.200'}>
+          borderTopWidth={'1px'}
+          borderColor={isFirst ? 'transparent' : 'gray.200'}>
           <Center
             w={'40px'}
             h={'40px'}
