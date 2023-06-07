@@ -62,7 +62,8 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
                   space={1}>
                   <Icon name={'clipboard-notes-solid'} size={15} />
                   <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-                    {t('home.teachers.session', {
+                    {t('home.teachers.session_interval', {
+                      postProcess: 'interval',
                       count: (teacher.sessions as any)?.length,
                     })}
                   </Text>
