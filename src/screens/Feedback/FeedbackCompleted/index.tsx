@@ -13,8 +13,10 @@ import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import Icon from '../../../components/base/Icon';
 import {FeedbackCompletedImg} from '../../../assets/images/feedback';
+import {useTranslation} from 'react-i18next';
 
 const FeedbackCompleted: React.FC = () => {
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -36,14 +38,15 @@ const FeedbackCompleted: React.FC = () => {
             color={'gray.800'}
             mb={'16px'}
             textAlign={'center'}>
-            Feedback complete
+            {t('feedback.feedbackCompleted.title') || 'Feedback complete'}
           </Text>
           <Text
             fontSize={'TMD'}
             fontWeight={400}
             color={'gray.800'}
             textAlign={'center'}>
-            Congratulations, you just completed the coaching process!
+            {t('feedback.feedbackCompleted.subtitle') ||
+              'Congratulations, you just completed the coaching process!'}
           </Text>
 
           <HStack
@@ -61,12 +64,11 @@ const FeedbackCompleted: React.FC = () => {
 
             <VStack>
               <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
-                What's next?
+                {t('feedback.feedbackCompleted.aboutNext') || "What's next?"}
               </Text>
               <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                Stay prepared for Teaching Learning Circles, until then you can
-                create new observations with a teacher by selecting them at the
-                app's home
+                {t('feedback.feedbackCompleted.aboutNextDescription') ||
+                  "Stay prepared for Teaching Learning Circles, until then you can create new observations with a teacher by selecting them at the app's home"}
               </Text>
             </VStack>
           </HStack>
@@ -86,7 +88,7 @@ const FeedbackCompleted: React.FC = () => {
           color={'white'}
           background={'primary.200'}
           onPress={() => Navigation.reset(Routes.home)}>
-          Go back to home
+          {t('feedback.feedbackCompleted.button') || 'Go back to home'}
         </Button>
       </VStack>
     </VStack>

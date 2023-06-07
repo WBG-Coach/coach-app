@@ -44,8 +44,15 @@ const enTranslation = {
   },
   splash: {},
   settings: {
-    settings: {},
-    changeLanguage: {},
+    settings: {
+      title: 'Language',
+      lastSync: 'Last sync:',
+      appVersion: 'App version',
+    },
+    changeLanguage: {
+      title: 'Select language',
+      button: 'Next',
+    },
   },
   classObservation: {
     observationCompleted: {},
@@ -134,10 +141,44 @@ const enTranslation = {
     form: {},
   },
   feedback: {
-    mentoringSection: {},
-    feedbackPreparation: {},
-    defineActions: {},
-    feedbackCompleted: {},
+    mentoringSection: {
+      title: 'Best practices',
+      subtitle:
+        'Remember the good practices from your training and put them in practice.',
+      bestPratices:
+        "If you don't remember the best practices access the Training Guide",
+      continueButton: 'Continue to feedback preparation',
+      trainingButton: 'Access Training Guide',
+    },
+    feedbackPreparation: {
+      title: 'Choose teaching practices',
+      subtitle: 'Choose 1 teaching practices to work with the teacher',
+      teachingPratice: 'Teaching practice 2',
+      button: 'Finish coach session',
+    },
+    defineActions: {
+      title: 'Define the actions',
+      subtitle:
+        'Define with the teacher what actions they will take to improve this teaching practice',
+      actionsToImprove: 'Actions to improve',
+      describeActions:
+        "Describe the actions you and the teacher agreed they're going to take to improve in this teaching practice",
+      textAreaPlaceholder:
+        'e.g. Be more aware of the way they talk to students',
+      uploadImage: 'Upload a image',
+      sendPicture:
+        'You can also send a picture of the annotations you made during the class observation and mentoring session',
+      uploadPhoto: 'Upload a photo',
+      button: 'Finish coach session',
+    },
+    feedbackCompleted: {
+      title: 'Feedback complete',
+      subtitle: 'Congratulations, you just completed the coaching process!',
+      aboutNext: "What's next?",
+      aboutNextDescription:
+        "Stay prepared for Teaching Learning Circles, until then you can create new observations with a teacher by selecting them at the app's home",
+      button: 'Go back to home',
+    },
   },
   header: {
     settings: 'Settings',

@@ -24,6 +24,7 @@ import ImagePicker from '../../../components/ImagePicker';
 import RNFS from 'react-native-fs';
 import Image from '../../../database/models/Image';
 import ImageCard from '../../../components/ImageCard';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -38,6 +39,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
   const [images, setImages] = useState<
     {name: string; value: string; created_at: number}[]
   >([]);
+  const {t} = useTranslation();
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const {competencies} = params;
   const defaultValues = competencies.reduce(
@@ -92,11 +94,11 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
       <VStack flex={1} px={isTablet ? '64px' : 4}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            Define the actions
+            {t('feedback.defineActions.title') || 'Define the actions'}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            Define with the teacher what actions they will take to improve this
-            teaching practice
+            {t('feedback.defineActions.subtitle') ||
+              'Define with the teacher what actions they will take to improve this teaching practice'}
           </Text>
 
           <VStack mt={7} space={5}>
@@ -118,11 +120,12 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                 viewInside={
                   <VStack>
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      Actions to improve
+                      {t('feedback.defineActions.actionsToImprove') ||
+                        'Actions to improve'}
                     </Text>
                     <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                      Describe the actions you and the teacher agreed they're
-                      going to take to improve in this teaching practice
+                      {t('feedback.defineActions.describeActions') ||
+                        "Describe the actions you and the teacher agreed they're going to take to improve in this teaching practice"}
                     </Text>
                     <Controller
                       control={control}
@@ -134,6 +137,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                           isInvalid={!!fieldState.error}
                           autoCompleteType={''}
                           placeholder={
+                            t('feedback.defineActions.textAreaPlaceholder') ||
                             'e.g. Be more aware of the way they talk to students'
                           }
                           onChangeText={field.onChange}
@@ -154,16 +158,16 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                 flex={1}
                 fontWeight={700}
                 color={'gray.700'}>
-                Upload a image
+                {t('feedback.defineActions.uploadImage') || 'Upload a image'}
               </Text>
               <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                Optional
+                {t('feedback.defineActions.optional') || 'Optional'}
               </Text>
             </HStack>
 
             <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              You can also send a picture of the annotations you made during the
-              class observation and mentoring session
+              {t('feedback.defineActions.sendPicture') ||
+                'You can also send a picture of the annotations you made during the class observation and mentoring session'}
             </Text>
 
             <Button
@@ -187,7 +191,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
                   fontSize={'LMD'}
                   fontWeight={500}
                   color={'primary.200'}>
-                  Upload a photo
+                  {t('feedback.defineActions.uploadPhoto') || 'Upload a photo'}
                 </Text>
               </HStack>
             </Button>
@@ -223,7 +227,7 @@ const DefineActions: React.FC<any> = ({route: {params}}: Props) => {
           color={'white'}
           isLoading={isSubmitting}
           background={'primary.200'}>
-          Finish coach session
+          {t('feedback.defineActions.button') || 'Finish coach session'}
         </Button>
       </VStack>
     </VStack>

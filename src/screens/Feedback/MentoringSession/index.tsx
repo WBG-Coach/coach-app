@@ -14,6 +14,7 @@ import Routes from '../../../routes/paths';
 import {BestPratices} from '../../../assets/images/mentoring';
 import Icon from '../../../components/base/Icon';
 import Session from '../../../database/models/Session';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -24,6 +25,7 @@ type Props = {
 };
 
 const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -43,15 +45,15 @@ const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
             color={'gray.800'}
             mb={'16px'}
             textAlign={'center'}>
-            Best practices
+            {t('feedback.mentoringSection.title') || 'Best practices'}
           </Text>
           <Text
             fontSize={'TMD'}
             fontWeight={400}
             color={'gray.800'}
             textAlign={'center'}>
-            Remember the good practices from your training and put them in
-            practice.
+            {t('feedback.mentoringSection.subtitle') ||
+              'Remember the good practices from your training and put them in practice.'}
           </Text>
 
           <HStack
@@ -68,7 +70,8 @@ const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
               color={theme.colors.violet['200']}
             />
             <Text flex={1} fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-              If you don't remember the best practices access the Training Guide
+              {t('feedback.mentoringSection.bestPratices') ||
+                "If you don't remember the best practices access the Training Guide"}
             </Text>
           </HStack>
         </VStack>
@@ -87,9 +90,10 @@ const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
           color={'white'}
           background={'primary.200'}
           onPress={() =>
-            Navigation.reset(Routes.feedback.feedbackPreparation, {...params})
+            Navigation.reset(Routes.feedback.mentoringSection, {...params})
           }>
-          Continue to feedback preparation
+          {t('feedback.mentoringSection.continueButton') ||
+            'Continue to feedback preparation'}
         </Button>
 
         <Button
@@ -98,7 +102,10 @@ const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
           borderRadius={'8px'}
           borderColor={'transparent'}
           onPress={() => Navigation.reset(Routes.home)}>
-          <Text color={'primary.200'}>Access Training Guide</Text>
+          <Text color={'primary.200'}>
+            {t('feedback.mentoringSection.trainingButton') ||
+              'Access Training Guide'}
+          </Text>
         </Button>
       </VStack>
     </VStack>
