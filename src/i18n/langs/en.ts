@@ -28,8 +28,7 @@ const enTranslation = {
       '(0)[No teachers];(1)[1 Teacher being coached];(2-inf)[{{count}} Teachers being coached];',
     teachers: {
       title: 'Teachers',
-      session: 'Session',
-      sessions: 'Sessions',
+      session_interval: '(1)[1 Session];(2-inf)[{{count}} Sessions]',
       addNew: 'Add new teacher',
     },
   },

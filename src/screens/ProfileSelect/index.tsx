@@ -21,13 +21,14 @@ const ProfileSelectScreen: React.FC = () => {
 
   const isTablet = Tablet();
   const {t} = useTranslation();
-  const {handleSelectProfile} = useContext(UserContext);
+  const {handleSelectProfile, user} = useContext(UserContext);
 
   const loadFirstPageWithFilter = useCallback((value: string) => {
     setUserList([]);
     setIsLoading(true);
     setIsTheEnd(false);
     UserService.findUsersWithTeacherCoachingCount(
+      user?.school?.id || '',
       value,
       ITEMS_PER_PAGE,
       1,

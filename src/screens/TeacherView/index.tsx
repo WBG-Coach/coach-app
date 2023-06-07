@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import TeacherStatsTab from './Tabs/TeacherStats';
+import TabButton from './TabButton';
 
 type Props = {
   route: {
@@ -18,22 +19,23 @@ type Props = {
   };
 };
 
-const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
-  const {teacher} = useContext(UserContext);
-  const {t} = useTranslation();
-  const tabs = [
-    {
-      Component: <SessionTab />,
-      label: t('teacher.tabs.session.title'),
-    },
-    {
-      Component: <TeacherStatsTab />,
-      label: t('teacher.tabs.stats.title'),
-    },
-  ];
+const tabs = [
+  {
+    Component: <SessionTab />,
+    label: 'teacher.tabs.session.title',
+  },
+  {
+    Component: <TeacherStatsTab />,
+    label: 'teacher.tabs.stats.title',
+  },
+];
 
+const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
   const [tabSelected, setTabSelected] = useState(tabs[params.tabIn || 0]);
+
+  const {teacher} = useContext(UserContext);
   const {user} = useContext(UserContext);
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -101,37 +103,17 @@ const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
       <HStack
         mt={4}
         pb={2}
+        w={'100%'}
         borderBottomWidth={'2px'}
         px={isTablet ? '64px' : 4}
-        w={'100%'}
         borderBottomColor={'gray.200'}>
         {tabs.map((item, index) => (
-          <VStack position={'relative'} key={index} flex={1} py={2}>
-            <Center>
-              <TouchableOpacity onPress={() => setTabSelected(item)}>
-                <Text
-                  fontSize={'TSM'}
-                  fontWeight={tabSelected.label === item.label ? 700 : 500}
-                  color={
-                    tabSelected.label === item.label
-                      ? 'primary.200'
-                      : 'gray.700'
-                  }>
-                  {item.label}
-                </Text>
-              </TouchableOpacity>
-            </Center>
-
-            {tabSelected.label === item.label && (
-              <Box
-                w={'100%'}
-                position={'absolute'}
-                bottom={'-10px'}
-                height={'2px'}
-                background={'primary.200'}
-              />
-            )}
-          </VStack>
+          <TabButton
+            tab={item}
+            index={index}
+            onPress={() => setTabSelected(item)}
+            isActive={item.label === tabSelected.label}
+          />
         ))}
       </HStack>
 

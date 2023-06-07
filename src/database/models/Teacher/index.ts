@@ -19,6 +19,10 @@ export default class Teacher extends Model {
     .get('session')
     .query(Q.where('teacher_id', this.id));
 
+  sessionsCount = 0;
+
+  feedbacksCount = 0;
+
   @text('name') name: any;
   @text('surname') surname: any;
   @text('subject') subject: any;

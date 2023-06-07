@@ -6,6 +6,7 @@ type InfiniteScrollProps<T> = {
   data: T[];
   isLoading: boolean;
   emptyMessage?: string | null;
+  emptyComponent?: React.ReactNode;
   renderItem: ListRenderItem<T> | null | undefined;
   loadNextPage: () => Promise<void>;
 };
@@ -16,6 +17,7 @@ const InfiniteScroll = <T extends any>({
   renderItem,
   loadNextPage,
   emptyMessage,
+  emptyComponent,
 }: InfiniteScrollProps<T>) => {
   const handleLoadData = async () => {
     try {
@@ -27,13 +29,15 @@ const InfiniteScroll = <T extends any>({
 
   return (
     <Flex flex={1} w="full">
-      {!isLoading && data.length === 0 && (
-        <Center mx="20px">
-          <Text fontWeight={600} color={'gray.700'}>
-            {emptyMessage}
-          </Text>
-        </Center>
-      )}
+      {!isLoading &&
+        data.length === 0 &&
+        (emptyComponent || (
+          <Center mx="20px">
+            <Text fontWeight={600} color={'gray.700'}>
+              {emptyMessage}
+            </Text>
+          </Center>
+        ))}
       <FlatList
         data={data}
         renderItem={renderItem}
