@@ -1,4 +1,10 @@
 const enTranslation = {
+  noGeolocation: {
+    title: 'Location service not allowed',
+    description:
+      'We need access to your location to provide a great Coach experience',
+    allowButton: 'Allow location service',
+  },
   setupUserData: {
     schoolSelect: {
       title: 'Select the school',
