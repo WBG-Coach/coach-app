@@ -1,5 +1,6 @@
 import {Button, HStack, Radio, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import i18n, {resources} from '../../../i18n';
@@ -8,6 +9,7 @@ import Navigation from '../../../services/navigation';
 const ChangeLanguageScreen: React.FC = () => {
   const currentLanguage = i18n.languages[0];
   const [language, setLanguage] = useState(currentLanguage);
+  const {t} = useTranslation();
   const isTablet = Tablet();
 
   return (
@@ -19,7 +21,7 @@ const ChangeLanguageScreen: React.FC = () => {
       flex={1}>
       <VStack flex={1} space={4}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-          Select language
+          {t('settings.changeLanguage.title') || 'Select language'}
         </Text>
 
         {Object.keys(resources).map(option => (
@@ -57,7 +59,7 @@ const ChangeLanguageScreen: React.FC = () => {
           i18n.changeLanguage(language);
           Navigation.goBack();
         }}>
-        Next
+        {t('settings.changeLanguage.button') || 'Next'}
       </Button>
     </VStack>
   );

@@ -42,7 +42,7 @@ const SettingsScreen: React.FC = () => {
               <Icon name={option.icon} />
               <VStack flex={1} space={2}>
                 <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                  Language
+                  {t('settings.settings.title') || 'Language'}
                 </Text>
                 <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
                   {resources[currentLanguage].label}
@@ -58,14 +58,14 @@ const SettingsScreen: React.FC = () => {
         <HStack alignItems={'center'} py={'16px'} space={2}>
           <Icon name={'wifi'} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            Last sync: Apr 21, 2023
+            {t('settings.settings.lastSync') || 'Last sync:'} Apr 21, 2023
           </Text>
         </HStack>
 
         <HStack alignItems={'center'} py={'16px'} space={2}>
           <Icon name={'mobile-android'} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            App version v{pkg.version}
+            {t('settings.settings.appVersion') || 'App version'} v{pkg.version}
           </Text>
         </HStack>
       </VStack>

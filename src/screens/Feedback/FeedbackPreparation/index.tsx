@@ -8,6 +8,7 @@ import Routes from '../../../routes/paths';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import StarsTag from '../../../components/StarsTag';
 import Session from '../../../database/models/Session';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -22,6 +23,7 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
     ICompetence[]
   >([]);
   const {competences} = useContext(CompetenceContext);
+  const {t} = useTranslation();
   const isTablet = Tablet();
 
   return (
@@ -29,10 +31,12 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
       <VStack flex={1} px={isTablet ? '64px' : 4}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            Choose teaching practices
+            {t('feedback.feedbackPreparation.title') ||
+              'Choose teaching practices'}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            Choose 1 teaching practices to work with the teacher
+            {t('feedback.feedbackPreparation.subtitle') ||
+              'Choose 1 teaching practices to work with the teacher'}
           </Text>
 
           <VStack mt={7} space={5}>
@@ -76,7 +80,8 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
                         fontSize={'TSM'}
                         fontWeight={400}
                         color={'gray.600'}>
-                        Teaching practice 2
+                        {t('feedback.feedbackPreparation.teachingPratice') ||
+                          'Teaching practice 2'}
                       </Text>
 
                       <HStack space={1}>
@@ -124,7 +129,7 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
           borderRadius={'8px'}
           color={'white'}
           background={'primary.200'}>
-          Finish coach session
+          {t('feedback.feedbackPreparation.button') || 'Finish coach session'}
         </Button>
       </VStack>
     </VStack>
