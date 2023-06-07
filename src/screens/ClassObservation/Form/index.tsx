@@ -11,6 +11,7 @@ import Answer from '../../../database/models/Answer';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import CompetenceAccordion from './CompetenceAccordion';
 import Session from '../../../database/models/Session';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -22,6 +23,7 @@ type Props = {
 
 const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
   const {competences} = useContext(CompetenceContext);
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -55,7 +57,6 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
   });
 
   const formValues = watch();
-
   const competenciesFinished = useMemo(
     () =>
       competences.reduce((acc, item) => {
@@ -121,20 +122,23 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
       <VStack flex={1} px={isTablet ? '64px' : 4}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            Class evaluation
+            {t('classObservation.form.title') || 'Class evaluation'}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            Rate each topic with your observation
+            {t('classObservation.form.subtitle') ||
+              'Rate each topic with your observation'}
           </Text>
 
           <VStack>{CompetenceComponent}</VStack>
 
           <VStack py={4}>
             <Text fontSize={'TXL'} fontWeight={700} color={'gray.700'}>
-              Key points to be discussed
+              {t('classObservation.form.keyPoints') ||
+                'Key points to be discussed'}
             </Text>
             <Text mt={4} fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
-              What you want to discuss with the teacher?
+              {t('classObservation.form.pointsToDiscuss') ||
+                'What you want to discuss with the teacher?'}
             </Text>
             <Controller
               name={'key_points'}
@@ -153,8 +157,8 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
             />
 
             <Text mt={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              Use this space for additional annotations that you'd like to
-              discuss with the teacher
+              {t('classObservation.form.spaceAdditional') ||
+                "Use this space for additional annotations that you'd like to discuss with the teacher"}
             </Text>
           </VStack>
         </ScrollView>
@@ -170,8 +174,15 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
           space={1}>
           <Icon name="star" color={theme.colors.gray['600']} size={20} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            {competenciesFinished.length} of {competences.length} competencies
-            rated
+            {(
+              t('classObservation.form.competenciesRated') ||
+              '${finishedLength} of ${competencesLength} competencies rated'
+            )
+              .replace(
+                '${finishedLength}',
+                competenciesFinished.length.toString(),
+              )
+              .replace('${competencesLength}', competences.length.toString())}
           </Text>
         </HStack>
         <VStack
@@ -187,7 +198,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
             borderRadius={'8px'}
             color={'white'}
             background={'primary.200'}>
-            Finish observation
+            {t('classObservation.form.button') || 'Finish observation'}
           </Button>
         </VStack>
       </VStack>

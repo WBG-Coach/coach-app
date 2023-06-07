@@ -13,8 +13,10 @@ import Navigation from '../../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {TeacherCreatedIcon} from '../../../../assets/images/teacher';
 import Icon from '../../../../components/base/Icon';
+import {useTranslation} from 'react-i18next';
 
 const TeacherCreatedScreen: React.FC = () => {
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -35,11 +37,11 @@ const TeacherCreatedScreen: React.FC = () => {
           />
 
           <Text mt={8} fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            New teacher added
+            {t('teacher.created.title') || 'New teacher added'}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.600'}>
-            The teacher will be available in the list of teachers at the home of
-            the app
+            {t('teacher.created.subtitle') ||
+              'The teacher will be available in the list of teachers at the home of the app'}
           </Text>
 
           <HStack
@@ -57,11 +59,12 @@ const TeacherCreatedScreen: React.FC = () => {
             />
             <VStack flex={1}>
               <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
-                Start coaching this teacher
+                {t('teacher.created.startCoaching') ||
+                  'Start coaching this teacher'}
               </Text>
               <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                Select their profile and click the ”New class observation”
-                button to get started
+                {t('teacher.created.selectProfile') ||
+                  'Select their profile and click the ”New class observation” button to get started'}
               </Text>
             </VStack>
           </HStack>
@@ -74,7 +77,7 @@ const TeacherCreatedScreen: React.FC = () => {
         color={'white'}
         background={'primary.200'}
         onPress={() => Navigation.reset(Routes.home)}>
-        Finish
+        {t('teacher.created.button') || 'Finish'}
       </Button>
     </VStack>
   );

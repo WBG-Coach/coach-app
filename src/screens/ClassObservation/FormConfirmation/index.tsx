@@ -20,6 +20,7 @@ import Session from '../../../database/models/Session';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import CompetenceView from './CompetenceView';
 import Geolocation from '../../../services/geolocation';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -34,6 +35,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const {competences} = useContext(CompetenceContext);
   const {user} = useContext(UserContext);
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -138,7 +140,10 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
               background={'primary.200'}>
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'check'} color={theme.colors.white} />
-                <Text>Finish observation</Text>
+                <Text>
+                  {t('classObservation.formConfirmation.button') ||
+                    'Finish observation'}
+                </Text>
               </HStack>
             </Button>
 
@@ -151,7 +156,10 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
               borderColor={'primary.200'}>
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'pen'} color={theme.colors.primary['200']} />
-                <Text color={'primary.200'}>Edit evaluation</Text>
+                <Text color={'primary.200'}>
+                  {t('classObservation.formConfirmation.buttonEdit') ||
+                    'Edit evaluation'}
+                </Text>
               </HStack>
             </Button>
           </VStack>

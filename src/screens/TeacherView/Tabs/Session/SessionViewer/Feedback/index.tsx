@@ -2,11 +2,10 @@ import {isTablet as Tablet} from 'react-native-device-info';
 import React, {useEffect, useState} from 'react';
 import Feedback from '../../../../../../database/models/Feedback';
 import {getWatermelon} from '../../../../../../database';
-import {Center, HStack, Spinner, Text, useTheme, VStack} from 'native-base';
-import Icon from '../../../../../../components/base/Icon';
-import moment from 'moment';
+import {Center, Spinner, Text, VStack} from 'native-base';
 import Image from '../../../../../../database/models/Image';
 import ImageCard from '../../../../../../components/ImageCard';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -18,7 +17,7 @@ type Props = {
 
 const FeedbackViewScreen: React.FC<any> = ({route: {params}}: Props) => {
   const isTablet = Tablet();
-  const theme = useTheme();
+  const {t} = useTranslation();
   const [feedback, setFeedback] = useState({
     isLoading: false,
     data: {} as Omit<Feedback, 'images'> & {images: Image[]},
@@ -53,10 +52,12 @@ const FeedbackViewScreen: React.FC<any> = ({route: {params}}: Props) => {
       ) : (
         <VStack flex={1}>
           <Text fontSize={'HXS'} fontWeight={600} color={'gray.700'}>
-            Feedback session summary
+            {t('teacher.tabs.session.feedback.title') ||
+              'Feedback session summary'}
           </Text>
           <Text mt={1} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            Check how was the conversation with the teacher
+            {t('teacher.tabs.session.feedback.subtitle') ||
+              'Check how was the conversation with the teacher'}
           </Text>
 
           <VStack mt={6}>
@@ -64,8 +65,8 @@ const FeedbackViewScreen: React.FC<any> = ({route: {params}}: Props) => {
               {feedback?.data?.competence?.title}
             </Text>
             <Text mt={1} fontSize={'TMD'} fontWeight={400} color={'gray.600'}>
-              Those are the actions you and the teacher agreed they're going to
-              take to improve in this teaching practice
+              {t('teacher.tabs.session.feedback.actions') ||
+                "Those are the actions you and the teacher agreed they're going to take to improve in this teaching practice"}
             </Text>
 
             <VStack
@@ -82,10 +83,11 @@ const FeedbackViewScreen: React.FC<any> = ({route: {params}}: Props) => {
           </VStack>
           <VStack mt={6} flex={1}>
             <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-              Image uploaded
+              {t('teacher.tabs.session.feedback.image') || 'Image uploaded'}
             </Text>
             <Text mt={1} fontSize={'TMD'} fontWeight={400} color={'gray.600'}>
-              You can check the image you've sent of you annotations
+              {t('teacher.tabs.session.feedback.imageDescription') ||
+                "You can check the image you've sent of you annotations"}
             </Text>
             <VStack flex={1} space={2} mt={6}>
               {feedback.data?.images?.map((image, index) => (

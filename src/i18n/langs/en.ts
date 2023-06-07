@@ -43,10 +43,74 @@ const enTranslation = {
         stillNoSession: 'Still no session',
         stillNoSessionDescription:
           'You can start a new class observation with this teacher',
+        pendingFeedback: 'Pending feedback session',
+        haventDone:
+          "You still haven't done the feedback of the last class observation with this teacher",
+        startFeedback: 'Start feedback now',
+        selectCoach: 'Select coaching part',
+        viewSummary:
+          'You can view the summary of the observation or the feedback you had with the teacher',
+        feedback: {
+          title: 'Feedback session summary',
+          subtitle: 'Check how was the conversation with the teacher',
+          actions:
+            "Those are the actions you and the teacher agreed they're going to take to improve in this teaching practice",
+          image: 'Image uploaded',
+          imageDescription:
+            "You can check the image you've sent of you annotations",
+        },
       },
       stats: {
         title: "Teacher's stats",
+        editTeacher: 'Edit teacher',
+        overallRating: 'Overall rating',
+        currentRating: 'The current rating is:',
+        ratingAverage:
+          'This rating is the average of all 5 Teaching Practices in the last observation',
+        evolution:
+          'This rating is the average of all 5 Teaching Practices in the last observation',
+        comparisio:
+          "Comparison presenting the teacher's improvement through coach sessions",
+        lastSession: 'since last session',
+        seeDetails: 'See details',
+        button: 'New class observation',
+        empty: {
+          title: 'No data to show now',
+          subtitle:
+            'Complete class observations and feedback sessions to show the statistics',
+          button: 'New class observation',
+        },
+        scale: {
+          high: 'Got better',
+          low: 'Needs work',
+        },
+        ratingPerSession: 'Rating per session',
+        teacherComparision:
+          "Comparison presenting the teacher's improvement through coach sessions",
+        sessionName: 'Session',
       },
+    },
+    create: {
+      editTeacher: 'Edit a teacher',
+      newTeacher: 'Add a new teacher',
+      takePhoto: 'Take/choose photo',
+      firstName: 'First name',
+      lastName: 'Last name',
+      emisNumber: 'EMIS number',
+      principalSubject: 'Principal subject',
+      principalSubjectPlaceholder: 'e.g. Math',
+      dateOfBirth: 'Date of birth',
+      buttonSave: 'Save',
+      buttonAdd: 'Add teacher',
+    },
+    created: {
+      title: 'New teacher added',
+      subtitle:
+        'The teacher will be available in the list of teachers at the home of the app',
+      startCoaching: 'Start coaching this teacher',
+      selectProfile:
+        'Select their profile and click the ”New class observation” button to get started',
+      button: 'Finish',
     },
   },
   splash: {},
@@ -62,8 +126,25 @@ const enTranslation = {
     },
   },
   classObservation: {
-    observationCompleted: {},
-    formConfirmaton: {},
+    observationCompleted: {
+      title: 'Class observation complete',
+      subtitle:
+        'Congratulations, you just completed the class evaluation process!',
+      whatsNext: "What's next?",
+      startFeedback:
+        'You can start the feedback with the teacher right now or you can go back to the home and do it later by selecting the teacher profile',
+      button: 'Start feedback preparation',
+      buttonBack: 'Go back to home',
+    },
+    formConfirmaton: {
+      button: 'Finish observation',
+      buttonEdit: 'Edit evaluation',
+      competenceView: {
+        title: 'Class observation summary',
+        subtitle: 'Review how you rated the class',
+        overallRating: 'Overall rating',
+      },
+    },
     create: {
       title: 'Mentoring process',
       button: 'Start preparation',
@@ -145,7 +226,17 @@ const enTranslation = {
         },
       },
     },
-    form: {},
+    form: {
+      title: 'Class evaluation',
+      subtitle: 'Rate each topic with your observation',
+      keyPoints: 'Key points to be discussed',
+      pointsToDiscuss: 'What you want to discuss with the teacher?',
+      spaceAdditional:
+        "Use this space for additional annotations that you'd like to discuss with the teacher",
+      competenciesRated:
+        '${finishedLength} of ${competencesLength} competencies rated',
+      button: 'Finish observation',
+    },
   },
   feedback: {
     mentoringSection: {
@@ -211,6 +302,16 @@ const enTranslation = {
       needsAttention: 'Needs attention',
       almostThere: 'Almost there',
       doingGreat: 'Doing great',
+    },
+  },
+  quickAccess: {
+    newSession: {
+      title: 'Start new session',
+      subtitle: 'Select a teacher and start a new observation session',
+    },
+    stats: {
+      title: 'Check teacher stats',
+      subtitle: 'Select a teacher to see their progress',
     },
   },
 };

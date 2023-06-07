@@ -26,6 +26,7 @@ import {UserContext} from '../../../providers/contexts/UserContext';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import * as RNC from 'react-native-compressor';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -145,7 +146,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
 
     Navigation.reset(Routes.teacher.created);
   };
-
+  const {t} = useTranslation();
   const idWatcher = watch('id');
 
   return (
@@ -162,7 +163,9 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
         <>
           <ScrollView>
             <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-              {teacher_id ? 'Edit a teacher' : 'Add a new teacher'}
+              {teacher_id
+                ? t('teacher.create.editTeacher') || 'Edit a teacher'
+                : t('teacher.create.newTeacher') || 'Add a new teacher'}
             </Text>
             <Center w={'100%'} my={6}>
               <VStack alignItems={'center'} space={1}>
@@ -200,7 +203,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                     )
                   }>
                   <Text fontSize={'LMD'} fontWeight={500} color={'primary.200'}>
-                    Take/choose photo
+                    {t('teacher.create.takePhoto') || 'Take/choose photo'}
                   </Text>
                 </TouchableOpacity>
               </VStack>
@@ -214,7 +217,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                 render={({field, fieldState: {error}}) => (
                   <VStack space={2}>
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      First name
+                      {t('teacher.create.firstName') || 'First name'}
                     </Text>
                     <Input
                       {...field}
@@ -233,7 +236,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                 render={({field, fieldState: {error}}) => (
                   <VStack space={2}>
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      Last name
+                      {t('teacher.create.lastName') || 'Last name'}
                     </Text>
                     <Input
                       {...field}
@@ -253,7 +256,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                 render={({field, fieldState: {error}}) => (
                   <VStack space={2}>
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      EMIS number
+                      {t('teacher.create.emisNumber') || 'EMIS number'}
                     </Text>
                     <Input
                       {...field}
@@ -274,14 +277,18 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                 render={({field, fieldState: {error}}) => (
                   <VStack space={2}>
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      Principal subject
+                      {t('teacher.create.principalSubject') ||
+                        'Principal subject'}
                     </Text>
                     <Input
                       {...field}
                       onChangeText={field.onChange}
                       isInvalid={!!error}
                       variant={'outline'}
-                      placeholder={'e.g. Math'}
+                      placeholder={
+                        t('teacher.create.principalSubjectPlaceholder') ||
+                        'e.g. Math'
+                      }
                     />
                   </VStack>
                 )}
@@ -294,7 +301,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                 render={({field, fieldState: {error}}) => (
                   <VStack space={2}>
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                      Date of birth
+                      {t('teacher.create.dateOfBirth') || 'Date of birth'}
                     </Text>
 
                     <TouchableOpacity
@@ -341,7 +348,9 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
             background={'primary.200'}
             isLoading={isSubmitting}
             onPress={handleSubmit(handleSubmitTeacher)}>
-            {teacher_id ? 'Save' : 'Add teacher'}
+            {teacher_id
+              ? t('teacher.create.buttonSave') || 'Save'
+              : t('teacher.create.buttonAdd') || 'Add teacher'}
           </Button>
         </>
       )}

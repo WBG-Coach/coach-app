@@ -77,7 +77,7 @@ const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
               p={3}>
               <Icon name={'pen'} color={theme.colors.primary['200']} />
               <Text fontSize={'LMD'} fontWeight={500} color={'primary.200'}>
-                Edit teacher
+                {t('teacher.tabs.stats.editTeacher') || 'Edit teacher'}
               </Text>
             </HStack>
           </TouchableOpacity>

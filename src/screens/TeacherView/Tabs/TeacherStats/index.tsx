@@ -96,8 +96,6 @@ const TeacherStatsTab = () => {
               answersValue[answersValue.length - 1] >=
               answersValue[answersValue.length - 2];
 
-            console.log(answersValue);
-
             return {
               ...competence._raw,
               answersValue: answersValue.splice(
@@ -135,7 +133,7 @@ const TeacherStatsTab = () => {
           ) : (
             <>
               <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                Overall rating
+                {t('teacher.tabs.stats.overallRating') || 'Overall rating'}
               </Text>
               <VStack
                 w={'100%'}
@@ -162,7 +160,8 @@ const TeacherStatsTab = () => {
                     fontSize={'TMD'}
                     fontWeight={500}
                     color={'gray.600'}>
-                    The current rating is:{' '}
+                    {t('teacher.tabs.stats.currentRating') ||
+                      'The current rating is:'}{' '}
                   </Text>
                   <Text
                     mt={6}
@@ -179,16 +178,16 @@ const TeacherStatsTab = () => {
                   fontSize={'TSM'}
                   fontWeight={400}
                   color={'gray.600'}>
-                  This rating is the average of all 5 Teaching Practices in the
-                  last observation
+                  {t('teacher.tabs.stats.ratingAverage') ||
+                    'This rating is the average of all 5 Teaching Practices in the last observation'}
                 </Text>
               </VStack>
               <Text mt={8} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                Teacher's evolution
+                {t('teacher.tabs.stats.evolution') || "Teacher's evolution"}
               </Text>
               <Text mt={1} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                Comparison presenting the teacher's improvement through coach
-                sessions
+                {t('teacher.tabs.stats.comparision') ||
+                  "Comparison presenting the teacher's improvement through coach sessions"}
               </Text>
               <FlatList
                 mt={4}
@@ -235,7 +234,8 @@ const TeacherStatsTab = () => {
                             fontSize={'TXS'}
                             fontWeight={400}
                             color={'gray.600'}>
-                            since last session
+                            {t('teacher.tabs.stats.lastSession') ||
+                              'since last session'}
                           </Text>
                         </HStack>
                         <HStack ml={3} alignItems={'center'}>
@@ -244,7 +244,8 @@ const TeacherStatsTab = () => {
                             fontSize={'LSM'}
                             fontWeight={500}
                             color={'primary.200'}>
-                            See details
+                            {t('teacher.tabs.stats.seeDetails') ||
+                              'See details'}
                           </Text>
                           <Icon
                             size={14}
@@ -304,7 +305,9 @@ const TeacherStatsTab = () => {
                 }>
                 <HStack alignItems={'center'} space={3}>
                   <Icon name={'plus'} color={theme.colors.primary['200']} />
-                  <Text color={'primary.200'}>New class observation</Text>
+                  <Text color={'primary.200'}>
+                    {t('teacher.tabs.stats.button') || 'New class observation'}
+                  </Text>
                 </HStack>
               </Button>
             </>

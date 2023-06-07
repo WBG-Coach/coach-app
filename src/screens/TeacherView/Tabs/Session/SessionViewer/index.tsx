@@ -102,7 +102,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
               fontSize={'HXS'}
               fontWeight={600}
               color={'gray.700'}>
-              Session 2
+              {t('teacher.tabs.session.session') || 'Session'} 2
             </Text>
             <Text
               textAlign={'center'}
@@ -138,7 +138,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
           fontSize={'LMD'}
           fontWeight={500}
           color={'gray.700'}>
-          Select coaching part
+          {t('teacher.tabs.session.selectCoach') || 'Select coaching part'}
         </Text>
         <Text
           mt={1}
@@ -146,8 +146,8 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
           fontSize={'TXS'}
           fontWeight={400}
           color={'gray.600'}>
-          You can view the summary of the observation or the feedback you had
-          with the teacher
+          {t('teacher.tabs.session.viewSummary') ||
+            'You can view the summary of the observation or the feedback you had with the teacher'}
         </Text>
 
         <VStack flex={1} mt={4} w={'100%'}>

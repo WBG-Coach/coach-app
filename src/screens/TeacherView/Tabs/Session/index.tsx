@@ -93,15 +93,16 @@ const SessionTab: React.FC = () => {
                   />
                   <VStack flex={1} alignItems={'baseline'}>
                     <Text fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
-                      Pending feedback session
+                      {t('teacher.tabs.session.pendingFeedback') ||
+                        'Pending feedback session'}
                     </Text>
                     <Text
                       mt={2}
                       fontSize={'TSM'}
                       fontWeight={400}
                       color={'gray.700'}>
-                      You still haven't done the feedback of the last class
-                      observation with this teacher
+                      {t('teacher.tabs.session.haventDone') ||
+                        "You still haven't done the feedback of the last class observation with this teacher"}
                     </Text>
 
                     <Button
@@ -117,7 +118,10 @@ const SessionTab: React.FC = () => {
                       mt={3}
                       borderColor={'white'}
                       background={'white'}>
-                      <Text color={'primary.200'}>Start feedback now</Text>
+                      <Text color={'primary.200'}>
+                        {t('teacher.tabs.session.startFeedback') ||
+                          'Start feedback now'}
+                      </Text>
                     </Button>
                   </VStack>
                 </HStack>

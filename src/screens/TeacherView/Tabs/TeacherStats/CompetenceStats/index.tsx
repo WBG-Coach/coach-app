@@ -154,7 +154,9 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
                 fontSize={'TXS'}
                 fontWeight={400}
                 color={isCrescent ? 'green.300' : 'red.300'}>
-                {isCrescent ? 'Got better' : 'Needs work'}
+                {isCrescent
+                  ? t('teacher.tabs.stats.scale.high') || 'Got better'
+                  : t('teacher.tabs.stats.scale.low') || 'Needs work'}
               </Text>
             </HStack>
           </HStack>
@@ -191,12 +193,12 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
           />
 
           <Text mt={6} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-            Rating per session
+            {t('teacher.tabs.stats.ratingPerSession') || 'Rating per session'}
           </Text>
 
           <Text fontSize={'TSM'} mt={1} fontWeight={400} color={'gray.600'}>
-            Comparison presenting the teacher's improvement through coach
-            sessions
+            {t('teacher.tabs.stats.teacherComparision') ||
+              "Comparison presenting the teacher's improvement through coach sessions"}
           </Text>
 
           <FlatList
@@ -210,7 +212,8 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
                 borderBottomColor={'gray.200'}>
                 <VStack flex={1}>
                   <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                    Session {index + 1}
+                    {t('teacher.tabs.stats.sessionName') || 'Session'}{' '}
+                    {index + 1}
                   </Text>
                   <Text
                     mt={2}

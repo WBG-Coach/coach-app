@@ -18,9 +18,11 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Navigation from '../../../../services/navigation';
 import Routes from '../../../../routes/paths';
 import Icon from '../../../../components/base/Icon';
+import {useTranslation} from 'react-i18next';
 
 const QuickStatsScreen = () => {
   const {user, setTeacher} = useContext(UserContext);
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const [teachers, setTeachers] = useState({
     isLoading: true,
@@ -72,7 +74,7 @@ const QuickStatsScreen = () => {
       flex={1}>
       <VStack flex={1}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-          Check teacher stats
+          {t('quickAccess.stats.title') || 'Check teacher stats'}
         </Text>
         <Text
           fontSize={'TMD'}
@@ -80,7 +82,8 @@ const QuickStatsScreen = () => {
           color={'gray.800'}
           mt={2}
           mb={4}>
-          Select a teacher to see their progress
+          {t('quickAccess.stats.subtitle') ||
+            'Select a teacher to see their progress'}
         </Text>
 
         <Input

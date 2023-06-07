@@ -12,10 +12,12 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-        Class observation summary
+        {t('classObservation.formConfirmation.competenceView.title') ||
+          'Class observation summary'}
       </Text>
       <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-        Review how you rated the class
+        {t('classObservation.formConfirmation.competenceView.subtitle') ||
+          'Review how you rated the class'}
       </Text>
 
       <VStack space={6} mt={6}>
@@ -37,7 +39,9 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
                 flex={1}
                 fontWeight={400}
                 color={'gray.700'}>
-                Overall rating
+                {t(
+                  'classObservation.formConfirmation.competenceView.overallRating',
+                ) || 'Overall rating'}
               </Text>
               <VStack alignItems={'flex-end'} space={1}>
                 <StarView maxLength={5} value={competency.overall_rating + 1} />

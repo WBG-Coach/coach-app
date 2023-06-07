@@ -5,6 +5,7 @@ import Icon from '../../../components/base/Icon';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import Session from '../../../database/models/Session';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   route: {
@@ -16,6 +17,7 @@ type Props = {
 
 const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
   const starsLength = Array(5).fill({});
+  const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
 
@@ -42,10 +44,12 @@ const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
         </HStack>
 
         <Text mt={8} fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-          Class observation complete
+          {t('classObservation.observationCompleted.title') ||
+            'Class observation complete'}
         </Text>
         <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.600'}>
-          Congratulations, you just completed the class evaluation process!
+          {t('classObservation.observationCompleted.subtitle') ||
+            'Congratulations, you just completed the class evaluation process!'}
         </Text>
 
         <HStack
@@ -63,12 +67,12 @@ const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
           />
           <VStack flex={1}>
             <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
-              What's next?
+              {t('classObservation.observationCompleted.whatsNext') ||
+                "What's next?"}
             </Text>
             <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-              You can start the feedback with the teacher right now or you can
-              go back to the home and do it later by selecting the teacher
-              profile
+              {t('classObservation.observationCompleted.startFeedback') ||
+                'You can start the feedback with the teacher right now or you can go back to the home and do it later by selecting the teacher profile'}
             </Text>
           </VStack>
         </HStack>
@@ -90,7 +94,8 @@ const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
           onPress={() =>
             Navigation.reset(Routes.feedback.mentoringSection, {...params})
           }>
-          Start feedback preparation
+          {t('classObservation.observationCompleted.button') ||
+            'Start feedback preparation'}
         </Button>
 
         <Button
@@ -99,7 +104,10 @@ const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
           borderRadius={'8px'}
           borderColor={'white'}
           onPress={() => Navigation.reset(Routes.home)}>
-          <Text color={'primary.200'}>Go back to home</Text>
+          <Text color={'primary.200'}>
+            {t('classObservation.observationCompleted.buttonBack') ||
+              'Go back to home'}
+          </Text>
         </Button>
       </VStack>
     </VStack>
