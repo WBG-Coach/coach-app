@@ -9,7 +9,7 @@ import {
   View,
   VStack,
 } from 'native-base';
-import React, {useContext, useCallback, useState} from 'react';
+import React, {useContext, useCallback, useState, useEffect} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import {
@@ -26,6 +26,7 @@ import {useTranslation} from 'react-i18next';
 import {Q} from '@nozbe/watermelondb';
 import Session from '../../database/models/Session';
 import EmptyStateComponent from './EmptyState';
+import TeacherService from '../../services/teacher';
 
 const HomeScreen = () => {
   const {user, setTeacher, handleSwitchSchool, handleSwitchProfile} =
@@ -33,10 +34,19 @@ const HomeScreen = () => {
   const {t} = useTranslation();
   const theme = useTheme();
   const isTablet = Tablet();
+  const [teacherCount, setTeacherCount] = useState(0);
   const [teachers, setTeachers] = useState({
     isLoading: true,
     data: [] as [] | TeachersWithSession[],
   });
+
+  useEffect(() => {
+    if (user?.school?.id) {
+      TeacherService.getTeachersBySchoolCount(user?.school.id).then(
+        setTeacherCount,
+      );
+    }
+  }, [user]);
 
   const data = [
     {
@@ -72,7 +82,10 @@ const HomeScreen = () => {
         const db = await getWatermelon();
         const allTeachers = await db.collections
           .get<Teacher>('teacher')
-          .query(Q.where('school_id', Q.eq(user?.school?.id as string)))
+          .query(
+            Q.take(10),
+            Q.where('school_id', Q.eq(user?.school?.id as string)),
+          )
           .fetch();
 
         const teachersUpdated: TeachersWithSession[] = await Promise.all(
@@ -121,12 +134,10 @@ const HomeScreen = () => {
             {user?.school?.name}
           </Text>
           <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-            {teachers.data.length >= 1
-              ? t('home.teachersLength').replace(
-                  '$teacherslength',
-                  teachers.data.length.toString(),
-                )
-              : t('home.noTeachersLength')}
+            {t('home.teachersLength_interval', {
+              postProcess: 'interval',
+              count: teacherCount,
+            })}
           </Text>
         </VStack>
       </HStack>

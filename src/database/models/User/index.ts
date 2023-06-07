@@ -15,6 +15,8 @@ export default class User extends Model {
     sessions: {type: 'has_many', foreignKey: 'session_id'},
   } as const;
 
+  teacherCoachingCount = 0;
+
   @lazy
   sessions = this.collections
     .get('session')

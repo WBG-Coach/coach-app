@@ -9,6 +9,8 @@ export default class School extends Model {
     teachers: {type: 'has_many', foreignKey: 'school_id'},
   } as const;
 
+  teachersCount = 0;
+
   @lazy
   teachers = this.collections
     .get('teacher')
