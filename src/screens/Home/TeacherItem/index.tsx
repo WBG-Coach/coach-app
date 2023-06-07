@@ -4,9 +4,10 @@ import {isTablet as Tablet} from 'react-native-device-info';
 import Icon from '../../../components/base/Icon';
 import {useTranslation} from 'react-i18next';
 import {TeachersWithSession} from '../../../providers/contexts/UserContext';
+import Teacher from '../../../database/models/Teacher';
 
 type Props = {
-  teacher: TeachersWithSession;
+  teacher: Teacher;
   onPress: () => void;
 };
 
@@ -48,11 +49,11 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
               {teacher.name}
             </Text>
             <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-              {teacher.subject}
+              {teacher.subject || 'No subject'}
             </Text>
 
             <HStack space={1}>
-              {(teacher.sessions as any).length >= 1 ? (
+              {teacher.sessionsCount >= 1 ? (
                 <HStack
                   alignItems={'center'}
                   borderRadius={'4px'}
@@ -64,7 +65,7 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
                   <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
                     {t('home.teachers.session_interval', {
                       postProcess: 'interval',
-                      count: (teacher.sessions as any)?.length,
+                      count: teacher.sessionsCount,
                     })}
                   </Text>
                 </HStack>
@@ -87,7 +88,7 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
                 </HStack>
               )}
 
-              {(teacher as any).feedbacksLength >= 1 && (
+              {teacher.feedbacksCount >= 1 && (
                 <HStack
                   alignItems={'center'}
                   borderRadius={'4px'}
@@ -97,7 +98,7 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
                   space={1}>
                   <Icon name={'comment-verify-solid'} size={15} />
                   <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-                    {(teacher as any).feedbacksLength} Feedbacks
+                    {teacher.feedbacksCount} Feedbacks
                   </Text>
                 </HStack>
               )}

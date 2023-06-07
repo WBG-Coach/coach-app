@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Image from '../../../database/models/Image';
 import School from '../../../database/models/School';
 import Session from '../../../database/models/Session';
@@ -13,8 +13,8 @@ export type TeachersWithSession = Omit<Teacher, 'sessions'> & {
 export type UserContextProps = {
   handleSelectProfile: (user: IUser) => Promise<void>;
   handleSelectSchool: (school: School) => Promise<void>;
-  teacher?: TeachersWithSession;
-  setTeacher: (teacher: TeachersWithSession) => void;
+  teacher?: Teacher;
+  setTeacher: (teacher: Teacher) => void;
   handleSwitchSchool: () => void;
   handleSwitchProfile: () => void;
   user?: IUser;
@@ -30,11 +30,7 @@ interface Props {
 
 const UserContextProvider = ({children}: Props) => {
   const [user, setUser] = useState<IUser>();
-  const [teacher, setTeacher] = useState<TeachersWithSession>();
-
-  useEffect(() => {
-    console.log({user});
-  }, [user]);
+  const [teacher, setTeacher] = useState<Teacher>();
 
   const handleSelectProfile = async (newUser: IUser) => {
     console.log('handleSelectProfile');

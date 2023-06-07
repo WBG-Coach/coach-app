@@ -19,6 +19,7 @@ const UserService = {
   },
 
   findUsersWithTeacherCoachingCount: async (
+    school_id: string,
     filter = '',
     take = 20,
     page = 1,
@@ -37,8 +38,9 @@ const UserService = {
         return {
           ...(item._raw as any),
           teacherCoachingCount:
-            await TeacherService.getTeacherWithSessionByCoachCount(
+            await TeacherService.getTeacherWithSessionByCoachAndSchoolCount(
               item._raw.id,
+              school_id,
             ),
         };
       }),
