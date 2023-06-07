@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Image from '../../../database/models/Image';
 import School from '../../../database/models/School';
 import Session from '../../../database/models/Session';
@@ -32,7 +32,12 @@ const UserContextProvider = ({children}: Props) => {
   const [user, setUser] = useState<IUser>();
   const [teacher, setTeacher] = useState<TeachersWithSession>();
 
+  useEffect(() => {
+    console.log({user});
+  }, [user]);
+
   const handleSelectProfile = async (newUser: IUser) => {
+    console.log('handleSelectProfile');
     setUser({...user, ...newUser});
   };
 

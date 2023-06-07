@@ -1,5 +1,5 @@
 import {UserContext} from '../../providers/contexts/UserContext';
-import InfiniteScrollList from '../../components/InfiniteScroll';
+import InfiniteScroll from '../../components/InfiniteScroll';
 import React, {useCallback, useContext, useState} from 'react';
 import {isTablet as Tablet} from 'react-native-device-info';
 import SchoolService from '../../services/school';
@@ -12,7 +12,7 @@ import SchoolItem from './SchoolItem';
 
 const ITEMS_PER_PAGE = 20;
 
-const SchoolSelectScreen = () => {
+const SchoolSelectScreen: React.FC = () => {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
   const [isTheEnd, setIsTheEnd] = useState(false);
@@ -71,7 +71,7 @@ const SchoolSelectScreen = () => {
         onChangeText={setFilter}
       />
 
-      <InfiniteScrollList
+      <InfiniteScroll
         data={schoolList}
         isLoading={isLoading}
         loadNextPage={loadNextPage}

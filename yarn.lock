@@ -1140,7 +1140,14 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.6.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@7.21.0":
+  version "7.21.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
+  integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
+  dependencies:
+    regenerator-runtime "^0.13.11"
+
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.6.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   version "7.22.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.0.tgz#b7ca53ae391c404037540724186038afd83e26f9"
   integrity sha512-TT6NB0oszYQ4oxLNUdG+FNHIc3MohXVCKA2BeyQ4WeM2VCSC6wBZ6P0Yfkdzxv+87D8Xk0LJyHeCKlWMvpZt0g==
@@ -1671,34 +1678,34 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nozbe/simdjson@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@nozbe/simdjson/-/simdjson-1.0.0.tgz#9327962214c98e046bea44d0d56a70e10d9d7ce8"
-  integrity sha512-lm/MNUneznK65NNbmvawOn+OFYMjeBga+xEBACda4hTpZBnJhIgfLIxpYvx40sIeihRX0v7WiEB7VwQO9FIMAg==
+"@nozbe/simdjson@3.1.0-wmelon1":
+  version "3.1.0-wmelon1"
+  resolved "https://registry.yarnpkg.com/@nozbe/simdjson/-/simdjson-3.1.0-wmelon1.tgz#e02048b41d2b3662ddf1dc8c979a3a36fd389dfb"
+  integrity sha512-PQaHHQyvASrcrfzqkZ4ona43m0UjN81NuTWt6rJkOUePGDjxc8MNp2Q7jcod1CIdTsXJ13wRWeFbquwNfhpIQQ==
 
-"@nozbe/sqlite@3.36.0":
-  version "3.36.0"
-  resolved "https://registry.yarnpkg.com/@nozbe/sqlite/-/sqlite-3.36.0.tgz#80a46f8cb4a502a068ec1a5bef665dd65350ea7c"
-  integrity sha512-wKTFGvgf5V+bYlhXdukOWKH0XgdG0NmUQwLWG7w5Yk4EUeQS29D5uWPCeWT1Ac/NzDKuHsYP6KVOJDbJSauAAg==
+"@nozbe/sqlite@3.40.1":
+  version "3.40.1"
+  resolved "https://registry.yarnpkg.com/@nozbe/sqlite/-/sqlite-3.40.1.tgz#4218074ce8c87c859465dd2db28cd4b2fc7192b9"
+  integrity sha512-uKJOW4sQi3neCmgKhqLr0IJKlb2y5q2p05U5CEDJrCxSyD2uVYvSdh7IMrPjF4sWtzc/Lnk462M4vde7Dn5NSw==
 
-"@nozbe/watermelondb@^0.25.5":
-  version "0.25.5"
-  resolved "https://registry.yarnpkg.com/@nozbe/watermelondb/-/watermelondb-0.25.5.tgz#706aef57d92f8301ceb3d8430362197e810c2578"
-  integrity sha512-/c84A7+3Ack8X8eFUXrvHMgIdk+Qz/3Vfkr5A2bQtHpXOLOGSbS6oXGdZTu+PYzLm4VlKZ68F9tF6yFVIVydiA==
+"@nozbe/watermelondb@^0.26.0":
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/@nozbe/watermelondb/-/watermelondb-0.26.0.tgz#0b7472a0b885a51237529c9cabc6227aec6c227e"
+  integrity sha512-MIbCIE7Djyn5gNmO6OtAmf7IJHuFq2biKSDzK2ymMhHSJE5L5QjZPnrv3UFoGdTfEPUUGfi/87gwWwZecGiT3A==
   dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@nozbe/simdjson" "1.0.0"
-    "@nozbe/sqlite" "3.36.0"
-    "@nozbe/with-observables" "1.4.1"
+    "@babel/runtime" "7.21.0"
+    "@nozbe/simdjson" "3.1.0-wmelon1"
+    "@nozbe/sqlite" "3.40.1"
+    "@nozbe/with-observables" "^1.5.0-2"
     hoist-non-react-statics "^3.3.2"
     lokijs "npm:@nozbe/lokijs@1.5.12-wmelon6"
-    rxjs "^7.4.0"
+    rxjs "^7.8.0"
     sql-escape-string "^1.1.0"
 
-"@nozbe/with-observables@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@nozbe/with-observables/-/with-observables-1.4.1.tgz#e24680e57ae235e53db6ed7600494d7d0a8d36c2"
-  integrity sha512-xsYrSeSzelFiWF/BXFZW+khFAqJdet22Egt6nhVLHGF2GmYbV5kxv8om0Wh2om4OXK6IM0UAU3pwk+nX5GLsUw==
+"@nozbe/with-observables@^1.5.0-2":
+  version "1.5.0-3"
+  resolved "https://registry.yarnpkg.com/@nozbe/with-observables/-/with-observables-1.5.0-3.tgz#8d8efe49b25364829e621f53b31fca9a53bbf3a2"
+  integrity sha512-csb86XQSvc0/gATFHE6xecZ0Eb6iWg4aYk8To8vtvczXT8B5C0gk/MqjzDHNU9Rm7/DK1aYqxOI9DfvPIM/bZQ==
   dependencies:
     hoist-non-react-statics "^3.3.2"
 
@@ -5299,6 +5306,11 @@ hyphenate-style-name@^1.0.3:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.4.tgz#691879af8e220aea5750e8827db4ef62a54e361d"
   integrity sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==
 
+i18next-intervalplural-postprocessor@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/i18next-intervalplural-postprocessor/-/i18next-intervalplural-postprocessor-3.0.0.tgz#35580abdaff5e838c44c22740a7178063b7bdd0b"
+  integrity sha512-ZJWg2Gcb0kQqVI7kygLj9wVwQHK3mzRAg94uLsdoHqss0M9n0HSPr1pThd2AttkBsJFWR26G18hnKCqcTB8shQ==
+
 i18next@^22.4.9:
   version "22.5.0"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.5.0.tgz#16d98eba7c748ab183a36505046b5b91f87e989b"
@@ -8034,7 +8046,7 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxjs@^7.4.0:
+rxjs@^7.8.0:
   version "7.8.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==

@@ -1,6 +1,6 @@
-import {Q} from '@nozbe/watermelondb';
-import {getWatermelon} from '../../database';
 import School from '../../database/models/School';
+import {getWatermelon} from '../../database';
+import {Q} from '@nozbe/watermelondb';
 
 const SchoolService = {
   findSchools: async (filter = '', take = 20, page = 1): Promise<School[]> => {
@@ -13,7 +13,15 @@ const SchoolService = {
         Q.where('name', Q.like(`%${filter}%`)),
       );
 
-    return await query.fetch();
+    return Promise.all(
+      (await query.fetch()).map(
+        async item =>
+          ({
+            ...(item._raw as any),
+            teachersCount: await item.teachers.fetchCount(),
+          } as School),
+      ),
+    );
   },
 };
 

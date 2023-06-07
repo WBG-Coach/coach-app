@@ -8,12 +8,12 @@ const enTranslation = {
   setupUserData: {
     schoolSelect: {
       title: 'Select the school',
-      lineDesc: 'Teachers here',
+      lineDesc: '{{count}} Teachers here',
       emptyList: 'No schools for this filter',
     },
     profileSelect: {
       title: 'Select your profile',
-      lineDesc: 'Coaching $val teachers',
+      lineDesc: 'Coaching {{count}} teachers',
     },
   },
   home: {
@@ -24,8 +24,8 @@ const enTranslation = {
       statics: 'Statistics',
       pendingSession: 'Pending sessions',
     },
-    teachersLength: '$teacherslength Teachers being coached',
-    noTeachersLength: 'No teachers',
+    teachersLength_interval:
+      '(0)[No teachers];(1)[1 Teacher being coached];(2-inf)[{{count}} Teachers being coached];',
     teachers: {
       title: 'Teachers',
       session: 'Session',

@@ -32,6 +32,10 @@ const AppRoutes = () => {
   const {t} = useTranslation();
 
   useEffect(() => {
+    console.log('USER => ', user?.id);
+  }, [user]);
+
+  useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
@@ -73,7 +77,6 @@ const AppRoutes = () => {
             }}
           />
         )}
-
         {user && user.id && user.school && (
           <Stack.Group>
             <Stack.Screen
