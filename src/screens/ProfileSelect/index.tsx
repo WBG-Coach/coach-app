@@ -7,8 +7,8 @@ import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
 import UserItem from './UserItem';
 import UserService from '../../services/user';
-import useDebounce from '../../hooks/debounce';
 import InfiniteScroll from '../../components/InfiniteScroll';
+import useDebounce from '../../hooks/debounce';
 
 const ITEMS_PER_PAGE = 20;
 

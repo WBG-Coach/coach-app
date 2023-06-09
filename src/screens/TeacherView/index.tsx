@@ -1,4 +1,4 @@
-import {Box, Center, HStack, Image, Text, useTheme, VStack} from 'native-base';
+import {Center, HStack, Image, Text, useTheme, VStack} from 'native-base';
 import React, {useContext, useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
