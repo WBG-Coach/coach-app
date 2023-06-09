@@ -2,9 +2,9 @@ import {Button, HStack, Radio, Text, VStack} from 'native-base';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import i18n, {resources} from '../../../i18n';
 import Navigation from '../../../services/navigation';
+import {TouchableOpacity} from 'react-native';
 
 const ChangeLanguageScreen: React.FC = () => {
   const currentLanguage = i18n.languages[0];

@@ -1,9 +1,9 @@
+import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {Center, HStack, Image, Text, VStack, useTheme} from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
 import Icon from '../../../components/base/Icon';
 import {useTranslation} from 'react-i18next';
-import {TeachersWithSession} from '../../../providers/contexts/UserContext';
 import Teacher from '../../../database/models/Teacher';
 
 type Props = {

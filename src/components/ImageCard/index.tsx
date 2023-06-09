@@ -10,7 +10,6 @@ import {
   VStack,
 } from 'native-base';
 import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../base/Icon';
 import {Props} from './types';
 import Animated, {
@@ -19,7 +18,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useClickOutside} from 'react-native-click-outside';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import RNFS from 'react-native-fs';
 
 const ImageCard: React.FC<Props> = ({

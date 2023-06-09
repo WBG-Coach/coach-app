@@ -1,7 +1,15 @@
-import {Button, HStack, Text, TextArea, VStack, useTheme} from 'native-base';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  Button,
+  HStack,
+  ScrollView,
+  Text,
+  TextArea,
+  VStack,
+  useTheme,
+} from 'native-base';
+import React, {useContext, useMemo} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
-import {ScrollView} from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
 import {IQuestion} from '../../../types';
 import {isTablet as Tablet} from 'react-native-device-info';

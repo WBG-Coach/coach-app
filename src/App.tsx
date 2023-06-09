@@ -6,7 +6,6 @@ import './i18n';
 import {syncWatermelon} from './database';
 import {PermissionsAndroid} from 'react-native';
 import NoGeolocation from './components/NoGeolocation';
-import {Spinner} from 'native-base';
 import SplashScreen from './screens/Splash';
 
 const App = () => {

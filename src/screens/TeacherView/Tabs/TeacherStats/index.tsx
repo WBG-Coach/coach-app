@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Box,
@@ -9,7 +10,6 @@ import {
   Spinner,
   Text,
   useTheme,
-  View,
   VStack,
 } from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
@@ -18,7 +18,6 @@ import {getWatermelon} from '../../../../database';
 import Icon from '../../../../components/base/Icon';
 import Navigation from '../../../../services/navigation';
 import Routes from '../../../../routes/paths';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Q} from '@nozbe/watermelondb';
 import Answer from '../../../../database/models/Answer';
 import Session from '../../../../database/models/Session';
@@ -29,6 +28,7 @@ import {chartData} from './common';
 import {getTags} from '../../../../components/StarsTag/common';
 import {useTranslation} from 'react-i18next';
 import EmptyStateComponent from './EmptyState';
+import {TouchableOpacity} from 'react-native';
 
 type competenceWithAnswers = {
   answersValue: number[];

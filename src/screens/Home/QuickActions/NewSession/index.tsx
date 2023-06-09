@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Q} from '@nozbe/watermelondb';
 import {
   Center,
@@ -14,11 +15,11 @@ import Teacher from '../../../../database/models/Teacher';
 import {UserContext} from '../../../../providers/contexts/UserContext';
 import {isTablet as Tablet} from 'react-native-device-info';
 import Input from '../../../../components/base/Input';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Navigation from '../../../../services/navigation';
 import Routes from '../../../../routes/paths';
 import Icon from '../../../../components/base/Icon';
 import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native';
 
 const QuickNewSessionScreen = () => {
   const {user, setTeacher} = useContext(UserContext);

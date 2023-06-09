@@ -9,11 +9,11 @@ import StarView from '../../../../../components/StarView';
 import {getTags} from '../../../../../components/StarsTag/common';
 import {useTranslation} from 'react-i18next';
 import Icon from '../../../../../components/base/Icon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Navigation from '../../../../../services/navigation';
 import Routes from '../../../../../routes/paths';
 import Answer from '../../../../../database/models/Answer';
 import {useFocusEffect} from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native';
 
 type Props = {
   route: {

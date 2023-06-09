@@ -1,13 +1,12 @@
 import {Box, Text, HStack, Image, useTheme, Stack} from 'native-base';
 import React from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ImageStyle} from 'react-native/types';
 import Navigation from '../../services/navigation';
 import Icon from '../base/Icon';
 import {Props} from './types';
 import {isTablet as Tablet} from 'react-native-device-info';
 import Routes from '../../routes/paths';
 import {MobileLogo, TabletLogo} from '../../assets/images/logos';
+import {ImageStyle, TouchableOpacity} from 'react-native';
 
 const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
   /*   const currentLanguage = i18n.languages[0]; */

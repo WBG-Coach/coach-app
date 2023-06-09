@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import {isTablet as checkIsTablet} from 'react-native-device-info';
-import {useContext, useMemo} from 'react';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import {Center, FlatList, HStack, Text, VStack, View} from 'native-base';
 import {TouchableOpacity} from 'react-native';

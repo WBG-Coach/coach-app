@@ -2,11 +2,11 @@ import {HStack, Text, VStack} from 'native-base';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import i18n, {resources} from '../../i18n';
 import Routes from '../../routes/paths';
 import Navigation from '../../services/navigation';
+import {TouchableOpacity} from 'react-native';
 var pkg = require('../../../package.json');
 
 const SettingsScreen: React.FC = () => {

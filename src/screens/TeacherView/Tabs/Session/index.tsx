@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Text,
   Image,
@@ -18,12 +19,12 @@ import Routes from '../../../../routes/paths';
 import Navigation from '../../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import StarsTag from '../../../../components/StarsTag';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
 import Answer from '../../../../database/models/Answer';
 import {Q} from '@nozbe/watermelondb';
 import {UserContext} from '../../../../providers/contexts/UserContext';
+import {TouchableOpacity} from 'react-native';
 
 export type SessionWithAnswers = Omit<Session, 'answers'> & {
   overall_rating: number;
@@ -50,6 +51,7 @@ const SessionTab: React.FC = () => {
           .query(Q.where('teacher_id', teacher.id))
           .fetch();
 
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         const sessions: SessionWithAnswers[] = await Promise.all(
           list.map(async session => {
             const answers = await session.answers.fetch();

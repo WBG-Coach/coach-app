@@ -12,27 +12,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		238D8F07D11540EAA066DB4E /* Inter-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 14321D85F623418B9BE4D0E8 /* Inter-Medium.otf */; };
-		29211EBA1D234F4586EB049C /* Inter-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D8664F2B6FEF4D2996BFDB8F /* Inter-MediumItalic.otf */; };
-		33D9E84D79F2443284392337 /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 545B432ED16F4F82AFE42BB4 /* Inter-Bold.otf */; };
-		3E37792B15274E1482A812A7 /* Inter-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B144B37503F4F14A4C98AFC /* Inter-BlackItalic.otf */; };
-		43CCE353E7BF42C58EE2061F /* Inter-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B2D4F4AD557C4DED9C8B9750 /* Inter-Light.otf */; };
-		4DC2AA24F8B141FFBBA69242 /* Inter-ExtraLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = DA7839E0A8B1492BA1FA121A /* Inter-ExtraLightItalic.otf */; };
-		4F15981B3FEE498BBEB44A10 /* Inter-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF631BC7700C4309AB0700D9 /* Inter-ThinItalic.otf */; };
-		4F6BE49F9D534E53B0458F65 /* Inter-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2E29EA7A3E2242FA99A63E74 /* Inter-ExtraBold.otf */; };
-		6F1A9F15256141308FC090B5 /* Inter-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 131F451A0A154C3FB9EB820E /* Inter-Italic.otf */; };
 		7699B88040F8A987B510C191 /* libPods-coachappsl-coachappslTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-coachappsl-coachappslTests.a */; };
-		7A52956A73F74F049E7E5E01 /* Inter-SemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C890780908C14C6E8071B09C /* Inter-SemiBoldItalic.otf */; };
-		7CE18ABF10A44D4C8922F944 /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B9660A2E7B3A4E3C906CFFDB /* Inter-SemiBold.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8797464837104C3E8A22DB25 /* Inter-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 76BBA2A3670945609C7D7833 /* Inter-ExtraLight.otf */; };
-		964DA630CC9540A0B4D74147 /* Inter-V.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB43E2806AB244259EE5E780 /* Inter-V.ttf */; };
-		A2FE3744E29E484D88F3C013 /* Inter-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0789B7EA224643109DF07E0F /* Inter-Regular.otf */; };
-		C67B88558879438493736CE6 /* Inter-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8882E9B52ED94981A679D4D3 /* Inter-ExtraBoldItalic.otf */; };
-		D3ED5E151BFB4A4EB43FA708 /* Inter-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 43EF1ED2126843E1839AE3E0 /* Inter-Thin.otf */; };
-		D58FFA26D8C647DF99D1A14A /* Inter-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1390BC70F2842C5B45890DB /* Inter-Black.otf */; };
-		D9BE99DC5AA24B0587CC003C /* Inter-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63F3D329FA284B94AE01D6D1 /* Inter-BoldItalic.otf */; };
-		E9326185AB584FCC9BC35B3E /* Inter-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 70EABD836150482B8A72D662 /* Inter-LightItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,39 +30,20 @@
 		00E356EE1AD99517003FC87E /* coachappslTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coachappslTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* coachappslTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = coachappslTests.m; sourceTree = "<group>"; };
-		0789B7EA224643109DF07E0F /* Inter-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.otf"; path = "../src/assets/fonts/Inter-Regular.otf"; sourceTree = "<group>"; };
-		131F451A0A154C3FB9EB820E /* Inter-Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Italic.otf"; path = "../src/assets/fonts/Inter-Italic.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* coachappsl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coachappsl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = coachappsl/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = coachappsl/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = coachappsl/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = coachappsl/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = coachappsl/main.m; sourceTree = "<group>"; };
-		14321D85F623418B9BE4D0E8 /* Inter-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.otf"; path = "../src/assets/fonts/Inter-Medium.otf"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-coachappsl-coachappslTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-coachappsl-coachappslTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E29EA7A3E2242FA99A63E74 /* Inter-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.otf"; path = "../src/assets/fonts/Inter-ExtraBold.otf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-coachappsl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachappsl.debug.xcconfig"; path = "Target Support Files/Pods-coachappsl/Pods-coachappsl.debug.xcconfig"; sourceTree = "<group>"; };
-		43EF1ED2126843E1839AE3E0 /* Inter-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.otf"; path = "../src/assets/fonts/Inter-Thin.otf"; sourceTree = "<group>"; };
-		545B432ED16F4F82AFE42BB4 /* Inter-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.otf"; path = "../src/assets/fonts/Inter-Bold.otf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-coachappsl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachappsl.release.xcconfig"; path = "Target Support Files/Pods-coachappsl/Pods-coachappsl.release.xcconfig"; sourceTree = "<group>"; };
-		5B144B37503F4F14A4C98AFC /* Inter-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BlackItalic.otf"; path = "../src/assets/fonts/Inter-BlackItalic.otf"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-coachappsl-coachappslTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachappsl-coachappslTests.debug.xcconfig"; path = "Target Support Files/Pods-coachappsl-coachappslTests/Pods-coachappsl-coachappslTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-coachappsl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-coachappsl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		63F3D329FA284B94AE01D6D1 /* Inter-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-BoldItalic.otf"; path = "../src/assets/fonts/Inter-BoldItalic.otf"; sourceTree = "<group>"; };
-		70EABD836150482B8A72D662 /* Inter-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-LightItalic.otf"; path = "../src/assets/fonts/Inter-LightItalic.otf"; sourceTree = "<group>"; };
-		76BBA2A3670945609C7D7833 /* Inter-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.otf"; path = "../src/assets/fonts/Inter-ExtraLight.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = coachappsl/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8882E9B52ED94981A679D4D3 /* Inter-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBoldItalic.otf"; path = "../src/assets/fonts/Inter-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-coachappsl-coachappslTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachappsl-coachappslTests.release.xcconfig"; path = "Target Support Files/Pods-coachappsl-coachappslTests/Pods-coachappsl-coachappslTests.release.xcconfig"; sourceTree = "<group>"; };
-		A1390BC70F2842C5B45890DB /* Inter-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.otf"; path = "../src/assets/fonts/Inter-Black.otf"; sourceTree = "<group>"; };
-		B2D4F4AD557C4DED9C8B9750 /* Inter-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.otf"; path = "../src/assets/fonts/Inter-Light.otf"; sourceTree = "<group>"; };
-		B9660A2E7B3A4E3C906CFFDB /* Inter-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.otf"; path = "../src/assets/fonts/Inter-SemiBold.otf"; sourceTree = "<group>"; };
-		C890780908C14C6E8071B09C /* Inter-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBoldItalic.otf"; path = "../src/assets/fonts/Inter-SemiBoldItalic.otf"; sourceTree = "<group>"; };
-		CF631BC7700C4309AB0700D9 /* Inter-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ThinItalic.otf"; path = "../src/assets/fonts/Inter-ThinItalic.otf"; sourceTree = "<group>"; };
-		D8664F2B6FEF4D2996BFDB8F /* Inter-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-MediumItalic.otf"; path = "../src/assets/fonts/Inter-MediumItalic.otf"; sourceTree = "<group>"; };
-		DA7839E0A8B1492BA1FA121A /* Inter-ExtraLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLightItalic.otf"; path = "../src/assets/fonts/Inter-ExtraLightItalic.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FB43E2806AB244259EE5E780 /* Inter-V.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-V.ttf"; path = "../src/assets/fonts/Inter-V.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,33 +106,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5107FEFD7E8A4CD5B8E4E903 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A1390BC70F2842C5B45890DB /* Inter-Black.otf */,
-				5B144B37503F4F14A4C98AFC /* Inter-BlackItalic.otf */,
-				545B432ED16F4F82AFE42BB4 /* Inter-Bold.otf */,
-				63F3D329FA284B94AE01D6D1 /* Inter-BoldItalic.otf */,
-				2E29EA7A3E2242FA99A63E74 /* Inter-ExtraBold.otf */,
-				8882E9B52ED94981A679D4D3 /* Inter-ExtraBoldItalic.otf */,
-				76BBA2A3670945609C7D7833 /* Inter-ExtraLight.otf */,
-				DA7839E0A8B1492BA1FA121A /* Inter-ExtraLightItalic.otf */,
-				131F451A0A154C3FB9EB820E /* Inter-Italic.otf */,
-				B2D4F4AD557C4DED9C8B9750 /* Inter-Light.otf */,
-				70EABD836150482B8A72D662 /* Inter-LightItalic.otf */,
-				14321D85F623418B9BE4D0E8 /* Inter-Medium.otf */,
-				D8664F2B6FEF4D2996BFDB8F /* Inter-MediumItalic.otf */,
-				0789B7EA224643109DF07E0F /* Inter-Regular.otf */,
-				B9660A2E7B3A4E3C906CFFDB /* Inter-SemiBold.otf */,
-				C890780908C14C6E8071B09C /* Inter-SemiBoldItalic.otf */,
-				43EF1ED2126843E1839AE3E0 /* Inter-Thin.otf */,
-				CF631BC7700C4309AB0700D9 /* Inter-ThinItalic.otf */,
-				FB43E2806AB244259EE5E780 /* Inter-V.ttf */,
-			);
-			name = Resources;
-			path = "";
-			sourceTree = "<group>";
-		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +122,6 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
-				5107FEFD7E8A4CD5B8E4E903 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -310,25 +244,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				D58FFA26D8C647DF99D1A14A /* Inter-Black.otf in Resources */,
-				3E37792B15274E1482A812A7 /* Inter-BlackItalic.otf in Resources */,
-				33D9E84D79F2443284392337 /* Inter-Bold.otf in Resources */,
-				D9BE99DC5AA24B0587CC003C /* Inter-BoldItalic.otf in Resources */,
-				4F6BE49F9D534E53B0458F65 /* Inter-ExtraBold.otf in Resources */,
-				C67B88558879438493736CE6 /* Inter-ExtraBoldItalic.otf in Resources */,
-				8797464837104C3E8A22DB25 /* Inter-ExtraLight.otf in Resources */,
-				4DC2AA24F8B141FFBBA69242 /* Inter-ExtraLightItalic.otf in Resources */,
-				6F1A9F15256141308FC090B5 /* Inter-Italic.otf in Resources */,
-				43CCE353E7BF42C58EE2061F /* Inter-Light.otf in Resources */,
-				E9326185AB584FCC9BC35B3E /* Inter-LightItalic.otf in Resources */,
-				238D8F07D11540EAA066DB4E /* Inter-Medium.otf in Resources */,
-				29211EBA1D234F4586EB049C /* Inter-MediumItalic.otf in Resources */,
-				A2FE3744E29E484D88F3C013 /* Inter-Regular.otf in Resources */,
-				7CE18ABF10A44D4C8922F944 /* Inter-SemiBold.otf in Resources */,
-				7A52956A73F74F049E7E5E01 /* Inter-SemiBoldItalic.otf in Resources */,
-				D3ED5E151BFB4A4EB43FA708 /* Inter-Thin.otf in Resources */,
-				4F15981B3FEE498BBEB44A10 /* Inter-ThinItalic.otf in Resources */,
-				964DA630CC9540A0B4D74147 /* Inter-V.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,15 +256,13 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/.xcode.env",
 			);
 			name = "Bundle React Native code and images";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -523,7 +436,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = coachappslTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -547,7 +460,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = coachappslTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -577,7 +490,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -603,7 +515,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -649,7 +560,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -665,7 +576,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -683,7 +594,6 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -721,7 +631,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -730,7 +640,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -747,7 +657,6 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

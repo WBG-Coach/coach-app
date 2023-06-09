@@ -1,3 +1,4 @@
+import React from 'react';
 import {Button, Image, Text, VStack} from 'native-base';
 import {GeolocationImage} from '../../assets/images/globals';
 import {useTranslation} from 'react-i18next';

@@ -14,11 +14,11 @@ import {getWatermelon} from '../../database';
 import {UserContext} from '../../providers/contexts/UserContext';
 import {Q} from '@nozbe/watermelondb';
 import Session from '../../database/models/Session';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import EmptyStateComponent from './EmptyState';
+import {TouchableOpacity} from 'react-native';
 
 const PendingSessions: React.FC = () => {
   const {user, setTeacher} = useContext(UserContext);

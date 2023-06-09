@@ -1,13 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Box, Center, HStack, Text, useTheme, VStack} from 'native-base';
 import React, {useMemo} from 'react';
 import {Controller} from 'react-hook-form';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SimpleAccordion} from 'react-native-simple-accordion';
 import Icon from '../../../../components/base/Icon';
 import StarRating from '../../../../components/base/StarRating';
 import {useBottomSheetProvider} from '../../../../providers/contexts/BottomSheetContext';
 import BottomSheetTooltip from '../BottomSheetTooltip';
 import {Props} from './types';
+import {TouchableOpacity} from 'react-native';
 
 const CompetenceAccordion: React.FC<Props> = ({
   competence,
@@ -52,7 +53,7 @@ const CompetenceAccordion: React.FC<Props> = ({
                           {question.title}
                         </Text>
 
-                        {question.description && (
+                        {/* {question.description && (
                           <Text
                             mt={'1'}
                             fontSize={'TXS'}
@@ -60,7 +61,7 @@ const CompetenceAccordion: React.FC<Props> = ({
                             color={'gray.600'}>
                             {question.description}
                           </Text>
-                        )}
+                        )} */}
                       </VStack>
 
                       <TouchableOpacity

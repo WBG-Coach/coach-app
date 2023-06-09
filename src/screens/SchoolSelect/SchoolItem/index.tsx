@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import School from '../../../database/models/School';
 import {Center, HStack, Text, VStack} from 'native-base';

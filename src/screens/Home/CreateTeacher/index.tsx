@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Button,
@@ -14,7 +16,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import Teacher from '../../../database/models/Teacher';
 import Icon from '../../../components/base/Icon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
@@ -27,6 +28,7 @@ import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import * as RNC from 'react-native-compressor';
 import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native';
 
 type Props = {
   route: {

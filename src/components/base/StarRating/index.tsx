@@ -1,8 +1,8 @@
 import {Center, HStack, VStack, useTheme, Text} from 'native-base';
 import React from 'react';
 import Icon from '../Icon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Props} from './types';
+import {TouchableOpacity} from 'react-native';
 
 const StarRating: React.FC<Props> = ({onPress, value, isInvalid}) => {
   const starsLength = Array(5).fill({});

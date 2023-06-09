@@ -1,6 +1,5 @@
-import {Center, HStack, Image, Text, useTheme, VStack} from 'native-base';
 import React, {useContext, useState} from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Center, HStack, Image, Text, useTheme, VStack} from 'native-base';
 import Icon from '../../components/base/Icon';
 import {UserContext} from '../../providers/contexts/UserContext';
 import SessionTab from './Tabs/Session';
@@ -10,6 +9,7 @@ import Navigation from '../../services/navigation';
 import Routes from '../../routes/paths';
 import TeacherStatsTab from './Tabs/TeacherStats';
 import TabButton from './TabButton';
+import {TouchableOpacity} from 'react-native';
 
 type Props = {
   route: {

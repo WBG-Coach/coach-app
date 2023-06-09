@@ -1,3 +1,4 @@
+import React from 'react';
 import {Box, Center, Text, VStack} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import {TouchableOpacity} from 'react-native';

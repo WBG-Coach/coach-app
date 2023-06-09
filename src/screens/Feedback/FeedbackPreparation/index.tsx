@@ -2,13 +2,13 @@ import {Button, Checkbox, HStack, ScrollView, Text, VStack} from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
 import React, {useContext, useState} from 'react';
 import {ICompetence} from '../../../types';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import StarsTag from '../../../components/StarsTag';
 import Session from '../../../database/models/Session';
 import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native';
 
 type Props = {
   route: {

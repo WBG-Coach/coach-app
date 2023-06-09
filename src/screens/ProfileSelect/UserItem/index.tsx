@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from 'react';
 import {Center, HStack, Image, Text, VStack} from 'native-base';
 import {TouchableOpacity} from 'react-native';
 import User from '../../../database/models/User';

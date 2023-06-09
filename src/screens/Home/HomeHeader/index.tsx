@@ -1,8 +1,8 @@
+import React, {useContext, useEffect, useState} from 'react';
 import {Center, HStack, Text, VStack} from 'native-base';
 import Icon from '../../../components/base/Icon';
 import {useTranslation} from 'react-i18next';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {useContext, useEffect, useState} from 'react';
 import {UserContext} from '../../../providers/contexts/UserContext';
 import TeacherService from '../../../services/teacher';
 

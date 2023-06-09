@@ -1,4 +1,5 @@
-import {useContext, useEffect, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useEffect, useState} from 'react';
 import Teacher from '../../../database/models/Teacher';
 import TeacherService from '../../../services/teacher';
 import {UserContext} from '../../../providers/contexts/UserContext';
