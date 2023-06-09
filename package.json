@@ -30,7 +30,6 @@
     "react-hook-form": "^7.44.2",
     "react-i18next": "^12.1.4",
     "react-native": "^0.71.8",
-    "react-native-canvas": "^0.1.39",
     "react-native-click-outside": "^0.1.0",
     "react-native-compressor": "^1.6.1",
     "react-native-device-info": "^10.5.0",
