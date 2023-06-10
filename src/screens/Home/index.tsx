@@ -1,18 +1,13 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {isTablet as Tablet} from 'react-native-device-info';
-import {HStack, Text, useTheme, VStack} from 'native-base';
-import Navigation from '../../services/navigation';
-import Icon from '../../components/base/Icon';
+import {Text, VStack} from 'native-base';
 import HorizontalMenu from './HorizontalMenu';
 import {useTranslation} from 'react-i18next';
 import TeachersList from './TeachersList';
-import Routes from '../../routes/paths';
 import HomeHeader from './HomeHeader';
 
 const HomeScreen = () => {
   const {t} = useTranslation();
-  const theme = useTheme();
   const isTablet = Tablet();
 
   return (

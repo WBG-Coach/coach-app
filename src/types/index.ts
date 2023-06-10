@@ -1,7 +1,7 @@
 export interface IUser {
   id: string;
   name: string;
-  image_url: string;
+  image_id: string;
   school?: ISchool; //added!
 }
 

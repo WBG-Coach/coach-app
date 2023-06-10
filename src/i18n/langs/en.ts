@@ -14,6 +14,22 @@ const enTranslation = {
     profileSelect: {
       title: 'Select your profile',
       lineDesc: 'Coaching {{count}} teachers',
+      emptyList: 'No profiles for this filter',
+      create: {
+        title: 'Create new profile',
+        takePhoto: 'Take/choose photo',
+        name: 'First name',
+        surname: 'Last name',
+        emis: 'EMIS number',
+        optional: 'Optional',
+        button: 'Add profile',
+      },
+      created: {
+        title: 'Profile created',
+        subtitle:
+          'Now you can select your profile and start coaching the teachers',
+        button: 'Go to profile selection',
+      },
     },
   },
   home: {

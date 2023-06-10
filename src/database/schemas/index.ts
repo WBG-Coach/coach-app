@@ -22,6 +22,10 @@ export default appSchema({
           type: 'string',
         },
         {
+          name: 'surname',
+          type: 'string',
+        },
+        {
           name: 'image_id',
           type: 'string',
         },

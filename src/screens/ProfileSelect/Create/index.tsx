@@ -1,4 +1,4 @@
-import { isTablet as Tablet } from 'react-native-device-info';
+import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Button,
   Center,
@@ -7,31 +7,33 @@ import {
   Text,
   VStack,
   HStack,
-  Image as CImage
+  Image as CImage,
 } from 'native-base';
-import React, { useState } from 'react';
-import { useBottomSheetProvider } from '../../../providers/contexts/BottomSheetContext';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, {useState} from 'react';
+import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
 import ImagePicker from '../../../components/ImagePicker';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import * as RNC from 'react-native-compressor';
 import RNFS from 'react-native-fs';
-import { getWatermelon } from '../../../database';
+import {getWatermelon} from '../../../database';
 import Image from '../../../database/models/Image';
 import User from '../../../database/models/User';
 
-
-
 const ProfileCreateScreen: React.FC = () => {
   const isTablet = Tablet();
-  const { t } = useTranslation()
-  const defaultValues = {} as any
-  const { control, formState: { isSubmitting }, handleSubmit } = useForm({ defaultValues })
-  const [{ }, { setBottomSheetContent }] = useBottomSheetProvider();
+  const {t} = useTranslation();
+  const defaultValues = {} as any;
+  const {
+    control,
+    formState: {isSubmitting},
+    handleSubmit,
+  } = useForm({defaultValues});
+  const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const [profileImage, setProfileImage] = useState<{
     name: string;
     value: string;
@@ -53,36 +55,28 @@ const ProfileCreateScreen: React.FC = () => {
       const base64 =
         'data:image/png;base64,' + (await RNFS.readFile(newImg, 'base64'));
 
-      if (image) {
-        await db.write(async () =>
-          (
-            await db.collections.get<Image>('image').find(image.id)
-          ).update(image => {
-            image.value = base64;
+      image = await db.write(
+        async () =>
+          await db.collections.get<Image>('image').create(record => {
+            record.name = profileImage.name;
+            record.value = base64;
           }),
-        );
-      } else {
-        image = await db.write(
-          async () =>
-            await db.collections.get<Image>('image').create(record => {
-              record.name = profileImage.name;
-              record.value = base64;
-            }),
-        );
-      }
+      );
     }
 
-
-    await db.write(
+    const user = await db.write(
       async () =>
         await db.collections.get<User>('user').create(record => {
           record.name = values.name;
+          record.surname = values.surname;
+          record.image_id = image?.id;
         }),
     );
 
-    Navigation.reset(Routes.setupUserData.profileSelect.created);
+    Navigation.reset(Routes.setupUserData.profileSelect.created, {
+      user: user._raw,
+    });
   };
-
 
   return (
     <VStack
@@ -93,14 +87,15 @@ const ProfileCreateScreen: React.FC = () => {
       mt={isTablet ? '64px' : '24px'}>
       <ScrollView w={'100%'}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-          Create new profile
+          {t('setupUserData.profileSelect.create.title') ||
+            'Create new profile'}
         </Text>
         <Center w={'100%'} my={6}>
           <VStack alignItems={'center'} space={1}>
             <Controller
               control={control}
               name={'image'}
-              render={({ field: { value } }) => (
+              render={({field: {value}}) => (
                 <Center
                   background={'primary.100'}
                   w={'56px'}
@@ -131,7 +126,8 @@ const ProfileCreateScreen: React.FC = () => {
                 )
               }>
               <Text fontSize={'LMD'} fontWeight={500} color={'primary.200'}>
-                {t('teacher.create.takePhoto') || 'Take/choose photo'}
+                {t('setupUserData.profileSelect.create.takePhoto') ||
+                  'Take/choose photo'}
               </Text>
             </TouchableOpacity>
           </VStack>
@@ -141,11 +137,11 @@ const ProfileCreateScreen: React.FC = () => {
           <Controller
             control={control}
             name={'name'}
-            rules={{ required: true }}
-            render={({ field, fieldState: { error } }) => (
+            rules={{required: true}}
+            render={({field, fieldState: {error}}) => (
               <VStack space={2}>
                 <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                  {t('teacher.create.firstName') || 'First name'}
+                  {t('setupUserData.profileSelect.create.name') || 'First name'}
                 </Text>
                 <Input
                   {...field}
@@ -159,12 +155,13 @@ const ProfileCreateScreen: React.FC = () => {
 
           <Controller
             control={control}
-            name={'name'}
-            rules={{ required: true }}
-            render={({ field, fieldState: { error } }) => (
+            name={'surname'}
+            rules={{required: true}}
+            render={({field, fieldState: {error}}) => (
               <VStack space={2}>
                 <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                  Last name
+                  {t('setupUserData.profileSelect.create.surname') ||
+                    'Last name'}
                 </Text>
                 <Input
                   {...field}
@@ -179,17 +176,19 @@ const ProfileCreateScreen: React.FC = () => {
           <Controller
             control={control}
             name={'emis_number'}
-            render={({ field, fieldState: { error } }) => (
+            render={({field, fieldState: {error}}) => (
               <VStack space={2}>
                 <HStack
                   w={'100%'}
                   justifyContent={'space-between'}
                   alignItems={'center'}>
                   <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                    {t('teacher.create.emisNumber') || 'EMIS number'}
+                    {t('setupUserData.profileSelect.create.emis') ||
+                      'EMIS number'}
                   </Text>
                   <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                    Optional
+                    {t('setupUserData.profileSelect.create.optional') ||
+                      'Optional'}
                   </Text>
                 </HStack>
                 <Input
@@ -214,10 +213,10 @@ const ProfileCreateScreen: React.FC = () => {
         w={'100%'}
         background={'primary.200'}
         isLoading={isSubmitting}>
-        Add profile
+        {t('setupUserData.profileSelect.create.button') || 'Add profile'}
       </Button>
     </VStack>
-  )
+  );
 };
 
 export default ProfileCreateScreen;

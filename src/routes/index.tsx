@@ -92,13 +92,17 @@ const AppRoutes = () => {
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},
               }}
-            /> 
+            />
             <Stack.Screen
               name={Routes.setupUserData.profileSelect.created}
               component={ProfileCreatedScreen}
               options={{
                 header: () => (
-                  <Header title={t('header.newprofile') || 'New profile'} />
+                  <Header
+                    title={t('header.newprofile') || 'New profile'}
+                    hideBack
+                    hideConfig
+                  />
                 ),
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},

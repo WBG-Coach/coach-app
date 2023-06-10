@@ -47,6 +47,7 @@
   CREATE TABLE user (
       id TEXT,
       name TEXT,
+      surname TEXT null,
       image_id TEXT,
       _changed TEXT,
       _status TEXT,

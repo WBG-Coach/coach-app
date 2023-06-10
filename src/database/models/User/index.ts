@@ -23,6 +23,7 @@ export default class User extends Model {
     .query(Q.where('coach_id', Q.eq(this.id)));
 
   @text('name') name: any;
+  @text('surname') surname: any;
   @text('image_id') image_id: any;
   @immutableRelation('image', 'image_id') image: any;
   @readonly @date('created_at') createdAt: any;
