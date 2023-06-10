@@ -1,4 +1,4 @@
-import {Text, VStack} from 'native-base';
+import {Button, HStack, Text, useTheme, VStack} from 'native-base';
 import React, {useCallback, useContext, useState} from 'react';
 import Input from '../../components/base/Input';
 import {UserContext} from '../../providers/contexts/UserContext';
@@ -9,10 +9,14 @@ import UserItem from './UserItem';
 import UserService from '../../services/user';
 import InfiniteScroll from '../../components/InfiniteScroll';
 import useDebounce from '../../hooks/debounce';
+import Icon from '../../components/base/Icon';
+import Navigation from '../../services/navigation';
+import Routes from '../../routes/paths';
 
 const ITEMS_PER_PAGE = 20;
 
 const ProfileSelectScreen: React.FC = () => {
+  const theme = useTheme();
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
   const [isTheEnd, setIsTheEnd] = useState(false);
@@ -90,6 +94,20 @@ const ProfileSelectScreen: React.FC = () => {
           />
         )}
       />
+
+      <Button
+        onPress={() =>
+          Navigation.navigate(Routes.setupUserData.profileSelect.create)
+        }
+        variant={'outline'}
+        mb={6}
+        w={'100%'}
+        borderColor={'primary.200'}>
+        <HStack alignItems={'center'} space={2}>
+          <Icon name={'plus'} color={theme.colors.primary['200']} />
+          <Text color={'primary.200'}>Add new profile</Text>
+        </HStack>
+      </Button>
     </VStack>
   );
 };

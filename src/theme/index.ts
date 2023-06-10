@@ -116,6 +116,13 @@ const theme = extendTheme({
         },
       },
     },
+    Button: {
+      variants: {
+        outline: {
+          borderRadius: '8px',
+        },
+      },
+    },
     TextArea: {
       defaultProps: {
         borderColor: 'gray.300',

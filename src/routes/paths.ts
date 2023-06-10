@@ -1,7 +1,11 @@
 const Routes = {
   setupUserData: {
     schoolSelect: 'SchoolSelect',
-    profileSelect: 'ProfileSelect',
+    profileSelect: {
+      select: 'ProfileSelect',
+      create: 'ProfileCreateScreen',
+      created: 'ProfileCreatedScreen',
+    },
   },
   home: 'HomeScreen',
   quickAccess: {
@@ -31,6 +35,7 @@ const Routes = {
     setup: 'SetupObservation',
     form: 'FormObservation',
   },
+
   feedback: {
     mentoringSection: 'MentoringSectionScreen',
     feedbackPreparation: 'FeedbackPrepartionScreen',

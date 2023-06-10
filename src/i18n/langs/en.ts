@@ -293,6 +293,7 @@ const enTranslation = {
     previousSession: 'Previous session',
     pendingSession: 'Pending sessions',
     teacherstats: 'Teacher stats',
+    newprofile: 'New profile',
   },
   components: {
     starsTag: {

@@ -23,6 +23,8 @@ import FeedbackViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewe
 import CompetenceStats from '../screens/TeacherView/Tabs/TeacherStats/CompetenceStats';
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 import QuickNewSessionScreen from '../screens/Home/QuickActions/NewSession';
+import ProfileCreateScreen from '../screens/ProfileSelect/ProfileCreate';
+import ProfileCreatedScreen from '../screens/ProfileSelect/ProfileCreated';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,15 +69,42 @@ const AppRoutes = () => {
         )}
 
         {!user?.id && (
-          <Stack.Screen
-            name={Routes.setupUserData.profileSelect}
-            component={ProfileSelectScreen}
-            options={{
-              header: () => <Header hideBack />,
-              headerShown: true,
-              contentStyle: {backgroundColor: 'white'},
-            }}
-          />
+          <>
+            <Stack.Screen
+              name={Routes.setupUserData.profileSelect.select}
+              component={ProfileSelectScreen}
+              options={{
+                header: () => <Header hideBack />,
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+            <Stack.Screen
+              name={Routes.setupUserData.profileSelect.create}
+              component={ProfileCreateScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.newprofile') || 'New profile'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+            <Stack.Screen
+              name={Routes.setupUserData.profileSelect.created}
+              component={ProfileCreatedScreen}
+              options={{
+                header: () => (
+                  <Header title={t('header.newprofile') || 'New profile'} />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+          </>
         )}
         {user && user.id && user.school && (
           <Stack.Group>
