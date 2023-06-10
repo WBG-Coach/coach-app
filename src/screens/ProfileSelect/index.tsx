@@ -27,6 +27,7 @@ const ProfileSelectScreen: React.FC = () => {
   const {t} = useTranslation();
   const {handleSelectProfile, user} = useContext(UserContext);
 
+
   const loadFirstPageWithFilter = useCallback((value: string) => {
     setUserList([]);
     setIsLoading(true);

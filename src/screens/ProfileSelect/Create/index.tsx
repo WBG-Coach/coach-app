@@ -1,48 +1,50 @@
-import {isTablet as Tablet} from 'react-native-device-info';
+import { isTablet as Tablet } from 'react-native-device-info';
 import {
   Button,
   Center,
-  Image,
   Input,
   ScrollView,
   Text,
   VStack,
   HStack,
-  FlatList,
+  Image as CImage
 } from 'native-base';
-import React, {useState} from 'react';
-import User from '../../../database/models/User';
-import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
-import {Controller, useForm} from 'react-hook-form';
-import {useTranslation} from 'react-i18next';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { useBottomSheetProvider } from '../../../providers/contexts/BottomSheetContext';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
 import ImagePicker from '../../../components/ImagePicker';
+import Navigation from '../../../services/navigation';
+import Routes from '../../../routes/paths';
+import * as RNC from 'react-native-compressor';
+import RNFS from 'react-native-fs';
+import { getWatermelon } from '../../../database';
+import Image from '../../../database/models/Image';
+import User from '../../../database/models/User';
+
+
 
 const ProfileCreateScreen: React.FC = () => {
   const isTablet = Tablet();
-  const {t} = useTranslation();
-  const defaultValues = {} as User;
-  const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
-  const {
-    control,
-    handleSubmit,
-    formState: {isSubmitting},
-  } = useForm({defaultValues});
-
+  const { t } = useTranslation()
+  const defaultValues = {} as any
+  const { control, formState: { isSubmitting }, handleSubmit } = useForm({ defaultValues })
+  const [{ }, { setBottomSheetContent }] = useBottomSheetProvider();
   const [profileImage, setProfileImage] = useState<{
     name: string;
     value: string;
   }>();
 
   const handleSubmitProfile: SubmitHandler<typeof defaultValues> = async (
-    values: Partial<Teacher>,
+    values: Partial<User>,
   ) => {
-    /*    const db = await getWatermelon();
+    const db = await getWatermelon();
     let image = values.image;
 
-    if (teacherImage) {
-      const newImg = await RNC.Image.compress(teacherImage.value, {
+    if (profileImage) {
+      const newImg = await RNC.Image.compress(profileImage.value, {
         maxWidth: 100,
         maxHeight: 100,
         quality: 0.8,
@@ -63,28 +65,24 @@ const ProfileCreateScreen: React.FC = () => {
         image = await db.write(
           async () =>
             await db.collections.get<Image>('image').create(record => {
-              record.name = teacherImage.name;
+              record.name = profileImage.name;
               record.value = base64;
             }),
         );
       }
     }
 
+
     await db.write(
       async () =>
-        await db.collections.get<Profile>('teacher').create(record => {
+        await db.collections.get<User>('user').create(record => {
           record.name = values.name;
-          record.surname = values.surname;
-          record.emis_number = parseInt(values.emis_number);
-          record.subject = values.subject;
-          record.birthdate = values.birthdate.toString();
-          record.image_id = image?.id;
-          record.school_id = (user.school as any).id;
         }),
     );
 
-    Navigation.reset(Routes); */
+    Navigation.reset(Routes.setupUserData.profileSelect.created);
   };
+
 
   return (
     <VStack
@@ -102,19 +100,19 @@ const ProfileCreateScreen: React.FC = () => {
             <Controller
               control={control}
               name={'image'}
-              render={({field: {value}}) => (
+              render={({ field: { value } }) => (
                 <Center
                   background={'primary.100'}
                   w={'56px'}
                   h={'56px'}
                   borderRadius={'500px'}>
                   {profileImage || value ? (
-                    <Image
+                    <CImage
                       src={profileImage?.value || value._raw.value}
                       w={'56px'}
                       h={'56px'}
                       borderRadius={'500px'}
-                      alt={'Teacher image'}
+                      alt={'User image'}
                     />
                   ) : (
                     <Icon name={'user'} />
@@ -143,8 +141,8 @@ const ProfileCreateScreen: React.FC = () => {
           <Controller
             control={control}
             name={'name'}
-            rules={{required: true}}
-            render={({field, fieldState: {error}}) => (
+            rules={{ required: true }}
+            render={({ field, fieldState: { error } }) => (
               <VStack space={2}>
                 <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
                   {t('teacher.create.firstName') || 'First name'}
@@ -162,8 +160,8 @@ const ProfileCreateScreen: React.FC = () => {
           <Controller
             control={control}
             name={'name'}
-            rules={{required: true}}
-            render={({field, fieldState: {error}}) => (
+            rules={{ required: true }}
+            render={({ field, fieldState: { error } }) => (
               <VStack space={2}>
                 <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
                   Last name
@@ -181,7 +179,7 @@ const ProfileCreateScreen: React.FC = () => {
           <Controller
             control={control}
             name={'emis_number'}
-            render={({field, fieldState: {error}}) => (
+            render={({ field, fieldState: { error } }) => (
               <VStack space={2}>
                 <HStack
                   w={'100%'}
@@ -219,7 +217,7 @@ const ProfileCreateScreen: React.FC = () => {
         Add profile
       </Button>
     </VStack>
-  );
+  )
 };
 
 export default ProfileCreateScreen;

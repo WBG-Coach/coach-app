@@ -23,8 +23,8 @@ import FeedbackViewScreen from '../screens/TeacherView/Tabs/Session/SessionViewe
 import CompetenceStats from '../screens/TeacherView/Tabs/TeacherStats/CompetenceStats';
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 import QuickNewSessionScreen from '../screens/Home/QuickActions/NewSession';
-import ProfileCreateScreen from '../screens/ProfileSelect/ProfileCreate';
 import ProfileCreatedScreen from '../screens/ProfileSelect/ProfileCreated';
+import ProfileCreateScreen from '../screens/ProfileSelect/Create';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,7 +92,7 @@ const AppRoutes = () => {
                 headerShown: true,
                 contentStyle: {backgroundColor: 'white'},
               }}
-            />
+            /> 
             <Stack.Screen
               name={Routes.setupUserData.profileSelect.created}
               component={ProfileCreatedScreen}
