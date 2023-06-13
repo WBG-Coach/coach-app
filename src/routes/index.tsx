@@ -341,7 +341,7 @@ const AppRoutes = () => {
             />
 
             <Stack.Screen
-              name={Routes.classObservation.formConfirmaton}
+              name={Routes.classObservation.formConfirmation}
               component={FormConfirmation}
               options={{
                 header: () => (

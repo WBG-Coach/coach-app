@@ -55,7 +55,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
       value: answers[question_id],
     }));
 
-    Navigation.navigate(Routes.classObservation.formConfirmaton, {
+    Navigation.navigate(Routes.classObservation.formConfirmation, {
       answers: formattedAnswers,
       session: {...params.session, key_points: keyPoints},
     });

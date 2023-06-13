@@ -90,10 +90,9 @@ const MentoringSection: React.FC<any> = ({route: {params}}: Props) => {
           color={'white'}
           background={'primary.200'}
           onPress={() =>
-            Navigation.reset(Routes.feedback.mentoringSection, {...params})
+            Navigation.reset(Routes.feedback.feedbackPreparation, {...params})
           }>
-          {t('feedback.mentoringSection.continueButton') ||
-            'Continue to feedback preparation'}
+          {t('feedback.mentoringSection.continueButton')}
         </Button>
 
         <Button

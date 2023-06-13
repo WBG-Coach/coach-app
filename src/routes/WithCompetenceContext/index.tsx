@@ -84,7 +84,7 @@ export default function WithCompetenceContext() {
           />
 
           <Stack.Screen
-            name={Routes.classObservation.formConfirmaton}
+            name={Routes.classObservation.formConfirmation}
             component={FormConfirmation}
             options={{
               header: () => (
