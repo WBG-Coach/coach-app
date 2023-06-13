@@ -16,6 +16,7 @@ const Routes = {
   teacher: {
     teacher: 'TeacherScreen',
     create: 'TeacherCreateScreen',
+    update: 'TeacherUpdateScreen',
     created: 'TeacherCreatedScreen',
     sessionViewer: 'SessionViewerScreen',
     observationViewer: 'ObservationViewerScreen',

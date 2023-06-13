@@ -31,7 +31,7 @@ const HorizontalMenu: React.FC = () => {
     },
     {
       icon: 'user',
-      label: 'Switch coach profile',
+      label: t('home.items.switchProfile'),
       onPress: handleSwitchProfile,
     },
     {

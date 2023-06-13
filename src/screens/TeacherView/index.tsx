@@ -66,7 +66,7 @@ const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
 
           <TouchableOpacity
             onPress={() =>
-              Navigation.navigate(Routes.teacher.create, {
+              Navigation.navigate(Routes.teacher.update, {
                 teacher_id: teacher?.id,
               })
             }>

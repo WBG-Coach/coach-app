@@ -36,6 +36,7 @@ const enTranslation = {
     items: {
       newSession: 'Start new session',
       switchSchools: 'Switch schools',
+      switchProfile: 'Switch coach profile',
       offlineSync: 'Offline sync',
       statics: 'Statistics',
       pendingSession: 'Pending sessions',
@@ -293,6 +294,7 @@ const enTranslation = {
     newsession: 'New session',
     teacher: 'Teacher',
     newTeacher: 'New teacher',
+    updateTeacher: 'Update teacher',
     newClassObservation: 'New class observation',
     preparation: 'Preparation',
     classObservation: 'Class Observation',

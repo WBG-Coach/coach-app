@@ -36,6 +36,7 @@ const ptTranslation = {
     items: {
       newSession: 'Iniciar nova sessão',
       switchSchools: 'Trocar de escola',
+      switchProfile: 'Trocar de perfil',
       offlineSync: 'Sincronização offline',
       statics: 'Estatísticas',
       pendingSession: 'Sessões pendentes',
@@ -297,6 +298,7 @@ const ptTranslation = {
     newsession: 'Nova sessão',
     teacher: 'Professor',
     newTeacher: 'Novo professor',
+    updateTeacher: 'Atualizar professor',
     newClassObservation: 'Nova observação de aula',
     preparation: 'Preparação',
     classObservation: 'Observação de aula',

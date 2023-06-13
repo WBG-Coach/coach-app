@@ -159,6 +159,21 @@ const AppRoutes = () => {
             />
 
             <Stack.Screen
+              name={Routes.teacher.update}
+              component={TeacherCreateScreen}
+              options={{
+                header: () => (
+                  <Header
+                    title={t('header.updateTeacher') || 'Update teacher'}
+                    hideConfig
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
               name={Routes.teacher.created}
               component={TeacherCreatedScreen}
               options={{
