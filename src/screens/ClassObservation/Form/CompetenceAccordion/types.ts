@@ -1,14 +1,10 @@
-import {Control} from 'react-hook-form';
+import Competence from '../../../../database/models/Competence';
 import {CompetenceWithQuestions} from '../../../../providers/contexts/CompetencesContext';
 
 export type Props = {
   competence: CompetenceWithQuestions;
-  isFinished: boolean;
-  startCollapsed: boolean;
-  control: Control<
-    {
-      [key: string]: string | undefined;
-    },
-    any
-  >;
+  isFinished?: boolean;
+
+  handleAnswer: (answers: {[key: string]: number}) => void;
+  onComplete: () => void;
 };

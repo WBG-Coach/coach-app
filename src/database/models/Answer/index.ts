@@ -16,7 +16,6 @@ export default class Answer extends Model {
   } as const;
 
   @field('value') value: any;
-  @text('teste_id') teste_id: any;
   @text('question_id') question_id: any;
   @text('session_id') session_id: any;
   @immutableRelation('session', 'session_id') session: any;

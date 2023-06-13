@@ -10,7 +10,6 @@ import {navigationRef} from '../services/navigation';
 import {UserContext} from '../providers/contexts/UserContext';
 import HomeScreen from '../screens/Home';
 import TeacherView from '../screens/TeacherView';
-import WithCompetenceContext from './WithCompetenceContext';
 import SettingsScreen from '../screens/Settings';
 import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
 import {useTranslation} from 'react-i18next';
@@ -25,6 +24,16 @@ import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 import QuickNewSessionScreen from '../screens/Home/QuickActions/NewSession';
 import ProfileCreatedScreen from '../screens/ProfileSelect/ProfileCreated';
 import ProfileCreateScreen from '../screens/ProfileSelect/Create';
+import ClassObservationAbout from '../screens/ClassObservation/About';
+import ClassOnboarding from '../screens/ClassObservation/Onboarding';
+import ObservationSetup from '../screens/ClassObservation/Setup';
+import ObservationForm from '../screens/ClassObservation/Form';
+import FormConfirmation from '../screens/ClassObservation/FormConfirmation';
+import FeedbackCompleted from '../screens/Feedback/FeedbackCompleted';
+import DefineActions from '../screens/Feedback/DefineActions';
+import FeedbackPreparation from '../screens/Feedback/FeedbackPreparation';
+import ObservationCompleted from '../screens/ClassObservation/ObservationCompleted';
+import MentoringSection from '../screens/Feedback/MentoringSession';
 
 const Stack = createNativeStackNavigator();
 
@@ -272,10 +281,162 @@ const AppRoutes = () => {
             />
 
             <Stack.Screen
-              name="WithCompetenceContext"
-              component={WithCompetenceContext}
+              name={Routes.classObservation.about}
+              component={ClassObservationAbout}
               options={{
-                headerShown: false,
+                header: () => (
+                  <Header
+                    hideConfig
+                    title={
+                      t('header.newClassObservation') || 'New class observation'
+                    }
+                  />
+                ),
+                headerShown: true,
+                contentStyle: {backgroundColor: 'white'},
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.classObservation.onboarding}
+              component={ClassOnboarding}
+              options={{
+                header: () => (
+                  <Header
+                    hideConfig
+                    title={t('header.preparation') || 'Preparation'}
+                    background={'primary.0'}
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.classObservation.setup}
+              component={ObservationSetup}
+              options={{
+                header: () => (
+                  <Header
+                    hideConfig
+                    title={t('header.classObservation') || 'Class Observation'}
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.classObservation.form}
+              component={ObservationForm}
+              options={{
+                header: () => (
+                  <Header
+                    background="gray.0"
+                    hideConfig
+                    title={t('header.classObservation') || 'Class Observation'}
+                  />
+                ),
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.classObservation.formConfirmaton}
+              component={FormConfirmation}
+              options={{
+                header: () => (
+                  <Header
+                    background="gray.0"
+                    hideConfig
+                    title={
+                      t('header.observationSummary') || 'Observation summary'
+                    }
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.classObservation.observationCompleted}
+              component={ObservationCompleted}
+              options={{
+                header: () => (
+                  <Header
+                    background="gray.0"
+                    hideConfig
+                    hideBack
+                    title={
+                      t('header.observationComplete') || 'Observation complete'
+                    }
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.feedback.mentoringSection}
+              component={MentoringSection}
+              options={{
+                header: () => (
+                  <Header
+                    hideConfig
+                    title={t('header.mentoringSession') || 'Mentoring session'}
+                    background={'primary.0'}
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.feedback.feedbackPreparation}
+              component={FeedbackPreparation}
+              options={{
+                header: () => (
+                  <Header
+                    hideConfig
+                    title={
+                      t('header.feedbackPreparation') || 'Feedback preparation'
+                    }
+                    background="gray.0"
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.feedback.defineActions}
+              component={DefineActions}
+              options={{
+                header: () => (
+                  <Header
+                    hideConfig
+                    title={
+                      t('header.feedbackPreparation') || 'Feedback preparation'
+                    }
+                    background="gray.0"
+                  />
+                ),
+                headerShown: true,
+              }}
+            />
+
+            <Stack.Screen
+              name={Routes.feedback.feedbackCompleted}
+              component={FeedbackCompleted}
+              options={{
+                header: () => (
+                  <Header
+                    hideBack
+                    hideConfig
+                    title={t('header.feedbackComplete') || 'Feedback complete'}
+                    background="gray.0"
+                  />
+                ),
+                headerShown: true,
               }}
             />
           </Stack.Group>

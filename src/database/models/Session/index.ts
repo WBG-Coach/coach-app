@@ -29,8 +29,7 @@ export default class Session extends Model {
   @field('latitude') latitude?: any;
   @field('longitude') longitude?: any;
   @text('session_status') session_status?: string;
-  @text('boys_count') boys_count?: string;
-  @text('girls_count') girls_count?: string;
+  @text('students_count') students_count?: string;
   @text('subject') subject?: string;
   @text('lesson_time') lesson_time?: string;
   @text('objective') objective?: string;

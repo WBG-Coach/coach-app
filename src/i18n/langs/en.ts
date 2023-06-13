@@ -151,7 +151,7 @@ const enTranslation = {
       button: 'Start feedback preparation',
       buttonBack: 'Go back to home',
     },
-    formConfirmaton: {
+    formConfirmation: {
       button: 'Finish observation',
       buttonEdit: 'Edit evaluation',
       competenceView: {
@@ -220,24 +220,20 @@ const enTranslation = {
 
       questions: {
         $1: {
-          title: 'How many students are boys?',
-          placeholder: '15',
+          title: 'How many students are in the class?',
+          placeholder: 'e.g. 7',
         },
         $2: {
-          title: 'How many students are girls?',
-          placeholder: '15',
-        },
-        $3: {
-          title: "What's the subject?",
+          title: 'What is the subject?',
           placeholder: 'Math',
         },
-        $4: {
-          title: 'How long the lesson’s going to last?',
+        $3: {
+          title: 'How long will the lesson last?',
           placeholder: '30 min',
         },
-        $5: {
-          title: "Teacher's description of the class",
-          placeholder: "Teacher's description of the class",
+        $4: {
+          title: "What are the teacher's objectives?",
+          placeholder: "Teacher's description of the teaching",
         },
       },
     },
@@ -248,8 +244,7 @@ const enTranslation = {
       pointsToDiscuss: 'What you want to discuss with the teacher?',
       spaceAdditional:
         "Use this space for additional annotations that you'd like to discuss with the teacher",
-      competenciesRated:
-        '${finishedLength} of ${competencesLength} competencies rated',
+      competenciesRated: '{{count}} of {{total}} competencies rated',
       button: 'Finish observation',
     },
   },
@@ -309,7 +304,6 @@ const enTranslation = {
     previousSession: 'Previous session',
     pendingSession: 'Pending sessions',
     teacherstats: 'Teacher stats',
-    newprofile: 'New profile',
   },
   components: {
     starsTag: {

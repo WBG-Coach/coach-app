@@ -17,6 +17,7 @@ const Geolocation = {
             longitude: 0,
           });
         },
+        {timeout: 1000, enableHighAccuracy: true},
       );
     });
   },

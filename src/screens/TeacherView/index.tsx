@@ -110,6 +110,7 @@ const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
         {tabs.map((item, index) => (
           <TabButton
             tab={item}
+            key={index}
             index={index}
             onPress={() => setTabSelected(item)}
             isActive={item.label === tabSelected.label}

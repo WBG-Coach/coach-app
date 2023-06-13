@@ -107,8 +107,7 @@ const SessionTab: React.FC = () => {
 
                     <Button
                       onPress={() =>
-                        Navigation.navigate('WithCompetenceContext', {
-                          screen: Routes.feedback.mentoringSection,
+                        Navigation.navigate(Routes.feedback.mentoringSection, {
                           params: {
                             session_id:
                               sessions.data[sessions.data.length - 1].id,
@@ -181,9 +180,7 @@ const SessionTab: React.FC = () => {
                 borderRadius={'8px'}
                 borderColor={theme.colors.primary['200']}
                 onPress={() =>
-                  Navigation.navigate('WithCompetenceContext', {
-                    screen: Routes.classObservation.about,
-                  })
+                  Navigation.navigate(Routes.classObservation.about)
                 }>
                 <HStack alignItems={'center'}>
                   <Icon name={'plus'} color={theme.colors.primary['200']} />
@@ -224,9 +221,7 @@ const SessionTab: React.FC = () => {
                   borderRadius={'8px'}
                   borderColor={theme.colors.primary['200']}
                   onPress={() =>
-                    Navigation.navigate('WithCompetenceContext', {
-                      screen: Routes.classObservation.about,
-                    })
+                    Navigation.navigate(Routes.classObservation.about)
                   }>
                   <HStack alignItems={'center'}>
                     <Icon name={'plus'} color={theme.colors.primary['200']} />

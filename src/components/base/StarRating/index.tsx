@@ -1,39 +1,39 @@
-import {Center, HStack, VStack, useTheme, Text} from 'native-base';
-import React from 'react';
-import Icon from '../Icon';
+import React, {useMemo} from 'react';
+import {Center, HStack, VStack, useTheme, Text, Image} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Props} from './types';
+import Icon from '../Icon';
 
-const StarRating: React.FC<Props> = ({onPress, value, isInvalid}) => {
-  const starsLength = Array(5).fill({});
+const StarRating: React.FC<Props> = ({onPress, size, value}) => {
+  const starsLength = Array(size).fill({});
   const theme = useTheme();
+
+  const renderStars = useMemo(
+    () => (
+      <HStack space={3}>
+        {starsLength.map((_, index) => (
+          <TouchableOpacity key={index} onPress={() => onPress(index + 1)}>
+            {value >= index + 1 ? (
+              <Icon
+                size={32}
+                name={'star-solid'}
+                color={theme.colors.yellow['200']}
+              />
+            ) : (
+              <Icon size={32} name={'star'} color={theme.colors.gray['500']} />
+            )}
+          </TouchableOpacity>
+        ))}
+      </HStack>
+    ),
+    [value],
+  );
 
   return (
     <Center>
       <VStack>
-        <HStack space={3}>
-          {starsLength.map((_, index) => (
-            <TouchableOpacity key={index} onPress={() => onPress(index + 1)}>
-              {value >= index + 1 ? (
-                <Icon
-                  name={'star-solid'}
-                  size={32}
-                  color={theme.colors.yellow['200']}
-                />
-              ) : (
-                <Icon
-                  name={'star'}
-                  color={
-                    isInvalid
-                      ? theme.colors.red['200']
-                      : theme.colors.gray['600']
-                  }
-                  size={32}
-                />
-              )}
-            </TouchableOpacity>
-          ))}
-        </HStack>
+        {renderStars}
+
         <HStack justifyContent={'space-between'}>
           <Text color={'gray.600'} left={0} bottom={0}>
             Needs work

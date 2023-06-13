@@ -1,13 +1,18 @@
-import {Button, HStack, Text, TextArea, VStack, useTheme} from 'native-base';
+import {
+  Button,
+  HStack,
+  Text,
+  TextArea,
+  VStack,
+  Spinner,
+  Center,
+} from 'native-base';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from '../../../components/base/Icon';
-import {IQuestion} from '../../../types';
 import {isTablet as Tablet} from 'react-native-device-info';
 import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
-import Answer from '../../../database/models/Answer';
 import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import CompetenceAccordion from './CompetenceAccordion';
 import Session from '../../../database/models/Session';
@@ -22,186 +27,133 @@ type Props = {
 };
 
 const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
-  const {competences} = useContext(CompetenceContext);
-  const {t} = useTranslation();
   const isTablet = Tablet();
-  const theme = useTheme();
+  const {t} = useTranslation();
+  const {competences} = useContext(CompetenceContext);
 
-  const questions = useMemo(
-    () =>
-      competences.reduce(
-        (acc, item) => [...acc, ...(item.questions as any)],
-        [] as IQuestion[],
-      ),
-    [competences],
+  const [loading, setLoading] = useState(true);
+  const [keyPoints, setKeyPoints] = useState('');
+  const [answers, setAnswers] = useState<{[key: string]: number}>({});
+  const [competenciesFinished, setCompetenciesFinished] = useState<string[]>(
+    [],
   );
 
-  const defaultValues = useMemo(
-    () =>
-      questions.reduce(
-        (acc, item) => ({...acc, [item.id]: undefined}),
-        {} as {[key: string]: undefined | string},
-      ),
-    [questions],
+  const isDisable = useMemo(
+    () => competenciesFinished.length < competences.length,
+    [competenciesFinished, competences],
   );
 
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: {isSubmitting},
-  } = useForm({
-    defaultValues: {...defaultValues, key_points: ''} as {
-      [key: string]: undefined | string;
-    },
-  });
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    });
+  }, []);
 
-  const formValues = watch();
-  const competenciesFinished = useMemo(
-    () =>
-      competences.reduce((acc, item) => {
-        if (!item.questions.find(({id}) => !formValues[id])) {
-          return [...acc, item.id];
-        }
-        return acc;
-      }, [] as string[]),
-    [formValues],
-  );
-
-  const handleSubmitForm: SubmitHandler<
-    typeof defaultValues
-  > = async values => {
-    const formData = Object.keys(values).reduce(
-      (acc, item) => {
-        if (item === 'key_points') {
-          return {...acc, session: {[item]: values[item] as string}};
-        } else {
-          return {
-            ...acc,
-            answers: [
-              ...acc.answers,
-              {
-                question_id: item,
-                value: values[item],
-              },
-            ],
-          };
-        }
-      },
-      {answers: [], session: {}} as {
-        answers: Partial<Answer>[];
-        session: {[x: string]: string};
-      },
-    );
+  const handleSubmitForm = async () => {
+    const formattedAnswers = Object.keys(answers).map(question_id => ({
+      question_id,
+      value: answers[question_id],
+    }));
 
     Navigation.navigate(Routes.classObservation.formConfirmaton, {
-      answers: formData.answers,
-      session: {...params.session, ...formData.session},
+      answers: formattedAnswers,
+      session: {...params.session, key_points: keyPoints},
     });
   };
 
-  const CompetenceComponent = useMemo(
-    () => (
-      <>
-        {competences.map((competence, index) => (
+  if (loading)
+    return (
+      <Center bg="white" w="full" h="full">
+        <Spinner size="lg" />
+      </Center>
+    );
+
+  return (
+    <VStack
+      py={6}
+      flex={1}
+      bg={'gray.0'}
+      safeAreaBottom
+      px={isTablet ? '64px' : 4}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
+          {t('classObservation.form.title') || 'Class evaluation'}
+        </Text>
+        <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
+          {t('classObservation.form.subtitle') ||
+            'Rate each topic with your observation'}
+        </Text>
+
+        {competences.map(competence => (
           <CompetenceAccordion
-            control={control}
             key={competence.id}
             competence={competence}
             isFinished={competenciesFinished.includes(competence.id)}
-            startCollapsed={index !== 0}
+            onComplete={() =>
+              setCompetenciesFinished(state => [...state, competence.id])
+            }
+            handleAnswer={answers => {
+              setAnswers(state => ({...state, ...answers}));
+            }}
           />
         ))}
-      </>
-    ),
-    [competenciesFinished],
-  );
 
-  return (
-    <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
-      <VStack flex={1} px={isTablet ? '64px' : 4}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            {t('classObservation.form.title') || 'Class evaluation'}
+        <VStack py={4}>
+          <Text fontSize={'TXL'} fontWeight={700} color={'gray.700'}>
+            {t('classObservation.form.keyPoints') ||
+              'Key points to be discussed'}
           </Text>
-          <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            {t('classObservation.form.subtitle') ||
-              'Rate each topic with your observation'}
+          <Text mt={4} fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
+            {t('classObservation.form.pointsToDiscuss') ||
+              'What you want to discuss with the teacher?'}
           </Text>
 
-          <VStack>{CompetenceComponent}</VStack>
+          <TextArea
+            mt={2}
+            value={keyPoints}
+            autoCompleteType={'off'}
+            onChangeText={setKeyPoints}
+            placeholder={'Positive and negative points'}
+          />
 
-          <VStack py={4}>
-            <Text fontSize={'TXL'} fontWeight={700} color={'gray.700'}>
-              {t('classObservation.form.keyPoints') ||
-                'Key points to be discussed'}
-            </Text>
-            <Text mt={4} fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
-              {t('classObservation.form.pointsToDiscuss') ||
-                'What you want to discuss with the teacher?'}
-            </Text>
-            <Controller
-              name={'key_points'}
-              rules={{required: true}}
-              control={control}
-              render={({field: {value, onChange}, fieldState: {error}}) => (
-                <TextArea
-                  mt={2}
-                  onChangeText={onChange}
-                  value={value}
-                  isInvalid={!!error}
-                  autoCompleteType={'off'}
-                  placeholder={'Positive and negative points'}
-                />
-              )}
-            />
-
-            <Text mt={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              {t('classObservation.form.spaceAdditional') ||
-                "Use this space for additional annotations that you'd like to discuss with the teacher"}
-            </Text>
-          </VStack>
-        </ScrollView>
-      </VStack>
-
-      <VStack w={'100%'}>
-        <HStack
-          alignItems={'center'}
-          px={isTablet ? '64px' : 4}
-          background={'gray.100'}
-          borderRadius={'8px 8px 0px 0px'}
-          py={1}
-          space={1}>
-          <Icon name="star" color={theme.colors.gray['600']} size={20} />
-          <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            {(
-              t('classObservation.form.competenciesRated') ||
-              '${finishedLength} of ${competencesLength} competencies rated'
-            )
-              .replace(
-                '${finishedLength}',
-                competenciesFinished.length.toString(),
-              )
-              .replace('${competencesLength}', competences.length.toString())}
+          <Text mt={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+            {t('classObservation.form.spaceAdditional')}
           </Text>
-        </HStack>
-        <VStack
-          px={isTablet ? '64px' : 4}
-          background={'white'}
-          pt={3}
-          borderRadius={'8px 8px 0px 0px'}>
-          <Button
-            onPress={handleSubmit(handleSubmitForm)}
-            isLoading={isSubmitting}
-            marginTop={'auto'}
-            variant={'solid'}
-            borderRadius={'8px'}
-            color={'white'}
-            background={'primary.200'}>
-            {t('classObservation.form.button') || 'Finish observation'}
-          </Button>
         </VStack>
-      </VStack>
+      </ScrollView>
+
+      <HStack
+        mb={3}
+        py={1}
+        space={1}
+        alignItems={'center'}
+        background={'#FEF8EC'}
+        px={isTablet ? '64px' : 4}
+        mx={isTablet ? '-64px' : -4}>
+        <Icon name="star" color={'#9B6908'} size={20} />
+        <Text fontSize={'TSM'} fontWeight={400} color={'#9B6908'}>
+          {t('classObservation.form.competenciesRated', {
+            count: competenciesFinished.length,
+            total: competences.length,
+          })}
+        </Text>
+      </HStack>
+
+      <Button
+        color={'white'}
+        variant={'solid'}
+        marginTop={'auto'}
+        borderRadius={'8px'}
+        onPress={handleSubmitForm}
+        background={'primary.200'}
+        isDisabled={isDisable}
+        _disabled={{
+          background: '#F2F4F7',
+          _text: {color: '#9AA2AC'},
+          opacity: 1,
+        }}>
+        {t('classObservation.form.button') || 'Finish observation'}
+      </Button>
     </VStack>
   );
 };

@@ -18,8 +18,7 @@ import {Picker} from '@react-native-picker/picker';
 import {useTranslation} from 'react-i18next';
 
 const defaultValues = {
-  boys_count: '',
-  girls_count: '',
+  students_count: '',
   subject: '',
   lesson_time: '30',
   objective: '',
@@ -41,11 +40,11 @@ const ObservationSetup: React.FC<any> = () => {
 
   return (
     <VStack
-      flex={1}
-      px={isTablet ? '64px' : 4}
       py={6}
+      flex={1}
+      bg={'gray.0'}
       safeAreaBottom
-      bg={'gray.0'}>
+      px={isTablet ? '64px' : 4}>
       <ScrollView flexGrow={0}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
           {t('classObservation.setup.title') || 'About the lesson'}
@@ -65,7 +64,7 @@ const ObservationSetup: React.FC<any> = () => {
             <Controller
               control={control}
               rules={{required: true}}
-              name={'boys_count'}
+              name={'students_count'}
               render={({field, fieldState: {error}}) => (
                 <Input
                   {...field}
@@ -83,33 +82,7 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$2.title') ||
-                'How many students are girls?'}
-            </Text>
-
-            <Controller
-              control={control}
-              rules={{required: true}}
-              name={'girls_count'}
-              render={({field, fieldState: {error}}) => (
-                <Input
-                  {...field}
-                  onChangeText={field.onChange}
-                  isInvalid={!!error}
-                  placeholder={
-                    t('classObservation.setup.questions.$2.placeholder') || '15'
-                  }
-                  variant={'outline'}
-                  keyboardType={'number-pad'}
-                />
-              )}
-            />
-          </VStack>
-
-          <VStack space={2}>
-            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$3.title') ||
-                "What's the subject?"}
+              {t('classObservation.setup.questions.$2.title')}
             </Text>
 
             <Controller
@@ -123,7 +96,7 @@ const ObservationSetup: React.FC<any> = () => {
                   isInvalid={!!error}
                   variant={'outline'}
                   placeholder={
-                    t('classObservation.setup.questions.$3.placeholder') ||
+                    t('classObservation.setup.questions.$2.placeholder') ||
                     'Math'
                   }
                 />
@@ -133,8 +106,7 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$4.title') ||
-                'How long the lesson’s going to last?'}
+              {t('classObservation.setup.questions.$3.title')}
             </Text>
 
             <Controller
@@ -149,14 +121,14 @@ const ObservationSetup: React.FC<any> = () => {
                   <Picker
                     selectedValue={field.value}
                     placeholder={
-                      t('classObservation.setup.questions.$4.placeholder') ||
+                      t('classObservation.setup.questions.$3.placeholder') ||
                       '30 min'
                     }
                     onValueChange={itemValue => field.onChange(itemValue)}>
-                    <Picker.Item label="30 Minuts" value="30" />
-                    <Picker.Item label="40 Minuts" value="40" />
-                    <Picker.Item label="50 Minuts" value="50" />
-                    <Picker.Item label="60 Minuts" value="60" />
+                    <Picker.Item label="30 mins" value="30" />
+                    <Picker.Item label="40 mins" value="40" />
+                    <Picker.Item label="50 mins" value="50" />
+                    <Picker.Item label="60 mins" value="60" />
                   </Picker>
                 </Box>
               )}
@@ -165,7 +137,7 @@ const ObservationSetup: React.FC<any> = () => {
 
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$5.title') ||
+              {t('classObservation.setup.questions.$4.title') ||
                 "Teacher's description of the class"}
             </Text>
 
@@ -181,7 +153,7 @@ const ObservationSetup: React.FC<any> = () => {
                   autoCompleteType={'off'}
                   variant={'outline'}
                   placeholder={
-                    t('classObservation.setup.questions.$5.placeholder') ||
+                    t('classObservation.setup.questions.$4.placeholder') ||
                     "Teacher's description of the class"
                   }
                 />

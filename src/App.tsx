@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {PermissionsAndroid} from 'react-native';
+import {useNetInfo} from '@react-native-community/netinfo';
+import NoGeolocation from './components/NoGeolocation';
+import SplashScreen from './screens/Splash';
+import {syncWatermelon} from './database';
 import RootProvider from './providers';
 import AppRoutes from './routes';
-import {useNetInfo} from '@react-native-community/netinfo';
 import './i18n';
-import {syncWatermelon} from './database';
-import {PermissionsAndroid} from 'react-native';
-import NoGeolocation from './components/NoGeolocation';
-import {Spinner} from 'native-base';
-import SplashScreen from './screens/Splash';
 
 const App = () => {
   const [isGeolocationApproved, setIsGeolocationApproved] = useState(false);

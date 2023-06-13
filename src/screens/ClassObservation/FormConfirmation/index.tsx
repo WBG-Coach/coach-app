@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Button,
@@ -32,12 +32,19 @@ type Props = {
 };
 
 const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
+  const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const {competences} = useContext(CompetenceContext);
   const {user} = useContext(UserContext);
   const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    });
+  }, []);
 
   const {session, answers} = params;
   const competencyFormatted = useMemo(
@@ -69,47 +76,63 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
   );
 
   const handlePressContinue = async () => {
-    const db = await getWatermelon();
-    setIsLoading(true);
+    try {
+      console.log('START');
+      const db = await getWatermelon();
+      console.log('1');
+      setIsLoading(true);
+      console.log('2');
 
-    const location = await Geolocation.getLocation();
+      const location = await Geolocation.getLocation();
+      console.log('3');
+      console.log({location});
 
-    const {_raw} = await db.write(
-      async () =>
-        await db.collections.get<Session>('session').create(record => {
-          record.session_status = '';
-          record.boys_count = session.boys_count;
-          record.girls_count = session.girls_count;
-          record.subject = session.subject;
-          record.lesson_time = session.lesson_time;
-          record.objective = session.objective;
-          record.school_id = user?.school?.id;
-          record.coach_id = user?.id;
-          record.key_points = session.key_points;
-          record.teacher_id = session.teacher_id;
-          record.latitude = location.latitude;
-          record.longitude = location.longitude;
-        }),
-    );
+      const {_raw} = await db.write(
+        async () =>
+          await db.collections.get<Session>('session').create(record => {
+            record.session_status = '';
+            record.students_count = session.students_count;
+            record.subject = session.subject;
+            record.lesson_time = session.lesson_time;
+            record.objective = session.objective;
+            record.school_id = user?.school?.id;
+            record.coach_id = user?.id;
+            record.key_points = session.key_points;
+            record.teacher_id = session.teacher_id;
+            record.latitude = location.latitude;
+            record.longitude = location.longitude;
+          }),
+      );
+      console.log('4');
 
-    await Promise.all(
-      answers?.map(
-        async answer =>
-          await db.write(
-            async () =>
-              await db.collections.get<Answer>('answer').create(record => {
-                record.value = answer.value;
-                record.question_id = answer.question_id;
-                record.session_id = _raw.id;
-              }),
-          ),
-      ),
-    );
+      await Promise.all(
+        answers?.map(
+          async answer =>
+            await db.write(
+              async () =>
+                await db.collections.get<Answer>('answer').create(record => {
+                  record.value = answer.value;
+                  record.question_id = answer.question_id;
+                  record.session_id = _raw.id;
+                }),
+            ),
+        ),
+      );
 
-    Navigation.navigate(Routes.classObservation.observationCompleted, {
-      session_id: _raw.id,
-    });
+      Navigation.navigate(Routes.classObservation.observationCompleted, {
+        session_id: _raw.id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  if (loading)
+    return (
+      <Center bg="white" w="full" h="full">
+        <Spinner size="lg" />
+      </Center>
+    );
 
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>

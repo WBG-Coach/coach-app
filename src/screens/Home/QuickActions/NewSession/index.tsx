@@ -101,9 +101,7 @@ const QuickNewSessionScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 setTeacher(item as any);
-                Navigation.navigate('WithCompetenceContext', {
-                  screen: Routes.classObservation.about,
-                });
+                Navigation.navigate(Routes.classObservation.about);
               }}>
               <HStack
                 py={3}

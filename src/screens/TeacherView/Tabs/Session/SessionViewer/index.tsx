@@ -79,8 +79,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
       label: 'Feedback',
       onPress: !(session.data.feedback as any)?.id
         ? () =>
-            Navigation.navigate('WithCompetenceContext', {
-              screen: Routes.feedback.mentoringSection,
+            Navigation.navigate(Routes.feedback.mentoringSection, {
               params: {
                 session_id: session.data.id,
               },

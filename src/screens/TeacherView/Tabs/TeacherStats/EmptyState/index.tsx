@@ -37,11 +37,7 @@ const EmptyStateComponent: React.FC = () => {
       </Text>
 
       <Button
-        onPress={() =>
-          Navigation.navigate('WithCompetenceContext', {
-            screen: Routes.classObservation.onboarding,
-          })
-        }
+        onPress={() => Navigation.navigate(Routes.classObservation.onboarding)}
         mt={8}
         variant={'solid'}
         borderRadius={'8px'}

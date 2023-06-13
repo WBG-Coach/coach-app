@@ -299,9 +299,7 @@ const TeacherStatsTab = () => {
                 borderWidth={'1px'}
                 borderColor={'primary.200'}
                 onPress={() =>
-                  Navigation.navigate('WithCompetenceContext', {
-                    screen: Routes.classObservation.onboarding,
-                  })
+                  Navigation.navigate(Routes.classObservation.onboarding)
                 }>
                 <HStack alignItems={'center'} space={3}>
                   <Icon name={'plus'} color={theme.colors.primary['200']} />
