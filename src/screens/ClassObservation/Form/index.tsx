@@ -17,6 +17,7 @@ import {CompetenceContext} from '../../../providers/contexts/CompetencesContext'
 import CompetenceAccordion from './CompetenceAccordion';
 import Session from '../../../database/models/Session';
 import {useTranslation} from 'react-i18next';
+import {useFocusEffect} from '@react-navigation/native';
 
 type Props = {
   route: {
@@ -43,11 +44,11 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
     [competenciesFinished, competences],
   );
 
-  useEffect(() => {
+  useFocusEffect(() => {
     setTimeout(() => {
       setLoading(false);
     });
-  }, []);
+  });
 
   const handleSubmitForm = async () => {
     const formattedAnswers = Object.keys(answers).map(question_id => ({

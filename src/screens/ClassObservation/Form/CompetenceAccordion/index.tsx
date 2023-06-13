@@ -1,5 +1,5 @@
 import {VStack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Accordion from '../../../../components/Accordion';
 import Question from '../../../../database/models/Question';
 import QuestionItem from './QuestionItem';
@@ -30,20 +30,29 @@ const CompetenceAccordion: React.FC<Props> = ({
     handleAnswer(newValues);
   };
 
+  const Form = useMemo(
+    () => (
+      <VStack>
+        {competence.questions.map(question => (
+          <QuestionItem
+            key={question.id}
+            question={question}
+            onAnswer={handleAnswerQuestion}
+            value={answers[question.id || 0]}
+          />
+        ))}
+      </VStack>
+    ),
+    [isOpen],
+  );
+
   return (
     <Accordion
       isOpen={isOpen}
       check={isFinished}
       title={competence.title}
       onClickHeader={() => isFinished && setIsOpen(!isOpen)}>
-      {competence.questions.map(question => (
-        <QuestionItem
-          key={question.id}
-          question={question}
-          onAnswer={handleAnswerQuestion}
-          value={answers[question.id || 0]}
-        />
-      ))}
+      {Form}
     </Accordion>
   );
 };

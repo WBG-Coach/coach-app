@@ -15,6 +15,8 @@ type Props = {
 
 const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [internalValue, setInternalValue] = useState(value);
+
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
 
   useEffect(() => {
@@ -63,8 +65,11 @@ const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
 
       <StarRating
         size={5}
-        value={value}
-        onPress={value => onAnswer(question, value)}
+        value={internalValue}
+        onPress={value => {
+          onAnswer(question, value);
+          setInternalValue(value);
+        }}
       />
     </VStack>
   );
