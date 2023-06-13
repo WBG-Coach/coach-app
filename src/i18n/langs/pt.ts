@@ -248,8 +248,7 @@ const ptTranslation = {
       pointsToDiscuss: 'O que você deseja discutir com o professor?',
       spaceAdditional:
         'Use este espaço para anotações adicionais que você gostaria de discutir com o professor',
-      competenciesRated:
-        '${finishedLength} de ${competencesLength} competências avaliadas',
+      competenciesRated: '{{count}} de {{total}} competências avaliadas',
       button: 'Concluir observação',
     },
   },
