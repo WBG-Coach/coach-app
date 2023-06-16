@@ -87,7 +87,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
-              rules={{required: true}}
+              rules={{required: false}}
               name={'subject'}
               render={({field, fieldState: {error}}) => (
                 <Input
@@ -147,7 +147,7 @@ const ObservationSetup: React.FC<any> = () => {
 
             <Controller
               control={control}
-              rules={{required: true}}
+              rules={{required: false}}
               name={'objective'}
               render={({field, fieldState: {error}}) => (
                 <TextArea
