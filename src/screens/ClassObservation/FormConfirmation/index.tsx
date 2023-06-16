@@ -142,13 +142,13 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
         </Center>
       ) : (
         <>
-          <VStack flex={1} px={isTablet ? '64px' : 4}>
+          <VStack flex={1} px={isTablet ? '32px' : 4}>
             <CompetenceView competences={competencyFormatted} />
           </VStack>
 
           <VStack
             w={'100%'}
-            px={isTablet ? '64px' : 4}
+            px={isTablet ? '32px' : 4}
             background={'white'}
             pt={3}
             space={4}

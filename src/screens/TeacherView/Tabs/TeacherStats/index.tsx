@@ -119,7 +119,7 @@ const TeacherStatsTab = () => {
     ) || 0) / (competences?.data?.length || 0);
 
   return (
-    <VStack flex={1} py={6} px={isTablet ? '64px' : 4}>
+    <VStack flex={1} py={6} px={isTablet ? '32px' : 4}>
       {competences.isLoading ? (
         <Center flex={1}>
           <Spinner size={'lg'} />

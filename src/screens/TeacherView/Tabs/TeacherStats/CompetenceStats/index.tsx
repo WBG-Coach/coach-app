@@ -123,7 +123,7 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
       sessions?.data[sessions.data.length - 2]?.overall_rating;
 
   return (
-    <VStack px={isTablet ? '64px' : 4} mt={6} flex={1}>
+    <VStack px={isTablet ? '32px' : 4} mt={6} flex={1}>
       {sessions.isLoading ? (
         <Center flex={1}>
           <Spinner size={'lg'} />

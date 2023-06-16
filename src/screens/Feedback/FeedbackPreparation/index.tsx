@@ -28,7 +28,7 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
 
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
-      <VStack flex={1} px={isTablet ? '64px' : 4}>
+      <VStack flex={1} px={isTablet ? '32px' : 4}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
             {t('feedback.feedbackPreparation.title') ||
@@ -112,7 +112,7 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
       </VStack>
 
       <VStack
-        px={isTablet ? '64px' : 4}
+        px={isTablet ? '32px' : 4}
         background={'white'}
         pt={3}
         borderRadius={'8px 8px 0px 0px'}>

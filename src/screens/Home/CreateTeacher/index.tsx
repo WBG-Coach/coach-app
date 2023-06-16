@@ -153,7 +153,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
     <VStack
       safeAreaBottom
       my={isTablet ? '64px' : 6}
-      px={isTablet ? '64px' : 4}
+      px={isTablet ? '32px' : 4}
       flex={1}>
       {!idWatcher && teacher_id ? (
         <Center flex={1}>

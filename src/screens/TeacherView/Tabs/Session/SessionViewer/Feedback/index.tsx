@@ -44,7 +44,7 @@ const FeedbackViewScreen: React.FC<any> = ({route: {params}}: Props) => {
   }, []);
 
   return (
-    <VStack flex={1} px={isTablet ? '64px' : 4} py={4} background={'white'}>
+    <VStack flex={1} px={isTablet ? '32px' : 4} py={4} background={'white'}>
       {feedback.isLoading ? (
         <Center flex={1}>
           <Spinner size={'lg'} />

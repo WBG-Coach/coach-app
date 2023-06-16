@@ -93,7 +93,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
 
   return (
     <VStack flex={1} background={'gray.100'} space={1}>
-      <VStack px={isTablet ? '64px' : 4} background={'white'}>
+      <VStack px={isTablet ? '32px' : 4} background={'white'}>
         <HStack alignItems={'center'} w={'100%'} py={6}>
           <VStack flex={1} space={2} alignItems={'flex-start'}>
             <Text
@@ -127,7 +127,7 @@ const SessionViewerScreen: React.FC<any> = ({route: {params}}: Props) => {
       </VStack>
 
       <VStack
-        px={isTablet ? '64px' : 4}
+        px={isTablet ? '32px' : 4}
         py={6}
         background={'white'}
         alignItems={'flex-start'}

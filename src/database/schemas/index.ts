@@ -26,6 +26,10 @@ export default appSchema({
           type: 'string',
         },
         {
+          name: 'emis_number',
+          type: 'string',
+        },
+        {
           name: 'image_id',
           type: 'string',
         },
@@ -86,6 +90,11 @@ export default appSchema({
           name: 'competence_id',
           type: 'string',
         },
+        {
+          name: 'scale',
+          type: 'number',
+        },
+
         {name: 'created_at', type: 'number'},
         {name: 'updated_at', type: 'number'},
       ],
@@ -105,6 +114,7 @@ export default appSchema({
           name: 'session_id',
           type: 'string',
         },
+
         {name: 'created_at', type: 'number'},
         {name: 'updated_at', type: 'number'},
       ],

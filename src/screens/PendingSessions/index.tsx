@@ -74,7 +74,7 @@ const PendingSessions: React.FC = () => {
     <VStack
       safeAreaBottom
       mt={isTablet ? '64px' : 6}
-      px={isTablet ? '64px' : 4}
+      px={isTablet ? '32px' : 4}
       flex={1}>
       {teachers.isLoading ? (
         <Center flex={1} bg={'white'}>

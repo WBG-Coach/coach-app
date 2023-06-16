@@ -75,7 +75,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
       flex={1}
       bg={'gray.0'}
       safeAreaBottom
-      px={isTablet ? '64px' : 4}>
+      px={isTablet ? '32px' : 4}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
           {t('classObservation.form.title') || 'Class evaluation'}
@@ -129,8 +129,8 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
         space={1}
         alignItems={'center'}
         background={'#FEF8EC'}
-        px={isTablet ? '64px' : 4}
-        mx={isTablet ? '-64px' : -4}>
+        px={isTablet ? '32px' : 4}
+        mx={isTablet ? '-32px' : -4}>
         <Icon name="star" color={'#9B6908'} size={20} />
         <Text fontSize={'TSM'} fontWeight={400} color={'#9B6908'}>
           {t('classObservation.form.competenciesRated', {

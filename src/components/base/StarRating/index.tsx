@@ -10,7 +10,7 @@ const StarRating: React.FC<Props> = ({onPress, size, value}) => {
 
   const renderStars = useMemo(
     () => (
-      <HStack space={3}>
+      <HStack space={3} justifyContent="space-around">
         {starsLength.map((_, index) => (
           <TouchableOpacity key={index} onPress={() => onPress(index + 1)}>
             {value >= index + 1 ? (
@@ -35,11 +35,11 @@ const StarRating: React.FC<Props> = ({onPress, size, value}) => {
         {renderStars}
 
         <HStack justifyContent={'space-between'}>
-          <Text color={'gray.600'} left={0} bottom={0}>
+          <Text color={'gray.600'} left={0} bottom={0} mr="24px">
             Needs work
           </Text>
 
-          <Text color={'gray.600'} left={0} bottom={0}>
+          <Text color={'gray.600'} left={0} bottom={0} ml="24px">
             Great work
           </Text>
         </HStack>
