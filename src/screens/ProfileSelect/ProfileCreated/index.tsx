@@ -24,7 +24,7 @@ const ProfileCreatedScreen: React.FC<any> = ({route: {params}}: Props) => {
       safeAreaBottom
       py={6}
       my={isTablet ? '64px' : 6}
-      px={isTablet ? '64px' : 4}
+      px={isTablet ? '32px' : 4}
       flex={1}>
       <Center flex={1}>
         <VStack alignItems={'center'}>

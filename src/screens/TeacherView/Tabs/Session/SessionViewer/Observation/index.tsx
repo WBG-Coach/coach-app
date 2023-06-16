@@ -83,7 +83,7 @@ const ObservationViewScreen: React.FC<any> = ({route: {params}}: Props) => {
     <VStack
       flex={1}
       py={6}
-      px={isTablet ? '64px' : 4}
+      px={isTablet ? '32px' : 4}
       safeAreaBottom
       bg={'gray.0'}>
       {competences.isLoading || competencyFormatted.length < 1 ? (

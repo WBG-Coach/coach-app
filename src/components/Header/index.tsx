@@ -19,7 +19,7 @@ const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
       <Stack
         p={'16px'}
         safeAreaTop
-        px={isTablet ? '64px' : '16px'}
+        px={isTablet ? '32px' : '16px'}
         {...(background && {background: background})}>
         <HStack
           w={'100%'}

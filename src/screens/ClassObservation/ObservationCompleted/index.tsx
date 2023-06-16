@@ -23,7 +23,7 @@ const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
 
   return (
     <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
-      <Center flex={1} px={isTablet ? '64px' : 4} flexDirection={'column'}>
+      <Center flex={1} px={isTablet ? '32px' : 4} flexDirection={'column'}>
         <Center
           w={'48px'}
           h={'48px'}
@@ -80,7 +80,7 @@ const ObservationCompleted: React.FC<any> = ({route: {params}}: Props) => {
 
       <VStack
         w={'100%'}
-        px={isTablet ? '64px' : 4}
+        px={isTablet ? '32px' : 4}
         background={'white'}
         pt={3}
         space={4}

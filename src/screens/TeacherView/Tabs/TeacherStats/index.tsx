@@ -119,7 +119,7 @@ const TeacherStatsTab = () => {
   console.log('->', chartData.find(el => 5 <= el.start)?.start);
 
   return (
-    <VStack flex={1} py={6} px={isTablet ? '64px' : 4}>
+    <VStack flex={1} py={6} px={isTablet ? '32px' : 4}>
       {competences.isLoading ? (
         <Center flex={1}>
           <Spinner size={'lg'} />

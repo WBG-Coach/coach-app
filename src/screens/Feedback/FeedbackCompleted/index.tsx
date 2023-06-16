@@ -22,7 +22,7 @@ const FeedbackCompleted: React.FC = () => {
 
   return (
     <VStack flex={1} py={6} background={'gray.0'} safeAreaBottom>
-      <Center flex={1} px={isTablet ? '64px' : 4}>
+      <Center flex={1} px={isTablet ? '32px' : 4}>
         <VStack alignItems={'center'}>
           <Image
             alignSelf={'center'}
@@ -77,7 +77,7 @@ const FeedbackCompleted: React.FC = () => {
 
       <VStack
         w={'100%'}
-        px={isTablet ? '64px' : 4}
+        px={isTablet ? '32px' : 4}
         pt={3}
         space={4}
         borderRadius={'8px 8px 0px 0px'}>

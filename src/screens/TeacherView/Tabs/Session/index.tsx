@@ -84,7 +84,7 @@ const SessionTab: React.FC = () => {
       ) : (
         <>
           {sessions.data.length >= 1 ? (
-            <VStack flex={1} px={isTablet ? '64px' : 4}>
+            <VStack flex={1} px={isTablet ? '32px' : 4}>
               {sessions.data[sessions.data.length - 1].feedbackPending && (
                 <HStack background={'yellow.100'} p={4} space={2}>
                   <Icon

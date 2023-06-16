@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 
 const useDebounce = (
   value: string,
@@ -19,7 +19,6 @@ const useDebounce = (
 
   useEffect(() => {
     if (callback) {
-      console.log('TO ATUALIZANDO');
       callback(debouncedValue);
     }
   }, [debouncedValue, callback]);

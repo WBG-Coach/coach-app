@@ -41,7 +41,7 @@ const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
 
   return (
     <VStack flex={1} mt={6}>
-      <VStack px={isTablet ? '64px' : 4}>
+      <VStack px={isTablet ? '32px' : 4}>
         <HStack
           alignItems={'center'}
           w={'100%'}
@@ -105,7 +105,7 @@ const TeacherView: React.FC<any> = ({route: {params}}: Props) => {
         pb={2}
         w={'100%'}
         borderBottomWidth={'2px'}
-        px={isTablet ? '64px' : 4}
+        px={isTablet ? '32px' : 4}
         borderBottomColor={'gray.200'}>
         {tabs.map((item, index) => (
           <TabButton

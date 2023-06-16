@@ -36,7 +36,7 @@ const Accordion: React.FC<Props> = ({
         </HStack>
       </TouchableOpacity>
       {isOpen && children}
-      <Box h="8px" bg="gray.100" />
+      <Box mt="24px" h="8px" bg="gray.100" />
     </>
   );
 };

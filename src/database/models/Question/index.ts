@@ -17,6 +17,7 @@ export default class Question extends Model {
   @text('title') title: any;
   @text('description') description: any;
   @text('tooltip_data') tooltip_data: any;
+  @text('scale') scale: any;
   @text('type') type: any;
   @text('competence_id') competence_id: any;
   @immutableRelation('competence', 'competence_id') competence: any;

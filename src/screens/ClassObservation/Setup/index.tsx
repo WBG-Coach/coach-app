@@ -44,7 +44,7 @@ const ObservationSetup: React.FC<any> = () => {
       flex={1}
       bg={'gray.0'}
       safeAreaBottom
-      px={isTablet ? '64px' : 4}>
+      px={isTablet ? '32px' : 4}>
       <ScrollView flexGrow={0}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
           {t('classObservation.setup.title') || 'About the lesson'}

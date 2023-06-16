@@ -34,14 +34,18 @@ const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
 
   return (
     <VStack mb="24px">
-      <HStack mb={1}>
+      <HStack mb={'16px'}>
         <VStack flex={1}>
           <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
             {question.title}
           </Text>
 
           {question.description && (
-            <Text mt={'1'} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+            <Text
+              mt={'4px'}
+              fontSize={'TXS'}
+              fontWeight={400}
+              color={'gray.600'}>
               {question.description}
             </Text>
           )}
@@ -64,7 +68,7 @@ const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
       </HStack>
 
       <StarRating
-        size={5}
+        size={question.scale}
         value={internalValue}
         onPress={value => {
           onAnswer(question, value);

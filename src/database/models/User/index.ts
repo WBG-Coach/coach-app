@@ -25,6 +25,7 @@ export default class User extends Model {
   @text('name') name: any;
   @text('surname') surname: any;
   @text('image_id') image_id: any;
+  @text('emis_number') emis_number: any;
   @immutableRelation('image', 'image_id') image: any;
   @readonly @date('created_at') createdAt: any;
   @readonly @date('updated_at') updatedAt: any;

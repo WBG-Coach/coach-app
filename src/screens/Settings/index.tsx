@@ -27,8 +27,8 @@ const SettingsScreen: React.FC = () => {
     <VStack
       safeAreaBottom
       mt={isTablet ? '64px' : 6}
-      px={isTablet ? '64px' : 4}
-      pb={isTablet ? '64px' : 4}
+      px={isTablet ? '32px' : 4}
+      pb={isTablet ? '32px' : 4}
       flex={1}>
       <VStack flex={1}>
         {options.map((option, index) => (

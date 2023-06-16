@@ -16,8 +16,8 @@ const ChangeLanguageScreen: React.FC = () => {
     <VStack
       safeAreaBottom
       mt={isTablet ? '64px' : 6}
-      px={isTablet ? '64px' : 4}
-      pb={isTablet ? '64px' : 4}
+      px={isTablet ? '32px' : 4}
+      pb={isTablet ? '32px' : 4}
       flex={1}>
       <VStack flex={1} space={4}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>

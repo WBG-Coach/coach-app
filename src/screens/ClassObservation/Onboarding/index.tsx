@@ -119,7 +119,7 @@ const ClassOnboarding: React.FC<any> = () => {
         ))}
       </HStack>
 
-      <HStack px={isTablet ? '64px' : 4} space={'8px'} mb={6}>
+      <HStack px={isTablet ? '32px' : 4} space={'8px'} mb={6}>
         <Button
           flex={1}
           borderRadius={'8px'}
