@@ -20,7 +20,7 @@ import {useTranslation} from 'react-i18next';
 const defaultValues = {
   students_count: '',
   subject: '',
-  lesson_time: '30',
+  lesson_time: '25',
   objective: '',
 };
 
@@ -122,12 +122,16 @@ const ObservationSetup: React.FC<any> = () => {
                     selectedValue={field.value}
                     placeholder={
                       t('classObservation.setup.questions.$3.placeholder') ||
-                      '30 min'
+                      '25 min'
                     }
                     onValueChange={itemValue => field.onChange(itemValue)}>
+                    <Picker.Item label="25 mins" value="25" />
                     <Picker.Item label="30 mins" value="30" />
+                    <Picker.Item label="35 mins" value="35" />
                     <Picker.Item label="40 mins" value="40" />
+                    <Picker.Item label="45 mins" value="45" />
                     <Picker.Item label="50 mins" value="50" />
+                    <Picker.Item label="55 mins" value="55" />
                     <Picker.Item label="60 mins" value="60" />
                   </Picker>
                 </Box>

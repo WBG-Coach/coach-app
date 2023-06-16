@@ -70,6 +70,7 @@ const ProfileCreateScreen: React.FC = () => {
           record.name = values.name;
           record.surname = values.surname;
           record.image_id = image?.id;
+          record.emis_number = values.emis_number;
         }),
     );
 

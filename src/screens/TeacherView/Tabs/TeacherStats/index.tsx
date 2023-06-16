@@ -9,7 +9,6 @@ import {
   Spinner,
   Text,
   useTheme,
-  View,
   VStack,
 } from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
@@ -96,12 +95,11 @@ const TeacherStatsTab = () => {
               answersValue[answersValue.length - 1] >=
               answersValue[answersValue.length - 2];
 
+            answersValue.splice(0, answersValue.length - 4);
+
             return {
               ...competence._raw,
-              answersValue: answersValue.splice(
-                answersValue.length - 4,
-                answersValue.length,
-              ),
+              answersValue,
               isCrescent,
             } as competenceWithAnswers;
           }),
@@ -118,6 +116,8 @@ const TeacherStatsTab = () => {
       0,
     ) || 0) / (competences?.data?.length || 0);
 
+  console.log('->', chartData.find(el => 5 <= el.start)?.start);
+
   return (
     <VStack flex={1} py={6} px={isTablet ? '64px' : 4}>
       {competences.isLoading ? (
@@ -126,7 +126,7 @@ const TeacherStatsTab = () => {
         </Center>
       ) : (
         <>
-          {competences.data && competences.data[0].answersValue.length <= 2 ? (
+          {competences.data && competences.data[0].answersValue.length < 3 ? (
             <Center flex={1}>
               <EmptyStateComponent />
             </Center>
@@ -145,11 +145,7 @@ const TeacherStatsTab = () => {
                 alignItems={'center'}>
                 <Image
                   source={
-                    chartData.find(
-                      (el, i) =>
-                        averageAnswers >= el.start &&
-                        averageAnswers < chartData[i + 1]?.start,
-                    )?.image
+                    chartData.find(el => averageAnswers <= el.start)?.image
                   }
                   alt={'Graph'}
                 />
@@ -169,7 +165,7 @@ const TeacherStatsTab = () => {
                     fontSize={'TMD'}
                     fontWeight={500}
                     color={'gray.700'}>
-                    {tags[Math.round(averageAnswers)].label}
+                    {tags[Math.round(averageAnswers - 1)]?.label}
                   </Text>
                 </HStack>
                 <Text

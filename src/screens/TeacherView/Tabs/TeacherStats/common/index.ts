@@ -19,4 +19,5 @@ export const chartData = [
   {start: 4.0, image: doingGreat.low},
   {start: 4.4, image: doingGreat.medium},
   {start: 4.8, image: doingGreat.high},
+  {start: 5, image: doingGreat.high},
 ];
