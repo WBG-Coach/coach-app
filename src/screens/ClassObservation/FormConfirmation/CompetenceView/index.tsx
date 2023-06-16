@@ -44,7 +44,10 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
                 ) || 'Overall rating'}
               </Text>
               <VStack alignItems={'flex-end'} space={1}>
-                <StarView maxLength={5} value={competency.overall_rating + 1} />
+                <StarView
+                  maxLength={competency.questions[0].scale}
+                  value={competency.overall_rating + 1}
+                />
                 <Text
                   fontSize={'LSM'}
                   flex={1}
@@ -80,7 +83,10 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
                       )}
                     </VStack>
 
-                    <StarView maxLength={5} value={(question as any).value} />
+                    <StarView
+                      maxLength={question.scale}
+                      value={(question as any).value}
+                    />
                   </HStack>
                 ))}
               </VStack>

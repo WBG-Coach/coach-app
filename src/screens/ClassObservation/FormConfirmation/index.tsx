@@ -77,14 +77,10 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
 
   const handlePressContinue = async () => {
     try {
-      console.log('START');
       const db = await getWatermelon();
-      console.log('1');
       setIsLoading(true);
-      console.log('2');
 
       const location = await Geolocation.getLocation();
-      console.log('3');
       console.log({location});
 
       const {_raw} = await db.write(
@@ -103,7 +99,6 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
             record.longitude = location.longitude;
           }),
       );
-      console.log('4');
 
       await Promise.all(
         answers?.map(
