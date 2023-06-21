@@ -85,9 +85,10 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
             'Rate each topic with your observation'}
         </Text>
 
-        {competences.map(competence => (
+        {competences.map((competence, index) => (
           <CompetenceAccordion
             key={competence.id}
+            index={index}
             competence={competence}
             isFinished={competenciesFinished.includes(competence.id)}
             onComplete={() =>
@@ -153,7 +154,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
           _text: {color: '#9AA2AC'},
           opacity: 1,
         }}>
-        {t('classObservation.form.button') || 'Finish observation'}
+        {t('classObservation.form.button')}
       </Button>
     </VStack>
   );

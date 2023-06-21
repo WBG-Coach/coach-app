@@ -9,6 +9,7 @@ const CompetenceAccordion: React.FC<Props> = ({
   competence,
   handleAnswer,
   onComplete,
+  index,
 }) => {
   const [answers, setAnswers] = useState<{[key: string]: number}>({});
   const [isFinished, setIsFinished] = useState(false);
@@ -50,7 +51,7 @@ const CompetenceAccordion: React.FC<Props> = ({
     <Accordion
       isOpen={isOpen}
       check={isFinished}
-      title={competence.title}
+      title={`${(index || 0) + 1}. ${competence.title}`}
       onClickHeader={() => isFinished && setIsOpen(!isOpen)}>
       {Form}
     </Accordion>

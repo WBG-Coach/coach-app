@@ -158,10 +158,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
               background={'primary.200'}>
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'check'} color={theme.colors.white} />
-                <Text>
-                  {t('classObservation.formConfirmation.button') ||
-                    'Finish observation'}
-                </Text>
+                <Text>{t('classObservation.formConfirmation.button')}</Text>
               </HStack>
             </Button>
 
@@ -175,8 +172,7 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'pen'} color={theme.colors.primary['200']} />
                 <Text color={'primary.200'}>
-                  {t('classObservation.formConfirmation.buttonEdit') ||
-                    'Edit evaluation'}
+                  {t('classObservation.formConfirmation.buttonEdit')}
                 </Text>
               </HStack>
             </Button>

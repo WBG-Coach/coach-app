@@ -149,8 +149,8 @@ const enTranslation = {
       buttonBack: 'Go back to home',
     },
     formConfirmation: {
-      button: 'Complete observation',
-      buttonEdit: 'Edit evaluation',
+      button: 'Confirm',
+      buttonEdit: 'Edit',
       competenceView: {
         title: 'Class observation summary',
         subtitle: 'Review your class observation',
@@ -158,7 +158,7 @@ const enTranslation = {
       },
     },
     create: {
-      title: 'Mentoring process',
+      title: 'Coaching process',
       button: 'Start preparation',
       process: {
         el1: {
@@ -195,17 +195,17 @@ const enTranslation = {
         $1: {
           title: 'Inform the teacher',
           subtitle:
-            'Make sure to contact the teacher and let they know you are going to observe the class and have a mentoring session.',
+            'Make sure to contact the teacher and should be let them knows you are going to observe the class and have a coaching session.',
         },
         $2: {
-          title: 'Beware of the time',
+          title: 'Note the time',
           subtitle:
-            'Plan to spend 60 to 75 minutes with the teacher. Use this time to observe their class and to conduct the mentoring session.',
+            'Plan to spend 60 to 75 minutes with the teacher. Use this time to observe their class and to conduct the coaching session.',
         },
         $3: {
           title: 'Take notes',
           subtitle:
-            'Notes will help you to respond to the observation questions and plan the future mentoring sessions.',
+            'Notes will help you to respond to the observation questions and plan the future coaching sessions.',
         },
       },
     },
@@ -234,8 +234,8 @@ const enTranslation = {
       },
     },
     form: {
-      title: 'Class evaluation',
-      subtitle: 'Rate each topic related to your observation',
+      title: 'Class Observation',
+      subtitle: 'Score each teaching practice related to your observation',
       keyPoints: 'Key points to be discussed',
       pointsToDiscuss: 'What you want to discuss with the teacher?',
       spaceAdditional:
@@ -250,9 +250,9 @@ const enTranslation = {
       subtitle:
         'Remember the good practices from your training and put them in practice.',
       bestPratices:
-        'If you do not recall the best practices, refer to the Training Guide',
-      continueButton: 'Continue to feedback preparation',
-      trainingButton: 'Access Training Guide',
+        'If you do not recall the best practices, refer to the Coach manual',
+      continueButton: 'Continue to feedback session',
+      trainingButton: 'Access Coach manual',
     },
     feedbackPreparation: {
       title: 'Choose teaching practices',
@@ -271,12 +271,12 @@ const enTranslation = {
         'e.g., become more aware of the way they speak with students',
       uploadImage: 'Upload a image',
       sendPicture:
-        'You can also send a picture of the notes you made during the class observation and mentoring session',
+        'You can also send a picture of the notes you made during the class observation and coaching session',
       uploadPhoto: 'Upload a photo',
       button: 'Complete coach session',
     },
     feedbackCompleted: {
-      title: 'Feedback complete',
+      title: 'Coaching session complete',
       subtitle: 'Thank you! You jut completed the coaching process.',
       aboutNext: "What's next?",
       aboutNextDescription:
@@ -295,9 +295,9 @@ const enTranslation = {
     classObservation: 'Class Observation',
     observationSummary: 'Observation summary',
     observationComplete: 'Observation complete',
-    mentoringSession: 'Mentoring session',
+    mentoringSession: 'Coaching session',
     feedbackPreparation: 'Prepare feedback',
-    feedbackComplete: 'Feedback complete',
+    feedbackComplete: 'Coaching session complete',
     previousSession: 'Previous session',
     pendingSession: 'Pending sessions',
     teacherstats: 'Teacher stats',

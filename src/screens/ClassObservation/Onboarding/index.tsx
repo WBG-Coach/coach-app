@@ -34,9 +34,7 @@ const ClassOnboarding: React.FC<any> = () => {
       title:
         t('classObservation.onboarding.sections.$1.title') ||
         'Inform the teacher',
-      subtitle:
-        t('classObservation.onboarding.sections.$1.subtitle') ||
-        "Make sure to contact the teacher and let they know you're going to observe the class and have a mentoring session",
+      subtitle: t('classObservation.onboarding.sections.$1.subtitle'),
     },
     {
       image: OnboardingImages['BewareTimeOnboarding'],
