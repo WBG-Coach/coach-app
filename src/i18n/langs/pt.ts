@@ -133,7 +133,7 @@ const ptTranslation = {
   settings: {
     settings: {
       title: 'Idioma',
-      lastSync: 'Última sincronização:',
+      lastSync: 'Última sincronização: {{value}}',
       appVersion: 'Versão do aplicativo',
     },
     changeLanguage: {

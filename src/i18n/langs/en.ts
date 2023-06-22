@@ -130,7 +130,7 @@ const enTranslation = {
   settings: {
     settings: {
       title: 'Language',
-      lastSync: 'Last sync:',
+      lastSync: 'Last sync: {{value}}',
       appVersion: 'App version',
     },
     changeLanguage: {

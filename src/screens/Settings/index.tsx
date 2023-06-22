@@ -1,18 +1,28 @@
 import {HStack, Text, VStack} from 'native-base';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from '../../components/base/Icon';
 import i18n, {resources} from '../../i18n';
 import Routes from '../../routes/paths';
+import {getWatermelon} from '../../database';
 import Navigation from '../../services/navigation';
 var pkg = require('../../../package.json');
 
 const SettingsScreen: React.FC = () => {
-  const {t} = useTranslation(); // T must be in context to refresh currentLanguage.
+  const [lastSync, setLastSync] = useState('');
+  const {t} = useTranslation();
   const currentLanguage = i18n.languages[0];
   const isTablet = Tablet();
+
+  useEffect(() => {
+    getWatermelon().then(db => {
+      db.localStorage.get('__watermelon_last_pulled_at').then((res: any) => {
+        setLastSync(new Date(res).toUTCString().replace(' GMT', ''));
+      });
+    });
+  }, []);
 
   const options = [
     {
@@ -58,7 +68,7 @@ const SettingsScreen: React.FC = () => {
         <HStack alignItems={'center'} py={'16px'} space={2}>
           <Icon name={'wifi'} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            {t('settings.settings.lastSync') || 'Last sync:'} Apr 21, 2023
+            {t('settings.settings.lastSync', {value: lastSync})}
           </Text>
         </HStack>
 
