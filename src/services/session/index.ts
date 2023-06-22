@@ -2,6 +2,24 @@ import {getWatermelon} from '../../database';
 import {Q} from '@nozbe/watermelondb';
 
 const SessionService = {
+  countPendingSessionsToSync: async () => {
+    const db = await getWatermelon();
+    const query = db.collections
+      .get('session')
+      .query(Q.where('_status', Q.notEq('synced')));
+
+    return query.fetchCount();
+  },
+
+  countPendingFeedbacksToSync: async () => {
+    const db = await getWatermelon();
+    const query = db.collections
+      .get('feedback')
+      .query(Q.where('_status', Q.notEq('synced')));
+
+    return query.fetchCount();
+  },
+
   getSessionByTeacherCount: async (teacher_id: string): Promise<number> => {
     const db = await getWatermelon();
 

@@ -132,6 +132,7 @@ export const syncWatermelon = async () => {
         return resolved;
       },
     });
+    console.log('FINISHED');
   } catch (err) {
     if (!Array.isArray(err) || err[0].code !== 'ERR_NETWORK') {
       console.log('ERROR OF SYNC - ', {err});

@@ -132,6 +132,11 @@ const enTranslation = {
       title: 'Language',
       lastSync: 'Last sync: {{value}}',
       appVersion: 'App version',
+      sync_now: 'Sync now',
+      'unsynced-items': 'Unsynchronized items',
+      'unsynced-teacher': 'Teachers: {{count}}',
+      'unsynced-session': 'Sessions: {{count}}',
+      'unsynced-feedback': 'Feedback: {{count}}',
     },
     changeLanguage: {
       title: 'Select language',

@@ -5,6 +5,15 @@ import {TeachersWithSession} from '../../providers/contexts/UserContext';
 import SessionService from '../session';
 
 const TeacherService = {
+  countPendingTeacherToSync: async () => {
+    const db = await getWatermelon();
+    const query = db.collections
+      .get<Teacher>('teacher')
+      .query(Q.where('_status', Q.notEq('synced')));
+
+    return query.fetchCount();
+  },
+
   findTeachersBySchoolId: async (
     school_id: string,
     take = 20,
