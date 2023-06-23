@@ -15,6 +15,7 @@ import Routes from '../../../routes/paths';
 import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const ClassObservationAbout: React.FC<any> = () => {
   const theme = useTheme();
@@ -110,15 +111,17 @@ const ClassObservationAbout: React.FC<any> = () => {
           />
         </HStack>
       </VStack>
-      <Button
-        mb={6}
-        w={'100%'}
-        py={3}
-        borderRadius={'8px'}
-        background={'primary.200'}
+      <TouchableOpacity
         onPress={() => Navigation.navigate(Routes.classObservation.onboarding)}>
-        {t('classObservation.create.button') || 'Start preparation'}
-      </Button>
+        <Center
+          mb={6}
+          w={'100%'}
+          py={3}
+          borderRadius={'8px'}
+          background={'primary.200'}>
+          <Text>{t('classObservation.create.button')}</Text>
+        </Center>
+      </TouchableOpacity>
     </VStack>
   );
 };

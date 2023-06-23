@@ -18,6 +18,7 @@ import CompetenceAccordion from './CompetenceAccordion';
 import Session from '../../../database/models/Session';
 import {useTranslation} from 'react-i18next';
 import {useFocusEffect} from '@react-navigation/native';
+import {TouchableOpacity} from '@gorhom/bottom-sheet';
 
 type Props = {
   route: {
@@ -141,21 +142,20 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
         </Text>
       </HStack>
 
-      <Button
-        color={'white'}
-        variant={'solid'}
-        marginTop={'auto'}
-        borderRadius={'8px'}
-        onPress={handleSubmitForm}
-        background={'primary.200'}
-        isDisabled={isDisable}
-        _disabled={{
-          background: '#F2F4F7',
-          _text: {color: '#9AA2AC'},
-          opacity: 1,
-        }}>
-        {t('classObservation.form.button')}
-      </Button>
+      <TouchableOpacity onPress={handleSubmitForm} disabled={isDisable}>
+        <Center
+          color={'white'}
+          variant={'solid'}
+          marginTop={'auto'}
+          borderRadius={'8px'}
+          background={'primary.200'}
+          py={3}
+          {...(isDisable && {background: '#F2F4F7'})}>
+          <Text {...(isDisable && {color: '#9AA2AC'})}>
+            {t('classObservation.form.button')}
+          </Text>
+        </Center>
+      </TouchableOpacity>
     </VStack>
   );
 };

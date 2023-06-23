@@ -73,7 +73,7 @@ const ClassOnboarding: React.FC<any> = () => {
           }}
           onSnapToItem={setLowProgress}
           renderItem={({item, index}) => (
-            <Center key={index} flex={1}>
+            <Center key={index} flex={1} px={4}>
               <VStack
                 alignItems={'center'}
                 {...(isTablet && {maxWidth: '500px'})}>
@@ -128,17 +128,18 @@ const ClassOnboarding: React.FC<any> = () => {
             {t('classObservation.onboarding.skip') || 'Skip'}
           </Text>
         </Button>
+
         <Button
-          flex={1}
-          variant={'solid'}
-          borderRadius={'8px'}
-          color={'white'}
-          background={'primary.200'}
           onPress={
             lowProgress !== data.length - 1
               ? () => carouselRef.current.next()
               : () => Navigation.navigate(Routes.classObservation.setup)
-          }>
+          }
+          flex={1}
+          variant={'solid'}
+          borderRadius={'8px'}
+          color={'white'}
+          background={'primary.200'}>
           {lowProgress === data.length - 1
             ? t('classObservation.onboarding.start') || 'Start'
             : t('classObservation.onboarding.next') || 'Next'}

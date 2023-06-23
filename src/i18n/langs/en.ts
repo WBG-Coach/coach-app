@@ -182,7 +182,7 @@ const enTranslation = {
           title: 'Coaching conversation',
           subtitle: '20-30 minutes',
           description:
-            'Present your observations to the teacher, pointing out the positive and negative points of their class.',
+            'Present your observations to the teacher, pointing out the positive and areas of improvement points of their class.',
         },
         el4: {
           title: 'Next steps',
@@ -233,7 +233,7 @@ const enTranslation = {
           placeholder: '30 min',
         },
         $4: {
-          title: "What are the teacher's objectives?",
+          title: 'What are the lesson’s objectives?',
           placeholder: "Teacher's description of what is to be taught",
         },
       },
@@ -274,7 +274,7 @@ const enTranslation = {
         'Describe the actions you and the teacher agreed they will take to improve in regard to this teaching practice',
       textAreaPlaceholder:
         'e.g., become more aware of the way they speak with students',
-      uploadImage: 'Upload a image',
+      uploadImage: 'Upload an image',
       sendPicture:
         'You can also send a picture of the notes you made during the class observation and coaching session',
       uploadPhoto: 'Upload a photo',

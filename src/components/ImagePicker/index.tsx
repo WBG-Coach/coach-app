@@ -4,9 +4,11 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Icon from '../base/Icon';
 import {Props} from './types';
+import {useTranslation} from 'react-i18next';
 
 const ImagePicker: React.FC<Props> = ({handleSelectImage, handleClose}) => {
   const theme = useTheme();
+  const {t} = useTranslation();
 
   const handleOpenGallery = async () => {
     const {assets} = await launchImageLibrary({
@@ -41,7 +43,7 @@ const ImagePicker: React.FC<Props> = ({handleSelectImage, handleClose}) => {
   return (
     <VStack p={4}>
       <Text fontSize={'HXS'} fontWeight={600} color={'gray.700'}>
-        Upload a image
+        {t('feedback.defineActions.uploadImage') || 'Upload a image'}
       </Text>
       <Text mt={2} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
         Choose the way you want do send the picture of your annotations

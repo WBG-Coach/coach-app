@@ -175,7 +175,7 @@ const SessionTab: React.FC = () => {
               </ScrollView>
 
               <Button
-                mt={8}
+                my={4}
                 variant={'outline'}
                 borderRadius={'8px'}
                 borderColor={theme.colors.primary['200']}

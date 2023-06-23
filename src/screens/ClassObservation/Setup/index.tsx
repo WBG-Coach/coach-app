@@ -7,6 +7,7 @@ import {
   VStack,
   Select,
   Box,
+  Center,
 } from 'native-base';
 import React, {useContext} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
@@ -14,13 +15,14 @@ import Routes from '../../../routes/paths';
 import Navigation from '../../../services/navigation';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {UserContext} from '../../../providers/contexts/UserContext';
-import {Picker} from '@react-native-picker/picker';
 import {useTranslation} from 'react-i18next';
+import SelectModal from '../../../components/base/SelectModal';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const defaultValues = {
   students_count: '',
   subject: '',
-  lesson_time: '25',
+  lesson_time: '',
   objective: '',
 };
 
@@ -114,27 +116,23 @@ const ObservationSetup: React.FC<any> = () => {
               rules={{required: true}}
               name={'lesson_time'}
               render={({field, fieldState: {error}}) => (
-                <Box
-                  borderColor={!!error ? 'red' : 'gray.300'}
-                  borderWidth={'1px'}
-                  borderRadius={'12px'}>
-                  <Picker
-                    selectedValue={field.value}
-                    placeholder={
-                      t('classObservation.setup.questions.$3.placeholder') ||
-                      '25 min'
-                    }
-                    onValueChange={itemValue => field.onChange(itemValue)}>
-                    <Picker.Item label="25 mins" value="25" />
-                    <Picker.Item label="30 mins" value="30" />
-                    <Picker.Item label="35 mins" value="35" />
-                    <Picker.Item label="40 mins" value="40" />
-                    <Picker.Item label="45 mins" value="45" />
-                    <Picker.Item label="50 mins" value="50" />
-                    <Picker.Item label="55 mins" value="55" />
-                    <Picker.Item label="60 mins" value="60" />
-                  </Picker>
-                </Box>
+                <SelectModal
+                  options={[
+                    {label: '25 mins', value: '25'},
+                    {label: '30 mins', value: '30'},
+                    {label: '35 mins', value: '35'},
+                    {label: '40 mins', value: '40'},
+                    {label: '45 mins', value: '45'},
+                    {label: '50 mins', value: '50'},
+                    {label: '55 mins', value: '55'},
+                    {label: '60 mins', value: '60'},
+                  ]}
+                  isInvalid={!!error}
+                  handleSelectValue={field.onChange}
+                  placeholder={'25 mins'}
+                  bottomTitle={t('classObservation.setup.questions.$3.title')}
+                  value={field.value}
+                />
               )}
             />
           </VStack>
@@ -165,21 +163,20 @@ const ObservationSetup: React.FC<any> = () => {
             />
           </VStack>
         </VStack>
-        <Text my={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-          {t('classObservation.setup.description') ||
-            'Ask the teacher the following questions'}
-        </Text>
       </ScrollView>
 
-      <Button
-        marginTop={isTablet ? 6 : 'auto'}
-        variant={'solid'}
-        borderRadius={'8px'}
-        color={'white'}
-        background={'primary.200'}
-        onPress={handleSubmit(handleSubmitForm)}>
-        {t('classObservation.setup.button') || 'Next'}
-      </Button>
+      <Box marginTop={isTablet ? 6 : 'auto'}>
+        <TouchableOpacity onPress={handleSubmit(handleSubmitForm)}>
+          <Center
+            variant={'solid'}
+            borderRadius={'8px'}
+            color={'white'}
+            py={3}
+            background={'primary.200'}>
+            {t('classObservation.setup.button') || 'Next'}
+          </Center>
+        </TouchableOpacity>
+      </Box>
     </VStack>
   );
 };
