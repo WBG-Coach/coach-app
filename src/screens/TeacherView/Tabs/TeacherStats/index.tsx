@@ -190,7 +190,11 @@ const TeacherStatsTab = () => {
                   <TouchableOpacity
                     onPress={() =>
                       Navigation.navigate(Routes.teacher.competenceStats, {
-                        competence: item,
+                        competences: competences.data?.map(competence => ({
+                          id: competence.id,
+                          title: competence.title,
+                        })),
+                        current: index,
                       })
                     }>
                     <HStack

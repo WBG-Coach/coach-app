@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Props} from './types';
 
 import {Q} from '@nozbe/watermelondb';
-import {FlatList, HStack, Text, View, VStack} from 'native-base';
+import {Center, FlatList, HStack, Spinner, Text, View, VStack} from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
@@ -105,73 +105,90 @@ const CompetenceCharts: React.FC<Props> = ({competence_id}) => {
 
   return (
     <>
-      <LineChart
-        isAnimated
-        thickness={4}
-        maxValue={5}
-        color="#07BAD1"
-        noOfSections={4}
-        animateOnDataChange
-        animationDuration={1000}
-        onDataChangeAnimationDuration={300}
-        areaChart
-        curved
-        yAxisTextStyle={{color: 'lightgray'}}
-        yAxisTextNumberOfLines={1}
-        data={lineData as any}
-        startFillColor={'rgb(84,219,234)'}
-        endFillColor={'rgb(84,219,234)'}
-        startOpacity={0.4}
-        endOpacity={0.1}
-        spacing={(screenWidth - 270) / (lineData as any)?.length}
-        width={isTablet ? screenWidth - 270 : screenWidth - 90}
-        initialSpacing={10}
-        yAxisColor="lightgray"
-        xAxisColor="lightgray"
-        dataPointsHeight={20}
-        dataPointsWidth={20}
-        {...(isTablet && {
-          yAxisLabelTexts: tags.map(tag => tag.label),
-          yAxisLabelWidth: 120,
-        })}
-      />
-      <Text mt={6} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-        {t('teacher.tabs.stats.ratingPerSession') || 'Rating per session'}
-      </Text>
-      <Text fontSize={'TSM'} mt={1} fontWeight={400} color={'gray.600'}>
-        {t('teacher.tabs.stats.teacherComparision') ||
-          "Comparison presenting the teacher's improvement through coach sessions"}
-      </Text>
-      <FlatList
-        data={sessions.data}
-        renderItem={({item, index}) => (
-          <HStack
-            alignItems={'center'}
-            w={'100%'}
-            py={3}
-            borderBottomWidth={'1px'}
-            borderBottomColor={'gray.200'}>
-            <VStack flex={1}>
-              <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                {t('teacher.tabs.stats.sessionName') || 'Session'} {index + 1}
-              </Text>
-              <Text mt={2} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                {moment(new Date((item as any).created_at)).format(
-                  'DD MMM, YYYY - HH:mm',
-                )}
-              </Text>
-            </VStack>
+      {sessions.isLoading ? (
+        <Center flex={1}>
+          <Spinner size={'lg'} />
+        </Center>
+      ) : (
+        <>
+          <LineChart
+            isAnimated
+            thickness={4}
+            maxValue={5}
+            color="#07BAD1"
+            noOfSections={4}
+            animateOnDataChange
+            animationDuration={1000}
+            onDataChangeAnimationDuration={300}
+            areaChart
+            curved
+            yAxisTextStyle={{color: 'lightgray'}}
+            yAxisTextNumberOfLines={1}
+            data={lineData as any}
+            startFillColor={'rgb(84,219,234)'}
+            endFillColor={'rgb(84,219,234)'}
+            startOpacity={0.4}
+            endOpacity={0.1}
+            spacing={(screenWidth - 270) / (lineData as any)?.length}
+            width={isTablet ? screenWidth - 270 : screenWidth - 90}
+            initialSpacing={10}
+            yAxisColor="lightgray"
+            xAxisColor="lightgray"
+            dataPointsHeight={20}
+            dataPointsWidth={20}
+            {...(isTablet && {
+              yAxisLabelTexts: tags.map(tag => tag.label),
+              yAxisLabelWidth: 120,
+            })}
+          />
+          <Text mt={6} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+            {t('teacher.tabs.stats.ratingPerSession') || 'Rating per session'}
+          </Text>
+          <Text fontSize={'TSM'} mt={1} fontWeight={400} color={'gray.600'}>
+            {t('teacher.tabs.stats.teacherComparision') ||
+              "Comparison presenting the teacher's improvement through coach sessions"}
+          </Text>
+          <FlatList
+            data={sessions.data}
+            renderItem={({item, index}) => (
+              <HStack
+                alignItems={'center'}
+                w={'100%'}
+                py={3}
+                borderBottomWidth={'1px'}
+                borderBottomColor={'gray.200'}>
+                <VStack flex={1}>
+                  <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+                    {t('teacher.tabs.stats.sessionName') || 'Session'}{' '}
+                    {index + 1}
+                  </Text>
+                  <Text
+                    mt={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {moment(new Date((item as any).created_at)).format(
+                      'DD MMM, YYYY - HH:mm',
+                    )}
+                  </Text>
+                </VStack>
 
-            <VStack>
-              <StarView maxLength={5} value={item.overall_rating} />
+                <VStack>
+                  <StarView maxLength={5} value={item.overall_rating} />
 
-              <Text mt={2} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                {getTags(t)[item.overall_rating - 1]?.label}
-              </Text>
-            </VStack>
-          </HStack>
-        )}
-      />
+                  <Text
+                    mt={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {getTags(t)[item.overall_rating - 1]?.label}
+                  </Text>
+                </VStack>
+              </HStack>
+            )}
+          />
+        </>
+      )}
     </>
   );
 };

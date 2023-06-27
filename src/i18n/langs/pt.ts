@@ -79,6 +79,7 @@ const ptTranslation = {
       stats: {
         title: 'Estatísticas do professor',
         editTeacher: 'Editar professor',
+        teacherAt: 'Professor de {{school}}',
         overallRating: 'Avaliação geral',
         currentRating: 'A avaliação atual é:',
         ratingAverage:

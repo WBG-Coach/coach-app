@@ -77,6 +77,7 @@ const enTranslation = {
       stats: {
         title: 'Teacher observation stats',
         editTeacher: 'Edit teacher',
+        teacherAt: 'Teacher at {{school}}',
         overallRating: 'Overall rating',
         currentRating: 'The current rating is:',
         ratingAverage:
