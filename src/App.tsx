@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, View} from 'react-native';
 import {useNetInfo} from '@react-native-community/netinfo';
 import NoGeolocation from './components/NoGeolocation';
 import SplashScreen from './screens/Splash';

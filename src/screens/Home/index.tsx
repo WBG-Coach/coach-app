@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {Text, VStack} from 'native-base';
 import HorizontalMenu from './HorizontalMenu';
 import {useTranslation} from 'react-i18next';
 import TeachersList from './TeachersList';
 import HomeHeader from './HomeHeader';
+import {useNetInfo} from '@react-native-community/netinfo';
+import {syncWatermelon} from '../../database';
 
 const HomeScreen = () => {
-  const {t} = useTranslation();
   const isTablet = Tablet();
+  const {t} = useTranslation();
+  const {isConnected} = useNetInfo();
+
+  useLayoutEffect(() => {
+    if (isConnected) {
+      syncWatermelon();
+    }
+  }, [isConnected]);
 
   return (
     <VStack
