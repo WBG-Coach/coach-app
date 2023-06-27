@@ -3,6 +3,7 @@ import {Props} from './types';
 import {Box, FlatList, HStack, Text, VStack} from 'native-base';
 import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from '../Icon';
 
 const SelectModal: React.FC<Props> = ({
   handleSelectValue,
@@ -52,9 +53,14 @@ const SelectModal: React.FC<Props> = ({
         h={12}
         px={3}
         alignItems={'center'}>
-        <Text fontSize={'LMD'} color={!!value ? 'gray.700' : 'gray.300'}>
+        <Text
+          flex={1}
+          fontSize={'LMD'}
+          color={!!value ? 'gray.700' : 'gray.300'}>
           {options.find(opt => opt.value === value)?.label || placeholder}
         </Text>
+
+        <Icon name={'angle-down'} />
       </HStack>
     </TouchableOpacity>
   );

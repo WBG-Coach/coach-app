@@ -24,6 +24,7 @@ const defaultValues = {
   subject: '',
   lesson_time: '',
   objective: '',
+  class_type: '',
 };
 
 const ObservationSetup: React.FC<any> = () => {
@@ -59,6 +60,35 @@ const ObservationSetup: React.FC<any> = () => {
         <VStack space={4} mt={6}>
           <VStack space={2}>
             <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+              {t('classObservation.setup.questions.$0.title') ||
+                'How many students are boys?'}
+            </Text>
+
+            <Controller
+              control={control}
+              rules={{required: true}}
+              name={'class_type'}
+              render={({field, fieldState: {error}}) => (
+                <SelectModal
+                  options={[
+                    {label: 'All boys', value: 'All boys'},
+                    {label: 'All girls', value: 'All girls'},
+                    {label: 'Both', value: 'Both'},
+                  ]}
+                  isInvalid={!!error}
+                  handleSelectValue={field.onChange}
+                  placeholder={
+                    t('classObservation.setup.questions.$0.placeholder') || '0'
+                  }
+                  value={field.value}
+                  bottomTitle={t('classObservation.setup.questions.$0.title')}
+                />
+              )}
+            />
+          </VStack>
+
+          <VStack space={2}>
+            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
               {t('classObservation.setup.questions.$1.title') ||
                 'How many students are boys?'}
             </Text>
@@ -68,15 +98,20 @@ const ObservationSetup: React.FC<any> = () => {
               rules={{required: true}}
               name={'students_count'}
               render={({field, fieldState: {error}}) => (
-                <Input
-                  {...field}
-                  onChangeText={field.onChange}
+                <SelectModal
+                  options={[
+                    {label: '1 - 10', value: '1 - 10'},
+                    {label: '10 - 30', value: '10 - 30'},
+                    {label: '30 - 60', value: '30 - 60'},
+                    {label: '60+', value: '60+'},
+                  ]}
                   isInvalid={!!error}
+                  handleSelectValue={field.onChange}
                   placeholder={
                     t('classObservation.setup.questions.$1.placeholder') || '15'
                   }
-                  variant={'outline'}
-                  keyboardType={'number-pad'}
+                  value={field.value}
+                  bottomTitle={t('classObservation.setup.questions.$1.title')}
                 />
               )}
             />

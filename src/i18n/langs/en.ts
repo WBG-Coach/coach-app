@@ -221,6 +221,10 @@ const enTranslation = {
       description: 'Ask the teacher the following questions',
       button: 'Next',
       questions: {
+        $0: {
+          title: 'Classroom consists of',
+          placeholder: 'Both',
+        },
         $1: {
           title: 'How many students are in the class?',
           placeholder: 'e.g. 7',

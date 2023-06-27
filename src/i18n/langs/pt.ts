@@ -220,6 +220,10 @@ const ptTranslation = {
       description: 'Faça as seguintes perguntas ao professor',
       button: 'Próximo',
       questions: {
+        $0: {
+          title: 'A classe consiste em',
+          placeholder: 'Ambos',
+        },
         $1: {
           title: 'Quantos alunos são meninos?',
           placeholder: '15',
