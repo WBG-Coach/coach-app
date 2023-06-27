@@ -9,13 +9,14 @@ import {
   Spinner,
   Text,
   VStack,
+  Modal,
+  useTheme,
 } from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import Teacher from '../../../database/models/Teacher';
 import Icon from '../../../components/base/Icon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import {useBottomSheetProvider} from '../../../providers/contexts/BottomSheetContext';
 import ImagePicker from '../../../components/ImagePicker';
@@ -27,6 +28,7 @@ import Navigation from '../../../services/navigation';
 import Routes from '../../../routes/paths';
 import * as RNC from 'react-native-compressor';
 import {useTranslation} from 'react-i18next';
+import DatePicker from 'react-native-modern-datepicker';
 
 type Props = {
   route: {
@@ -37,10 +39,12 @@ type Props = {
 };
 
 const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
+  const theme = useTheme();
   const isTablet = Tablet();
   const {teacher_id} = params;
   const defaultValues = {} as Teacher;
   const {user} = useContext(UserContext);
+  const [dateIsOpen, setDateIsOpen] = useState(false);
   const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
   const {
     control,
@@ -304,18 +308,7 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                       {t('teacher.create.dateOfBirth') || 'Date of birth'}
                     </Text>
 
-                    <TouchableOpacity
-                      onPress={() => {
-                        DateTimePickerAndroid.open({
-                          value: field.value
-                            ? new Date(field.value)
-                            : new Date(),
-                          onChange: e =>
-                            field.onChange(e.nativeEvent.timestamp),
-                          mode: 'date',
-                          is24Hour: true,
-                        });
-                      }}>
+                    <TouchableOpacity onPress={() => setDateIsOpen(true)}>
                       <HStack
                         w={'100%'}
                         borderWidth={'1px'}
@@ -335,6 +328,47 @@ const TeacherCreateScreen: React.FC<any> = ({route: {params}}: Props) => {
                         </Text>
                       </HStack>
                     </TouchableOpacity>
+                    <Modal
+                      isOpen={dateIsOpen}
+                      onClose={() => setDateIsOpen(false)}>
+                      <Modal.Content background={'white'}>
+                        <Modal.Body>
+                          <DatePicker
+                            onSelectedChange={newValue => {
+                              const newDate = moment(
+                                new Date(newValue.replace(/\//g, '-')),
+                              ).add(1, 'days');
+
+                              console.log();
+
+                              if (
+                                newDate.toString() !==
+                                  field?.value?.toString() &&
+                                newDate.get('year') !== 0
+                              ) {
+                                field.onChange(newDate);
+                              }
+                            }}
+                            selected={moment(new Date(field.value)).format(
+                              'YYYY-MM-DD',
+                            )}
+                            mode="calendar"
+                            options={{
+                              mainColor: theme.colors.primary['200'],
+                            }}
+                          />
+
+                          <Button
+                            background={'primary.200'}
+                            _pressed={{
+                              background: 'primary.300',
+                            }}
+                            onPress={() => setDateIsOpen(false)}>
+                            Done
+                          </Button>
+                        </Modal.Body>
+                      </Modal.Content>
+                    </Modal>
                   </VStack>
                 )}
               />
