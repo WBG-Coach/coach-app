@@ -24,6 +24,7 @@ import {useTranslation} from 'react-i18next';
 import {Dimensions} from 'react-native';
 import Icon from '../../../../../components/base/Icon';
 import {LineChart} from 'react-native-gifted-charts';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -130,6 +131,43 @@ const CompetenceStats: React.FC<any> = ({route: {params}}: Props) => {
         </Center>
       ) : (
         <>
+          <HStack
+            p={3}
+            borderWidth={'1px'}
+            borderColor={'primary.200'}
+            borderRadius={'8px'}
+            mb={'4'}
+            space={2}
+            alignItems={'center'}>
+            <Icon
+              name={'graduation-cap-solid'}
+              color={theme.colors.primary['200']}
+            />
+            <VStack>
+              <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
+                {teacher?.name}
+              </Text>
+              <Text fontSize={'TXS'} fontWeight={500} color={'gray.700'}>
+                Teacher at Bayshore High
+              </Text>
+            </VStack>
+          </HStack>
+
+          <HStack w={'100%'} alignItems={'center'} mb={4} px={2}>
+            <TouchableOpacity>
+              <Icon name={'angle-left'} />
+            </TouchableOpacity>
+            <Center flex={1}>
+              <Text fontSize={'HXS'} fontWeight={500} color={'gray.700'}>
+                {params.competence.title}
+              </Text>
+            </Center>
+
+            <TouchableOpacity>
+              <Icon name={'angle-right'} />
+            </TouchableOpacity>
+          </HStack>
+
           <HStack mb={6} w={'100%'} alignItems={'center'}>
             <Text fontSize={'HXS'} flex={1} fontWeight={600} color={'gray.700'}>
               {params.competence.title}

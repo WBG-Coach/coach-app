@@ -40,7 +40,7 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
           </Text>
 
           <VStack mt={7} space={5}>
-            {competences.map(competence => {
+            {competences.map((competence, index) => {
               const isChecked = competenciesSelected.find(
                 ({id}) => competence.id === id,
               );
@@ -80,8 +80,9 @@ const FeedbackPreparation: React.FC<any> = ({route: {params}}: Props) => {
                         fontSize={'TSM'}
                         fontWeight={400}
                         color={'gray.600'}>
-                        {t('feedback.feedbackPreparation.teachingPratice') ||
-                          'Teaching practice 2'}
+                        {t('feedback.feedbackPreparation.teachingPratice', {
+                          count: index + 1,
+                        })}
                       </Text>
 
                       <HStack space={1}>

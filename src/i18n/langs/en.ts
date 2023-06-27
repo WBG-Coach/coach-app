@@ -262,7 +262,7 @@ const enTranslation = {
     feedbackPreparation: {
       title: 'Choose teaching practices',
       subtitle: 'Choose 1 teaching practice to work on with the teacher',
-      teachingPratice: 'Teaching practice 2',
+      teachingPratice: 'Teaching practice {{count}}',
       button: 'Complete coaching session',
     },
     defineActions: {
