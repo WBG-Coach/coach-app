@@ -1,12 +1,11 @@
 import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useMemo,
-  useCallback,
   useRef,
   useState,
+  ReactNode,
   useEffect,
+  useContext,
+  useCallback,
+  createContext,
 } from 'react';
 import BottomSheet, {
   BottomSheetBackdrop,
@@ -15,13 +14,11 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import {Dimensions} from 'react-native';
 
-type ContextStateValues = {};
-
-type ContextStateDispatchs = {
+type ContextStateDispatches = {
   setBottomSheetContent: (content: React.ReactNode) => void;
 };
 
-type ContextState = [ContextStateValues, ContextStateDispatchs];
+type ContextState = ContextStateDispatches;
 
 type ProviderProps = {
   children: ReactNode;
@@ -33,36 +30,27 @@ function BottomSheetProvider({children}: ProviderProps) {
   const {height} = Dimensions.get('window');
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const [BottomSheetContent, setBottomSheetContent] =
+  const [bottomSheetContent, setBottomSheetContent] =
     useState<React.ReactNode>();
 
   useEffect(() => {
-    if (BottomSheetContent) {
+    if (bottomSheetContent) {
       bottomSheetRef.current?.expand();
     } else {
       bottomSheetRef.current?.close();
     }
-  }, [BottomSheetContent]);
-
-  const initialSnapPoints = useMemo(() => ['CONTENT_HEIGHT'], []);
+  }, [bottomSheetContent]);
 
   const {
-    animatedHandleHeight,
     animatedSnapPoints,
-    animatedContentHeight,
     handleContentLayout,
-  } = useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
-  const handleSheetChanges = useCallback(() => {}, []);
-
-  const providerValues = {} as ContextStateValues;
-  const providerDispatchs = {
-    setBottomSheetContent,
-  } as ContextStateDispatchs;
+    animatedHandleHeight,
+    animatedContentHeight,
+  } = useBottomSheetDynamicSnapPoints(['CONTENT_HEIGHT']);
 
   const renderBackdrop = useCallback(
     (props: any) =>
-      BottomSheetContent ? (
+      bottomSheetContent ? (
         <BottomSheetBackdrop
           {...props}
           appearsOnIndex={0}
@@ -71,27 +59,26 @@ function BottomSheetProvider({children}: ProviderProps) {
       ) : (
         <></>
       ),
-    [BottomSheetContent],
+    [bottomSheetContent],
   );
 
   return (
-    <BottomSheetContext.Provider value={[providerValues, providerDispatchs]}>
+    <BottomSheetContext.Provider value={{setBottomSheetContent}}>
       {children}
       <BottomSheet
-        backgroundStyle={{backgroundColor: '#F9FAFB'}}
-        ref={bottomSheetRef}
         index={-1}
+        ref={bottomSheetRef}
+        enablePanDownToClose={true}
         snapPoints={animatedSnapPoints}
+        backdropComponent={renderBackdrop}
         handleHeight={animatedHandleHeight}
         contentHeight={animatedContentHeight}
-        enablePanDownToClose={true}
-        onChange={handleSheetChanges}
-        onClose={() => setBottomSheetContent(undefined)}
-        backdropComponent={renderBackdrop}>
+        backgroundStyle={{backgroundColor: '#F9FAFB'}}
+        onClose={() => setBottomSheetContent(undefined)}>
         <BottomSheetScrollView
           onLayout={handleContentLayout}
           style={{maxHeight: height * 0.9}}>
-          {BottomSheetContent}
+          {bottomSheetContent}
         </BottomSheetScrollView>
       </BottomSheet>
     </BottomSheetContext.Provider>
