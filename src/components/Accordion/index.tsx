@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, HStack, Text} from 'native-base';
 import {TouchableOpacity} from 'react-native';
-import Icon from '../base/Icon';
+import Icon from '../Icon';
 
 type Props = {
   title: string;

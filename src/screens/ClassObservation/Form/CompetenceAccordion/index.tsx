@@ -1,14 +1,13 @@
-import {VStack} from 'native-base';
-import React, {useEffect, useMemo, useState} from 'react';
-import Accordion from '../../../../components/Accordion';
-import Question from '../../../../database/models/Question';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Question} from '../../../../types/question';
 import QuestionItem from './QuestionItem';
+import {VStack} from 'native-base';
 import {Props} from './types';
+import Accordion from '../../../../components/Accordion';
 
 const CompetenceAccordion: React.FC<Props> = ({
-  competence,
-  handleAnswer,
   onComplete,
+  competence,
   index,
 }) => {
   const [answers, setAnswers] = useState<{[key: string]: number}>({});
@@ -19,32 +18,26 @@ const CompetenceAccordion: React.FC<Props> = ({
     if (!isFinished) {
       if (Object.keys(answers).length === competence.questions.length) {
         setIsFinished(true);
+        onComplete(answers);
         setIsOpen(false);
-        onComplete();
       }
     }
-  }, [isFinished, answers, competence]);
+  }, [isFinished, answers, competence, onComplete]);
 
   const handleAnswerQuestion = (question: Question, value: number) => {
     const newValues = {[question.id]: value};
     setAnswers(state => ({...state, ...newValues}));
-    handleAnswer(newValues);
   };
 
-  const Form = useMemo(
-    () => (
-      <VStack>
-        {competence.questions.map(question => (
-          <QuestionItem
-            key={question.id}
-            question={question}
-            onAnswer={handleAnswerQuestion}
-            value={answers[question.id || 0]}
-          />
-        ))}
-      </VStack>
+  const renderQuestion = useCallback(
+    (question: Question) => (
+      <QuestionItem
+        key={question.id}
+        question={question}
+        onAnswer={handleAnswerQuestion}
+      />
     ),
-    [isOpen],
+    [],
   );
 
   return (
@@ -53,7 +46,7 @@ const CompetenceAccordion: React.FC<Props> = ({
       check={isFinished}
       title={`${(index || 0) + 1}. ${competence.title}`}
       onClickHeader={() => isFinished && setIsOpen(!isOpen)}>
-      {Form}
+      <VStack>{competence.questions.map(renderQuestion)}</VStack>
     </Accordion>
   );
 };

@@ -1,26 +1,26 @@
 import {
   Box,
-  Button,
-  Center,
-  FlatList,
-  HStack,
   Text,
-  useTheme,
   View,
   VStack,
+  Center,
+  HStack,
+  FlatList,
+  useTheme,
 } from 'native-base';
 import React from 'react';
-import Icon from '../../../components/base/Icon';
-import Routes from '../../../routes/paths';
-import Navigation from '../../../services/navigation';
-import {isTablet as Tablet} from 'react-native-device-info';
+import Icon from '../../../components/Icon';
 import {useTranslation} from 'react-i18next';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigate, useParams} from 'react-router-native';
+import PathRoutes from '../../../routers/paths';
+import Page from '../../../components/Page';
+import Button from '../../../components/Button';
 
-const ClassObservationAbout: React.FC<any> = () => {
+const ClassObservationAbout: React.FC = () => {
   const theme = useTheme();
-  const isTablet = Tablet();
   const {t} = useTranslation();
+  const navigate = useNavigate();
+  const param = useParams<{teacherId: string}>();
 
   const process = [
     {
@@ -60,7 +60,7 @@ const ClassObservationAbout: React.FC<any> = () => {
   ];
 
   return (
-    <VStack flex={1} mt={6} px={isTablet ? '32px' : 4} safeAreaBottom>
+    <Page back title={t('classObservation.title')}>
       <VStack flex={1} position={'relative'}>
         <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
           {t('classObservation.create.title') || 'Mentoring process'}
@@ -111,18 +111,16 @@ const ClassObservationAbout: React.FC<any> = () => {
           />
         </HStack>
       </VStack>
-      <TouchableOpacity
-        onPress={() => Navigation.navigate(Routes.classObservation.onboarding)}>
-        <Center
-          mb={6}
-          w={'100%'}
-          py={3}
-          borderRadius={'8px'}
-          background={'primary.200'}>
-          <Text>{t('classObservation.create.button')}</Text>
-        </Center>
-      </TouchableOpacity>
-    </VStack>
+      <Button
+        onPress={() =>
+          navigate(PathRoutes.classObservation.setup, {
+            replace: true,
+            state: {teacher_id: param?.teacherId},
+          })
+        }>
+        <Text>{t('classObservation.create.button')}</Text>
+      </Button>
+    </Page>
   );
 };
 

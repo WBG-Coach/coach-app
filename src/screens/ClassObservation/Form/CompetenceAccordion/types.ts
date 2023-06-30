@@ -1,11 +1,8 @@
-import Competence from '../../../../database/models/Competence';
-import {CompetenceWithQuestions} from '../../../../providers/contexts/CompetencesContext';
+import {Competence} from '../../../../types/competence';
 
 export type Props = {
   index?: number;
-  competence: CompetenceWithQuestions;
-  isFinished?: boolean;
+  competence: Competence;
 
-  handleAnswer: (answers: {[key: string]: number}) => void;
-  onComplete: () => void;
+  onComplete: (answers: {[key: string]: number}) => void;
 };

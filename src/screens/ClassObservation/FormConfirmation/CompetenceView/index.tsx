@@ -3,9 +3,12 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {getTags} from '../../../../components/StarsTag/common';
 import StarView from '../../../../components/StarView';
-import {Props} from './types';
+import {Question} from '../../../../types/question';
+import {Competence} from '../../../../types/competence';
 
-const CompetenceView: React.FC<Props> = ({competences}) => {
+const CompetenceView: React.FC<{
+  competences: (Competence & {overall_rating: number})[];
+}> = ({competences}) => {
   const {t} = useTranslation();
   const tags = getTags(t);
 
@@ -64,7 +67,7 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
               </Text>
 
               <VStack mt={4} space={4}>
-                {competency.questions.map(question => (
+                {competency.questions.map((question: Question) => (
                   <HStack key={question.id} alignItems={'center'}>
                     <VStack flex={1} space={1} mr={2}>
                       <Text

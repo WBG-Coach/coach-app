@@ -1,10 +1,10 @@
-import {HStack, Text, useTheme, VStack} from 'native-base';
 import React from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import Icon from '../base/Icon';
-import {Props} from './types';
+import {HStack, Text, useTheme, VStack} from 'native-base';
 import {useTranslation} from 'react-i18next';
+import {Props} from './types';
+import Icon from '../Icon';
 
 const ImagePicker: React.FC<Props> = ({handleSelectImage, handleClose}) => {
   const theme = useTheme();

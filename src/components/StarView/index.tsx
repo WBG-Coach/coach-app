@@ -1,6 +1,6 @@
 import {Box, HStack, useTheme} from 'native-base';
 import React from 'react';
-import Icon from '../base/Icon';
+import Icon from '../Icon';
 import {Props} from './types';
 
 const StarView: React.FC<Props> = ({maxLength, value}) => {

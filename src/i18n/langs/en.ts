@@ -1,38 +1,53 @@
 const enTranslation = {
-  noGeolocation: {
-    title: 'Location service must be allowed',
-    description:
-      'We need access to your location to provide a great Coach experience',
-    allowButton: 'Allow location services',
+  common: {
+    'load-more': 'Load more',
   },
-  setupUserData: {
-    schoolSelect: {
-      title: 'Select your school',
-      lineDesc: '{{count}} teachers here',
-      emptyList: 'No schools found',
-    },
-    profileSelect: {
-      title: 'Select your coach profile',
-      lineDesc: 'Teachers coached: {{count}}',
-      emptyList: 'No coach profiles found',
-      create: {
-        title: 'Create a new coach profile',
-        takePhoto: 'Take/choose photo',
-        name: 'First name',
-        surname: 'Last name',
-        emis: 'EMIS number',
-        optional: 'Optional',
-        button: 'Add profile',
-      },
-      created: {
-        title: 'Profile created',
-        subtitle: 'You may now select your profile and coach teachers',
-        button: 'Go to coach profile selection',
-      },
+
+  login: {
+    'login-button': 'Login',
+    'create-account': 'Create account',
+    username: 'Username',
+    password: 'Password',
+    createAccount: {
+      title: 'New account',
+      takePhoto: 'Take/Choose photo',
+      name: 'First name',
+      surname: 'Last name',
+      username: 'Username',
+      password: 'Password',
+      'confirm-password': 'Confirm password',
+      'create-account-button': 'Create account',
     },
   },
+
+  settings: {
+    title: 'Settings',
+    logout: 'Start over',
+    'logout-description': 'Start from the beginning ',
+    language: 'Language',
+    lastSync: 'Last sync: {{value}}',
+    appVersion: 'App version',
+    sync_now: 'Sync now',
+    'unsynced-items': 'Unsynchronized items',
+    'unsynced-teacher': 'Teachers:',
+    'unsynced-session': 'Sessions:',
+    'unsynced-feedback': 'Feedback:',
+    changeLanguage: {
+      title: 'Select language',
+      button: 'Next',
+    },
+  },
+
+  schoolSelect: {
+    title: 'Select your school',
+    'item-description_interval':
+      '(0)[No teachers here];(1)[1 teacher here];(2-inf)[{{count}} teachers here];',
+  },
+
   home: {
-    items: {
+    teachersLength_interval:
+      '(0)[No teachers];(1)[1 teacher being coached];(2-inf)[{{count}} teachers being coached];',
+    'menu-items': {
       newSession: 'Start a new session',
       switchSchools: 'Switch schools',
       switchProfile: 'Switch to a different coach profile',
@@ -40,16 +55,45 @@ const enTranslation = {
       statics: 'Statistics',
       pendingSession: 'Feedback needed',
     },
-    teachersLength_interval:
-      '(0)[No teachers];(1)[1 teacher being coached];(2-inf)[{{count}} teachers being coached];',
     teachers: {
       title: 'Teachers',
-      session_interval: '(1)[1 session];(2-inf)[{{count}} sessions]',
       addNew: 'Add new teacher',
+      'no-session': 'No sessions yet. Start coaching!',
+      'last-session': 'Last session on {{date}}',
+    },
+    emptyState: {
+      title: 'No teacher registered',
+      description: 'Add a new teacher to start coaching',
+    },
+    quickAccess: {
+      newSession: {
+        title: 'Start new session',
+        subtitle: 'Select a teacher and start a new observation session',
+      },
+      stats: {
+        title: 'Check teacher stats',
+        subtitle: 'Select a teacher to see their progress',
+      },
     },
   },
+
   teacher: {
-    description: '$name is a teacher at $school',
+    form: {
+      name: 'Name',
+      surname: 'Last name',
+      emis_number: 'EMIS number',
+      'title-new': 'New teacher',
+      'title-edit': 'Edit teacher',
+      subject: 'Principal subject',
+      'new-teacher-button': 'Add teacher',
+      'update-teacher-button': 'Edit teacher',
+    },
+
+    details: {
+      editTeacher: 'Edit teacher',
+      description: '{{subject}} teacher at {{school}}',
+    },
+
     tabs: {
       session: {
         title: 'Observation sessions',
@@ -77,7 +121,6 @@ const enTranslation = {
       stats: {
         title: 'Teacher observation stats',
         editTeacher: 'Edit teacher',
-        teacherAt: 'Teacher at {{school}}',
         overallRating: 'Overall rating',
         currentRating: 'The current rating is:',
         ratingAverage:
@@ -127,24 +170,9 @@ const enTranslation = {
       button: 'Finish',
     },
   },
-  splash: {},
-  settings: {
-    settings: {
-      title: 'Language',
-      lastSync: 'Last sync: {{value}}',
-      appVersion: 'App version',
-      sync_now: 'Sync now',
-      'unsynced-items': 'Unsynchronized items',
-      'unsynced-teacher': 'Teachers: {{count}}',
-      'unsynced-session': 'Sessions: {{count}}',
-      'unsynced-feedback': 'Feedback: {{count}}',
-    },
-    changeLanguage: {
-      title: 'Select language',
-      button: 'Next',
-    },
-  },
+
   classObservation: {
+    title: 'Class observation',
     observationCompleted: {
       title: 'Class observation complete',
       subtitle: 'Thank you. The class observation section is complete!',
@@ -254,6 +282,43 @@ const enTranslation = {
       button: 'Complete observation',
     },
   },
+
+  noGeolocation: {
+    title: 'Location service must be allowed',
+    description:
+      'We need access to your location to provide a great Coach experience',
+    allowButton: 'Allow location services',
+  },
+
+  setupUserData: {
+    schoolSelect: {
+      title: 'Select your school',
+      lineDesc: '{{count}} teachers here',
+      emptyList: 'No schools found',
+    },
+    profileSelect: {
+      title: 'Select your coach profile',
+      lineDesc: 'Teachers coached: {{count}}',
+      emptyList: 'No coach profiles found',
+      create: {
+        title: 'Create a new coach profile',
+        takePhoto: 'Take/choose photo',
+        name: 'First name',
+        surname: 'Last name',
+        emis: 'EMIS number',
+        optional: 'Optional',
+        button: 'Add profile',
+      },
+      created: {
+        title: 'Profile created',
+        subtitle: 'You may now select your profile and coach teachers',
+        button: 'Go to coach profile selection',
+      },
+    },
+  },
+
+  splash: {},
+
   feedback: {
     mentoringSection: {
       title: 'Best practices',
@@ -267,7 +332,7 @@ const enTranslation = {
     feedbackPreparation: {
       title: 'Choose teaching practices',
       subtitle: 'Choose 1 teaching practice to work on with the teacher',
-      teachingPratice: 'Teaching practice {{count}}',
+      teachingPratice: 'Teaching practice 2',
       button: 'Complete coaching session',
     },
     defineActions: {
@@ -319,16 +384,6 @@ const enTranslation = {
       needsAttention: 'Needs attention',
       almostThere: 'Almost there',
       doingGreat: 'Doing great',
-    },
-  },
-  quickAccess: {
-    newSession: {
-      title: 'Start new session',
-      subtitle: 'Select a teacher and start a new observation session',
-    },
-    stats: {
-      title: 'Check teacher stats',
-      subtitle: 'Select a teacher to see their progress',
     },
   },
 };

@@ -1,14 +1,14 @@
-import {UserContext} from '../../providers/contexts/UserContext';
+import React, {useCallback, useState} from 'react';
+import {useCoachContext} from '../../providers/coach.provider';
 import InfiniteScroll from '../../components/InfiniteScroll';
-import React, {useCallback, useContext, useState} from 'react';
-import {isTablet as Tablet} from 'react-native-device-info';
-import SchoolService from '../../services/school';
-import School from '../../database/models/School';
-import Input from '../../components/base/Input';
+import {SchoolService} from '../../services/school.service';
+import InputText from '../../components/InputText';
 import useDebounce from '../../hooks/debounce';
 import {useTranslation} from 'react-i18next';
-import {Text, VStack} from 'native-base';
+import {School} from '../../types/school';
+import Page from '../../components/Page';
 import SchoolItem from './SchoolItem';
+import {Text} from 'native-base';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -19,16 +19,17 @@ const SchoolSelectScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [schoolList, setSchoolList] = useState<School[]>([]);
 
-  const isTablet = Tablet();
   const {t} = useTranslation();
-  const {handleSelectSchool} = useContext(UserContext);
+  const {selectSchool} = useCoachContext();
 
   const loadFirstPageWithFilter = useCallback((value: string) => {
     setSchoolList([]);
     setIsLoading(true);
     setIsTheEnd(false);
-    SchoolService.findSchools(value, ITEMS_PER_PAGE, 1).then(data => {
-      if (data.length < ITEMS_PER_PAGE) setIsTheEnd(true);
+    SchoolService.findSchoolItems(value, ITEMS_PER_PAGE, 1).then(data => {
+      if (data && data.length < ITEMS_PER_PAGE) {
+        setIsTheEnd(true);
+      }
       setSchoolList(data);
       setIsLoading(false);
     });
@@ -40,33 +41,30 @@ const SchoolSelectScreen: React.FC = () => {
     if (!isLoading && !isTheEnd) {
       setPage(page + 1);
       setIsLoading(true);
-      const data = await SchoolService.findSchools(
+      const data = await SchoolService.findSchoolItems(
         filter,
         ITEMS_PER_PAGE,
         page + 1,
       );
 
-      if (data.length < ITEMS_PER_PAGE) setIsTheEnd(true);
+      if (data.length < ITEMS_PER_PAGE) {
+        setIsTheEnd(true);
+      }
+
       setSchoolList(prevData => [...prevData, ...data]);
+      setIsLoading(false);
     }
   };
 
   return (
-    <VStack
-      flex={1}
-      w={'100%'}
-      alignItems={'flex-start'}
-      px={isTablet ? '64px' : '16px'}
-      mt={isTablet ? '64px' : '24px'}>
+    <Page setting logo>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
         {t('setupUserData.schoolSelect.title')}
       </Text>
 
-      <Input
+      <InputText
         mb={2}
         value={filter}
-        icon="search"
-        marginBottom={2}
         placeholder={'Search'}
         onChangeText={setFilter}
       />
@@ -75,17 +73,16 @@ const SchoolSelectScreen: React.FC = () => {
         data={schoolList}
         isLoading={isLoading}
         loadNextPage={loadNextPage}
-        emptyMessage={t('setupUserData.schoolSelect.emptyList')}
+        emptyMessage={t('schoolSelect.item-description')}
         renderItem={({item, index}) => (
           <SchoolItem
             index={index}
             school={item}
-            isFirst={index === 0}
-            onPress={() => handleSelectSchool(item)}
+            onPress={() => selectSchool(item)}
           />
         )}
       />
-    </VStack>
+    </Page>
   );
 };
 

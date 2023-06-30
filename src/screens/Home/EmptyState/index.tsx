@@ -1,19 +1,21 @@
-import {Button, HStack, Image, Text, useTheme, VStack} from 'native-base';
 import React from 'react';
+import {HStack, Image, Text, useTheme, VStack} from 'native-base';
 import {EmptyState} from '../../../assets/images/globals';
-import Icon from '../../../components/base/Icon';
-import {Props} from './types';
+import Icon from '../../../components/Icon';
+import Button from '../../../components/Button';
+import {useTranslation} from 'react-i18next';
+
+type Props = {
+  handleCreate: () => void;
+};
 
 const EmptyStateComponent: React.FC<Props> = ({handleCreate}) => {
   const theme = useTheme();
+  const {t} = useTranslation();
 
   return (
-    <VStack alignSelf={'center'}>
-      <Image
-        alt={'Icon of empty state'}
-        alignSelf={'center'}
-        source={EmptyState}
-      />
+    <VStack>
+      <Image alt={'Icon of empty state'} source={EmptyState} />
 
       <Text
         mt={8}
@@ -21,7 +23,7 @@ const EmptyStateComponent: React.FC<Props> = ({handleCreate}) => {
         fontSize={'HXS'}
         fontWeight={600}
         color={'gray.800'}>
-        No teacher registered
+        {t('home.emptyState.title')}
       </Text>
       <Text
         mt={2}
@@ -29,16 +31,10 @@ const EmptyStateComponent: React.FC<Props> = ({handleCreate}) => {
         fontSize={'TMD'}
         fontWeight={400}
         color={'gray.600'}>
-        Add a new teacher to start coaching
+        {t('home.emptyState.description')}
       </Text>
 
-      <Button
-        onPress={handleCreate}
-        mt={8}
-        variant={'solid'}
-        borderRadius={'8px'}
-        color={'white'}
-        background={'primary.200'}>
+      <Button onPress={handleCreate} mt={8}>
         <HStack alignItems={'center'} space={2}>
           <Icon name={'plus'} color={theme.colors.white} />
           <Text>Add new teacher</Text>

@@ -1,55 +1,48 @@
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
-  Button,
   HStack,
   Text,
   TextArea,
   VStack,
   Spinner,
   Center,
+  ScrollView,
 } from 'native-base';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
-import Icon from '../../../components/base/Icon';
+import {useLocation, useNavigate} from 'react-router-native';
 import {isTablet as Tablet} from 'react-native-device-info';
-import Navigation from '../../../services/navigation';
-import Routes from '../../../routes/paths';
-import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
 import CompetenceAccordion from './CompetenceAccordion';
-import Session from '../../../database/models/Session';
+import {Competence} from '../../../types/competence';
+import PathRoutes from '../../../routers/paths';
 import {useTranslation} from 'react-i18next';
-import {useFocusEffect} from '@react-navigation/native';
-import {TouchableOpacity} from '@gorhom/bottom-sheet';
+import Icon from '../../../components/Icon';
+import Button from '../../../components/Button';
+import CompetenceService from '../../../services/competence.service';
+import Page from '../../../components/Page';
 
-type Props = {
-  route: {
-    params: {
-      session: Session;
-    };
-  };
-};
-
-const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
+const ClassObservationForm: React.FC<any> = () => {
   const isTablet = Tablet();
   const {t} = useTranslation();
-  const {competences} = useContext(CompetenceContext);
-
+  const {state} = useLocation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [keyPoints, setKeyPoints] = useState('');
+  const [competencies, setCompetencies] = useState<Competence[]>([]);
   const [answers, setAnswers] = useState<{[key: string]: number}>({});
   const [competenciesFinished, setCompetenciesFinished] = useState<string[]>(
     [],
   );
 
   const isDisable = useMemo(
-    () => competenciesFinished.length < competences.length,
-    [competenciesFinished, competences],
+    () => competenciesFinished.length < competencies.length,
+    [competenciesFinished, competencies],
   );
 
-  useFocusEffect(() => {
-    setTimeout(() => {
+  useEffect(() => {
+    CompetenceService.listCompetenciesWithQuestions().then(result => {
+      setCompetencies(result);
       setLoading(false);
     });
-  });
+  }, []);
 
   const handleSubmitForm = async () => {
     const formattedAnswers = Object.keys(answers).map(question_id => ({
@@ -57,27 +50,44 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
       value: answers[question_id],
     }));
 
-    Navigation.navigate(Routes.classObservation.formConfirmation, {
-      answers: formattedAnswers,
-      session: {...params.session, key_points: keyPoints},
+    navigate(PathRoutes.classObservation.confirmation, {
+      state: {
+        competencies,
+        answers: formattedAnswers,
+        session: {...state, key_points: keyPoints},
+      },
     });
   };
 
-  if (loading)
+  const renderQuestion = useCallback(
+    (competence: Competence, index: number) => (
+      <CompetenceAccordion
+        key={competence.id}
+        index={index}
+        competence={competence}
+        onComplete={newAnswers => {
+          setCompetenciesFinished(state => [...state, competence.id]);
+          setAnswers(currentAnswers => ({
+            ...currentAnswers,
+            ...newAnswers,
+          }));
+        }}
+      />
+    ),
+    [],
+  );
+
+  if (loading) {
     return (
       <Center bg="white" w="full" h="full">
         <Spinner size="lg" />
       </Center>
     );
+  }
 
   return (
-    <VStack
-      py={6}
-      flex={1}
-      bg={'gray.0'}
-      safeAreaBottom
-      px={isTablet ? '32px' : 4}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <Page back title={t('classObservation.title')}>
+      <ScrollView>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
           {t('classObservation.form.title') || 'Class evaluation'}
         </Text>
@@ -86,20 +96,7 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
             'Rate each topic with your observation'}
         </Text>
 
-        {competences.map((competence, index) => (
-          <CompetenceAccordion
-            key={competence.id}
-            index={index}
-            competence={competence}
-            isFinished={competenciesFinished.includes(competence.id)}
-            onComplete={() =>
-              setCompetenciesFinished(state => [...state, competence.id])
-            }
-            handleAnswer={answers => {
-              setAnswers(state => ({...state, ...answers}));
-            }}
-          />
-        ))}
+        {competencies.map(renderQuestion)}
 
         <VStack py={4}>
           <Text fontSize={'TXL'} fontWeight={700} color={'gray.700'}>
@@ -137,27 +134,18 @@ const ObservationForm: React.FC<any> = ({route: {params}}: Props) => {
         <Text fontSize={'TSM'} fontWeight={400} color={'#9B6908'}>
           {t('classObservation.form.competenciesRated', {
             count: competenciesFinished.length,
-            total: competences.length,
+            total: competencies.length,
           })}
         </Text>
       </HStack>
 
-      <TouchableOpacity onPress={handleSubmitForm} disabled={isDisable}>
-        <Center
-          color={'white'}
-          variant={'solid'}
-          marginTop={'auto'}
-          borderRadius={'8px'}
-          background={'primary.200'}
-          py={3}
-          {...(isDisable && {background: '#F2F4F7'})}>
-          <Text {...(isDisable && {color: '#9AA2AC'})}>
-            {t('classObservation.form.button')}
-          </Text>
-        </Center>
-      </TouchableOpacity>
-    </VStack>
+      <Button onPress={handleSubmitForm} disabled={isDisable}>
+        <Text {...(isDisable && {color: '#9AA2AC'})}>
+          {t('classObservation.form.button')}
+        </Text>
+      </Button>
+    </Page>
   );
 };
 
-export default ObservationForm;
+export default ClassObservationForm;

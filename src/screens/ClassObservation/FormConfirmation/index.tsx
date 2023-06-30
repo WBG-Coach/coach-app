@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Button,
@@ -9,36 +9,29 @@ import {
   useTheme,
   VStack,
 } from 'native-base';
-import Icon from '../../../components/base/Icon';
-import Navigation from '../../../services/navigation';
-import Routes from '../../../routes/paths';
-import Answer from '../../../database/models/Answer';
-import {getWatermelon} from '../../../database';
-import {CompetenceContext} from '../../../providers/contexts/CompetencesContext';
-import Question from '../../../database/models/Question';
-import Session from '../../../database/models/Session';
-import {UserContext} from '../../../providers/contexts/UserContext';
-import CompetenceView from './CompetenceView';
-import Geolocation from '../../../services/geolocation';
+import Icon from '../../../components/Icon';
 import {useTranslation} from 'react-i18next';
+import PathRoutes from '../../../routers/paths';
+import {useCoachContext} from '../../../providers/coach.provider';
+import {SessionService} from '../../../services/session.service';
+import GeolocationService from '../../../services/geolocation.service';
+import {useLocation, useNavigate} from 'react-router-native';
+import {Competence} from '../../../types/competence';
+import {Question} from '../../../types/question';
+import CompetenceView from './CompetenceView';
+import Page from '../../../components/Page';
 
-type Props = {
-  route: {
-    params: {
-      answers: Answer[];
-      session: Session;
-    };
-  };
-};
-
-const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
+const ObservationFormConfirmation: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const {competences} = useContext(CompetenceContext);
-  const {user} = useContext(UserContext);
   const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const {currentCoach, currentSchool} = useCoachContext();
+  const {
+    state: {answers, session, competencies},
+  } = useLocation();
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,91 +39,80 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
     });
   }, []);
 
-  const {session, answers} = params;
   const competencyFormatted = useMemo(
     () =>
-      competences.reduce((acc, item) => {
-        let questionsMax = 0;
+      competencies.reduce(
+        (
+          acc: Array<Competence & {overall_rating: number}>,
+          item: Competence,
+        ) => {
+          let questionsMax = 0;
 
-        const questions = item.questions.map(question => {
-          const value = parseInt(
-            answers.find(answer => answer.question_id === question.id)?.value ||
-              '0',
-          );
-          questionsMax += value;
-          return {
-            ...question,
-            value,
+          const questions = item.questions.map(question => {
+            const value = parseInt(
+              answers.find((answer: any) => answer.question_id === question.id)
+                ?.value || '0',
+              10,
+            );
+
+            questionsMax += value;
+            return {
+              ...question,
+              value,
+            };
+          }) as Array<Question & {value: number}>;
+
+          const competence = {
+            ...item,
+            questions: questions,
+            overall_rating:
+              Math.round(questionsMax / item.questions.length) - 1,
           };
-        }) as Array<Question & {value: number}>;
 
-        const competence = {
-          ...item,
-          questions: questions,
-          overall_rating: Math.round(questionsMax / item.questions.length) - 1,
-        };
-
-        return [...acc, competence];
-      }, [] as Array<(typeof competences)[0] & {overall_rating: number}>),
-    [],
+          return [...acc, competence];
+        },
+        [],
+      ),
+    [answers, competencies],
   );
 
   const handlePressContinue = async () => {
     try {
-      const db = await getWatermelon();
       setIsLoading(true);
 
-      const location = await Geolocation.getLocation();
-      console.log({location});
+      const location = await GeolocationService.getLocation();
 
-      const {_raw} = await db.write(
-        async () =>
-          await db.collections.get<Session>('session').create(record => {
-            record.session_status = '';
-            record.students_count = session.students_count;
-            record.subject = session.subject;
-            record.lesson_time = session.lesson_time;
-            record.objective = session.objective;
-            record.school_id = user?.school?.id;
-            record.coach_id = user?.id;
-            record.key_points = session.key_points;
-            record.teacher_id = session.teacher_id;
-            record.latitude = location.latitude;
-            record.longitude = location.longitude;
-          }),
-      );
+      const id = await SessionService.create({
+        students_count: session.students_count,
+        subject: session.subject,
+        lesson_time: session.lesson_time,
+        objective: session.objective,
+        school_id: currentSchool?.id,
+        coach_id: currentCoach?.id,
+        key_points: session.key_points,
+        teacher_id: session.teacher_id,
+        latitude: location.latitude,
+        longitude: location.longitude,
+      });
 
-      await Promise.all(
-        answers?.map(
-          async answer =>
-            await db.write(
-              async () =>
-                await db.collections.get<Answer>('answer').create(record => {
-                  record.value = answer.value;
-                  record.question_id = answer.question_id;
-                  record.session_id = _raw.id;
-                }),
-            ),
-        ),
-      );
-
-      Navigation.navigate(Routes.classObservation.observationCompleted, {
-        session_id: _raw.id,
+      navigate(PathRoutes.classObservation.completed, {
+        state: {session_id: id},
       });
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (loading)
+  if (loading) {
     return (
       <Center bg="white" w="full" h="full">
         <Spinner size="lg" />
       </Center>
     );
+  }
 
   return (
-    <VStack flex={1} py={6} safeAreaBottom bg={'gray.0'}>
+    <Page back title={t('classObservation.title')}>
       {!competencyFormatted ? (
         <Center flex={1}>
           <Spinner size={'lg'} />
@@ -163,11 +145,11 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
             </Button>
 
             <Button
-              onPress={Navigation.goBack}
               marginTop={'auto'}
               variant={'outline'}
               borderRadius={'8px'}
               isLoading={isLoading}
+              onPress={() => navigate(-1)}
               borderColor={'primary.200'}>
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'pen'} color={theme.colors.primary['200']} />
@@ -179,8 +161,8 @@ const FormConfirmation: React.FC<any> = ({route: {params}}: Props) => {
           </VStack>
         </>
       )}
-    </VStack>
+    </Page>
   );
 };
 
-export default FormConfirmation;
+export default ObservationFormConfirmation;

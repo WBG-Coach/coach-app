@@ -1,9 +1,9 @@
-import {HStack, Text, useTheme} from 'native-base';
 import React from 'react';
+import {HStack, Text, useTheme} from 'native-base';
 import {useTranslation} from 'react-i18next';
-import Icon from '../base/Icon';
 import {getTags} from './common';
 import {Props} from './types';
+import Icon from '../Icon';
 
 const StarsTag: React.FC<Props> = ({value}) => {
   const theme = useTheme();
