@@ -10,6 +10,8 @@ const StarsTag: React.FC<Props> = ({value}) => {
   const {t} = useTranslation();
   const tag = getTags(t, theme)[value];
 
+  console.log(value);
+
   return (
     <HStack alignItems={'center'} bg={tag?.background} space={1} py={1} px={2}>
       <Icon name={tag?.icon} size={16} />

@@ -25,7 +25,16 @@ const PathRoutes = {
     setup: '/classObservation/setup',
     form: '/classObservation/forms',
     confirmation: '/classObservation/confirmation',
-    completed: '/classObservation/completed',
+    completed: '/classObservation/completed/:sessionId',
+  },
+
+  sessionDetails: '/sessionDetails',
+
+  feedbackSession: {
+    about: '/feedbackSession/about/:sessionId',
+    chooseCompetence: '/feedbackSession/chooseCompetence',
+    form: '/feedbackSession/form',
+    completed: '/feedbackSession/completed',
   },
 };
 

@@ -3,12 +3,13 @@ import {Center, HStack, Text, useTheme} from 'native-base';
 import PathRoutes from '../../../../../routers/paths';
 import Icon from '../../../../../components/Icon';
 import {useNavigate} from 'react-router-native';
-import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import InfiniteScroll from '../../../../../components/InfiniteScroll';
 import SessionListEmpty from './SessionListEmpty';
 import {SessionService} from '../../../../../services/session.service';
-import {SessionItemType} from '../../../../../types/session';
+import SessionItem from './SessionItem';
+import {Session} from '../../../../../types/session';
+import Button from '../../../../../components/Button';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -21,7 +22,7 @@ const SessionList: React.FC<Props> = ({teacherId}) => {
   const [page, setPage] = useState(1);
   const [isTheEnd, setIsTheEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [sessionList, setSessionList] = useState<SessionItemType[]>([]);
+  const [sessionList, setSessionList] = useState<Session[]>([]);
 
   const navigate = useNavigate();
 
@@ -85,22 +86,34 @@ const SessionList: React.FC<Props> = ({teacherId}) => {
             />
           </Center>
         }
-        renderItem={({index}) => (
-          <Text>{index}</Text>
-          // <TeacherItem teacher={item} onPress={() => onSelectTeacher(item)} />
+        renderItem={({item, index}) => (
+          <SessionItem
+            key={index}
+            index={index}
+            session={item}
+            onPress={() => navigate(PathRoutes.sessionDetails, {state: item})}
+          />
         )}
       />
 
       {sessionList.length > 0 && (
-        <TouchableOpacity
+        <Button
+          variant="outlined"
           onPress={() =>
-            navigate(PathRoutes.teacher.form.replace(':id', 'new'))
+            navigate(
+              PathRoutes.classObservation.about.replace(
+                ':teacherId',
+                teacherId,
+              ),
+            )
           }>
           <HStack alignSelf={'center'} space={3} alignItems={'center'}>
             <Icon name={'plus'} color={theme.colors.primary[200]} />
-            <Text color={'white'}>{t('home.teachers.addNew')}</Text>
+            <Text color={'primary.200'}>
+              {t('teacher.tabs.session.newClassObservation')}
+            </Text>
           </HStack>
-        </TouchableOpacity>
+        </Button>
       )}
     </>
   );

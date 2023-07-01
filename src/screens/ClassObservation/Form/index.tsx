@@ -26,11 +26,17 @@ const ClassObservationForm: React.FC<any> = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [keyPoints, setKeyPoints] = useState('');
-  const [competencies, setCompetencies] = useState<Competence[]>([]);
-  const [answers, setAnswers] = useState<{[key: string]: number}>({});
-  const [competenciesFinished, setCompetenciesFinished] = useState<string[]>(
-    [],
+  const [competencies, setCompetencies] = useState<Competence[]>(
+    state.competencies || [],
   );
+  const [answers, setAnswers] = useState<{[key: string]: number}>(
+    state.answers || {},
+  );
+  const [competenciesFinished, setCompetenciesFinished] = useState<string[]>(
+    state.answers ? state.competencies.map((item: Competence) => item.id) : [],
+  );
+
+  console.log({state});
 
   const isDisable = useMemo(
     () => competenciesFinished.length < competencies.length,
@@ -38,35 +44,44 @@ const ClassObservationForm: React.FC<any> = () => {
   );
 
   useEffect(() => {
-    CompetenceService.listCompetenciesWithQuestions().then(result => {
-      setCompetencies(result);
+    if (competencies.length === 0) {
+      CompetenceService.listCompetenciesWithQuestions().then(result => {
+        setCompetencies(result);
+        setLoading(false);
+      });
+    } else {
       setLoading(false);
-    });
-  }, []);
+    }
+  }, [competencies]);
 
   const handleSubmitForm = async () => {
-    const formattedAnswers = Object.keys(answers).map(question_id => ({
-      question_id,
-      value: answers[question_id],
-    }));
-
     navigate(PathRoutes.classObservation.confirmation, {
+      replace: true,
       state: {
         competencies,
-        answers: formattedAnswers,
-        session: {...state, key_points: keyPoints},
+        answers,
+        session: {...state.session, key_points: keyPoints},
       },
     });
+  };
+
+  const goBack = () => {
+    navigate(PathRoutes.classObservation.setup, {replace: true, state});
   };
 
   const renderQuestion = useCallback(
     (competence: Competence, index: number) => (
       <CompetenceAccordion
-        key={competence.id}
         index={index}
+        key={competence.id}
         competence={competence}
+        initialAnswers={state?.answers}
         onComplete={newAnswers => {
-          setCompetenciesFinished(state => [...state, competence.id]);
+          setCompetenciesFinished(currentCompetenciesFinished =>
+            currentCompetenciesFinished.includes(competence.id)
+              ? currentCompetenciesFinished
+              : [...currentCompetenciesFinished, competence.id],
+          );
           setAnswers(currentAnswers => ({
             ...currentAnswers,
             ...newAnswers,
@@ -74,7 +89,7 @@ const ClassObservationForm: React.FC<any> = () => {
         }}
       />
     ),
-    [],
+    [state],
   );
 
   if (loading) {
@@ -86,7 +101,7 @@ const ClassObservationForm: React.FC<any> = () => {
   }
 
   return (
-    <Page back title={t('classObservation.title')}>
+    <Page back title={t('classObservation.title')} onBack={goBack}>
       <ScrollView>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
           {t('classObservation.form.title') || 'Class evaluation'}

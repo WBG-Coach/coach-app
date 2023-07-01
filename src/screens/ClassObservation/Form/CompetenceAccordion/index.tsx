@@ -7,26 +7,39 @@ import Accordion from '../../../../components/Accordion';
 
 const CompetenceAccordion: React.FC<Props> = ({
   onComplete,
-  competence,
   index,
+  competence,
+  initialAnswers,
 }) => {
-  const [answers, setAnswers] = useState<{[key: string]: number}>({});
-  const [isFinished, setIsFinished] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const [isFinished, setIsFinished] = useState(initialAnswers ? true : false);
+  const [answers, setAnswers] = useState<{[key: string]: number}>(
+    initialAnswers
+      ? competence.questions.reduce(
+          (acc, question) => ({
+            ...acc,
+            [question.id]: initialAnswers[question.id],
+          }),
+          {},
+        )
+      : {},
+  );
 
   useEffect(() => {
-    if (!isFinished) {
-      if (Object.keys(answers).length === competence.questions.length) {
-        setIsFinished(true);
-        onComplete(answers);
-        setIsOpen(false);
-      }
+    if (Object.keys(answers).length === competence.questions.length) {
+      setIsFinished(true);
+      onComplete(answers);
+      setIsOpen(isFinished);
     }
-  }, [isFinished, answers, competence, onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers]);
 
   const handleAnswerQuestion = (question: Question, value: number) => {
-    const newValues = {[question.id]: value};
-    setAnswers(state => ({...state, ...newValues}));
+    setAnswers(state =>
+      state[question.id] !== value
+        ? {...state, ...{[question.id]: value}}
+        : state,
+    );
   };
 
   const renderQuestion = useCallback(
@@ -34,10 +47,11 @@ const CompetenceAccordion: React.FC<Props> = ({
       <QuestionItem
         key={question.id}
         question={question}
+        initialValue={initialAnswers && initialAnswers[question.id]}
         onAnswer={handleAnswerQuestion}
       />
     ),
-    [],
+    [initialAnswers],
   );
 
   return (

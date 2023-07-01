@@ -5,14 +5,16 @@ import {Question} from '../../../../../types/question';
 import {TouchableOpacity} from 'react-native';
 import Icon from '../../../../../components/Icon';
 import StarRating from '../../../../../components/StarRating';
+import Button from '../../../../../components/Button';
 
 type Props = {
   question: Question;
+  initialValue?: number;
   onAnswer: (question: Question, value: number) => void;
 };
 
-const QuestionItem: React.FC<Props> = ({question, onAnswer}) => {
-  const [internalValue, setInternalValue] = useState(0);
+const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
+  const [internalValue, setInternalValue] = useState(initialValue || 0);
   const [tooltipData, setTooltipData] = useState<string>();
 
   return (
@@ -54,9 +56,12 @@ const QuestionItem: React.FC<Props> = ({question, onAnswer}) => {
         }}
       />
 
-      <Modal isOpen={!!tooltipData}>
+      <Modal isOpen={!!tooltipData} onClose={() => setTooltipData(undefined)}>
         <VStack w="full" mt="auto" p="16px" bg="white" borderTopRadius={'20px'}>
           <BottomSheetTooltip content={tooltipData || ''} />
+          <Button variant="outlined" onPress={() => setTooltipData(undefined)}>
+            {'Ok'}
+          </Button>
         </VStack>
       </Modal>
     </VStack>

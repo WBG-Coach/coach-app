@@ -60,6 +60,7 @@ const enTranslation = {
       addNew: 'Add new teacher',
       'no-session': 'No sessions yet. Start coaching!',
       'last-session': 'Last session on {{date}}',
+      session_interval: '(1)[1 Observation];(2-inf)[{{count}} Observations];',
     },
     emptyState: {
       title: 'No teacher registered',
@@ -256,10 +257,26 @@ const enTranslation = {
         $1: {
           title: 'How many students are in the class?',
           placeholder: 'e.g. 7',
+          options: {
+            $1: 'Only boys',
+            $2: 'Only girls',
+            $3: 'Both',
+          },
         },
         $2: {
           title: 'What is the subject?',
           placeholder: 'Math',
+          options: {
+            $1: 'Arabic',
+            $2: 'Creative and Performing Arts',
+            $3: 'General Science',
+            $4: 'Home economics',
+            $5: 'Language Art',
+            $6: 'Mathematics',
+            $7: 'PHE',
+            $8: 'Quantitative and Verbal Aptitude',
+            $9: 'Social Studies/Civics',
+          },
         },
         $3: {
           title: 'How long will the lesson last?',
@@ -281,6 +298,14 @@ const enTranslation = {
       competenciesRated: '{{count}} of {{total}} competencies rated',
       button: 'Complete observation',
     },
+  },
+
+  sessionDetails: {
+    title: 'Previous session',
+  },
+
+  feedbackSession: {
+    title: 'Coaching session',
   },
 
   noGeolocation: {
@@ -332,7 +357,7 @@ const enTranslation = {
     feedbackPreparation: {
       title: 'Choose teaching practices',
       subtitle: 'Choose 1 teaching practice to work on with the teacher',
-      teachingPratice: 'Teaching practice 2',
+      teachingPratice: 'Teaching practice {{index}}',
       button: 'Complete coaching session',
     },
     defineActions: {

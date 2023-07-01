@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Button,
   Center,
@@ -20,14 +19,14 @@ import {Competence} from '../../../types/competence';
 import {Question} from '../../../types/question';
 import CompetenceView from './CompetenceView';
 import Page from '../../../components/Page';
+import {Answer} from '../../../types/answer';
 
-const ObservationFormConfirmation: React.FC = () => {
+const ClassObservationConfirmation: React.FC = () => {
+  const theme = useTheme();
+  const {t} = useTranslation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const {t} = useTranslation();
-  const isTablet = Tablet();
-  const theme = useTheme();
-  const navigate = useNavigate();
   const {currentCoach, currentSchool} = useCoachContext();
   const {
     state: {answers, session, competencies},
@@ -49,11 +48,7 @@ const ObservationFormConfirmation: React.FC = () => {
           let questionsMax = 0;
 
           const questions = item.questions.map(question => {
-            const value = parseInt(
-              answers.find((answer: any) => answer.question_id === question.id)
-                ?.value || '0',
-              10,
-            );
+            const value = parseInt(answers[question.id] || '0', 10);
 
             questionsMax += value;
             return {
@@ -82,25 +77,42 @@ const ObservationFormConfirmation: React.FC = () => {
 
       const location = await GeolocationService.getLocation();
 
-      const id = await SessionService.create({
-        students_count: session.students_count,
-        subject: session.subject,
-        lesson_time: session.lesson_time,
-        objective: session.objective,
-        school_id: currentSchool?.id,
-        coach_id: currentCoach?.id,
-        key_points: session.key_points,
-        teacher_id: session.teacher_id,
-        latitude: location.latitude,
-        longitude: location.longitude,
-      });
+      const parsedAnswers: Partial<Answer>[] = Object.keys(answers).map(
+        question_id => ({question_id, value: answers[question_id]}),
+      );
 
-      navigate(PathRoutes.classObservation.completed, {
-        state: {session_id: id},
-      });
+      const sessionId = await SessionService.create(
+        {
+          students_count: session.students_count,
+          subject: session.subject,
+          lesson_time: session.lesson_time,
+          objective: session.objective,
+          school_id: currentSchool?.id,
+          coach_id: currentCoach?.id,
+          key_points: session.key_points,
+          teacher_id: session.teacher_id,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        },
+        parsedAnswers,
+      );
+
+      navigate(
+        PathRoutes.classObservation.completed.replace(':sessionId', sessionId),
+        {
+          replace: true,
+        },
+      );
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const goBack = () => {
+    navigate(PathRoutes.classObservation.form, {
+      replace: true,
+      state: {answers, session, competencies},
+    });
   };
 
   if (loading) {
@@ -112,24 +124,18 @@ const ObservationFormConfirmation: React.FC = () => {
   }
 
   return (
-    <Page back title={t('classObservation.title')}>
+    <Page back title={t('classObservation.title')} onBack={goBack}>
       {!competencyFormatted ? (
         <Center flex={1}>
           <Spinner size={'lg'} />
         </Center>
       ) : (
         <>
-          <VStack flex={1} px={isTablet ? '32px' : 4}>
+          <VStack flex={1}>
             <CompetenceView competences={competencyFormatted} />
           </VStack>
 
-          <VStack
-            w={'100%'}
-            px={isTablet ? '32px' : 4}
-            background={'white'}
-            pt={3}
-            space={4}
-            borderRadius={'8px 8px 0px 0px'}>
+          <VStack w={'100%'} pt={3} space={4}>
             <Button
               onPress={handlePressContinue}
               marginTop={'auto'}
@@ -145,11 +151,11 @@ const ObservationFormConfirmation: React.FC = () => {
             </Button>
 
             <Button
+              onPress={goBack}
               marginTop={'auto'}
               variant={'outline'}
               borderRadius={'8px'}
               isLoading={isLoading}
-              onPress={() => navigate(-1)}
               borderColor={'primary.200'}>
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'pen'} color={theme.colors.primary['200']} />
@@ -165,4 +171,4 @@ const ObservationFormConfirmation: React.FC = () => {
   );
 };
 
-export default ObservationFormConfirmation;
+export default ClassObservationConfirmation;

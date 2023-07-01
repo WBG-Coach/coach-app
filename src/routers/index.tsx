@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
-import {Route, Routes, useNavigate} from 'react-router-native';
+import {Route, Routes} from 'react-router-native';
 import {useCoachContext} from '../providers/coach.provider';
 import CreateAccountScreen from '../screens/CreateAccount';
 import SchoolSelectScreen from '../screens/SchoolSelect';
@@ -8,36 +8,22 @@ import TeacherFormScreen from '../screens/Teacher/TeacherForm';
 import SettingsScreen from '../screens/Settings';
 import LoginScreen from '../screens/Login';
 import HomeScreen from '../screens/Home';
-import {BackHandler} from 'react-native';
 import PathRoutes from './paths';
 import QuickNewSessionScreen from '../screens/Home/QuickActions/NewSession';
 import TeacherDetailsScreen from '../screens/Teacher/TeacherDetails';
 import ClassObservationAbout from '../screens/ClassObservation/About';
 import ClassObservationSetup from '../screens/ClassObservation/Setup';
 import ClassObservationForm from '../screens/ClassObservation/Form';
-import ObservationFormConfirmation from '../screens/ClassObservation/FormConfirmation';
+import ClassObservationConfirmation from '../screens/ClassObservation/Confirmation';
+import ClassObservationCompleted from '../screens/ClassObservation/Completed';
+import SessionDetailsScreen from '../screens/SessionDetails';
+import FeedbackSessionAbout from '../screens/FeedbackSession/About';
+import FeedbackSessionChooseCompetence from '../screens/FeedbackSession/ChooseCompetence';
+import FeedbackSessionForm from '../screens/FeedbackSession/Form';
+import FeedbackSessionCompleted from '../screens/FeedbackSession/Completed';
 
 const RouterProvider: React.FC = () => {
-  const navigate = useNavigate();
   const {currentCoach, currentSchool} = useCoachContext();
-
-  useEffect(() => {
-    const backAction = () => {
-      navigate(-1);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, [navigate]);
-
-  useEffect(() => {
-    console.log(currentCoach);
-  }, [currentCoach]);
 
   return (
     <Routes>
@@ -86,7 +72,31 @@ const RouterProvider: React.FC = () => {
           />
           <Route
             path={PathRoutes.classObservation.confirmation}
-            Component={ObservationFormConfirmation}
+            Component={ClassObservationConfirmation}
+          />
+          <Route
+            path={PathRoutes.classObservation.completed}
+            Component={ClassObservationCompleted}
+          />
+          <Route
+            path={PathRoutes.sessionDetails}
+            Component={SessionDetailsScreen}
+          />
+          <Route
+            path={PathRoutes.feedbackSession.about}
+            Component={FeedbackSessionAbout}
+          />
+          <Route
+            path={PathRoutes.feedbackSession.chooseCompetence}
+            Component={FeedbackSessionChooseCompetence}
+          />
+          <Route
+            path={PathRoutes.feedbackSession.form}
+            Component={FeedbackSessionForm}
+          />
+          <Route
+            path={PathRoutes.feedbackSession.completed}
+            Component={FeedbackSessionCompleted}
           />
         </>
       )}

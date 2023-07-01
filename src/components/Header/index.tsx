@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Box, HStack, Image, Text, useTheme} from 'native-base';
+import {BackHandler, TouchableOpacity} from 'react-native';
 import {TabletLogo} from '../../assets/images/logos';
 import {isTablet} from 'react-native-device-info';
 import {useNavigate} from 'react-router-native';
-import {TouchableOpacity} from 'react-native';
 import PathRoutes from '../../routers/paths';
 import Icon from '../Icon';
 
@@ -13,9 +13,11 @@ export type HeaderProps = {
   logo?: boolean;
   setting?: boolean;
   onBack?: () => void;
+  bg?: string;
 };
 
 const Header: React.FC<HeaderProps> = ({
+  bg,
   title,
   back,
   logo,
@@ -25,18 +27,29 @@ const Header: React.FC<HeaderProps> = ({
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (onBack) {
       onBack();
     } else {
       navigate(-1);
     }
-  };
+    return true;
+  }, [onBack, navigate]);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBack,
+    );
+
+    return () => backHandler.remove();
+  }, [handleBack]);
 
   return (
     <HStack
       w="full"
       py="12px"
+      bg={bg}
       alignItems="center"
       justifyContent="space-between"
       px={isTablet() ? '32px' : '16px'}>

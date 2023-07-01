@@ -1,20 +1,12 @@
 import React from 'react';
-import {
-  Input,
-  ScrollView,
-  Text,
-  TextArea,
-  VStack,
-  Box,
-  Center,
-} from 'native-base';
+import {ScrollView, Text, TextArea, VStack, Box} from 'native-base';
 import {useNavigate, useLocation} from 'react-router-native';
 import SelectModal from '../../../components/SelectModal';
 import PathRoutes from '../../../routers/paths';
-import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
+import Button from '../../../components/Button';
 
 const defaultValues = {
   students_count: '',
@@ -31,7 +23,8 @@ const ClassObservationSetup: React.FC = () => {
 
   const handleSubmitForm = async (values: typeof defaultValues) => {
     navigate(PathRoutes.classObservation.form, {
-      state: {...state, ...values},
+      state: {session: {...(state?.session ? state.session : {}), ...values}},
+      replace: true,
     });
   };
 
@@ -52,11 +45,29 @@ const ClassObservationSetup: React.FC = () => {
     return erros;
   };
 
+  const classroomOptions = [
+    t('classObservation.setup.questions.$1.options.$1'),
+    t('classObservation.setup.questions.$1.options.$2'),
+    t('classObservation.setup.questions.$1.options.$3'),
+  ];
+
+  const subjectOptions = [
+    t('classObservation.setup.questions.$2.options.$1'),
+    t('classObservation.setup.questions.$2.options.$2'),
+    t('classObservation.setup.questions.$2.options.$3'),
+    t('classObservation.setup.questions.$2.options.$4'),
+    t('classObservation.setup.questions.$2.options.$5'),
+    t('classObservation.setup.questions.$2.options.$6'),
+    t('classObservation.setup.questions.$2.options.$7'),
+    t('classObservation.setup.questions.$2.options.$8'),
+    t('classObservation.setup.questions.$2.options.$9'),
+  ];
+
   return (
     <Formik
       validate={validate}
       onSubmit={handleSubmitForm}
-      initialValues={defaultValues}>
+      initialValues={state?.session ? state?.session : defaultValues}>
       {({values, errors, handleSubmit, setFieldValue}) => (
         <Page back title={t('classObservation.title')}>
           <ScrollView flexGrow={0}>
@@ -81,11 +92,10 @@ const ClassObservationSetup: React.FC = () => {
                   handleSelectValue={value =>
                     setFieldValue('class_type', value)
                   }
-                  options={[
-                    {label: 'All boys', value: 'All boys'},
-                    {label: 'All girls', value: 'All girls'},
-                    {label: 'Both', value: 'Both'},
-                  ]}
+                  options={classroomOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
                   placeholder={
                     t('classObservation.setup.questions.$0.placeholder') || '0'
                   }
@@ -123,14 +133,17 @@ const ClassObservationSetup: React.FC = () => {
                   {t('classObservation.setup.questions.$2.title')}
                 </Text>
 
-                <Input
-                  onChangeText={value => setFieldValue('subject', value)}
-                  isInvalid={!!errors.subject}
-                  variant={'outline'}
-                  placeholder={
-                    t('classObservation.setup.questions.$2.placeholder') ||
-                    'Math'
-                  }
+                <SelectModal
+                  options={subjectOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
+                  handleSelectValue={value => setFieldValue('subject', value)}
+                  placeholder={t(
+                    'classObservation.setup.questions.$2.placeholder',
+                  )}
+                  bottomTitle={t('classObservation.setup.questions.$2.title')}
+                  value={values.subject}
                 />
               </VStack>
 
@@ -179,16 +192,9 @@ const ClassObservationSetup: React.FC = () => {
           </ScrollView>
 
           <Box marginTop={'auto'}>
-            <TouchableOpacity onPress={() => handleSubmit()}>
-              <Center
-                variant={'solid'}
-                borderRadius={'8px'}
-                color={'white'}
-                py={3}
-                background={'primary.200'}>
-                {t('classObservation.setup.button') || 'Next'}
-              </Center>
-            </TouchableOpacity>
+            <Button onPress={() => handleSubmit()}>
+              {t('classObservation.setup.button')}
+            </Button>
           </Box>
         </Page>
       )}

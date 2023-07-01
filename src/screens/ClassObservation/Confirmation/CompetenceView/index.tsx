@@ -23,7 +23,7 @@ const CompetenceView: React.FC<{
           'Review how you rated the class'}
       </Text>
 
-      <VStack space={6} mt={6}>
+      <VStack space={6} mt={6} mb="8px">
         {competences.map((competency, i) => (
           <VStack
             key={i}

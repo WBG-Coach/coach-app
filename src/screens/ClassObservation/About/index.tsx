@@ -115,7 +115,7 @@ const ClassObservationAbout: React.FC = () => {
         onPress={() =>
           navigate(PathRoutes.classObservation.setup, {
             replace: true,
-            state: {teacher_id: param?.teacherId},
+            state: {session: {teacher_id: param?.teacherId}},
           })
         }>
         <Text>{t('classObservation.create.button')}</Text>
