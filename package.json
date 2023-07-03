@@ -12,10 +12,13 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-native-community/geolocation": "^3.0.6",
+    "@react-native-community/netinfo": "^9.4.1",
     "@types/uuid": "^9.0.2",
+    "axios": "^1.4.0",
     "formik": "^2.4.2",
     "i18next": "^23.2.3",
     "i18next-intervalplural-postprocessor": "^3.0.0",
+    "moment": "^2.29.4",
     "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-i18next": "^13.0.1",

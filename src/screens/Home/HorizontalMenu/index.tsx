@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {isTablet as checkIsTablet} from 'react-native-device-info';
@@ -60,7 +61,7 @@ const HorizontalMenu: React.FC = () => {
                   px={isTablet ? '64px' : 9}
                   borderRadius={'8px'}
                   background={'primary.100'}>
-                  <Icon name={item.icon} color={'#264673'} />
+                  <Icon name={item.icon as any} color={'#264673'} />
                 </Center>
 
                 <Text

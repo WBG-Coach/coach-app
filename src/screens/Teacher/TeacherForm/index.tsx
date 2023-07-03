@@ -7,7 +7,9 @@ import {
   Image,
   Modal,
   Spinner,
+  useToast,
 } from 'native-base';
+import {teacherFormValidate} from '../../../helpers/validate.helper';
 import {useCoachContext} from '../../../providers/coach.provider';
 import {TeacherService} from '../../../services/teacher.service';
 import {ImageService} from '../../../services/image.service';
@@ -20,8 +22,9 @@ import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
+import Toast from '../../../components/Toast';
 
-type FormValuesType = {
+export type FormValuesType = {
   name?: string;
   surname?: string;
   subject?: string;
@@ -38,10 +41,10 @@ let initialValues: FormValuesType = {
 };
 
 const TeacherFormScreen: React.FC = () => {
-  const params = useParams<{id: string}>();
+  const toast = useToast();
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const isNew = params.id === 'new';
+  const params = useParams<{id: string}>();
   const [loading, setLoading] = useState(true);
   const [showImagePicker, setShowImagePicker] = useState(false);
   const [profileImage, setProfileImage] = useState<{
@@ -49,6 +52,7 @@ const TeacherFormScreen: React.FC = () => {
     name: string;
     value: string;
   }>();
+  const isNew = params.id === 'new';
 
   useEffect(() => {
     if (params?.id && params?.id !== 'new') {
@@ -75,19 +79,6 @@ const TeacherFormScreen: React.FC = () => {
 
   const {currentSchool, addTeacherInCurrentSchool} = useCoachContext();
 
-  const validate = (values: FormValuesType) => {
-    let errors: any = {};
-
-    if (!values.name) {
-      errors.name = 'Required';
-    }
-    if (!values.surname) {
-      errors.surname = 'Required';
-    }
-
-    return errors;
-  };
-
   const onSubmit = async (values: FormValuesType) => {
     const image_id = await createOrUpdateImage();
 
@@ -105,13 +96,19 @@ const TeacherFormScreen: React.FC = () => {
       });
     }
 
+    toast.show({
+      placement: 'top',
+      render: () => (
+        <Toast title={t('teacher.form.success')} icon="check-circle-solid" />
+      ),
+    });
+
     navigate(-1);
   };
 
   const createOrUpdateImage = () => {
     if (profileImage?.name && profileImage.value) {
       if (profileImage.id) {
-        console.log('updateImage');
         return ImageService.updateImage(
           profileImage.id,
           profileImage.name,
@@ -137,9 +134,11 @@ const TeacherFormScreen: React.FC = () => {
       back
       title={t(isNew ? 'teacher.form.title-new' : 'teacher.form.title-edit')}>
       <Formik
-        initialValues={initialValues}
         onSubmit={onSubmit}
-        validate={validate}>
+        validateOnBlur={false}
+        validateOnChange={false}
+        initialValues={initialValues}
+        validate={teacherFormValidate}>
         {({values, errors, handleSubmit, setFieldValue}) => (
           <>
             <ScrollView w={'100%'}>

@@ -10,6 +10,8 @@ import {CoachService} from '../services/coach.service';
 import {School} from '../types/school';
 import {useToast} from 'native-base';
 import {Coach} from '../types/coach';
+import Toast from '../components/Toast';
+import {useTranslation} from 'react-i18next';
 
 type CoachContextType = {
   currentCoach: Coach | null;
@@ -25,6 +27,7 @@ const CoachContext = createContext<CoachContextType | null>(null);
 const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [currentCoach, setCurrentCoach] = useState<Coach | null>(null);
   const [currentSchool, setCurrentSchool] = useState<School | null>(null);
+  const {t} = useTranslation();
   const toast = useToast();
 
   useEffect(() => {
@@ -39,12 +42,15 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
       await StorageService.setCurrentCoach(coachLogged);
     } else {
       toast.show({
-        bg: 'red.200',
         placement: 'top',
-        variant: 'solid',
-        title: 'Login error',
-        description: 'User or password incorrect',
-        _title: {fontFamily: 'Inter', fontWeight: 700},
+        render: () => (
+          <Toast
+            type="error"
+            icon="exclamation-circle-solid"
+            title={t('login.loginError')}
+            description={t('login.invalidUserPassword')}
+          />
+        ),
       });
     }
   };

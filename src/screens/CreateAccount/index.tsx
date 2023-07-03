@@ -1,7 +1,16 @@
 import React, {useState} from 'react';
-import {Center, ScrollView, Text, VStack, Image, Modal} from 'native-base';
-import {CoachService} from '../../services/session.service';
+import {
+  Center,
+  ScrollView,
+  Text,
+  VStack,
+  Image,
+  Modal,
+  useToast,
+} from 'native-base';
+import {createAccountFormValidate} from '../../helpers/validate.helper';
 import InputPassword from '../../components/InputPassword';
+import {CoachService} from '../../services/coach.service';
 import {ImageService} from '../../services/image.service';
 import ImagePicker from '../../components/ImagePicker';
 import InputText from '../../components/InputText';
@@ -12,8 +21,9 @@ import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import Page from '../../components/Page';
 import {Formik} from 'formik';
+import Toast from '../../components/Toast';
 
-type FormValuesType = {
+export type FormValuesType = {
   name?: string;
   surname?: string;
   username?: string;
@@ -30,6 +40,7 @@ const initialValues = {
 };
 
 const CreateAccountScreen: React.FC = () => {
+  const toast = useToast();
   const {t} = useTranslation();
   const navigate = useNavigate();
   const [showImagePicker, setShowImagePicker] = useState(false);
@@ -38,32 +49,8 @@ const CreateAccountScreen: React.FC = () => {
     value: string;
   }>();
 
-  const validate = (values: FormValuesType) => {
-    let errors: any = {};
-
-    if (!values.name) {
-      errors.name = 'Required';
-    }
-    if (!values.surname) {
-      errors.surname = 'Required';
-    }
-    if (!values.username) {
-      errors.username = 'Required';
-    }
-    if (!values.password) {
-      errors.password = 'Required';
-    }
-    if (!values.confirmPassword) {
-      errors.confirmPassword = 'Required';
-    } else if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match';
-    }
-    return errors;
-  };
-
   const onSubmit = async (values: FormValuesType) => {
     let image_id = '';
-
     if (profileImage?.name && profileImage.value) {
       image_id = await ImageService.saveNewImage(
         profileImage.name,
@@ -73,24 +60,36 @@ const CreateAccountScreen: React.FC = () => {
     await CoachService.create({...values, image_id});
 
     navigate(-1);
+
+    toast.show({
+      placement: 'top',
+      render: () => (
+        <Toast
+          title={t('login.createAccount.success')}
+          icon="check-circle-solid"
+        />
+      ),
+    });
   };
 
   return (
     <Page back title={t('login.createAccount.title')}>
       <Formik
-        initialValues={initialValues}
         onSubmit={onSubmit}
-        validate={validate}>
-        {({values, errors, handleSubmit, setFieldValue}) => (
+        validateOnChange={false}
+        enableReinitialize={true}
+        initialValues={initialValues}
+        validate={createAccountFormValidate}>
+        {({values, errors, isSubmitting, handleSubmit, setFieldValue}) => (
           <>
             <ScrollView w={'100%'}>
               <Center w={'100%'} my={6}>
                 <VStack alignItems={'center'} space={1}>
                   <Center
-                    background={'primary.100'}
                     w={'56px'}
                     h={'56px'}
-                    borderRadius={'500px'}>
+                    borderRadius={'500px'}
+                    background={'primary.100'}>
                     {profileImage ? (
                       <Image
                         src={profileImage?.value}
@@ -189,7 +188,10 @@ const CreateAccountScreen: React.FC = () => {
                 />
               </VStack>
             </ScrollView>
-            <Button mb={6} onPress={() => handleSubmit()}>
+            <Button
+              mb={6}
+              isLoading={isSubmitting}
+              onPress={() => handleSubmit()}>
               {t('login.createAccount.create-account-button')}
             </Button>
           </>

@@ -9,7 +9,7 @@ export const CoachService = {
   ): Promise<Coach | undefined> => {
     const db = await getDBConnection();
     const result = (await db.executeSql(
-      `SELECT * FROM coach WHERE username = '${username}' AND password = '${password}'`,
+      `SELECT * FROM coach WHERE username = '${username?.toLocaleLowerCase()}' AND password = '${password?.toLocaleLowerCase()}'`,
     )) as any[];
 
     return result[0].rows.raw()[0];
@@ -18,9 +18,11 @@ export const CoachService = {
     const db = await getDBConnection();
     await db.executeSql(`
       INSERT OR REPLACE INTO coach(id, name, surname, username, password, image_id, _status)
-      VALUES ('${uuid()}', '${coach.name}', '${coach.surname}', '${
-      coach.username
-    }', '${coach.password}', '${coach.image_id}', 'pending')
+      VALUES ('${uuid()}', '${coach.name}', '${
+      coach.surname
+    }', '${coach.username?.toLocaleLowerCase()}', '${coach.password?.toLocaleLowerCase()}', '${
+      coach.image_id
+    }', 'pending')
     `);
   },
 };

@@ -1,8 +1,8 @@
 export type Teacher = {
   id: string;
   name?: string;
-  birthdate?: Date;
   surname?: string;
+  birthdate?: Date;
   image_id?: string;
   subject?: string;
   emis_number?: string;

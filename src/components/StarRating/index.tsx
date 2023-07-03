@@ -8,8 +8,6 @@ const StarRating: React.FC<Props> = ({onPress, size, value}) => {
   const starsLength = Array(size).fill({});
   const theme = useTheme();
 
-  console.log('RENDER StarRating');
-
   const starFull = useMemo(
     () => (
       <Icon size={32} name={'star-solid'} color={theme.colors.yellow['200']} />

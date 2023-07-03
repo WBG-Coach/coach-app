@@ -1,7 +1,6 @@
 export type Coach = {
   id: string;
   name?: string;
-  birthday?: Date;
   surname?: string;
   image_id?: string;
 

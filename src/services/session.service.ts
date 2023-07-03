@@ -89,7 +89,6 @@ export const SessionService = {
       [sessionId],
     )) as any[];
 
-    console.log(result[0].rows.raw());
     return result[0].rows.raw();
   },
 
@@ -98,7 +97,6 @@ export const SessionService = {
     competence_id,
     session_id,
   }: Partial<Feedback>) => {
-    console.log({value, competence_id, session_id});
     const db = await getDBConnection();
     const feedbackId = uuid();
 

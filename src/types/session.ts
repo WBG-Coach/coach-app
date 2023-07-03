@@ -11,6 +11,7 @@ export type Session = {
   coach_id: string;
   school_id: string;
   teacher_id: string;
+
   feedback_id?: string;
 
   _status?: string;

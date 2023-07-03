@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Coach} from '../types/coach';
 import {School} from '../types/school';
+import moment from 'moment';
 
 const KEYS = {
   databaseVersion: 'DATABASE_VERSION',
@@ -17,10 +18,11 @@ export const StorageService = {
     await AsyncStorage.setItem(KEYS.databaseVersion, value);
   },
   getLastSync: async () => {
-    return (await AsyncStorage.getItem(KEYS.lastSync)) || 'no sync';
+    const date = await AsyncStorage.getItem(KEYS.lastSync);
+    return date ? moment(new Date(date)).format('LLL') : 'no sync';
   },
-  setLastSync: async (value: string) => {
-    await AsyncStorage.setItem(KEYS.lastSync, value);
+  setLastSync: async (date: Date) => {
+    await AsyncStorage.setItem(KEYS.lastSync, date.toString());
   },
   getCurrentCoach: async (): Promise<Coach | null> => {
     const coach = await AsyncStorage.getItem(KEYS.currentCoach);

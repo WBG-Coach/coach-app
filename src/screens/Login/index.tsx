@@ -43,6 +43,8 @@ const LoginScreen: React.FC = () => {
     <Formik
       validate={validate}
       onSubmit={handleLogin}
+      validateOnBlur={false}
+      validateOnChange={false}
       initialValues={initialValues}>
       {({values, errors, handleSubmit, setFieldValue}) => (
         <Page setting>

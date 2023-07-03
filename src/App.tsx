@@ -7,9 +7,12 @@ import theme from './theme';
 import './i18n';
 import {NativeRouter} from 'react-router-native';
 import {CoachProvider} from './providers/coach.provider';
+import {useNetInfo} from '@react-native-community/netinfo';
+import SyncService from './services/sync.service';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const {isConnected} = useNetInfo();
 
   const setupApp = useCallback(async () => {
     await runMigrations();
@@ -20,6 +23,12 @@ const App = () => {
   useEffect(() => {
     setupApp();
   }, [setupApp]);
+
+  useEffect(() => {
+    if (isConnected) {
+      SyncService.trySyncData();
+    }
+  }, [isConnected]);
 
   const requestPermission = async () => {
     try {

@@ -8,6 +8,8 @@ const enTranslation = {
     'create-account': 'Create account',
     username: 'Username',
     password: 'Password',
+    loginError: 'Login error',
+    invalidUserPassword: 'Incorrect username or password',
     createAccount: {
       title: 'New account',
       takePhoto: 'Take/Choose photo',
@@ -17,6 +19,7 @@ const enTranslation = {
       password: 'Password',
       'confirm-password': 'Confirm password',
       'create-account-button': 'Create account',
+      success: 'Account created successfully',
     },
   },
 
@@ -32,6 +35,8 @@ const enTranslation = {
     'unsynced-teacher': 'Teachers:',
     'unsynced-session': 'Sessions:',
     'unsynced-feedback': 'Feedback:',
+    'sync-error-title': 'Unable to sync',
+    'sync-error-description': 'Check your connection and try again',
     changeLanguage: {
       title: 'Select language',
       button: 'Next',
@@ -88,6 +93,7 @@ const enTranslation = {
       subject: 'Principal subject',
       'new-teacher-button': 'Add teacher',
       'update-teacher-button': 'Edit teacher',
+      success: 'Teacher created successfully',
     },
 
     details: {

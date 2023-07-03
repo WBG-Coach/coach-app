@@ -36,8 +36,6 @@ const ClassObservationForm: React.FC<any> = () => {
     state.answers ? state.competencies.map((item: Competence) => item.id) : [],
   );
 
-  console.log({state});
-
   const isDisable = useMemo(
     () => competenciesFinished.length < competencies.length,
     [competenciesFinished, competencies],

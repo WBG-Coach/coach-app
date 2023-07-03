@@ -1,7 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import {HStack, Spinner, Text, VStack, useToast} from 'native-base';
 import {useCoachContext} from '../../providers/coach.provider';
 import {StorageService} from '../../services/storage.service';
-import {HStack, Spinner, Text, VStack} from 'native-base';
+import {useNetInfo} from '@react-native-community/netinfo';
 import SyncService from '../../services/sync.service';
 import {useNavigate} from 'react-router-native';
 import {TouchableOpacity} from 'react-native';
@@ -10,10 +11,12 @@ import {useTranslation} from 'react-i18next';
 import i18n, {resources} from '../../i18n';
 import Icon from '../../components/Icon';
 import Page from '../../components/Page';
+import Toast from '../../components/Toast';
 
 var pkg = require('../../../package.json');
 
 const SettingsScreen: React.FC = () => {
+  const {isConnected} = useNetInfo();
   const navigate = useNavigate();
   const {t} = useTranslation();
   const currentLanguage = i18n.languages[0];
@@ -25,6 +28,7 @@ const SettingsScreen: React.FC = () => {
   });
   const [lastSync, setLastSync] = useState('');
   const [loading, setLoading] = useState(true);
+  const toast = useToast();
 
   const getSyncData = useCallback(async () => {
     setLoading(true);
@@ -36,6 +40,32 @@ const SettingsScreen: React.FC = () => {
   useEffect(() => {
     getSyncData();
   }, [getSyncData]);
+
+  const trySync = async () => {
+    setLoading(true);
+    try {
+      if (!isConnected) {
+        throw new Error();
+      }
+
+      await SyncService.trySyncData();
+      await getSyncData();
+    } catch (err) {
+      console.log(err);
+      toast.show({
+        placement: 'top',
+        render: () => (
+          <Toast
+            type="error"
+            icon="wifi-slash"
+            title={t('settings.sync-error-title')}
+            description={t('settings.sync-error-description')}
+          />
+        ),
+      });
+    }
+    setLoading(false);
+  };
 
   const options = [
     {
@@ -94,7 +124,7 @@ const SettingsScreen: React.FC = () => {
                   borderBottomColor={'gray.200'}
                   borderBottomWidth={'1px'}
                   pb={3}>
-                  <Icon name={option.icon} />
+                  <Icon name={option.icon as any} />
                   <VStack flex={1} justifyContent="center">
                     <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
                       {t(option.label)}
@@ -113,13 +143,27 @@ const SettingsScreen: React.FC = () => {
         <Spinner />
       ) : (
         <VStack mb="24px">
-          <Text
-            color={'#111417'}
-            fontFamily="Inter"
-            fontWeight="700"
-            fontSize="16px">
-            {t('settings.unsynced-items')}
-          </Text>
+          <HStack alignItems="center" justifyContent="space-between">
+            <Text
+              color={'#111417'}
+              fontFamily="Inter"
+              fontWeight="700"
+              fontSize="16px">
+              {t('settings.unsynced-items')}
+            </Text>
+            <TouchableOpacity onPress={trySync}>
+              <HStack alignItems="center">
+                <Text
+                  mr="4px"
+                  color={'#3373CC'}
+                  fontFamily="Inter"
+                  fontSize="16px">
+                  {'Try sync'}
+                </Text>
+                <Icon name="redo" color={'#3373CC'} size={24} />
+              </HStack>
+            </TouchableOpacity>
+          </HStack>
           <HStack space={1} justifyContent="space-around" my="12px">
             {renderSyncTag(
               t('settings.unsynced-teacher'),

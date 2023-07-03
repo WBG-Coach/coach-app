@@ -9,7 +9,7 @@ export const SchoolService = {
   ): Promise<School[]> => {
     const db = await getDBConnection();
     let result;
-    if (!!value) {
+    if (value) {
       result = (await db.executeSql(
         "SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s WHERE s.name LIKE UPPER(?) || '%' LIMIT ? OFFSET ?",
         [value, pageSize, (pageNumber - 1) * pageSize],

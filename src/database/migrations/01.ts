@@ -1371,7 +1371,7 @@ const insertSchools = (db: SQLiteDatabase) => {
       ('0d43e8c9-c82c-4395-bca1-1f5f70ab22d0', 'GLOBAL ARMY SCHOOL OF EXCELLENCE', 'synced'),
       ('6217d470-bc92-4837-af5f-b8c02729587a', 'BOMBALI SCHOOL FOR THE BLIND', 'synced'),
       ('83d070b9-f0d2-4a07-adc1-7f8e6f9c0ca2', 'ROSINT COMMUNITY PRIMARY SCHOOL', 'synced'),
-      ('b2b74654-bf56-4b48-8c37-43d32537d45a', 'DULFLO\DEC PRIMARY SCHOOL', 'synced'),
+      ('b2b74654-bf56-4b48-8c37-43d32537d45a', 'DULFLODEC PRIMARY SCHOOL', 'synced'),
       ('3eaa332f-e4d5-4d4b-bd22-0e2c87cdd21e', 'ALLISON INTERNATIONAL ACADEMY', 'synced'),
       ('bd789ef9-d058-47ec-99f9-68b593572cd9', 'MADAM ALICE KOROMA PRIMARY SCHOOL', 'synced'),
       ('3732e261-58d4-4e7e-b7b2-6080b1223a44', 'YELISANDA COMMUNITY JUNIOR SECONDARY SCHOOL', 'synced'),

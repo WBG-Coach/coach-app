@@ -1,7 +1,6 @@
 import {
   Box,
   Text,
-  View,
   VStack,
   Center,
   HStack,
@@ -77,7 +76,6 @@ const ClassObservationAbout: React.FC = () => {
 
           <FlatList
             data={process}
-            ItemSeparatorComponent={() => <View h={'14px'} />}
             renderItem={({item}) => (
               <>
                 <Center
