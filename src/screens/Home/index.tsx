@@ -1,13 +1,13 @@
 import React from 'react';
+import {TeacherItemType} from '../../types/teacher';
+import {useNavigate} from 'react-router-native';
 import HorizontalMenu from './HorizontalMenu';
 import {useTranslation} from 'react-i18next';
+import PathRoutes from '../../routers/paths';
 import TeachersList from './TeachersList';
 import {Text, VStack} from 'native-base';
 import Page from '../../components/Page';
 import HomeHeader from './HomeHeader';
-import {useNavigate} from 'react-router-native';
-import {TeacherItemType} from '../../types/teacher';
-import PathRoutes from '../../routers/paths';
 
 const HomeScreen: React.FC = () => {
   const {t} = useTranslation();

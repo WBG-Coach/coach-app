@@ -21,10 +21,10 @@ const QuickNewSessionScreen: React.FC = () => {
   return (
     <Page back setting logo>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-        {t('quickAccess.newSession.title')}
+        {t('home.newSession.title')}
       </Text>
       <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'} mt={2} mb={4}>
-        {t('quickAccess.newSession.subtitle')}
+        {t('home.newSession.subtitle')}
       </Text>
       <TeachersList
         showSearchFilter

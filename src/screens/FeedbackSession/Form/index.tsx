@@ -1,23 +1,22 @@
+import React, {useState} from 'react';
 import {
-  HStack,
-  Modal,
-  ScrollView,
   Text,
+  VStack,
+  HStack,
   TextArea,
   useTheme,
-  VStack,
+  ScrollView,
 } from 'native-base';
-import React, {useState} from 'react';
-import Icon from '../../../components/Icon';
-import {useTranslation} from 'react-i18next';
-import {useLocation, useNavigate} from 'react-router-native';
-import Page from '../../../components/Page';
-import PathRoutes from '../../../routers/paths';
-import ImagePicker from '../../../components/ImagePicker';
-import ImageCard from '../../../components/ImageCard';
-import Button from '../../../components/Button';
+import ImagePickerModal from '../../../components/ImagePickerModal';
 import {SessionService} from '../../../services/session.service';
+import {useLocation, useNavigate} from 'react-router-native';
 import {ImageService} from '../../../services/image.service';
+import ImageCard from '../../../components/ImageCard';
+import PathRoutes from '../../../routers/paths';
+import Button from '../../../components/Button';
+import {useTranslation} from 'react-i18next';
+import Icon from '../../../components/Icon';
+import Page from '../../../components/Page';
 
 const FeedbackSessionForm: React.FC = () => {
   const [images, setImages] = useState<
@@ -66,11 +65,10 @@ const FeedbackSessionForm: React.FC = () => {
       <VStack flex={1}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            {t('feedback.defineActions.title') || 'Define the actions'}
+            {t('feedback.defineActions.title')}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            {t('feedback.defineActions.subtitle') ||
-              'Define with the teacher what actions they will take to improve this teaching practice'}
+            {t('feedback.defineActions.subtitle')}
           </Text>
 
           <VStack mt={7} space={5}>
@@ -78,12 +76,10 @@ const FeedbackSessionForm: React.FC = () => {
               {competence.title}
             </Text>
             <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-              {t('feedback.defineActions.actionsToImprove') ||
-                'Actions to improve'}
+              {t('feedback.defineActions.actionsToImprove')}
             </Text>
             <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              {t('feedback.defineActions.describeActions') ||
-                "Describe the actions you and the teacher agreed they're going to take to improve in this teaching practice"}
+              {t('feedback.defineActions.describeActions')}
             </Text>
 
             <TextArea
@@ -103,16 +99,15 @@ const FeedbackSessionForm: React.FC = () => {
                 flex={1}
                 fontWeight={700}
                 color={'gray.700'}>
-                {t('feedback.defineActions.uploadImage') || 'Upload a image'}
+                {t('feedback.defineActions.uploadImage')}
               </Text>
               <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                {t('feedback.defineActions.optional') || 'Optional'}
+                {t('feedback.defineActions.optional')}
               </Text>
             </HStack>
 
             <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              {t('feedback.defineActions.sendPicture') ||
-                'You can also send a picture of the annotations you made during the class observation and mentoring session'}
+              {t('feedback.defineActions.sendPicture')}
             </Text>
 
             <Button
@@ -126,7 +121,7 @@ const FeedbackSessionForm: React.FC = () => {
                   fontSize={'LMD'}
                   fontWeight={500}
                   color={'primary.200'}>
-                  {t('feedback.defineActions.uploadPhoto') || 'Upload a photo'}
+                  {t('feedback.defineActions.uploadPhoto')}
                 </Text>
               </HStack>
             </Button>
@@ -155,19 +150,13 @@ const FeedbackSessionForm: React.FC = () => {
         </Button>
       </VStack>
 
-      <Modal
+      <ImagePickerModal
         isOpen={showImagePicker}
-        justifyContent="flex-end"
-        onClose={() => setShowImagePicker(false)}>
-        <VStack bg="white" w="full">
-          <ImagePicker
-            handleClose={() => setShowImagePicker(false)}
-            handleSelectImage={asset =>
-              setImages([...images, {...asset, created_at: Date.now()}])
-            }
-          />
-        </VStack>
-      </Modal>
+        onClose={() => setShowImagePicker(false)}
+        handleSelectImage={asset =>
+          setImages([...images, {...asset, created_at: Date.now()}])
+        }
+      />
     </Page>
   );
 };

@@ -1,4 +1,5 @@
 export type Props = {
-  image?: {name: string; value: string};
+  isOpen: boolean;
+  onClose: () => void;
   handleSelectImage: (asset: {name: string; value: string}) => void;
 };

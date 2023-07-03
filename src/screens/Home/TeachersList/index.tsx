@@ -86,8 +86,8 @@ const TeachersList: React.FC<Props> = ({
         <InputText
           mb={2}
           value={filter}
-          placeholder={'Search'}
           onChangeText={setFilter}
+          placeholder={t('common.search')}
         />
       )}
 

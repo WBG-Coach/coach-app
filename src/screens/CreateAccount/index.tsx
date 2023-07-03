@@ -43,7 +43,6 @@ const CreateAccountScreen: React.FC = () => {
   const toast = useToast();
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const [showImagePicker, setShowImagePicker] = useState(false);
   const [profileImage, setProfileImage] = useState<{
     name: string;
     value: string;
@@ -83,36 +82,10 @@ const CreateAccountScreen: React.FC = () => {
         {({values, errors, isSubmitting, handleSubmit, setFieldValue}) => (
           <>
             <ScrollView w={'100%'}>
-              <Center w={'100%'} my={6}>
-                <VStack alignItems={'center'} space={1}>
-                  <Center
-                    w={'56px'}
-                    h={'56px'}
-                    borderRadius={'500px'}
-                    background={'primary.100'}>
-                    {profileImage ? (
-                      <Image
-                        src={profileImage?.value}
-                        w={'56px'}
-                        h={'56px'}
-                        borderRadius={'500px'}
-                        alt={'User image'}
-                      />
-                    ) : (
-                      <Icon name={'user'} />
-                    )}
-                  </Center>
-
-                  <TouchableOpacity onPress={() => setShowImagePicker(true)}>
-                    <Text
-                      fontSize={'LMD'}
-                      fontWeight={500}
-                      color={'primary.200'}>
-                      {t('login.createAccount.takePhoto')}
-                    </Text>
-                  </TouchableOpacity>
-                </VStack>
-              </Center>
+              <ImagePicker
+                image={profileImage}
+                handleSelectImage={setProfileImage}
+              />
 
               <VStack flex={1} mb={4}>
                 <Text
@@ -197,18 +170,6 @@ const CreateAccountScreen: React.FC = () => {
           </>
         )}
       </Formik>
-
-      <Modal
-        isOpen={showImagePicker}
-        justifyContent="flex-end"
-        onClose={() => setShowImagePicker(false)}>
-        <VStack bg="white" w="full">
-          <ImagePicker
-            handleClose={() => setShowImagePicker(false)}
-            handleSelectImage={setProfileImage}
-          />
-        </VStack>
-      </Modal>
     </Page>
   );
 };

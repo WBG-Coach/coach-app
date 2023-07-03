@@ -59,13 +59,13 @@ const SchoolSelectScreen: React.FC = () => {
   return (
     <Page setting logo>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
-        {t('setupUserData.schoolSelect.title')}
+        {t('schoolSelect.title')}
       </Text>
 
       <InputText
         mb={2}
         value={filter}
-        placeholder={'Search'}
+        placeholder={t('common.search')}
         onChangeText={setFilter}
       />
 

@@ -1,7 +1,17 @@
 const enTranslation = {
   common: {
     'load-more': 'Load more',
+    search: 'Search',
+    'image-picker': {
+      'upload-image-modal-title': 'Upload as image',
+      'upload-image-modal-description':
+        'Choose the way you want do send the picture',
+      'take-photo-button': 'Take photo',
+      'photo-gallery-button': 'Photo gallery',
+    },
   },
+
+  splash: {},
 
   login: {
     'login-button': 'Login',
@@ -45,6 +55,7 @@ const enTranslation = {
 
   schoolSelect: {
     title: 'Select your school',
+    search: 'Search',
     'item-description_interval':
       '(0)[No teachers here];(1)[1 teacher here];(2-inf)[{{count}} teachers here];',
   },
@@ -71,15 +82,13 @@ const enTranslation = {
       title: 'No teacher registered',
       description: 'Add a new teacher to start coaching',
     },
-    quickAccess: {
-      newSession: {
-        title: 'Start new session',
-        subtitle: 'Select a teacher and start a new observation session',
-      },
-      stats: {
-        title: 'Check teacher stats',
-        subtitle: 'Select a teacher to see their progress',
-      },
+    newSession: {
+      title: 'Start new session',
+      subtitle: 'Select a teacher and start a new observation session',
+    },
+    stats: {
+      title: 'Check teacher stats',
+      subtitle: 'Select a teacher to see their progress',
     },
   },
 
@@ -154,80 +163,40 @@ const enTranslation = {
         sessionName: 'Session',
       },
     },
-    create: {
-      editTeacher: 'Edit a teacher',
-      newTeacher: 'Add a new teacher',
-      takePhoto: 'Take/choose photo',
-      firstName: 'First name',
-      lastName: 'Last name',
-      emisNumber: 'EMIS number',
-      principalSubject: 'Main subject',
-      principalSubjectPlaceholder: 'e.g. Math',
-      dateOfBirth: 'Date of birth',
-      buttonSave: 'Save',
-      buttonAdd: 'Add teacher',
-    },
-    created: {
-      title: 'New teacher added',
-      subtitle:
-        'The teacher is now available in the list of teachers for coaching',
-      startCoaching: 'Start coaching this teacher',
-      selectProfile:
-        'Select their profile and click on the "New class observation" button to get started',
-      button: 'Finish',
-    },
   },
 
   classObservation: {
     title: 'Class observation',
-    observationCompleted: {
-      title: 'Class observation complete',
-      subtitle: 'Thank you. The class observation section is complete!',
-      whatsNext: "What's next?",
-      startFeedback:
-        'You can start entering your feedback to the teacher  now or you can go back to the home and do it later by selecting the teacher profile',
-      button: 'Provide feedback',
-      buttonBack: 'Go back to home',
-    },
-    formConfirmation: {
-      button: 'Confirm',
-      buttonEdit: 'Edit',
-      competenceView: {
-        title: 'Class observation summary',
-        subtitle: 'Review your class observation',
-        overallRating: 'Overall observation rating',
-      },
-    },
-    create: {
+
+    about: {
       title: 'Coaching process',
-      button: 'Start preparation',
-      process: {
-        el1: {
-          title: 'Preparation',
-          subtitle: '5 minutes',
-          description:
-            'Talk to the teacher before the class and review your notes if you already had a coach observation before.',
-        },
-        el2: {
-          title: 'Classroom observation',
-          subtitle: '30-45 minutes',
-          description:
-            'Sit at the back of the class to make notes and remember to put your phone in silent mode.',
-        },
-        el3: {
-          title: 'Coaching conversation',
-          subtitle: '20-30 minutes',
-          description:
-            'Present your observations to the teacher, pointing out the positive and areas of improvement points of their class.',
-        },
-        el4: {
-          title: 'Next steps',
-          subtitle: '5 minutes',
-          description:
-            'After agreeing with the teacher about priority next steps, schedule your next visit.',
-        },
+      'start-button': 'Start preparation',
+      step1: {
+        title: 'Preparation',
+        subtitle: '5 minutes',
+        description:
+          'Talk to the teacher before the class and review your notes if you already had a coach observation before.',
+      },
+      step2: {
+        title: 'Classroom observation',
+        subtitle: '30-45 minutes',
+        description:
+          'Sit at the back of the class to make notes and remember to put your phone in silent mode.',
+      },
+      step3: {
+        title: 'Coaching conversation',
+        subtitle: '20-30 minutes',
+        description:
+          'Present your observations to the teacher, pointing out the positive and areas of improvement points of their class.',
+      },
+      step4: {
+        title: 'Next steps',
+        subtitle: '5 minutes',
+        description:
+          'After agreeing with the teacher about priority next steps, schedule your next visit.',
       },
     },
+
     onboarding: {
       skip: 'Skip',
       start: 'Start',
@@ -250,6 +219,7 @@ const enTranslation = {
         },
       },
     },
+
     setup: {
       title: 'About the lesson',
       subtitle: 'Ask the teacher the following questions',
@@ -294,6 +264,7 @@ const enTranslation = {
         },
       },
     },
+
     form: {
       title: 'Class Observation',
       subtitle: 'Score each teaching practice related to your observation',
@@ -302,53 +273,30 @@ const enTranslation = {
       spaceAdditional:
         "Use this space for additional notes of items that you'd like to discuss with the teacher",
       competenciesRated: '{{count}} of {{total}} competencies rated',
+      'keyPoints-placeholder': 'Positive and negative points',
       button: 'Complete observation',
     },
-  },
 
-  sessionDetails: {
-    title: 'Previous session',
-  },
-
-  feedbackSession: {
-    title: 'Coaching session',
-  },
-
-  noGeolocation: {
-    title: 'Location service must be allowed',
-    description:
-      'We need access to your location to provide a great Coach experience',
-    allowButton: 'Allow location services',
-  },
-
-  setupUserData: {
-    schoolSelect: {
-      title: 'Select your school',
-      lineDesc: '{{count}} teachers here',
-      emptyList: 'No schools found',
-    },
-    profileSelect: {
-      title: 'Select your coach profile',
-      lineDesc: 'Teachers coached: {{count}}',
-      emptyList: 'No coach profiles found',
-      create: {
-        title: 'Create a new coach profile',
-        takePhoto: 'Take/choose photo',
-        name: 'First name',
-        surname: 'Last name',
-        emis: 'EMIS number',
-        optional: 'Optional',
-        button: 'Add profile',
-      },
-      created: {
-        title: 'Profile created',
-        subtitle: 'You may now select your profile and coach teachers',
-        button: 'Go to coach profile selection',
+    formConfirmation: {
+      button: 'Confirm',
+      buttonEdit: 'Edit',
+      competenceView: {
+        title: 'Class observation summary',
+        subtitle: 'Review your class observation',
+        overallRating: 'Overall observation rating',
       },
     },
-  },
 
-  splash: {},
+    observationCompleted: {
+      title: 'Class observation complete',
+      subtitle: 'Thank you. The class observation section is complete!',
+      whatsNext: "What's next?",
+      startFeedback:
+        'You can start entering your feedback to the teacher  now or you can go back to the home and do it later by selecting the teacher profile',
+      button: 'Provide feedback',
+      buttonBack: 'Go back to home',
+    },
+  },
 
   feedback: {
     mentoringSection: {
@@ -390,24 +338,15 @@ const enTranslation = {
       button: 'Go back to home',
     },
   },
-  header: {
-    settings: 'Settings',
-    newsession: 'New session',
-    teacher: 'Teacher',
-    newTeacher: 'New teacher',
-    updateTeacher: 'Update teacher',
-    newClassObservation: 'New class observation',
-    preparation: 'Preparation',
-    classObservation: 'Class Observation',
-    observationSummary: 'Observation summary',
-    observationComplete: 'Observation complete',
-    mentoringSession: 'Coaching session',
-    feedbackPreparation: 'Prepare feedback',
-    feedbackComplete: 'Coaching session complete',
-    previousSession: 'Previous session',
-    pendingSession: 'Pending sessions',
-    teacherstats: 'Teacher stats',
+
+  sessionDetails: {
+    title: 'Previous session',
   },
+
+  feedbackSession: {
+    title: 'Coaching session',
+  },
+
   components: {
     starsTag: {
       notEvaluted: 'Not evaluated',

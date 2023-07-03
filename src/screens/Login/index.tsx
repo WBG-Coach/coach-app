@@ -10,8 +10,9 @@ import PathRoutes from '../../routers/paths';
 import Button from '../../components/Button';
 import Page from '../../components/Page';
 import {Formik} from 'formik';
+import {loginFormValidate} from '../../helpers/validate.helper';
 
-type LoginFormType = {username: string; password: string};
+export type LoginFormType = {username: string; password: string};
 
 const initialValues = {
   username: '',
@@ -23,28 +24,16 @@ const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
   const {login} = useCoachContext();
 
-  const validate = (values: LoginFormType) => {
-    let errors: any = {};
-
-    if (!values.username) {
-      errors.username = 'Required';
-    }
-    if (!values.password) {
-      errors.password = 'Required';
-    }
-    return errors;
-  };
-
   const handleLogin = async ({username, password}: LoginFormType) => {
     await login(username, password);
   };
 
   return (
     <Formik
-      validate={validate}
       onSubmit={handleLogin}
       validateOnBlur={false}
       validateOnChange={false}
+      validate={loginFormValidate}
       initialValues={initialValues}>
       {({values, errors, handleSubmit, setFieldValue}) => (
         <Page setting>

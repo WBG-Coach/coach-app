@@ -1,14 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {
+  Center,
+  HStack,
+  Image,
+  Modal,
+  Text,
+  useTheme,
+  VStack,
+} from 'native-base';
 import {TouchableOpacity} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {HStack, Text, useTheme, VStack} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import {Props} from './types';
 import Icon from '../Icon';
+import ImagePickerModal from '../ImagePickerModal';
 
-const ImagePicker: React.FC<Props> = ({handleSelectImage, handleClose}) => {
+const ImagePicker: React.FC<Props> = ({image, handleSelectImage}) => {
   const theme = useTheme();
   const {t} = useTranslation();
+  const [showImagePicker, setShowImagePicker] = useState(false);
 
   const handleOpenGallery = async () => {
     const {assets} = await launchImageLibrary({
@@ -22,7 +32,7 @@ const ImagePicker: React.FC<Props> = ({handleSelectImage, handleClose}) => {
       });
     }
 
-    handleClose();
+    setShowImagePicker(false);
   };
 
   const handleOpenCam = async () => {
@@ -37,43 +47,44 @@ const ImagePicker: React.FC<Props> = ({handleSelectImage, handleClose}) => {
       });
     }
 
-    handleClose();
+    setShowImagePicker(false);
   };
 
   return (
-    <VStack p={4}>
-      <Text fontSize={'HXS'} fontWeight={600} color={'gray.700'}>
-        {t('feedback.defineActions.uploadImage') || 'Upload a image'}
-      </Text>
-      <Text mt={2} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-        Choose the way you want do send the picture of your annotations
-      </Text>
+    <>
+      <Center w={'100%'} my={6}>
+        <VStack alignItems={'center'} space={1}>
+          <Center
+            w={'56px'}
+            h={'56px'}
+            borderRadius={'500px'}
+            background={'primary.100'}>
+            {image ? (
+              <Image
+                src={image?.value}
+                w={'56px'}
+                h={'56px'}
+                borderRadius={'500px'}
+                alt={'User image'}
+              />
+            ) : (
+              <Icon name={'user'} />
+            )}
+          </Center>
 
-      <VStack w={'100%'} px={4} py={6}>
-        <TouchableOpacity onPress={handleOpenCam}>
-          <HStack
-            alignItems={'center'}
-            w={'100%'}
-            py={4}
-            borderBottomWidth={'1px'}
-            borderBottomColor={'gray.200'}>
-            <Text flex={1} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-              Take photo
+          <TouchableOpacity onPress={() => setShowImagePicker(true)}>
+            <Text fontSize={'LMD'} fontWeight={500} color={'primary.200'}>
+              {t('login.createAccount.takePhoto')}
             </Text>
-            <Icon name={'camera'} color={theme.colors.primary['200']} />
-          </HStack>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleOpenGallery}>
-          <HStack alignItems={'center'} w={'100%'} py={4}>
-            <Text flex={1} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-              Photo gallery
-            </Text>
-            <Icon name={'image'} color={theme.colors.primary['200']} />
-          </HStack>
-        </TouchableOpacity>
-      </VStack>
-    </VStack>
+          </TouchableOpacity>
+        </VStack>
+      </Center>
+      <ImagePickerModal
+        isOpen={showImagePicker}
+        onClose={() => setShowImagePicker(false)}
+        handleSelectImage={handleSelectImage}
+      />
+    </>
   );
 };
 

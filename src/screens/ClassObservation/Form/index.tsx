@@ -8,15 +8,15 @@ import {
   Center,
   ScrollView,
 } from 'native-base';
+import CompetenceService from '../../../services/competence.service';
 import {useLocation, useNavigate} from 'react-router-native';
 import {isTablet as Tablet} from 'react-native-device-info';
 import CompetenceAccordion from './CompetenceAccordion';
 import {Competence} from '../../../types/competence';
 import PathRoutes from '../../../routers/paths';
+import Button from '../../../components/Button';
 import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
-import Button from '../../../components/Button';
-import CompetenceService from '../../../services/competence.service';
 import Page from '../../../components/Page';
 
 const ClassObservationForm: React.FC<any> = () => {
@@ -102,23 +102,20 @@ const ClassObservationForm: React.FC<any> = () => {
     <Page back title={t('classObservation.title')} onBack={goBack}>
       <ScrollView>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-          {t('classObservation.form.title') || 'Class evaluation'}
+          {t('classObservation.form.title')}
         </Text>
         <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-          {t('classObservation.form.subtitle') ||
-            'Rate each topic with your observation'}
+          {t('classObservation.form.subtitle')}
         </Text>
 
         {competencies.map(renderQuestion)}
 
         <VStack py={4}>
           <Text fontSize={'TXL'} fontWeight={700} color={'gray.700'}>
-            {t('classObservation.form.keyPoints') ||
-              'Key points to be discussed'}
+            {t('classObservation.form.keyPoints')}
           </Text>
           <Text mt={4} fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
-            {t('classObservation.form.pointsToDiscuss') ||
-              'What you want to discuss with the teacher?'}
+            {t('classObservation.form.pointsToDiscuss')}
           </Text>
 
           <TextArea
@@ -126,7 +123,7 @@ const ClassObservationForm: React.FC<any> = () => {
             value={keyPoints}
             autoCompleteType={'off'}
             onChangeText={setKeyPoints}
-            placeholder={'Positive and negative points'}
+            placeholder={t('classObservation.form.keyPoints-placeholder')}
           />
 
           <Text mt={2} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>

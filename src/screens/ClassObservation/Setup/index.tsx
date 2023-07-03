@@ -2,11 +2,11 @@ import React from 'react';
 import {ScrollView, Text, TextArea, VStack, Box} from 'native-base';
 import {useNavigate, useLocation} from 'react-router-native';
 import SelectModal from '../../../components/SelectModal';
+import Button from '../../../components/Button';
 import PathRoutes from '../../../routers/paths';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
-import Button from '../../../components/Button';
 
 const defaultValues = {
   students_count: '',
@@ -72,18 +72,16 @@ const ClassObservationSetup: React.FC = () => {
         <Page back title={t('classObservation.title')}>
           <ScrollView flexGrow={0}>
             <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-              {t('classObservation.setup.title') || 'About the lesson'}
+              {t('classObservation.setup.title')}
             </Text>
             <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.subtitle') ||
-                'Ask the teacher the following questions'}
+              {t('classObservation.setup.subtitle')}
             </Text>
 
             <VStack space={4} mt={6}>
               <VStack space={2}>
                 <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-                  {t('classObservation.setup.questions.$0.title') ||
-                    'How many students are boys?'}
+                  {t('classObservation.setup.questions.$0.title')}
                 </Text>
 
                 <SelectModal
@@ -96,17 +94,16 @@ const ClassObservationSetup: React.FC = () => {
                     value: option,
                     label: option,
                   }))}
-                  placeholder={
-                    t('classObservation.setup.questions.$0.placeholder') || '0'
-                  }
+                  placeholder={t(
+                    'classObservation.setup.questions.$0.placeholder',
+                  )}
                   bottomTitle={t('classObservation.setup.questions.$0.title')}
                 />
               </VStack>
 
               <VStack space={2}>
                 <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-                  {t('classObservation.setup.questions.$1.title') ||
-                    'How many students are boys?'}
+                  {t('classObservation.setup.questions.$1.title')}
                 </Text>
 
                 <SelectModal
@@ -120,9 +117,9 @@ const ClassObservationSetup: React.FC = () => {
                   handleSelectValue={value =>
                     setFieldValue('students_count', value)
                   }
-                  placeholder={
-                    t('classObservation.setup.questions.$1.placeholder') || '15'
-                  }
+                  placeholder={t(
+                    'classObservation.setup.questions.$1.placeholder',
+                  )}
                   value={values.students_count}
                   bottomTitle={t('classObservation.setup.questions.$1.title')}
                 />
@@ -174,18 +171,16 @@ const ClassObservationSetup: React.FC = () => {
 
               <VStack space={2} mb="4px">
                 <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-                  {t('classObservation.setup.questions.$4.title') ||
-                    "Teacher's description of the class"}
+                  {t('classObservation.setup.questions.$4.title')}
                 </Text>
                 <TextArea
                   onChangeText={value => setFieldValue('objective', value)}
                   isInvalid={!!errors.objective}
                   autoCompleteType={'off'}
                   variant={'outline'}
-                  placeholder={
-                    t('classObservation.setup.questions.$4.placeholder') ||
-                    "Teacher's description of the class"
-                  }
+                  placeholder={t(
+                    'classObservation.setup.questions.$4.placeholder',
+                  )}
                 />
               </VStack>
             </VStack>

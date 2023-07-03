@@ -9,25 +9,27 @@ import {TouchableOpacity} from 'react-native';
 import PathRoutes from '../../routers/paths';
 import {useTranslation} from 'react-i18next';
 import i18n, {resources} from '../../i18n';
+import Toast from '../../components/Toast';
 import Icon from '../../components/Icon';
 import Page from '../../components/Page';
-import Toast from '../../components/Toast';
 
 var pkg = require('../../../package.json');
 
+const pendingCountInit = {
+  pendingTeachers: 0,
+  pendingFeedbacks: 0,
+  pendingSessions: 0,
+};
+
 const SettingsScreen: React.FC = () => {
+  const [pendingCount, setPendingCount] = useState(pendingCountInit);
+  const {logout, currentCoach} = useCoachContext();
+  const [lastSync, setLastSync] = useState('');
+  const [loading, setLoading] = useState(true);
+  const currentLanguage = i18n.languages[0];
   const {isConnected} = useNetInfo();
   const navigate = useNavigate();
   const {t} = useTranslation();
-  const currentLanguage = i18n.languages[0];
-  const {logout, currentCoach} = useCoachContext();
-  const [pendingCount, setPendingCount] = useState({
-    pendingTeachers: 0,
-    pendingFeedbacks: 0,
-    pendingSessions: 0,
-  });
-  const [lastSync, setLastSync] = useState('');
-  const [loading, setLoading] = useState(true);
   const toast = useToast();
 
   const getSyncData = useCallback(async () => {
@@ -151,18 +153,22 @@ const SettingsScreen: React.FC = () => {
               fontSize="16px">
               {t('settings.unsynced-items')}
             </Text>
-            <TouchableOpacity onPress={trySync}>
-              <HStack alignItems="center">
-                <Text
-                  mr="4px"
-                  color={'#3373CC'}
-                  fontFamily="Inter"
-                  fontSize="16px">
-                  {'Try sync'}
-                </Text>
-                <Icon name="redo" color={'#3373CC'} size={24} />
-              </HStack>
-            </TouchableOpacity>
+            {(pendingCount.pendingTeachers > 0 ||
+              pendingCount.pendingSessions > 0 ||
+              pendingCount.pendingFeedbacks > 0) && (
+              <TouchableOpacity onPress={trySync}>
+                <HStack alignItems="center">
+                  <Text
+                    mr="4px"
+                    color={'#3373CC'}
+                    fontFamily="Inter"
+                    fontSize="16px">
+                    {'Try sync'}
+                  </Text>
+                  <Icon name="redo" color={'#3373CC'} size={24} />
+                </HStack>
+              </TouchableOpacity>
+            )}
           </HStack>
           <HStack space={1} justifyContent="space-around" my="12px">
             {renderSyncTag(

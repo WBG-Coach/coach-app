@@ -15,6 +15,16 @@ const ClassObservationCompleted: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams<{sessionId: string}>();
 
+  const startFeedbackSession = () => {
+    navigate(
+      PathRoutes.feedbackSession.about.replace(
+        ':sessionId',
+        params.sessionId || '',
+      ),
+      {replace: true},
+    );
+  };
+
   return (
     <Page>
       <Center flex={1} flexDirection={'column'}>
@@ -38,12 +48,10 @@ const ClassObservationCompleted: React.FC = () => {
         </HStack>
 
         <Text mt={8} fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-          {t('classObservation.observationCompleted.title') ||
-            'Class observation complete'}
+          {t('classObservation.observationCompleted.title')}
         </Text>
         <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.600'}>
-          {t('classObservation.observationCompleted.subtitle') ||
-            'Congratulations, you just completed the class evaluation process!'}
+          {t('classObservation.observationCompleted.subtitle')}
         </Text>
 
         <HStack
@@ -61,8 +69,7 @@ const ClassObservationCompleted: React.FC = () => {
           />
           <VStack flex={1}>
             <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
-              {t('classObservation.observationCompleted.whatsNext') ||
-                "What's next?"}
+              {t('classObservation.observationCompleted.whatsNext')}
             </Text>
             <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
               {t('classObservation.observationCompleted.startFeedback')}
@@ -79,20 +86,12 @@ const ClassObservationCompleted: React.FC = () => {
         space={4}
         borderRadius={'8px 8px 0px 0px'}>
         <Button
-          marginTop={'auto'}
-          variant={'solid'}
-          borderRadius={'8px'}
           color={'white'}
+          variant={'solid'}
+          marginTop={'auto'}
+          borderRadius={'8px'}
           background={'primary.200'}
-          onPress={() =>
-            navigate(
-              PathRoutes.feedbackSession.about.replace(
-                ':sessionId',
-                params.sessionId || '',
-              ),
-              {replace: true},
-            )
-          }>
+          onPress={startFeedbackSession}>
           {t('classObservation.observationCompleted.button')}
         </Button>
 

@@ -1,14 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Center,
-  ScrollView,
-  Text,
-  VStack,
-  Image,
-  Modal,
-  Spinner,
-  useToast,
-} from 'native-base';
+import {Center, ScrollView, Text, VStack, Spinner, useToast} from 'native-base';
 import {teacherFormValidate} from '../../../helpers/validate.helper';
 import {useCoachContext} from '../../../providers/coach.provider';
 import {TeacherService} from '../../../services/teacher.service';
@@ -17,9 +8,7 @@ import {useNavigate, useParams} from 'react-router-native';
 import ImagePicker from '../../../components/ImagePicker';
 import InputText from '../../../components/InputText';
 import Button from '../../../components/Button';
-import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import Icon from '../../../components/Icon';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
 import Toast from '../../../components/Toast';
@@ -46,7 +35,6 @@ const TeacherFormScreen: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams<{id: string}>();
   const [loading, setLoading] = useState(true);
-  const [showImagePicker, setShowImagePicker] = useState(false);
   const [profileImage, setProfileImage] = useState<{
     id?: string;
     name: string;
@@ -142,36 +130,12 @@ const TeacherFormScreen: React.FC = () => {
         {({values, errors, handleSubmit, setFieldValue}) => (
           <>
             <ScrollView w={'100%'}>
-              <Center w={'100%'} my={6}>
-                <VStack alignItems={'center'} space={1}>
-                  <Center
-                    w={'56px'}
-                    h={'56px'}
-                    borderRadius={'500px'}
-                    background={'primary.100'}>
-                    {profileImage ? (
-                      <Image
-                        w={'56px'}
-                        h={'56px'}
-                        alt={'User image'}
-                        borderRadius={'500px'}
-                        src={profileImage?.value}
-                      />
-                    ) : (
-                      <Icon name={'user'} />
-                    )}
-                  </Center>
-
-                  <TouchableOpacity onPress={() => setShowImagePicker(true)}>
-                    <Text
-                      fontSize={'LMD'}
-                      fontWeight={500}
-                      color={'primary.200'}>
-                      {t('login.createAccount.takePhoto')}
-                    </Text>
-                  </TouchableOpacity>
-                </VStack>
-              </Center>
+              <ImagePicker
+                image={profileImage}
+                handleSelectImage={newImage =>
+                  setProfileImage({...profileImage, ...newImage})
+                }
+              />
 
               <VStack flex={1} mb={4}>
                 <Text
@@ -241,20 +205,6 @@ const TeacherFormScreen: React.FC = () => {
           </>
         )}
       </Formik>
-
-      <Modal
-        isOpen={showImagePicker}
-        justifyContent="flex-end"
-        onClose={() => setShowImagePicker(false)}>
-        <VStack bg="white" w="full">
-          <ImagePicker
-            handleClose={() => setShowImagePicker(false)}
-            handleSelectImage={newImage =>
-              setProfileImage({...profileImage, ...newImage})
-            }
-          />
-        </VStack>
-      </Modal>
     </Page>
   );
 };

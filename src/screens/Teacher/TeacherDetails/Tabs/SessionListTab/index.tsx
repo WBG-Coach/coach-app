@@ -65,6 +65,12 @@ const SessionList: React.FC<Props> = ({teacherId}) => {
     }
   };
 
+  const startNewClassObservation = () => {
+    navigate(
+      PathRoutes.classObservation.about.replace(':teacherId', teacherId),
+    );
+  };
+
   return (
     <>
       <InfiniteScroll
@@ -74,16 +80,7 @@ const SessionList: React.FC<Props> = ({teacherId}) => {
         loadNextPage={loadNextPage}
         emptyComponent={
           <Center mt={'80px'}>
-            <SessionListEmpty
-              handleCreate={() =>
-                navigate(
-                  PathRoutes.classObservation.about.replace(
-                    ':teacherId',
-                    teacherId,
-                  ),
-                )
-              }
-            />
+            <SessionListEmpty handleCreate={startNewClassObservation} />
           </Center>
         }
         renderItem={({item, index}) => (
@@ -97,16 +94,7 @@ const SessionList: React.FC<Props> = ({teacherId}) => {
       />
 
       {sessionList.length > 0 && (
-        <Button
-          variant="outlined"
-          onPress={() =>
-            navigate(
-              PathRoutes.classObservation.about.replace(
-                ':teacherId',
-                teacherId,
-              ),
-            )
-          }>
+        <Button variant="outlined" onPress={startNewClassObservation}>
           <HStack alignSelf={'center'} space={3} alignItems={'center'}>
             <Icon name={'plus'} color={theme.colors.primary[200]} />
             <Text color={'primary.200'}>
