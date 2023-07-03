@@ -39,7 +39,7 @@ const SyncService = {
       feedbacks: await SyncService.getPendingFeedbacks(db),
     };
 
-    const response = await axios.post('http://192.168.5.120:3000/sync', {
+    const response = await axios.post('https://api-sl.coachdigital.org/sync', {
       changes,
       model: DeviceInfo.getDeviceId(),
       apiLevel: await DeviceInfo.getApiLevel(),
