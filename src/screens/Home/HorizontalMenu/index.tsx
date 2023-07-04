@@ -29,11 +29,11 @@ const HorizontalMenu: React.FC = () => {
       label: t('home.menu-items.switchSchools'),
       onPress: () => selectSchool(null),
     },
-    // {
-    //   icon: 'chart-line',
-    //   label: t('home.menu-items.statics'),
-    //   onPress: () => navigate(PathRoutes.home.stats),
-    // },
+    {
+      icon: 'chart-line',
+      label: t('home.menu-items.statics'),
+      onPress: () => navigate(PathRoutes.home.stats),
+    },
   ];
 
   return (

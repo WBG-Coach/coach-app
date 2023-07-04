@@ -11,26 +11,32 @@ import TeacherStatsTab from './Tabs/TeacherStats';
 import TabButton from '../../../components/TabButton';
 import SessionList from './Tabs/SessionListTab';
 
+type params = {
+  id: string;
+  tabIndex: string;
+};
+
 const TeacherDetailsScreen: React.FC = () => {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const {id, tabIndex} = useParams<params>();
+  const defaultTab = tabIndex === ':tabIndex' ? 0 : parseInt(tabIndex || '0');
+  const [selectedTabIndex, setSelectedTabIndex] = useState(defaultTab);
   const [teacher, setTeacher] = useState<TeacherDetailsType>();
-  const params = useParams<{id: string}>();
   const {currentSchool} = useCoachContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (params.id) {
-      TeacherService.getTeacherDetails(params.id).then(setTeacher);
+    if (id) {
+      TeacherService.getTeacherDetails(id).then(setTeacher);
     }
-  }, [params]);
+  }, [id]);
 
   const tabs = [
     {
-      Component: <SessionList teacherId={params.id || ''} />,
+      Component: <SessionList teacherId={id || ''} />,
       label: 'teacher.tabs.session.title',
     },
     {
-      Component: <TeacherStatsTab />,
+      Component: <TeacherStatsTab teacherId={id || ''} />,
       label: 'teacher.tabs.stats.title',
     },
   ];

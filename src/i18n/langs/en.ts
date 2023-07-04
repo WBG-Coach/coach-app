@@ -161,6 +161,7 @@ const enTranslation = {
         teacherComparision:
           "Changes in the teacher's improvement over coaching sessions",
         sessionName: 'Session',
+        teacherAt: 'Teacher at {{school}}'
       },
     },
   },

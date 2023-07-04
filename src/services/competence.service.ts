@@ -29,6 +29,7 @@ const CompetenceService = {
       })),
     );
   },
+  
   listCompetenciesWithQuestions: async (): Promise<Competence[]> => {
     const db = await getDBConnection();
     const results = await db.executeSql(`

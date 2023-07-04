@@ -23,6 +23,8 @@ import FeedbackSessionForm from '../screens/FeedbackSession/Form';
 import FeedbackSessionCompleted from '../screens/FeedbackSession/Completed';
 import FeedbackDetailScreen from '../screens/SessionDetails/FeedbackDetails';
 import ClassObservationDetailsScreen from '../screens/SessionDetails/ClassObservationDetails';
+import CompetenceStats from '../screens/Teacher/TeacherDetails/Tabs/TeacherStats/CompetenceStats';
+import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -51,9 +53,14 @@ const RouterProvider: React.FC = () => {
             path={PathRoutes.home.newSession}
             Component={QuickNewSessionScreen}
           />
+          <Route path={PathRoutes.home.stats} Component={QuickStatsScreen} />
           <Route
             path={PathRoutes.teacher.details}
             Component={TeacherDetailsScreen}
+          />
+          <Route
+            path={PathRoutes.teacher.competenceStats}
+            Component={CompetenceStats}
           />
           <Route path={PathRoutes.teacher.form} Component={TeacherFormScreen} />
           <Route

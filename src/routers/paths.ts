@@ -15,8 +15,9 @@ const PathRoutes = {
   },
 
   teacher: {
-    details: '/teacher/:id',
+    details: '/teacher/:id/:tabIndex?',
     form: '/teacher/form/:id',
+    competenceStats: '/teacher/competences/:competence_index/:id'
   },
 
   classObservation: {
