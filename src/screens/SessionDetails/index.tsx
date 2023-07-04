@@ -1,33 +1,44 @@
-import React from 'react';
-import {FlatList, HStack, Text, VStack} from 'native-base';
-import {getTags} from '../../components/StarsTag/common';
-import StarView from '../../components/StarView';
+import React, {useEffect, useMemo, useState} from 'react';
+import CompetenceService from '../../services/competence.service';
 import {useLocation, useNavigate} from 'react-router-native';
+import {FlatList, HStack, Spinner, Text, VStack} from 'native-base';
+import {getTags} from '../../components/StarsTag/common';
+import {Competence} from '../../types/competence';
+import StarView from '../../components/StarView';
 import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import PathRoutes from '../../routers/paths';
 import {Session} from '../../types/session';
 import Page from '../../components/Page';
 import Icon from '../../components/Icon';
 import moment from 'moment';
-import PathRoutes from '../../routers/paths';
+import {averageAnswersFromCompetences} from '../../helpers/session.helper';
 
 const SessionDetailsScreen: React.FC = () => {
   const {t} = useTranslation();
   const {state} = useLocation();
   const session: Session = state;
   const navigate = useNavigate();
+  const [competences, setCompetences] = useState<Competence[]>();
+
+  useEffect(() => {
+    CompetenceService.listCompetenciesWithAnswersBySession(session.id).then(
+      setCompetences,
+    );
+  }, []);
 
   const options = [
     {
       icon: 'clipboard-notes',
       label: 'Observation',
-      onPress: () => {},
+      onPress: () =>
+        navigate(PathRoutes.session.classObservation, {state: {competences}}),
     },
     {
       icon: 'comment-verify',
       label: 'Feedback',
       onPress: session.feedback_id
-        ? () => {}
+        ? () => navigate(PathRoutes.session.feedback, {state: {session}})
         : () =>
             navigate(
               PathRoutes.feedbackSession.about.replace(
@@ -38,12 +49,17 @@ const SessionDetailsScreen: React.FC = () => {
     },
   ];
 
+  const averageAnswers = useMemo(
+    () => averageAnswersFromCompetences(competences || []),
+    [competences],
+  );
+
   return (
     <Page back title={t('sessionDetails.title')}>
       <HStack alignItems={'center'} w={'100%'} py={6}>
         <VStack flex={1} space={2} alignItems={'flex-start'}>
           <Text fontSize={'HXS'} fontWeight={600} color={'gray.700'}>
-            {t('teacher.tabs.session.session') || 'Session'} 2
+            {t('teacher.tabs.session.session')}
           </Text>
           <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
             {moment(new Date(new Date(session.created_at))).format(
@@ -51,16 +67,20 @@ const SessionDetailsScreen: React.FC = () => {
             )}
           </Text>
         </VStack>
-        <VStack alignItems={'flex-end'} space={1}>
-          <StarView maxLength={5} value={0} />
-          <Text
-            textAlign={'center'}
-            fontSize={'TMD'}
-            fontWeight={400}
-            color={'gray.600'}>
-            {getTags(t)[0]?.label}
-          </Text>
-        </VStack>
+        {competences ? (
+          <VStack alignItems={'flex-end'} space={1}>
+            <StarView maxLength={5} value={averageAnswers} />
+            <Text
+              textAlign={'center'}
+              fontSize={'TMD'}
+              fontWeight={400}
+              color={'gray.600'}>
+              {getTags(t)[parseInt(averageAnswers.toFixed(0), 10)]?.label}
+            </Text>
+          </VStack>
+        ) : (
+          <Spinner />
+        )}
       </HStack>
 
       <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
@@ -78,18 +98,18 @@ const SessionDetailsScreen: React.FC = () => {
           renderItem={({item}) => (
             <TouchableOpacity onPress={item.onPress}>
               <HStack
-                borderBottomWidth={'1px'}
-                borderBottomColor={'gray.200'}
-                flex={1}
                 py={3}
-                alignItems={'center'}>
+                flex={1}
+                alignItems={'center'}
+                borderBottomWidth={'1px'}
+                borderBottomColor={'gray.200'}>
                 <HStack flex={1} space={2} alignItems={'center'}>
-                  <Icon name={item.icon} />
+                  <Icon name={item.icon as any} />
                   <Text
-                    textAlign={'center'}
                     fontSize={'LMD'}
                     fontWeight={500}
-                    color={'gray.700'}>
+                    color={'gray.700'}
+                    textAlign={'center'}>
                     {item.label}
                   </Text>
                 </HStack>

@@ -91,7 +91,7 @@ const ImageCard: React.FC<Props> = ({
                 {option.label}
               </Text>
 
-              <Icon name={option.icon} size={22} />
+              <Icon name={option.icon as any} size={22} />
             </HStack>
           </TouchableOpacity>
         ))}

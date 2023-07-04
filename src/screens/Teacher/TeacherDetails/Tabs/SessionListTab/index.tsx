@@ -88,7 +88,7 @@ const SessionList: React.FC<Props> = ({teacherId}) => {
             key={index}
             index={index}
             session={item}
-            onPress={() => navigate(PathRoutes.sessionDetails, {state: item})}
+            onPress={() => navigate(PathRoutes.session.details, {state: item})}
           />
         )}
       />

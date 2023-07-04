@@ -40,34 +40,23 @@ const ClassObservationConfirmation: React.FC = () => {
 
   const competencyFormatted = useMemo(
     () =>
-      competencies.reduce(
-        (
-          acc: Array<Competence & {overall_rating: number}>,
-          item: Competence,
-        ) => {
-          let questionsMax = 0;
+      (competencies as Competence[]).map(item => {
+        const questions = item.questions.map(question => {
+          const value = answers[question.id];
 
-          const questions = item.questions.map(question => {
-            const value = parseInt(answers[question.id] || '0', 10);
-
-            questionsMax += value;
-            return {
-              ...question,
-              value,
-            };
-          }) as Array<Question & {value: number}>;
-
-          const competence = {
-            ...item,
-            questions: questions,
-            overall_rating:
-              Math.round(questionsMax / item.questions.length) - 1,
+          return {
+            ...question,
+            answers: [{value} as Answer],
           };
+        });
 
-          return [...acc, competence];
-        },
-        [],
-      ),
+        const competence = {
+          ...item,
+          questions: questions,
+        };
+
+        return competence;
+      }),
     [answers, competencies],
   );
 

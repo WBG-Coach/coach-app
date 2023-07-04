@@ -28,7 +28,11 @@ const PathRoutes = {
     completed: '/classObservation/completed/:sessionId',
   },
 
-  sessionDetails: '/sessionDetails',
+  session: {
+    details: '/session/details',
+    classObservation: '/session/class-observation',
+    feedback: '/session/feedback',
+  },
 
   feedbackSession: {
     about: '/feedbackSession/about/:sessionId',

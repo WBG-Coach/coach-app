@@ -2,6 +2,7 @@ import {getDBConnection} from './database.service';
 import * as RNC from 'react-native-compressor';
 import RNFS from 'react-native-fs';
 import {v4 as uuid} from 'uuid';
+import {Image} from '../types/image';
 
 const IMAGE_PREFIX = 'data:image/png;base64,';
 
@@ -58,5 +59,22 @@ export const ImageService = {
     }
 
     return id;
+  },
+
+  getImagesByExternalId: async (externalId: string): Promise<Image[]> => {
+    const db = await getDBConnection();
+    const result = (await db.executeSql(
+      `
+        SELECT *
+        FROM image
+        WHERE external_id != ''
+        AND external_id = ?
+      `,
+      [externalId],
+    )) as any[];
+
+    console.log(result[0].rows.raw());
+
+    return result[0].rows.raw();
   },
 };

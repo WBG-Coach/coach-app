@@ -21,6 +21,8 @@ import FeedbackSessionAbout from '../screens/FeedbackSession/About';
 import FeedbackSessionChooseCompetence from '../screens/FeedbackSession/ChooseCompetence';
 import FeedbackSessionForm from '../screens/FeedbackSession/Form';
 import FeedbackSessionCompleted from '../screens/FeedbackSession/Completed';
+import FeedbackDetailScreen from '../screens/SessionDetails/FeedbackDetails';
+import ClassObservationDetailsScreen from '../screens/SessionDetails/ClassObservationDetails';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -79,8 +81,16 @@ const RouterProvider: React.FC = () => {
             Component={ClassObservationCompleted}
           />
           <Route
-            path={PathRoutes.sessionDetails}
+            path={PathRoutes.session.details}
             Component={SessionDetailsScreen}
+          />
+          <Route
+            path={PathRoutes.session.classObservation}
+            Component={ClassObservationDetailsScreen}
+          />
+          <Route
+            path={PathRoutes.session.feedback}
+            Component={FeedbackDetailScreen}
           />
           <Route
             path={PathRoutes.feedbackSession.about}

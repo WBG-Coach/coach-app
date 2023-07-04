@@ -4,6 +4,7 @@ import {Feedback} from '../types/feedback';
 import {Session} from '../types/session';
 import {getDBConnection} from './database.service';
 import {v4 as uuid} from 'uuid';
+import {ImageService} from './image.service';
 
 export const SessionService = {
   findSessionFromTeacher: async (
@@ -73,6 +74,27 @@ export const SessionService = {
     return sessionId;
   },
 
+  getAnswersByQuestionAndSession: async (
+    questionId: string,
+    sessionId: string,
+  ): Promise<Answer[]> => {
+    const db = await getDBConnection();
+    const result = (await db.executeSql(
+      `
+        SELECT
+          a.*
+        FROM answer as a
+        WHERE
+          a.question_id = ?
+        AND
+          a.session_id = ?
+      `,
+      [questionId, sessionId],
+    )) as any[];
+
+    return result[0].rows.raw();
+  },
+
   getSessionAnswersGroupedByCompetence: async (
     sessionId: string,
   ): Promise<CompetenceAnalytics[]> => {
@@ -109,5 +131,35 @@ export const SessionService = {
     );
 
     return feedbackId;
+  },
+
+  getFeedbackBySession: async (sessionId: string): Promise<Feedback> => {
+    const db = await getDBConnection();
+    const result = (await db.executeSql(
+      `
+        SELECT
+          f.*,
+          c.id as competence_id,
+          c.title as competence_title
+        FROM feedback as f
+        INNER JOIN competence as c on c.id = f.competence_id
+        WHERE f.session_id = ?
+      `,
+      [sessionId],
+    )) as any[];
+
+    console.log('FEEDBACK ', result[0].rows.raw());
+
+    const feedback = result[0].rows.raw().map(
+      ({competence_id, competence_title, ...item}: any): Feedback => ({
+        ...item,
+        competence: {id: competence_id, title: competence_title},
+      }),
+    )[0];
+
+    return {
+      ...feedback,
+      images: await ImageService.getImagesByExternalId(feedback.id),
+    };
   },
 };

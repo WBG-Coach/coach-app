@@ -1,62 +1,64 @@
-import {HStack, ScrollView, Text, VStack} from 'native-base';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 import {getTags} from '../../../../components/StarsTag/common';
+import {HStack, ScrollView, Text, VStack} from 'native-base';
+import {Competence} from '../../../../types/competence';
 import StarView from '../../../../components/StarView';
 import {Question} from '../../../../types/question';
-import {Competence} from '../../../../types/competence';
+import {useTranslation} from 'react-i18next';
+import {
+  averageAnswersPerCompetence,
+  sumAnswersPerQuestions,
+} from '../../../../helpers/session.helper';
 
-const CompetenceView: React.FC<{
-  competences: (Competence & {overall_rating: number})[];
-}> = ({competences}) => {
+type Props = {competences: Competence[]};
+
+const CompetenceView: React.FC<Props> = ({competences}) => {
   const {t} = useTranslation();
   const tags = getTags(t);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-        {t('classObservation.formConfirmation.competenceView.title') ||
-          'Class observation summary'}
+        {t('classObservation.formConfirmation.competenceView.title')}
       </Text>
       <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-        {t('classObservation.formConfirmation.competenceView.subtitle') ||
-          'Review how you rated the class'}
+        {t('classObservation.formConfirmation.competenceView.subtitle')}
       </Text>
 
       <VStack space={6} mt={6} mb="8px">
         {competences.map((competency, i) => (
           <VStack
             key={i}
-            borderRadius={'16px'}
             borderWidth={'1px'}
+            borderRadius={'16px'}
             borderColor={'gray.200'}>
             <HStack
-              borderTopLeftRadius={'16px'}
-              borderTopRightRadius={'16px'}
-              background={'gray.200'}
-              alignItems={'center'}
               py={3}
-              px={4}>
+              px={4}
+              alignItems={'center'}
+              background={'gray.200'}
+              borderTopLeftRadius={'16px'}
+              borderTopRightRadius={'16px'}>
               <Text
-                fontSize={'TSM'}
                 flex={1}
+                fontSize={'TSM'}
                 fontWeight={400}
                 color={'gray.700'}>
                 {t(
                   'classObservation.formConfirmation.competenceView.overallRating',
-                ) || 'Overall rating'}
+                )}
               </Text>
               <VStack alignItems={'flex-end'} space={1}>
                 <StarView
                   maxLength={competency.questions[0].scale}
-                  value={competency.overall_rating + 1}
+                  value={averageAnswersPerCompetence(competency)}
                 />
                 <Text
                   fontSize={'LSM'}
                   flex={1}
                   fontWeight={400}
                   color={'gray.600'}>
-                  {tags[competency.overall_rating]?.label}
+                  {tags[averageAnswersPerCompetence(competency) - 1]?.label}
                 </Text>
               </VStack>
             </HStack>
@@ -88,7 +90,7 @@ const CompetenceView: React.FC<{
 
                     <StarView
                       maxLength={question.scale}
-                      value={(question as any).value}
+                      value={sumAnswersPerQuestions(question) || 0}
                     />
                   </HStack>
                 ))}

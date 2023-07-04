@@ -1,6 +1,7 @@
 import {Competence} from '../types/competence';
 import {Question} from '../types/question';
 import {getDBConnection} from './database.service';
+import {SessionService} from './session.service';
 
 type QuestionCompetence = {
   competence_id: string;
@@ -8,6 +9,26 @@ type QuestionCompetence = {
 } & Question;
 
 const CompetenceService = {
+  listCompetenciesWithAnswersBySession: async (
+    sessionId: string,
+  ): Promise<Competence[]> => {
+    const competences = await CompetenceService.listCompetenciesWithQuestions();
+
+    return Promise.all(
+      competences.map(async competence => ({
+        ...competence,
+        questions: await Promise.all(
+          competence.questions.map(async question => ({
+            ...question,
+            answers: await SessionService.getAnswersByQuestionAndSession(
+              question.id,
+              sessionId,
+            ),
+          })),
+        ),
+      })),
+    );
+  },
   listCompetenciesWithQuestions: async (): Promise<Competence[]> => {
     const db = await getDBConnection();
     const results = await db.executeSql(`
