@@ -1,19 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Center, HStack, Text, useTheme, VStack} from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
+import {useNavigate, useParams} from 'react-router-native';
+import {useNetInfo} from '@react-native-community/netinfo';
+import SyncService from '../../../services/sync.service';
+import PathRoutes from '../../../routers/paths';
 import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
-import {useNavigate, useParams} from 'react-router-native';
-import PathRoutes from '../../../routers/paths';
 import Page from '../../../components/Page';
 
 const ClassObservationCompleted: React.FC = () => {
+  const params = useParams<{sessionId: string}>();
   const starsLength = Array(5).fill({});
+  const {isConnected} = useNetInfo();
+  const navigate = useNavigate();
   const {t} = useTranslation();
   const isTablet = Tablet();
   const theme = useTheme();
-  const navigate = useNavigate();
-  const params = useParams<{sessionId: string}>();
+
+  useEffect(() => {
+    if (isConnected) {
+      SyncService.trySyncData();
+    }
+  }, [isConnected]);
 
   const startFeedbackSession = () => {
     navigate(

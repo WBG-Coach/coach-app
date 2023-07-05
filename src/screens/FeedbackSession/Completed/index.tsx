@@ -1,16 +1,25 @@
 import {Center, HStack, Image, Text, useTheme, VStack} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Icon from '../../../components/Icon';
 import {FeedbackCompletedImg} from '../../../assets/images/feedback';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-native';
 import Page from '../../../components/Page';
 import Button from '../../../components/Button';
+import {useNetInfo} from '@react-native-community/netinfo';
+import SyncService from '../../../services/sync.service';
 
 const FeedbackSessionCompleted: React.FC = () => {
+  const {isConnected} = useNetInfo();
+  const navigate = useNavigate();
   const {t} = useTranslation();
   const theme = useTheme();
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isConnected) {
+      SyncService.trySyncData();
+    }
+  }, [isConnected]);
 
   return (
     <Page>
@@ -30,15 +39,14 @@ const FeedbackSessionCompleted: React.FC = () => {
             color={'gray.800'}
             mb={'16px'}
             textAlign={'center'}>
-            {t('feedback.feedbackCompleted.title') || 'Feedback complete'}
+            {t('feedback.completed.title')}
           </Text>
           <Text
             fontSize={'TMD'}
             fontWeight={400}
             color={'gray.800'}
             textAlign={'center'}>
-            {t('feedback.feedbackCompleted.subtitle') ||
-              'Congratulations, you just completed the coaching process!'}
+            {t('feedback.completed.subtitle')}
           </Text>
 
           <HStack
@@ -56,11 +64,10 @@ const FeedbackSessionCompleted: React.FC = () => {
 
             <VStack>
               <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
-                {t('feedback.feedbackCompleted.aboutNext') || "What's next?"}
+                {t('feedback.completed.aboutNext')}
               </Text>
               <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                {t('feedback.feedbackCompleted.aboutNextDescription') ||
-                  "Stay prepared for Teaching Learning Circles, until then you can create new observations with a teacher by selecting them at the app's home"}
+                {t('feedback.completed.aboutNextDescription')}
               </Text>
             </VStack>
           </HStack>
@@ -69,7 +76,7 @@ const FeedbackSessionCompleted: React.FC = () => {
 
       <VStack w={'100%'} pt={3} space={4}>
         <Button onPress={() => navigate(-999)}>
-          {t('feedback.feedbackCompleted.button')}
+          {t('feedback.completed.button')}
         </Button>
       </VStack>
     </Page>

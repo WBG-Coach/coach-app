@@ -65,10 +65,10 @@ const FeedbackSessionForm: React.FC = () => {
       <VStack flex={1}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            {t('feedback.defineActions.title')}
+            {t('feedback.form.title')}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            {t('feedback.defineActions.subtitle')}
+            {t('feedback.form.subtitle')}
           </Text>
 
           <VStack mt={7} space={5}>
@@ -76,10 +76,10 @@ const FeedbackSessionForm: React.FC = () => {
               {competence.title}
             </Text>
             <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-              {t('feedback.defineActions.actionsToImprove')}
+              {t('feedback.form.actionsToImprove')}
             </Text>
             <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              {t('feedback.defineActions.describeActions')}
+              {t('feedback.form.describeActions')}
             </Text>
 
             <TextArea
@@ -87,7 +87,7 @@ const FeedbackSessionForm: React.FC = () => {
               value={actions}
               isInvalid={submittedWithError}
               autoCompleteType=""
-              placeholder={t('feedback.defineActions.textAreaPlaceholder')}
+              placeholder={t('feedback.form.textAreaPlaceholder')}
               onChangeText={setActions}
             />
           </VStack>
@@ -99,15 +99,15 @@ const FeedbackSessionForm: React.FC = () => {
                 flex={1}
                 fontWeight={700}
                 color={'gray.700'}>
-                {t('feedback.defineActions.uploadImage')}
+                {t('feedback.form.uploadImage')}
               </Text>
               <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                {t('feedback.defineActions.optional')}
+                {t('feedback.form.optional')}
               </Text>
             </HStack>
 
             <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-              {t('feedback.defineActions.sendPicture')}
+              {t('feedback.form.sendPicture')}
             </Text>
 
             <Button
@@ -121,7 +121,7 @@ const FeedbackSessionForm: React.FC = () => {
                   fontSize={'LMD'}
                   fontWeight={500}
                   color={'primary.200'}>
-                  {t('feedback.defineActions.uploadPhoto')}
+                  {t('feedback.form.uploadPhoto')}
                 </Text>
               </HStack>
             </Button>
@@ -146,7 +146,7 @@ const FeedbackSessionForm: React.FC = () => {
 
       <VStack pt={3} background={'white'} borderRadius={'8px 8px 0px 0px'}>
         <Button onPress={finishCoachSession} isLoading={loading}>
-          {t('feedback.defineActions.button')}
+          {t('feedback.form.button')}
         </Button>
       </VStack>
 

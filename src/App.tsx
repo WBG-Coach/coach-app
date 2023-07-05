@@ -25,10 +25,10 @@ const App = () => {
   }, [setupApp]);
 
   useEffect(() => {
-    if (isConnected) {
+    if (!isLoading && isConnected) {
       SyncService.trySyncData();
     }
-  }, [isConnected]);
+  }, [isLoading, isConnected]);
 
   const requestPermission = async () => {
     try {

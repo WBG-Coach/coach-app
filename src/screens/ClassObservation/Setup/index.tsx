@@ -66,6 +66,8 @@ const ClassObservationSetup: React.FC = () => {
   return (
     <Formik
       validate={validate}
+      validateOnBlur={false}
+      validateOnChange={false}
       onSubmit={handleSubmitForm}
       initialValues={state?.session ? state?.session : defaultValues}>
       {({values, errors, handleSubmit, setFieldValue}) => (

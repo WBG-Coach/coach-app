@@ -1,22 +1,21 @@
-import {Checkbox, HStack, ScrollView, Text, VStack} from 'native-base';
-import {useLocation, useNavigate} from 'react-router-native';
-import {isTablet as Tablet} from 'react-native-device-info';
-import StarsTag from '../../../components/StarsTag';
 import React, {useCallback, useEffect, useState} from 'react';
+import {Center, HStack, ScrollView, Text, VStack} from 'native-base';
+import {SessionService} from '../../../services/session.service';
+import {CompetenceAnalytics} from '../../../types/competence';
+import {useLocation, useNavigate} from 'react-router-native';
+import StarsTag from '../../../components/StarsTag';
 import Button from '../../../components/Button';
 import PathRoutes from '../../../routers/paths';
 import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
-import {CompetenceAnalytics} from '../../../types/competence';
-import {SessionService} from '../../../services/session.service';
+import Icon from '../../../components/Icon';
 
 const FeedbackSessionChooseCompetence: React.FC = () => {
   const [selectedCompetence, setSelectedCompetence] =
     useState<CompetenceAnalytics>();
   const [competencies, setCompetencies] = useState<CompetenceAnalytics[]>([]);
   const {t} = useTranslation();
-  const isTablet = Tablet();
   const {state} = useLocation();
   const navigate = useNavigate();
 
@@ -42,7 +41,7 @@ const FeedbackSessionChooseCompetence: React.FC = () => {
               {competence.title}
             </Text>
             <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-              {t('feedback.feedbackPreparation.teachingPratice', {
+              {t('feedback.preparation.teachingPratice', {
                 index: index + 1,
               })}
             </Text>
@@ -57,34 +56,40 @@ const FeedbackSessionChooseCompetence: React.FC = () => {
               />
             </HStack>
           </VStack>
-
-          <Checkbox
-            size={'md'}
-            color={'white'}
-            value={competence.title}
-            aria-label={`${competence.title} checkbox`}
-            isChecked={competence.id === selectedCompetence?.id}
-            isDisabled={
-              selectedCompetence && competence.id !== selectedCompetence.id
-            }
-          />
+          <Center
+            w="24px"
+            h="24px"
+            mr="1px"
+            borderWidth="1px"
+            borderRadius="4px"
+            borderColor="primary.200"
+            bg={
+              selectedCompetence?.id === competence.id ? 'primary.200' : 'white'
+            }>
+            <Icon name="check" color="white" />
+          </Center>
         </HStack>
       </TouchableOpacity>
     ),
     [selectedCompetence, t],
   );
 
+  const goToFeedbackForm = () => {
+    navigate(PathRoutes.feedbackSession.form, {
+      replace: true,
+      state: {competence: selectedCompetence, ...state},
+    });
+  };
+
   return (
     <Page back title={t('feedbackSession.title')}>
       <VStack flex={1}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-            {t('feedback.feedbackPreparation.title') ||
-              'Choose teaching practices'}
+            {t('feedback.preparation.title')}
           </Text>
           <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            {t('feedback.feedbackPreparation.subtitle') ||
-              'Choose 1 teaching practices to work with the teacher'}
+            {t('feedback.preparation.subtitle')}
           </Text>
 
           <VStack mt={7} space={5}>
@@ -93,23 +98,13 @@ const FeedbackSessionChooseCompetence: React.FC = () => {
         </ScrollView>
       </VStack>
 
-      <VStack
-        pt={3}
-        background={'white'}
-        px={isTablet ? '32px' : 4}
-        borderRadius={'8px 8px 0px 0px'}>
-        <Button
-          isDisabled={!selectedCompetence}
-          onPress={() =>
-            navigate(PathRoutes.feedbackSession.form, {
-              replace: true,
-              state: {competence: selectedCompetence, ...state},
-            })
-          }
-          marginTop={'auto'}>
-          {t('feedback.feedbackPreparation.button')}
-        </Button>
-      </VStack>
+      <Button
+        mt={3}
+        marginTop={'auto'}
+        isDisabled={!selectedCompetence}
+        onPress={goToFeedbackForm}>
+        {t('feedback.preparation.button')}
+      </Button>
     </Page>
   );
 };

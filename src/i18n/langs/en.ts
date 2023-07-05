@@ -161,7 +161,7 @@ const enTranslation = {
         teacherComparision:
           "Changes in the teacher's improvement over coaching sessions",
         sessionName: 'Session',
-        teacherAt: 'Teacher at {{school}}'
+        teacherAt: 'Teacher at {{school}}',
       },
     },
   },
@@ -309,13 +309,13 @@ const enTranslation = {
       continueButton: 'Continue to feedback session',
       trainingButton: 'Access Coach manual',
     },
-    feedbackPreparation: {
+    preparation: {
       title: 'Choose teaching practices',
       subtitle: 'Choose 1 teaching practice to work on with the teacher',
       teachingPratice: 'Teaching practice {{index}}',
       button: 'Complete coaching session',
     },
-    defineActions: {
+    form: {
       title: 'Agree on actions',
       subtitle:
         'Agree with the teacher which actions they will take to improve this teaching practice',
@@ -329,8 +329,9 @@ const enTranslation = {
         'You can also send a picture of the notes you made during the class observation and coaching session',
       uploadPhoto: 'Upload a photo',
       button: 'Complete coach session',
+      optional: 'Optional',
     },
-    feedbackCompleted: {
+    completed: {
       title: 'Coaching session complete',
       subtitle: 'Thank you! You jut completed the coaching process.',
       aboutNext: "What's next?",
