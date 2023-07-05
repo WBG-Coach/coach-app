@@ -19,9 +19,9 @@ export const TeacherService = {
       `
         SELECT
           t.id as id,
-          t.name as name,
           i.value as image,
           s.created_at AS last_session_date,
+          t.name || ' ' || t.surname as name,
           (SELECT COUNT(*) FROM session as s WHERE s.teacher_id = t.id) as sessionsCount,
           (SELECT COUNT(*) FROM session as s INNER JOIN feedback as f on f.session_id = s.id WHERE s.teacher_id = t.id) as feedbacksCount
         FROM teacher as t
