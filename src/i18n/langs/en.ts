@@ -164,6 +164,18 @@ const enTranslation = {
         teacherAt: 'Teacher at {{school}}',
       },
     },
+
+    subjects: {
+      $1: 'Arabic',
+      $2: 'Creative and Performing Arts',
+      $3: 'General Science',
+      $4: 'Home economics',
+      $5: 'Language Art',
+      $6: 'Mathematics',
+      $7: 'PHE',
+      $8: 'Quantitative and Verbal Aptitude',
+      $9: 'Social Studies/Civics',
+    },
   },
 
   classObservation: {
@@ -198,29 +210,6 @@ const enTranslation = {
       },
     },
 
-    onboarding: {
-      skip: 'Skip',
-      start: 'Start',
-      next: 'Next',
-      sections: {
-        $1: {
-          title: 'Inform the teacher',
-          subtitle:
-            'Make sure to contact the teacher and should be let them knows you are going to observe the class and have a coaching session.',
-        },
-        $2: {
-          title: 'Note the time',
-          subtitle:
-            'Plan to spend 60 to 75 minutes with the teacher. Use this time to observe their class and to conduct the coaching session.',
-        },
-        $3: {
-          title: 'Take notes',
-          subtitle:
-            'Notes will help you to respond to the observation questions and plan the future coaching sessions.',
-        },
-      },
-    },
-
     setup: {
       title: 'About the lesson',
       subtitle: 'Ask the teacher the following questions',
@@ -243,17 +232,6 @@ const enTranslation = {
         $2: {
           title: 'What is the subject?',
           placeholder: 'Math',
-          options: {
-            $1: 'Arabic',
-            $2: 'Creative and Performing Arts',
-            $3: 'General Science',
-            $4: 'Home economics',
-            $5: 'Language Art',
-            $6: 'Mathematics',
-            $7: 'PHE',
-            $8: 'Quantitative and Verbal Aptitude',
-            $9: 'Social Studies/Civics',
-          },
         },
         $3: {
           title: 'How long will the lesson last?',

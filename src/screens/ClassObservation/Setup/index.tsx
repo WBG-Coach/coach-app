@@ -52,15 +52,15 @@ const ClassObservationSetup: React.FC = () => {
   ];
 
   const subjectOptions = [
-    t('classObservation.setup.questions.$2.options.$1'),
-    t('classObservation.setup.questions.$2.options.$2'),
-    t('classObservation.setup.questions.$2.options.$3'),
-    t('classObservation.setup.questions.$2.options.$4'),
-    t('classObservation.setup.questions.$2.options.$5'),
-    t('classObservation.setup.questions.$2.options.$6'),
-    t('classObservation.setup.questions.$2.options.$7'),
-    t('classObservation.setup.questions.$2.options.$8'),
-    t('classObservation.setup.questions.$2.options.$9'),
+    t('teacher.subjects.$1'),
+    t('teacher.subjects.$2'),
+    t('teacher.subjects.$3'),
+    t('teacher.subjects.$4'),
+    t('teacher.subjects.$5'),
+    t('teacher.subjects.$6'),
+    t('teacher.subjects.$7'),
+    t('teacher.subjects.$8'),
+    t('teacher.subjects.$9'),
   ];
 
   return (

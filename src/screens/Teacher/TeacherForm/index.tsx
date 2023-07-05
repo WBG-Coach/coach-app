@@ -6,12 +6,13 @@ import {TeacherService} from '../../../services/teacher.service';
 import {ImageService} from '../../../services/image.service';
 import {useNavigate, useParams} from 'react-router-native';
 import ImagePicker from '../../../components/ImagePicker';
+import SelectModal from '../../../components/SelectModal';
 import InputText from '../../../components/InputText';
 import Button from '../../../components/Button';
+import Toast from '../../../components/Toast';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
-import Toast from '../../../components/Toast';
 
 export type FormValuesType = {
   name?: string;
@@ -117,6 +118,18 @@ const TeacherFormScreen: React.FC = () => {
     );
   }
 
+  const subjectOptions = [
+    t('teacher.subjects.$1'),
+    t('teacher.subjects.$2'),
+    t('teacher.subjects.$3'),
+    t('teacher.subjects.$4'),
+    t('teacher.subjects.$5'),
+    t('teacher.subjects.$6'),
+    t('teacher.subjects.$7'),
+    t('teacher.subjects.$8'),
+    t('teacher.subjects.$9'),
+  ];
+
   return (
     <Page
       back
@@ -188,10 +201,16 @@ const TeacherFormScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('teacher.form.subject')}
                 </Text>
-                <InputText
+
+                <SelectModal
                   value={values.subject}
-                  errorMessage={errors.subject}
-                  onChangeText={value => setFieldValue('subject', value)}
+                  placeholder={t('teacher.form.subject')}
+                  bottomTitle={t('teacher.form.subject')}
+                  handleSelectValue={value => setFieldValue('subject', value)}
+                  options={subjectOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
                 />
               </VStack>
             </ScrollView>

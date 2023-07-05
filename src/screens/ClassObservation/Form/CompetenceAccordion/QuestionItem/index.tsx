@@ -20,7 +20,7 @@ const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
   return (
     <VStack mb="24px">
       <HStack mb={'16px'}>
-        <VStack flex={1}>
+        <VStack flex={1} mr={1}>
           <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
             {question.title}
           </Text>
