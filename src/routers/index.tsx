@@ -25,99 +25,108 @@ import FeedbackDetailScreen from '../screens/SessionDetails/FeedbackDetails';
 import ClassObservationDetailsScreen from '../screens/SessionDetails/ClassObservationDetails';
 import CompetenceStats from '../screens/Teacher/TeacherDetails/Tabs/TeacherStats/CompetenceStats';
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
+import {Container, VStack} from 'native-base';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
 
   return (
-    <Routes>
-      <Route path={PathRoutes.settings.main} Component={SettingsScreen} />
-      <Route
-        path={PathRoutes.settings.changeLanguage}
-        Component={ChangeLanguageScreen}
-      />
-      <Route path={PathRoutes.createAccount} Component={CreateAccountScreen} />
+    <VStack bg="white" flex={1} w="full">
+      <Routes>
+        <Route path={PathRoutes.settings.main} Component={SettingsScreen} />
+        <Route
+          path={PathRoutes.settings.changeLanguage}
+          Component={ChangeLanguageScreen}
+        />
+        <Route
+          path={PathRoutes.createAccount}
+          Component={CreateAccountScreen}
+        />
 
-      {!currentCoach && (
-        <Route path={PathRoutes.main} Component={LoginScreen} />
-      )}
+        {!currentCoach && (
+          <Route path={PathRoutes.main} Component={LoginScreen} />
+        )}
 
-      {currentCoach && !currentSchool && (
-        <Route path={PathRoutes.main} Component={SchoolSelectScreen} />
-      )}
+        {currentCoach && !currentSchool && (
+          <Route path={PathRoutes.main} Component={SchoolSelectScreen} />
+        )}
 
-      {currentCoach && currentSchool && (
-        <>
-          <Route path={PathRoutes.main} Component={HomeScreen} />
-          <Route
-            path={PathRoutes.home.newSession}
-            Component={QuickNewSessionScreen}
-          />
-          <Route path={PathRoutes.home.stats} Component={QuickStatsScreen} />
-          <Route
-            path={PathRoutes.teacher.details}
-            Component={TeacherDetailsScreen}
-          />
-          <Route
-            path={PathRoutes.teacher.competenceStats}
-            Component={CompetenceStats}
-          />
-          <Route path={PathRoutes.teacher.form} Component={TeacherFormScreen} />
-          <Route
-            path={PathRoutes.classObservation.about}
-            Component={ClassObservationAbout}
-          />
-          {/* <Route
+        {currentCoach && currentSchool && (
+          <>
+            <Route path={PathRoutes.main} Component={HomeScreen} />
+            <Route
+              path={PathRoutes.home.newSession}
+              Component={QuickNewSessionScreen}
+            />
+            <Route path={PathRoutes.home.stats} Component={QuickStatsScreen} />
+            <Route
+              path={PathRoutes.teacher.details}
+              Component={TeacherDetailsScreen}
+            />
+            <Route
+              path={PathRoutes.teacher.competenceStats}
+              Component={CompetenceStats}
+            />
+            <Route
+              path={PathRoutes.teacher.form}
+              Component={TeacherFormScreen}
+            />
+            <Route
+              path={PathRoutes.classObservation.about}
+              Component={ClassObservationAbout}
+            />
+            {/* <Route
             path={PathRoutes.classObservation.onboarding}
             Component={ClassObservationOnboarding}
           /> */}
-          <Route
-            path={PathRoutes.classObservation.setup}
-            Component={ClassObservationSetup}
-          />
-          <Route
-            path={PathRoutes.classObservation.form}
-            Component={ClassObservationForm}
-          />
-          <Route
-            path={PathRoutes.classObservation.confirmation}
-            Component={ClassObservationConfirmation}
-          />
-          <Route
-            path={PathRoutes.classObservation.completed}
-            Component={ClassObservationCompleted}
-          />
-          <Route
-            path={PathRoutes.session.details}
-            Component={SessionDetailsScreen}
-          />
-          <Route
-            path={PathRoutes.session.classObservation}
-            Component={ClassObservationDetailsScreen}
-          />
-          <Route
-            path={PathRoutes.session.feedback}
-            Component={FeedbackDetailScreen}
-          />
-          <Route
-            path={PathRoutes.feedbackSession.about}
-            Component={FeedbackSessionAbout}
-          />
-          <Route
-            path={PathRoutes.feedbackSession.chooseCompetence}
-            Component={FeedbackSessionChooseCompetence}
-          />
-          <Route
-            path={PathRoutes.feedbackSession.form}
-            Component={FeedbackSessionForm}
-          />
-          <Route
-            path={PathRoutes.feedbackSession.completed}
-            Component={FeedbackSessionCompleted}
-          />
-        </>
-      )}
-    </Routes>
+            <Route
+              path={PathRoutes.classObservation.setup}
+              Component={ClassObservationSetup}
+            />
+            <Route
+              path={PathRoutes.classObservation.form}
+              Component={ClassObservationForm}
+            />
+            <Route
+              path={PathRoutes.classObservation.confirmation}
+              Component={ClassObservationConfirmation}
+            />
+            <Route
+              path={PathRoutes.classObservation.completed}
+              Component={ClassObservationCompleted}
+            />
+            <Route
+              path={PathRoutes.session.details}
+              Component={SessionDetailsScreen}
+            />
+            <Route
+              path={PathRoutes.session.classObservation}
+              Component={ClassObservationDetailsScreen}
+            />
+            <Route
+              path={PathRoutes.session.feedback}
+              Component={FeedbackDetailScreen}
+            />
+            <Route
+              path={PathRoutes.feedbackSession.about}
+              Component={FeedbackSessionAbout}
+            />
+            <Route
+              path={PathRoutes.feedbackSession.chooseCompetence}
+              Component={FeedbackSessionChooseCompetence}
+            />
+            <Route
+              path={PathRoutes.feedbackSession.form}
+              Component={FeedbackSessionForm}
+            />
+            <Route
+              path={PathRoutes.feedbackSession.completed}
+              Component={FeedbackSessionCompleted}
+            />
+          </>
+        )}
+      </Routes>
+    </VStack>
   );
 };
 
