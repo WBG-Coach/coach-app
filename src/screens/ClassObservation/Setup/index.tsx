@@ -8,14 +8,6 @@ import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
 
-const defaultValues = {
-  students_count: '',
-  subject: '',
-  lesson_time: '',
-  objective: '',
-  class_type: '',
-};
-
 const ClassObservationSetup: React.FC = () => {
   const {state} = useLocation();
   const navigate = useNavigate();
@@ -64,13 +56,23 @@ const ClassObservationSetup: React.FC = () => {
     t('teacher.subjects.$10'),
   ];
 
+  const defaultValues = {
+    students_count: '',
+    subject: '',
+    lesson_time: '',
+    objective: '',
+    class_type: t('classObservation.setup.questions.$1.options.$1'),
+  };
+
   return (
     <Formik
       validate={validate}
       validateOnBlur={false}
       validateOnChange={false}
       onSubmit={handleSubmitForm}
-      initialValues={state?.session ? state?.session : defaultValues}>
+      initialValues={
+        state?.session?.class_type ? state.session : defaultValues
+      }>
       {({values, errors, handleSubmit, setFieldValue}) => (
         <Page back title={t('classObservation.title')}>
           <ScrollView flexGrow={0}>
