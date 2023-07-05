@@ -128,6 +128,7 @@ const TeacherFormScreen: React.FC = () => {
     t('teacher.subjects.$7'),
     t('teacher.subjects.$8'),
     t('teacher.subjects.$9'),
+    t('teacher.subjects.$10'),
   ];
 
   return (
@@ -188,6 +189,8 @@ const TeacherFormScreen: React.FC = () => {
                   {t('teacher.form.emis_number')}
                 </Text>
                 <InputText
+                  maxLength={9}
+                  keyboardType="number-pad"
                   value={values.emis_number}
                   errorMessage={errors.emis_number}
                   onChangeText={value => setFieldValue('emis_number', value)}

@@ -61,6 +61,7 @@ const ClassObservationSetup: React.FC = () => {
     t('teacher.subjects.$7'),
     t('teacher.subjects.$8'),
     t('teacher.subjects.$9'),
+    t('teacher.subjects.$10'),
   ];
 
   return (

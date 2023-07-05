@@ -175,6 +175,7 @@ const enTranslation = {
       $7: 'PHE',
       $8: 'Quantitative and Verbal Aptitude',
       $9: 'Social Studies/Civics',
+      $10: 'Other',
     },
   },
 
@@ -224,9 +225,9 @@ const enTranslation = {
           title: 'How many students are in the class?',
           placeholder: 'e.g. 7',
           options: {
-            $1: 'Only boys',
-            $2: 'Only girls',
-            $3: 'Both',
+            $1: 'Both boys and girls',
+            $2: 'Only boys',
+            $3: 'Only girls',
           },
         },
         $2: {
