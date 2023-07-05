@@ -18,22 +18,22 @@ const ITEMS_PER_PAGE = 20;
 
 type Props = {
   showSearchFilter?: boolean;
-  onSelectTeacher: (teacher: TeacherItemType) => void;
   hideNewTeacherButton?: boolean;
+  onSelectTeacher: (teacher: TeacherItemType) => void;
 };
 
 const TeachersList: React.FC<Props> = ({
+  onSelectTeacher,
   showSearchFilter,
   hideNewTeacherButton,
-  onSelectTeacher,
 }) => {
   const theme = useTheme();
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
+  const {currentSchool} = useCoachContext();
   const [isTheEnd, setIsTheEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [teachersList, setTeachersList] = useState<TeacherItemType[]>([]);
-  const {currentSchool} = useCoachContext();
 
   const navigate = useNavigate();
 

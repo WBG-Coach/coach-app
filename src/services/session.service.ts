@@ -148,8 +148,6 @@ export const SessionService = {
       [sessionId],
     )) as any[];
 
-    console.log('FEEDBACK ', result[0].rows.raw());
-
     const feedback = result[0].rows.raw().map(
       ({competence_id, competence_title, ...item}: any): Feedback => ({
         ...item,

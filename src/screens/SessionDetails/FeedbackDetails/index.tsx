@@ -23,7 +23,6 @@ const FeedbackDetailScreen: React.FC = () => {
   const [feedback, setFeedback] = useState<Feedback>();
 
   useEffect(() => {
-    console.log(session.id);
     SessionService.getFeedbackBySession(session.id).then(setFeedback);
   }, [session]);
 

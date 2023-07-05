@@ -1,13 +1,13 @@
 import React from 'react';
-import {Center, Spinner, Text} from 'native-base';
-import {useTranslation} from 'react-i18next';
+import {TeacherItemType} from '../../../../types/teacher';
+import PathRoutes from '../../../../routers/paths';
 import {useNavigate} from 'react-router-native';
 import Page from '../../../../components/Page';
 import TeachersList from '../../TeachersList';
-import {TeacherItemType} from '../../../../types/teacher';
-import PathRoutes from '../../../../routers/paths';
+import {useTranslation} from 'react-i18next';
+import {Text} from 'native-base';
 
-const QuickStatsScreen = () => {
+const QuickStatsScreen: React.FC = () => {
   const {t} = useTranslation();
   const navigate = useNavigate();
 

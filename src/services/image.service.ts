@@ -39,7 +39,6 @@ export const ImageService = {
     imageValue: string,
     externalId: string = '',
   ): Promise<string> => {
-    console.log({imageValue});
     if (!imageValue.startsWith(IMAGE_PREFIX)) {
       const newImg = await RNC.Image.compress(imageValue, {
         maxWidth: 100,
@@ -72,8 +71,6 @@ export const ImageService = {
       `,
       [externalId],
     )) as any[];
-
-    console.log(result[0].rows.raw());
 
     return result[0].rows.raw();
   },
