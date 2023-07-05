@@ -1,9 +1,12 @@
 import React from 'react';
 import {Center, Flex, Spinner, Text} from 'native-base';
 import {FlatList, ListRenderItem} from 'react-native';
+import Button from '../Button';
+import {useTranslation} from 'react-i18next';
 
 type InfiniteScrollProps<T> = {
   data: T[];
+  isEnd?: boolean;
   isLoading: boolean;
   emptyMessage?: string | null;
   emptyComponent?: React.ReactNode;
@@ -13,19 +16,14 @@ type InfiniteScrollProps<T> = {
 
 const InfiniteScroll = <T extends any>({
   data,
+  isEnd,
   isLoading,
   renderItem,
   loadNextPage,
   emptyMessage,
   emptyComponent,
 }: InfiniteScrollProps<T>) => {
-  const handleLoadData = async () => {
-    try {
-      await loadNextPage();
-    } catch (error) {
-      console.log('Error loading data:', error);
-    }
-  };
+  const {t} = useTranslation();
 
   return (
     <Flex flex={1} w="full">
@@ -41,14 +39,23 @@ const InfiniteScroll = <T extends any>({
       <FlatList
         data={data}
         renderItem={renderItem}
-        onEndReachedThreshold={0.5}
-        onEndReached={handleLoadData}
+        initialNumToRender={20}
+        maxToRenderPerBatch={20}
+        removeClippedSubviews={true}
+        keyExtractor={(_, index) => index.toString()}
         ListFooterComponent={
           <Center w="full" h="60px">
-            {isLoading && <Spinner color="blue" size="lg" />}
+            {isLoading ? (
+              <Spinner color="blue" size="lg" />
+            ) : (
+              !isEnd && (
+                <Button variant="outlined" onPress={loadNextPage}>
+                  {t('common.load-more')}
+                </Button>
+              )
+            )}
           </Center>
         }
-        keyExtractor={(_, index) => index.toString()}
       />
     </Flex>
   );

@@ -1,0 +1,164 @@
+import React, {useState} from 'react';
+import {
+  Text,
+  VStack,
+  HStack,
+  TextArea,
+  useTheme,
+  ScrollView,
+} from 'native-base';
+import ImagePickerModal from '../../../components/ImagePickerModal';
+import {SessionService} from '../../../services/session.service';
+import {useLocation, useNavigate} from 'react-router-native';
+import {ImageService} from '../../../services/image.service';
+import ImageCard from '../../../components/ImageCard';
+import PathRoutes from '../../../routers/paths';
+import Button from '../../../components/Button';
+import {useTranslation} from 'react-i18next';
+import Icon from '../../../components/Icon';
+import Page from '../../../components/Page';
+
+const FeedbackSessionForm: React.FC = () => {
+  const [images, setImages] = useState<
+    {name: string; value: string; created_at: number}[]
+  >([]);
+  const {t} = useTranslation();
+  const {
+    state: {competence, sessionId},
+  } = useLocation();
+  const navigate = useNavigate();
+  const [showImagePicker, setShowImagePicker] = useState(false);
+  const [actions, setActions] = useState('');
+  const [submittedWithError, setSubmittedWithError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const theme = useTheme();
+
+  const finishCoachSession = async () => {
+    setLoading(true);
+    if (actions) {
+      const feedbackId = await SessionService.createFeedback({
+        value: actions,
+        session_id: sessionId,
+        competence_id: competence.id,
+      });
+
+      await Promise.all(
+        images.map(
+          async image =>
+            await ImageService.saveNewImage(
+              image.name,
+              image.value,
+              feedbackId,
+            ),
+        ),
+      );
+      navigate(PathRoutes.feedbackSession.completed, {replace: true});
+    } else {
+      setSubmittedWithError(true);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <Page back title={t('feedbackSession.title')}>
+      <VStack flex={1}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
+            {t('feedback.defineActions.title')}
+          </Text>
+          <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
+            {t('feedback.defineActions.subtitle')}
+          </Text>
+
+          <VStack mt={7} space={5}>
+            <Text fontSize={'18px'} fontWeight={700} color={'gray.700'}>
+              {competence.title}
+            </Text>
+            <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+              {t('feedback.defineActions.actionsToImprove')}
+            </Text>
+            <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+              {t('feedback.defineActions.describeActions')}
+            </Text>
+
+            <TextArea
+              mt={2}
+              value={actions}
+              isInvalid={submittedWithError}
+              autoCompleteType=""
+              placeholder={t('feedback.defineActions.textAreaPlaceholder')}
+              onChangeText={setActions}
+            />
+          </VStack>
+
+          <VStack>
+            <HStack alignItems={'center'} mt={6}>
+              <Text
+                fontSize={'TXL'}
+                flex={1}
+                fontWeight={700}
+                color={'gray.700'}>
+                {t('feedback.defineActions.uploadImage')}
+              </Text>
+              <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+                {t('feedback.defineActions.optional')}
+              </Text>
+            </HStack>
+
+            <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+              {t('feedback.defineActions.sendPicture')}
+            </Text>
+
+            <Button
+              mt={2}
+              variant={'outlined'}
+              onPress={() => setShowImagePicker(true)}>
+              <HStack>
+                <Icon name={'image'} color={theme.colors.primary['200']} />
+                <Text
+                  ml={2}
+                  fontSize={'LMD'}
+                  fontWeight={500}
+                  color={'primary.200'}>
+                  {t('feedback.defineActions.uploadPhoto')}
+                </Text>
+              </HStack>
+            </Button>
+
+            <VStack flex={1} space={2} mt={6}>
+              {images.map((image: any, index) => (
+                <ImageCard
+                  {...image}
+                  key={index}
+                  transformBase
+                  handleDelete={() => {
+                    const imageCopy = images;
+                    imageCopy.splice(index, 1);
+                    setImages(JSON.parse(JSON.stringify(imageCopy)));
+                  }}
+                />
+              ))}
+            </VStack>
+          </VStack>
+        </ScrollView>
+      </VStack>
+
+      <VStack pt={3} background={'white'} borderRadius={'8px 8px 0px 0px'}>
+        <Button onPress={finishCoachSession} isLoading={loading}>
+          {t('feedback.defineActions.button')}
+        </Button>
+      </VStack>
+
+      <ImagePickerModal
+        isOpen={showImagePicker}
+        onClose={() => setShowImagePicker(false)}
+        handleSelectImage={asset =>
+          setImages([...images, {...asset, created_at: Date.now()}])
+        }
+      />
+    </Page>
+  );
+};
+
+export default FeedbackSessionForm;

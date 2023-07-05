@@ -1,53 +1,53 @@
-import React, {useEffect, useState} from 'react';
-import {PermissionsAndroid, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNetInfo} from '@react-native-community/netinfo';
-import NoGeolocation from './components/NoGeolocation';
-import SplashScreen from './screens/Splash';
-import {syncWatermelon} from './database';
-import RootProvider from './providers';
-import AppRoutes from './routes';
+import {CoachProvider} from './providers/coach.provider';
+import {NativeBaseProvider, Spinner} from 'native-base';
+import {runMigrations} from './database/migrations';
+import SyncService from './services/sync.service';
+import {NativeRouter} from 'react-router-native';
+import {PermissionsAndroid} from 'react-native';
+import RouterProvider from './routers';
+import theme from './theme';
 import './i18n';
 
 const App = () => {
-  const [isGeolocationApproved, setIsGeolocationApproved] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const {isConnected} = useNetInfo();
 
-  useEffect(() => {
-    requestPermission();
+  const setupApp = useCallback(async () => {
+    await runMigrations();
+    await requestPermission();
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    if (isConnected && isGeolocationApproved) {
-      syncWatermelon();
+    setupApp();
+  }, [setupApp]);
+
+  useEffect(() => {
+    if (isConnected) {
+      SyncService.trySyncData();
     }
-  }, [isConnected, isGeolocationApproved]);
+  }, [isConnected]);
 
   const requestPermission = async () => {
     try {
-      const granted = await PermissionsAndroid.request(
+      await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       );
-
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        setIsGeolocationApproved(true);
-      }
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <RootProvider>
-      {isLoading ? (
-        <SplashScreen />
-      ) : isGeolocationApproved ? (
-        <AppRoutes />
-      ) : (
-        <NoGeolocation requestPermission={requestPermission} />
-      )}
-    </RootProvider>
+    <NativeBaseProvider theme={theme}>
+      <CoachProvider>
+        <NativeRouter>
+          {isLoading ? <Spinner /> : <RouterProvider />}
+        </NativeRouter>
+      </CoachProvider>
+    </NativeBaseProvider>
   );
 };
 

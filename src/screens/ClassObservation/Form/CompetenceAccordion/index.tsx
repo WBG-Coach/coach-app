@@ -1,50 +1,57 @@
-import {VStack} from 'native-base';
-import React, {useEffect, useMemo, useState} from 'react';
-import Accordion from '../../../../components/Accordion';
-import Question from '../../../../database/models/Question';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Question} from '../../../../types/question';
 import QuestionItem from './QuestionItem';
+import {VStack} from 'native-base';
 import {Props} from './types';
+import Accordion from '../../../../components/Accordion';
 
 const CompetenceAccordion: React.FC<Props> = ({
-  competence,
-  handleAnswer,
   onComplete,
   index,
+  competence,
+  initialAnswers,
 }) => {
-  const [answers, setAnswers] = useState<{[key: string]: number}>({});
-  const [isFinished, setIsFinished] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const [isFinished, setIsFinished] = useState(initialAnswers ? true : false);
+  const [answers, setAnswers] = useState<{[key: string]: number}>(
+    initialAnswers
+      ? competence.questions.reduce(
+          (acc, question) => ({
+            ...acc,
+            [question.id]: initialAnswers[question.id],
+          }),
+          {},
+        )
+      : {},
+  );
 
   useEffect(() => {
-    if (!isFinished) {
-      if (Object.keys(answers).length === competence.questions.length) {
-        setIsFinished(true);
-        setIsOpen(false);
-        onComplete();
-      }
+    if (Object.keys(answers).length === competence.questions.length) {
+      setIsFinished(true);
+      onComplete(answers);
+      setIsOpen(isFinished);
     }
-  }, [isFinished, answers, competence]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers]);
 
   const handleAnswerQuestion = (question: Question, value: number) => {
-    const newValues = {[question.id]: value};
-    setAnswers(state => ({...state, ...newValues}));
-    handleAnswer(newValues);
+    setAnswers(state =>
+      state[question.id] !== value
+        ? {...state, ...{[question.id]: value}}
+        : state,
+    );
   };
 
-  const Form = useMemo(
-    () => (
-      <VStack>
-        {competence.questions.map(question => (
-          <QuestionItem
-            key={question.id}
-            question={question}
-            onAnswer={handleAnswerQuestion}
-            value={answers[question.id || 0]}
-          />
-        ))}
-      </VStack>
+  const renderQuestion = useCallback(
+    (question: Question) => (
+      <QuestionItem
+        key={question.id}
+        question={question}
+        initialValue={initialAnswers && initialAnswers[question.id]}
+        onAnswer={handleAnswerQuestion}
+      />
     ),
-    [isOpen],
+    [initialAnswers],
   );
 
   return (
@@ -53,7 +60,7 @@ const CompetenceAccordion: React.FC<Props> = ({
       check={isFinished}
       title={`${(index || 0) + 1}. ${competence.title}`}
       onClickHeader={() => isFinished && setIsOpen(!isOpen)}>
-      {Form}
+      <VStack>{competence.questions.map(renderQuestion)}</VStack>
     </Accordion>
   );
 };

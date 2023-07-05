@@ -1,4 +1,4 @@
-import Image from '../../database/models/Image';
+import {Image} from '../../types/image';
 
 export type Props = {
   created_at: number;

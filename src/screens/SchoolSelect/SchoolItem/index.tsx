@@ -1,51 +1,67 @@
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
-import School from '../../../database/models/School';
 import {Center, HStack, Text, VStack} from 'native-base';
-import Icon from '../../../components/base/Icon';
+import Icon from '../../../components/Icon';
 import {useTranslation} from 'react-i18next';
-import {useMemo} from 'react';
+import {School} from '../../../types/school';
 
 type Props = {
   school: School;
-  isFirst?: boolean;
   index?: string | number;
   onPress: () => void;
 };
 
-const SchoolItem: React.FC<Props> = ({school, index, isFirst, onPress}) => {
+const SchoolItem: React.FC<Props> = ({school, index, onPress}) => {
+  const [loading, setLoading] = useState(true);
   const {t} = useTranslation();
 
-  return useMemo(
-    () => (
-      <TouchableOpacity key={index} onPress={onPress}>
-        <HStack
-          w={'100%'}
-          py={'18px'}
-          alignItems={'center'}
-          borderTopWidth={'1px'}
-          borderColor={isFirst ? 'transparent' : 'gray.200'}>
-          <Center
-            w={'40px'}
-            h={'40px'}
-            borderRadius={'500px'}
-            background={'primary.100'}>
-            <Icon name={'university'} />
-          </Center>
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    });
+  }, []);
 
-          <VStack flex={1} ml={'8px'} space={'4px'}>
-            <Text color={'gray.700'}>{school.name}</Text>
-            <Text color={'gray.600'}>
-              {t('setupUserData.schoolSelect.lineDesc', {
-                count: (school as any)?.teachersCount,
-              })}
-            </Text>
-          </VStack>
+  if (loading) {
+    return (
+      <HStack
+        w={'100%'}
+        py={'18px'}
+        alignItems={'center'}
+        bg="gray.100"
+        my="12px"
+      />
+    );
+  }
 
-          <Icon name={'angle-right'} />
-        </HStack>
-      </TouchableOpacity>
-    ),
-    [],
+  return (
+    <TouchableOpacity key={index} onPress={onPress}>
+      <HStack
+        w={'100%'}
+        py={'18px'}
+        alignItems={'center'}
+        borderBottomWidth={'1px'}
+        borderColor={'gray.200'}>
+        <Center
+          w={'40px'}
+          h={'40px'}
+          borderRadius={'500px'}
+          background={'primary.100'}>
+          <Icon name={'university'} />
+        </Center>
+
+        <VStack flex={1} ml={'8px'} space={'4px'}>
+          <Text color={'gray.700'}>{school.name}</Text>
+          <Text color={'gray.600'}>
+            {t('schoolSelect.item-description_interval', {
+              postProcess: 'interval',
+              count: school?.teachersCount,
+            })}
+          </Text>
+        </VStack>
+
+        <Icon name={'angle-right'} />
+      </HStack>
+    </TouchableOpacity>
   );
 };
 

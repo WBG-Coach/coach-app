@@ -1,30 +1,24 @@
-import React, {useLayoutEffect} from 'react';
-import {isTablet as Tablet} from 'react-native-device-info';
-import {Text, VStack} from 'native-base';
+import React from 'react';
+import {TeacherItemType} from '../../types/teacher';
+import {useNavigate} from 'react-router-native';
 import HorizontalMenu from './HorizontalMenu';
 import {useTranslation} from 'react-i18next';
+import PathRoutes from '../../routers/paths';
 import TeachersList from './TeachersList';
+import {Text, VStack} from 'native-base';
+import Page from '../../components/Page';
 import HomeHeader from './HomeHeader';
-import {useNetInfo} from '@react-native-community/netinfo';
-import {syncWatermelon} from '../../database';
 
-const HomeScreen = () => {
-  const isTablet = Tablet();
+const HomeScreen: React.FC = () => {
   const {t} = useTranslation();
-  const {isConnected} = useNetInfo();
+  const navigate = useNavigate();
 
-  useLayoutEffect(() => {
-    if (isConnected) {
-      syncWatermelon();
-    }
-  }, [isConnected]);
+  const onSelectTeacher = (teacher: TeacherItemType) => {
+    navigate(PathRoutes.teacher.details.replace(':id', teacher.id));
+  };
 
   return (
-    <VStack
-      safeAreaBottom
-      mt={isTablet ? '64px' : 6}
-      px={isTablet ? '32px' : 4}
-      flex={1}>
+    <Page setting logo>
       <HomeHeader />
 
       <HorizontalMenu />
@@ -34,9 +28,9 @@ const HomeScreen = () => {
       </Text>
 
       <VStack flex={1} pb={4}>
-        <TeachersList />
+        <TeachersList onSelectTeacher={onSelectTeacher} />
       </VStack>
-    </VStack>
+    </Page>
   );
 };
 

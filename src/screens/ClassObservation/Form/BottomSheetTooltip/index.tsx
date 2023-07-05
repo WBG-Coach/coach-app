@@ -1,6 +1,6 @@
 import {HStack, Text, VStack} from 'native-base';
 import React from 'react';
-import Icon from '../../../../components/base/Icon';
+import Icon from '../../../../components/Icon';
 import {Props} from './types';
 
 const BottomSheetTooltip: React.FC<Props> = ({content}) => {

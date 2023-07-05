@@ -1,13 +1,13 @@
-import {TouchableOpacity} from 'react-native';
+import React from 'react';
 import {Center, HStack, Image, Text, VStack, useTheme} from 'native-base';
 import {isTablet as Tablet} from 'react-native-device-info';
-import Icon from '../../../components/base/Icon';
+import {TeacherItemType} from '../../../types/teacher';
+import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {TeachersWithSession} from '../../../providers/contexts/UserContext';
-import Teacher from '../../../database/models/Teacher';
+import Icon from '../../../components/Icon';
 
 type Props = {
-  teacher: Teacher;
+  teacher: TeacherItemType;
   onPress: () => void;
 };
 
@@ -31,13 +31,13 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
             h={isTablet ? '56px' : '40px'}
             borderRadius={'500px'}
             background={'primary.100'}>
-            {teacher?.image?.value ? (
+            {teacher?.image ? (
               <Image
-                source={{uri: teacher.image.value}}
-                alt={'Teacher image'}
                 w={'100%'}
                 h={'100%'}
+                alt={'Teacher image'}
                 borderRadius={'500px'}
+                source={{uri: teacher.image}}
               />
             ) : (
               <Icon name={'user'} />
@@ -49,18 +49,22 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
               {teacher.name}
             </Text>
             <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-              {teacher.subject || 'No subject'}
+              {teacher.last_session_date
+                ? t('home.teachers.last-session', {
+                    date: new Date(teacher.last_session_date).toDateString(),
+                  })
+                : t('home.teachers.no-session')}
             </Text>
 
             <HStack space={1}>
               {teacher.sessionsCount >= 1 ? (
                 <HStack
-                  alignItems={'center'}
-                  borderRadius={'4px'}
-                  background={'primary.100'}
                   px={2}
                   py={1}
-                  space={1}>
+                  space={1}
+                  borderRadius={'4px'}
+                  alignItems={'center'}
+                  background={'primary.100'}>
                   <Icon name={'clipboard-notes-solid'} size={15} />
                   <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
                     {t('home.teachers.session_interval', {
@@ -71,15 +75,15 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
                 </HStack>
               ) : (
                 <HStack
-                  alignItems={'center'}
-                  borderRadius={'4px'}
-                  background={'yellow.100'}
                   px={2}
                   py={1}
-                  space={1}>
+                  space={1}
+                  borderRadius={'4px'}
+                  alignItems={'center'}
+                  background={'yellow.100'}>
                   <Icon
-                    name={'favorite-solid'}
                     size={15}
+                    name={'favorite-solid'}
                     color={theme.colors.yellow['300']}
                   />
                   <Text fontSize={'TSM'} fontWeight={500} color={'yellow.300'}>
@@ -90,12 +94,12 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
 
               {teacher.feedbacksCount >= 1 && (
                 <HStack
-                  alignItems={'center'}
-                  borderRadius={'4px'}
-                  background={'green.100'}
                   px={2}
                   py={1}
-                  space={1}>
+                  space={1}
+                  borderRadius={'4px'}
+                  alignItems={'center'}
+                  background={'green.100'}>
                   <Icon name={'comment-verify-solid'} size={15} />
                   <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
                     {teacher.feedbacksCount} Feedbacks

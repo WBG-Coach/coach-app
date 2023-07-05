@@ -1,36 +1,21 @@
-import {Box, Center, HStack, Text, VStack} from 'native-base';
-import {useEffect, useState} from 'react';
-import {TouchableOpacity} from 'react-native';
-import Icon from '../../../../../components/base/Icon';
-import StarRating from '../../../../../components/base/StarRating';
-import Question from '../../../../../database/models/Question';
-import {useBottomSheetProvider} from '../../../../../providers/contexts/BottomSheetContext';
+import React, {useState} from 'react';
+import {Center, HStack, Modal, Text, VStack} from 'native-base';
 import BottomSheetTooltip from '../../BottomSheetTooltip';
+import {Question} from '../../../../../types/question';
+import {TouchableOpacity} from 'react-native';
+import Icon from '../../../../../components/Icon';
+import StarRating from '../../../../../components/StarRating';
+import Button from '../../../../../components/Button';
 
 type Props = {
-  value: number;
   question: Question;
+  initialValue?: number;
   onAnswer: (question: Question, value: number) => void;
 };
 
-const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [internalValue, setInternalValue] = useState(value);
-
-  const [{}, {setBottomSheetContent}] = useBottomSheetProvider();
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false));
-  }, []);
-
-  if (isLoading)
-    return (
-      <Box h="100px" w="full">
-        <Box bg="gray.100" h="20px"></Box>
-        <Box bg="gray.100" mt="8px" h="12px"></Box>
-        <Box mx="auto" bg="gray.100" mt="16px" w="200px" h="32px"></Box>
-      </Box>
-    );
+const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
+  const [internalValue, setInternalValue] = useState(initialValue || 0);
+  const [tooltipData, setTooltipData] = useState<string>();
 
   return (
     <VStack mb="24px">
@@ -51,12 +36,7 @@ const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
           )}
         </VStack>
 
-        <TouchableOpacity
-          onPress={() =>
-            setBottomSheetContent(
-              <BottomSheetTooltip content={question.tooltip_data} />,
-            )
-          }>
+        <TouchableOpacity onPress={() => setTooltipData(question.tooltip_data)}>
           <Center
             background={'primary.200'}
             borderRadius={'10px'}
@@ -70,11 +50,20 @@ const QuestionItem: React.FC<Props> = ({value, question, onAnswer}) => {
       <StarRating
         size={question.scale}
         value={internalValue}
-        onPress={value => {
-          onAnswer(question, value);
-          setInternalValue(value);
+        onPress={answerValue => {
+          onAnswer(question, answerValue);
+          setInternalValue(answerValue);
         }}
       />
+
+      <Modal isOpen={!!tooltipData} onClose={() => setTooltipData(undefined)}>
+        <VStack w="full" mt="auto" p="16px" bg="white" borderTopRadius={'20px'}>
+          <BottomSheetTooltip content={tooltipData || ''} />
+          <Button variant="outlined" onPress={() => setTooltipData(undefined)}>
+            {'Ok'}
+          </Button>
+        </VStack>
+      </Modal>
     </VStack>
   );
 };

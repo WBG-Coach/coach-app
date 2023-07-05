@@ -1,7 +1,7 @@
 import React from 'react';
-import {Box, HStack, Text} from 'native-base';
+import {Box, HStack, Text, VStack} from 'native-base';
 import {TouchableOpacity} from 'react-native';
-import Icon from '../base/Icon';
+import Icon from '../Icon';
 
 type Props = {
   title: string;
@@ -35,7 +35,9 @@ const Accordion: React.FC<Props> = ({
           )}
         </HStack>
       </TouchableOpacity>
-      {isOpen && children}
+      <VStack h={isOpen ? 'auto' : 0} overflow="hidden">
+        {children}
+      </VStack>
       <Box mt="24px" h="8px" bg="gray.100" />
     </>
   );

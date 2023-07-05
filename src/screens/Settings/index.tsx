@@ -1,155 +1,207 @@
-import {Box, HStack, Spinner, Text, VStack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
+import {HStack, Spinner, Text, VStack, useToast} from 'native-base';
+import {useCoachContext} from '../../providers/coach.provider';
+import {StorageService} from '../../services/storage.service';
+import {useNetInfo} from '@react-native-community/netinfo';
+import SyncService from '../../services/sync.service';
+import {useNavigate} from 'react-router-native';
+import {TouchableOpacity} from 'react-native';
+import PathRoutes from '../../routers/paths';
 import {useTranslation} from 'react-i18next';
-import {isTablet as Tablet} from 'react-native-device-info';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import Icon from '../../components/base/Icon';
 import i18n, {resources} from '../../i18n';
-import Routes from '../../routes/paths';
-import {getWatermelon, syncWatermelon} from '../../database';
-import Navigation from '../../services/navigation';
-import TeacherService from '../../services/teacher';
-import SessionService from '../../services/session';
+import Toast from '../../components/Toast';
+import Icon from '../../components/Icon';
+import Page from '../../components/Page';
+
 var pkg = require('../../../package.json');
 
+const pendingCountInit = {
+  pendingTeachers: 0,
+  pendingFeedbacks: 0,
+  pendingSessions: 0,
+};
+
 const SettingsScreen: React.FC = () => {
-  const {t} = useTranslation();
-  const currentLanguage = i18n.languages[0];
-  const [pendingCount, setPendingCount] = useState({
-    pendingTeachers: 0,
-    pendingFeedbacks: 0,
-    pendingSessions: 0,
-  });
+  const [pendingCount, setPendingCount] = useState(pendingCountInit);
+  const {logout, currentCoach} = useCoachContext();
   const [lastSync, setLastSync] = useState('');
   const [loading, setLoading] = useState(true);
-  const isTablet = Tablet();
+  const currentLanguage = i18n.languages[0];
+  const {isConnected} = useNetInfo();
+  const navigate = useNavigate();
+  const {t} = useTranslation();
+  const toast = useToast();
 
-  const updateLastSync = useCallback(async () => {
+  const getSyncData = useCallback(async () => {
     setLoading(true);
-    const db = await getWatermelon();
-    const date: any = await db.localStorage.get('__watermelon_last_pulled_at');
-    setLastSync(new Date(date).toUTCString().replace(' GMT', ''));
-    const pendingTeachers = await TeacherService.countPendingTeacherToSync();
-    const pendingFeedbacks = await SessionService.countPendingFeedbacksToSync();
-    const pendingSessions = await SessionService.countPendingSessionsToSync();
-
-    setPendingCount({pendingTeachers, pendingFeedbacks, pendingSessions});
+    setLastSync(await StorageService.getLastSync());
+    setPendingCount(await SyncService.getUnsyncedItemsCount());
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    updateLastSync();
-  }, [updateLastSync]);
+    getSyncData();
+  }, [getSyncData]);
 
-  const options = [
-    {
-      icon: 'globe',
-      label: 'Language',
-      description: 'English (US)',
-      onPress: () => Navigation.navigate(Routes.settings.changeLanguage),
-    },
-  ];
-
-  const syncNow = async () => {
+  const trySync = async () => {
     setLoading(true);
-    await syncWatermelon();
-    await updateLastSync();
+    try {
+      if (!isConnected) {
+        throw new Error();
+      }
+
+      await SyncService.trySyncData();
+      await getSyncData();
+    } catch (err) {
+      console.log(err);
+      toast.show({
+        placement: 'top',
+        render: () => (
+          <Toast
+            type="error"
+            icon="wifi-slash"
+            title={t('settings.sync-error-title')}
+            description={t('settings.sync-error-description')}
+          />
+        ),
+      });
+    }
     setLoading(false);
   };
 
+  const options = [
+    {
+      hide: false,
+      icon: 'globe',
+      label: 'settings.language',
+      description: resources[currentLanguage].label,
+      onPress: () => navigate(PathRoutes.settings.changeLanguage),
+    },
+    {
+      hide: !currentCoach,
+      icon: 'signout',
+      label: 'settings.logout',
+      description: 'settings.logout-description',
+      onPress: async () => {
+        await logout();
+        navigate(-999);
+      },
+    },
+  ];
+
+  const renderSyncTag = (label: string, count: number) => {
+    return (
+      <HStack
+        bg="#F2F4F7"
+        borderRadius="8px"
+        p="8px"
+        flex={1}
+        justifyContent="center">
+        <Text fontSize={'14px'} color={'gray.600'}>
+          {label}
+        </Text>
+        <Text
+          fontSize={'14px'}
+          ml="4px"
+          fontFamily="Inter"
+          fontWeight={700}
+          color={'gray.600'}>
+          {count}
+        </Text>
+      </HStack>
+    );
+  };
+
   return (
-    <VStack
-      safeAreaBottom
-      mt={isTablet ? '64px' : 6}
-      px={isTablet ? '32px' : 4}
-      pb={isTablet ? '32px' : 4}
-      flex={1}>
+    <Page back title={t('settings.title')}>
       <VStack flex={1}>
-        {options.map((option, index) => (
-          <TouchableOpacity key={index} onPress={option.onPress}>
-            <HStack
-              alignItems={'center'}
-              space={2}
-              borderBottomColor={'gray.200'}
-              borderBottomWidth={'1px'}
-              pb={3}>
-              <Icon name={option.icon} />
-              <VStack flex={1} space={2}>
-                <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                  {t('settings.settings.title') || 'Language'}
-                </Text>
-                <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                  {resources[currentLanguage].label}
-                </Text>
-              </VStack>
-              <Icon name={'angle-right'} />
-            </HStack>
-          </TouchableOpacity>
-        ))}
+        {options.map(
+          (option, index) =>
+            !option.hide && (
+              <TouchableOpacity key={index} onPress={option.onPress}>
+                <HStack
+                  mb="12px"
+                  space={2}
+                  alignItems={'center'}
+                  borderBottomColor={'gray.200'}
+                  borderBottomWidth={'1px'}
+                  pb={3}>
+                  <Icon name={option.icon as any} />
+                  <VStack flex={1} justifyContent="center">
+                    <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+                      {t(option.label)}
+                    </Text>
+                    <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
+                      {t(option.description)}
+                    </Text>
+                  </VStack>
+                  <Icon name={'angle-right'} />
+                </HStack>
+              </TouchableOpacity>
+            ),
+        )}
       </VStack>
       {loading ? (
         <Spinner />
       ) : (
         <VStack mb="24px">
-          <Text color={'#111417'} fontWeight="bold" fontSize="16px">
-            {t('settings.settings.unsynced-items')}
-          </Text>
-          <HStack justifyContent="space-around" my="12px">
-            <Text color={'gray.600'} p="12px">
-              {t('settings.settings.unsynced-teacher', {
-                count: pendingCount.pendingTeachers,
-              })}
+          <HStack alignItems="center" justifyContent="space-between">
+            <Text
+              color={'#111417'}
+              fontFamily="Inter"
+              fontWeight="700"
+              fontSize="16px">
+              {t('settings.unsynced-items')}
             </Text>
-            <Box h="full" bg="#111417" w="1px"></Box>
-            <Text color={'gray.600'} p="12px">
-              {t('settings.settings.unsynced-session', {
-                count: pendingCount.pendingSessions,
-              })}
-            </Text>
-            <Box h="full" bg="#111417" w="1px"></Box>
-            <Text color={'gray.600'} p="12px">
-              {t('settings.settings.unsynced-feedback', {
-                count: pendingCount.pendingFeedbacks,
-              })}
-            </Text>
+            {(pendingCount.pendingTeachers > 0 ||
+              pendingCount.pendingSessions > 0 ||
+              pendingCount.pendingFeedbacks > 0) && (
+              <TouchableOpacity onPress={trySync}>
+                <HStack alignItems="center">
+                  <Text
+                    mr="4px"
+                    color={'#3373CC'}
+                    fontFamily="Inter"
+                    fontSize="16px">
+                    {'Try sync'}
+                  </Text>
+                  <Icon name="redo" color={'#3373CC'} size={24} />
+                </HStack>
+              </TouchableOpacity>
+            )}
           </HStack>
-
-          {pendingCount.pendingFeedbacks ||
-          pendingCount.pendingSessions ||
-          pendingCount.pendingTeachers ? (
-            <TouchableOpacity onPress={syncNow}>
-              <Box
-                px={2}
-                py={1}
-                borderWidth="1px"
-                borderColor={'gray.600'}
-                borderRadius={'4px'}>
-                <Text color={'gray.600'} textAlign="center">
-                  {t('settings.settings.sync_now')}
-                </Text>
-              </Box>
-            </TouchableOpacity>
-          ) : (
-            <></>
-          )}
+          <HStack space={1} justifyContent="space-around" my="12px">
+            {renderSyncTag(
+              t('settings.unsynced-teacher'),
+              pendingCount.pendingTeachers,
+            )}
+            {renderSyncTag(
+              t('settings.unsynced-session'),
+              pendingCount.pendingSessions,
+            )}
+            {renderSyncTag(
+              t('settings.unsynced-feedback'),
+              pendingCount.pendingFeedbacks,
+            )}
+          </HStack>
         </VStack>
       )}
       <VStack w={'100%'}>
         <HStack alignItems={'center'} py={'16px'} space={2}>
           <Icon name={'wifi'} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            {t('settings.settings.lastSync', {value: lastSync})}
+            {t('settings.lastSync', {value: lastSync})}
           </Text>
         </HStack>
 
         <HStack alignItems={'center'} py={'16px'} space={2}>
           <Icon name={'mobile-android'} />
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-            {t('settings.settings.appVersion') || 'App version'} v{pkg.version}
+            {t('settings.appVersion') || 'App version'} v{pkg.version}
           </Text>
         </HStack>
       </VStack>
-    </VStack>
+    </Page>
   );
 };
 

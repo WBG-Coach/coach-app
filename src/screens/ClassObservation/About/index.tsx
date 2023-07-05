@@ -1,69 +1,61 @@
+import React from 'react';
 import {
   Box,
-  Button,
-  Center,
-  FlatList,
-  HStack,
   Text,
-  useTheme,
-  View,
   VStack,
+  Center,
+  HStack,
+  FlatList,
+  useTheme,
 } from 'native-base';
-import React from 'react';
-import Icon from '../../../components/base/Icon';
-import Routes from '../../../routes/paths';
-import Navigation from '../../../services/navigation';
-import {isTablet as Tablet} from 'react-native-device-info';
+import {useNavigate, useParams} from 'react-router-native';
+import PathRoutes from '../../../routers/paths';
+import Button from '../../../components/Button';
 import {useTranslation} from 'react-i18next';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from '../../../components/Icon';
+import Page from '../../../components/Page';
 
-const ClassObservationAbout: React.FC<any> = () => {
+const ClassObservationAbout: React.FC = () => {
   const theme = useTheme();
-  const isTablet = Tablet();
   const {t} = useTranslation();
+  const navigate = useNavigate();
+  const param = useParams<{teacherId: string}>();
 
   const process = [
     {
-      title: t('classObservation.create.process.el1.title') || 'Preparation',
-      estimated: t('classObservation.create.process.el1.subtitle') || '5min',
-      description:
-        t('classObservation.create.process.el1.description') ||
-        'Talk to the teacher before the class and review your notes if you already had a coach observation before.',
+      title: t('classObservation.about.step1.title'),
+      estimated: t('classObservation.about.step1.subtitle'),
+      description: t('classObservation.about.step1.description'),
     },
     {
-      title:
-        t('classObservation.create.process.el2.title') ||
-        'Classroom observation',
-      estimated:
-        t('classObservation.create.process.el2.subtitle') || '30-45min',
-      description:
-        t('classObservation.create.process.el2.description') ||
-        'Sit at the back of the class to make notes and remember to put your phone in silent mode.',
+      title: t('classObservation.about.step2.title'),
+      estimated: t('classObservation.about.step2.subtitle'),
+      description: t('classObservation.about.step2.description'),
     },
     {
-      title:
-        t('classObservation.create.process.el3.title') ||
-        'Coaching conversation',
-      estimated:
-        t('classObservation.create.process.el3.subtitle') || '20-30min',
-      description:
-        t('classObservation.create.process.el3.description') ||
-        'Present to the teacher your observations, pointing the positive and negative points of their class.',
+      title: t('classObservation.about.step3.title'),
+      estimated: t('classObservation.about.step3.subtitle'),
+      description: t('classObservation.about.step3.description'),
     },
     {
-      title: t('classObservation.create.process.el4.title') || 'Next steps',
-      estimated: t('classObservation.create.process.el4.subtitle') || '5min',
-      description:
-        t('classObservation.create.process.el4.description') ||
-        'After agreeing with the teacher about the  key next steps, schedule the next visit.',
+      title: t('classObservation.about.step4.title'),
+      estimated: t('classObservation.about.step4.subtitle'),
+      description: t('classObservation.about.step4.description'),
     },
   ];
 
+  const goToSetupSession = () => {
+    navigate(PathRoutes.classObservation.setup, {
+      replace: true,
+      state: {session: {teacher_id: param?.teacherId}},
+    });
+  };
+
   return (
-    <VStack flex={1} mt={6} px={isTablet ? '32px' : 4} safeAreaBottom>
+    <Page back title={t('classObservation.title')}>
       <VStack flex={1} position={'relative'}>
         <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-          {t('classObservation.create.title') || 'Mentoring process'}
+          {t('classObservation.about.title')}
         </Text>
 
         <HStack mt={6} position={'relative'}>
@@ -77,18 +69,17 @@ const ClassObservationAbout: React.FC<any> = () => {
 
           <FlatList
             data={process}
-            ItemSeparatorComponent={() => <View h={'14px'} />}
             renderItem={({item}) => (
               <>
                 <Center
-                  position={'absolute'}
                   top={0}
-                  left={'-0px'}
                   w={'40px'}
                   h={'40px'}
-                  background={'primary.100'}
                   zIndex={2}
-                  borderRadius={'500px'}>
+                  left={'-0px'}
+                  position={'absolute'}
+                  borderRadius={'500px'}
+                  background={'primary.100'}>
                   <Icon
                     name={'university'}
                     color={theme.colors.primary['200']}
@@ -111,18 +102,11 @@ const ClassObservationAbout: React.FC<any> = () => {
           />
         </HStack>
       </VStack>
-      <TouchableOpacity
-        onPress={() => Navigation.navigate(Routes.classObservation.onboarding)}>
-        <Center
-          mb={6}
-          w={'100%'}
-          py={3}
-          borderRadius={'8px'}
-          background={'primary.200'}>
-          <Text>{t('classObservation.create.button')}</Text>
-        </Center>
-      </TouchableOpacity>
-    </VStack>
+
+      <Button onPress={goToSetupSession}>
+        {t('classObservation.about.start-button')}
+      </Button>
+    </Page>
   );
 };
 

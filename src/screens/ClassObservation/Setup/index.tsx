@@ -1,121 +1,153 @@
-import {
-  Button,
-  Input,
-  ScrollView,
-  Text,
-  TextArea,
-  VStack,
-  Select,
-  Box,
-  Center,
-} from 'native-base';
-import React, {useContext} from 'react';
-import {Controller, SubmitHandler, useForm} from 'react-hook-form';
-import Routes from '../../../routes/paths';
-import Navigation from '../../../services/navigation';
-import {isTablet as Tablet} from 'react-native-device-info';
-import {UserContext} from '../../../providers/contexts/UserContext';
+import React from 'react';
+import {ScrollView, Text, TextArea, VStack, Box} from 'native-base';
+import {useNavigate, useLocation} from 'react-router-native';
+import SelectModal from '../../../components/SelectModal';
+import Button from '../../../components/Button';
+import PathRoutes from '../../../routers/paths';
 import {useTranslation} from 'react-i18next';
-import SelectModal from '../../../components/base/SelectModal';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Page from '../../../components/Page';
+import {Formik} from 'formik';
 
 const defaultValues = {
   students_count: '',
   subject: '',
   lesson_time: '',
   objective: '',
+  class_type: '',
 };
 
-const ObservationSetup: React.FC<any> = () => {
-  const {control, handleSubmit} = useForm({defaultValues});
-  const {teacher} = useContext(UserContext);
+const ClassObservationSetup: React.FC = () => {
+  const {state} = useLocation();
+  const navigate = useNavigate();
   const {t} = useTranslation();
-  const isTablet = Tablet();
 
-  const handleSubmitForm: SubmitHandler<
-    typeof defaultValues
-  > = async values => {
-    Navigation.navigate(Routes.classObservation.form, {
-      session: {...values, teacher_id: teacher?.id},
+  const handleSubmitForm = async (values: typeof defaultValues) => {
+    navigate(PathRoutes.classObservation.form, {
+      state: {session: {...(state?.session ? state.session : {}), ...values}},
+      replace: true,
     });
   };
 
+  const validate = (values: typeof defaultValues): any => {
+    let erros: any = {};
+    if (!values.class_type) {
+      erros.class_type = 'Required';
+    }
+
+    if (!values.students_count) {
+      erros.students_count = 'Required';
+    }
+
+    if (!values.lesson_time) {
+      erros.lesson_time = 'Required';
+    }
+
+    return erros;
+  };
+
+  const classroomOptions = [
+    t('classObservation.setup.questions.$1.options.$1'),
+    t('classObservation.setup.questions.$1.options.$2'),
+    t('classObservation.setup.questions.$1.options.$3'),
+  ];
+
+  const subjectOptions = [
+    t('classObservation.setup.questions.$2.options.$1'),
+    t('classObservation.setup.questions.$2.options.$2'),
+    t('classObservation.setup.questions.$2.options.$3'),
+    t('classObservation.setup.questions.$2.options.$4'),
+    t('classObservation.setup.questions.$2.options.$5'),
+    t('classObservation.setup.questions.$2.options.$6'),
+    t('classObservation.setup.questions.$2.options.$7'),
+    t('classObservation.setup.questions.$2.options.$8'),
+    t('classObservation.setup.questions.$2.options.$9'),
+  ];
+
   return (
-    <VStack
-      py={6}
-      flex={1}
-      bg={'gray.0'}
-      safeAreaBottom
-      px={isTablet ? '32px' : 4}>
-      <ScrollView flexGrow={0}>
-        <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-          {t('classObservation.setup.title') || 'About the lesson'}
-        </Text>
-        <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-          {t('classObservation.setup.subtitle') ||
-            'Ask the teacher the following questions'}
-        </Text>
-
-        <VStack space={4} mt={6}>
-          <VStack space={2}>
-            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$1.title') ||
-                'How many students are boys?'}
+    <Formik
+      validate={validate}
+      onSubmit={handleSubmitForm}
+      initialValues={state?.session ? state?.session : defaultValues}>
+      {({values, errors, handleSubmit, setFieldValue}) => (
+        <Page back title={t('classObservation.title')}>
+          <ScrollView flexGrow={0}>
+            <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
+              {t('classObservation.setup.title')}
+            </Text>
+            <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+              {t('classObservation.setup.subtitle')}
             </Text>
 
-            <Controller
-              control={control}
-              rules={{required: true}}
-              name={'students_count'}
-              render={({field, fieldState: {error}}) => (
-                <Input
-                  {...field}
-                  onChangeText={field.onChange}
-                  isInvalid={!!error}
-                  placeholder={
-                    t('classObservation.setup.questions.$1.placeholder') || '15'
+            <VStack space={4} mt={6}>
+              <VStack space={2}>
+                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                  {t('classObservation.setup.questions.$0.title')}
+                </Text>
+
+                <SelectModal
+                  isInvalid={!!errors.class_type}
+                  value={values.class_type}
+                  handleSelectValue={value =>
+                    setFieldValue('class_type', value)
                   }
-                  variant={'outline'}
-                  keyboardType={'number-pad'}
+                  options={classroomOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
+                  placeholder={t(
+                    'classObservation.setup.questions.$0.placeholder',
+                  )}
+                  bottomTitle={t('classObservation.setup.questions.$0.title')}
                 />
-              )}
-            />
-          </VStack>
+              </VStack>
 
-          <VStack space={2}>
-            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$2.title')}
-            </Text>
+              <VStack space={2}>
+                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                  {t('classObservation.setup.questions.$1.title')}
+                </Text>
 
-            <Controller
-              control={control}
-              rules={{required: false}}
-              name={'subject'}
-              render={({field, fieldState: {error}}) => (
-                <Input
-                  {...field}
-                  onChangeText={field.onChange}
-                  isInvalid={!!error}
-                  variant={'outline'}
-                  placeholder={
-                    t('classObservation.setup.questions.$2.placeholder') ||
-                    'Math'
+                <SelectModal
+                  options={[
+                    {label: '1 - 10', value: '1 - 10'},
+                    {label: '10 - 30', value: '10 - 30'},
+                    {label: '30 - 60', value: '30 - 60'},
+                    {label: '60+', value: '60+'},
+                  ]}
+                  isInvalid={!!errors.students_count}
+                  handleSelectValue={value =>
+                    setFieldValue('students_count', value)
                   }
+                  placeholder={t(
+                    'classObservation.setup.questions.$1.placeholder',
+                  )}
+                  value={values.students_count}
+                  bottomTitle={t('classObservation.setup.questions.$1.title')}
                 />
-              )}
-            />
-          </VStack>
+              </VStack>
 
-          <VStack space={2}>
-            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$3.title')}
-            </Text>
+              <VStack space={2}>
+                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                  {t('classObservation.setup.questions.$2.title')}
+                </Text>
 
-            <Controller
-              control={control}
-              rules={{required: true}}
-              name={'lesson_time'}
-              render={({field, fieldState: {error}}) => (
+                <SelectModal
+                  options={subjectOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
+                  handleSelectValue={value => setFieldValue('subject', value)}
+                  placeholder={t(
+                    'classObservation.setup.questions.$2.placeholder',
+                  )}
+                  bottomTitle={t('classObservation.setup.questions.$2.title')}
+                  value={values.subject}
+                />
+              </VStack>
+
+              <VStack space={2}>
+                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                  {t('classObservation.setup.questions.$3.title')}
+                </Text>
                 <SelectModal
                   options={[
                     {label: '25 mins', value: '25'},
@@ -127,58 +159,42 @@ const ObservationSetup: React.FC<any> = () => {
                     {label: '55 mins', value: '55'},
                     {label: '60 mins', value: '60'},
                   ]}
-                  isInvalid={!!error}
-                  handleSelectValue={field.onChange}
+                  isInvalid={!!errors.lesson_time}
+                  handleSelectValue={value =>
+                    setFieldValue('lesson_time', value)
+                  }
                   placeholder={'25 mins'}
                   bottomTitle={t('classObservation.setup.questions.$3.title')}
-                  value={field.value}
+                  value={values.lesson_time}
                 />
-              )}
-            />
-          </VStack>
+              </VStack>
 
-          <VStack space={2}>
-            <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-              {t('classObservation.setup.questions.$4.title') ||
-                "Teacher's description of the class"}
-            </Text>
-
-            <Controller
-              control={control}
-              rules={{required: false}}
-              name={'objective'}
-              render={({field, fieldState: {error}}) => (
+              <VStack space={2} mb="4px">
+                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                  {t('classObservation.setup.questions.$4.title')}
+                </Text>
                 <TextArea
-                  {...field}
-                  onChangeText={field.onChange}
-                  isInvalid={!!error}
+                  onChangeText={value => setFieldValue('objective', value)}
+                  isInvalid={!!errors.objective}
                   autoCompleteType={'off'}
                   variant={'outline'}
-                  placeholder={
-                    t('classObservation.setup.questions.$4.placeholder') ||
-                    "Teacher's description of the class"
-                  }
+                  placeholder={t(
+                    'classObservation.setup.questions.$4.placeholder',
+                  )}
                 />
-              )}
-            />
-          </VStack>
-        </VStack>
-      </ScrollView>
+              </VStack>
+            </VStack>
+          </ScrollView>
 
-      <Box marginTop={isTablet ? 6 : 'auto'}>
-        <TouchableOpacity onPress={handleSubmit(handleSubmitForm)}>
-          <Center
-            variant={'solid'}
-            borderRadius={'8px'}
-            color={'white'}
-            py={3}
-            background={'primary.200'}>
-            {t('classObservation.setup.button') || 'Next'}
-          </Center>
-        </TouchableOpacity>
-      </Box>
-    </VStack>
+          <Box marginTop={'auto'}>
+            <Button onPress={() => handleSubmit()}>
+              {t('classObservation.setup.button')}
+            </Button>
+          </Box>
+        </Page>
+      )}
+    </Formik>
   );
 };
 
-export default ObservationSetup;
+export default ClassObservationSetup;

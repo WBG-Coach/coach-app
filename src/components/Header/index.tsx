@@ -1,69 +1,93 @@
-import {Box, Text, HStack, Image, useTheme, Stack} from 'native-base';
-import React, {useMemo} from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ImageStyle} from 'react-native/types';
-import Navigation from '../../services/navigation';
-import Icon from '../base/Icon';
-import {Props} from './types';
-import {isTablet as Tablet} from 'react-native-device-info';
-import Routes from '../../routes/paths';
-import {MobileLogo, TabletLogo} from '../../assets/images/logos';
+import React, {useCallback, useEffect} from 'react';
+import {Box, HStack, Image, Text, useTheme} from 'native-base';
+import {BackHandler, TouchableOpacity} from 'react-native';
+import {TabletLogo} from '../../assets/images/logos';
+import {isTablet} from 'react-native-device-info';
+import {useNavigate} from 'react-router-native';
+import PathRoutes from '../../routers/paths';
+import Icon from '../Icon';
 
-const Header: React.FC<Props> = ({hideBack, hideConfig, title, background}) => {
-  /*   const currentLanguage = i18n.languages[0]; */
-  const isTablet = useMemo(() => Tablet(), []);
+export type HeaderProps = {
+  title?: string;
+  back?: boolean;
+  logo?: boolean;
+  setting?: boolean;
+  onBack?: () => void;
+  bg?: string;
+};
+
+const Header: React.FC<HeaderProps> = ({
+  bg,
+  title,
+  back,
+  logo,
+  setting,
+  onBack,
+}) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
-  return useMemo(
-    () => (
-      <Stack
-        p={'16px'}
-        safeAreaTop
-        px={isTablet ? '32px' : '16px'}
-        {...(background && {background: background})}>
-        <HStack
-          w={'100%'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          position={'relative'}>
-          {!hideBack && (
-            <Box position={'absolute'} left={0}>
-              <TouchableOpacity onPress={() => Navigation.goBack()}>
-                <Icon name={'angle-left'} color={theme.colors.primary[200]} />
-              </TouchableOpacity>
-            </Box>
-          )}
+  const handleBack = useCallback(() => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate(-1);
+    }
+    return true;
+  }, [onBack, navigate]);
 
-          {title ? (
-            <Text color={'primary.200'} fontSize={'TMD'} fontWeight={700}>
-              {title}
-            </Text>
-          ) : (
-            <Image
-              alignSelf={'center'}
-              source={isTablet ? TabletLogo : MobileLogo}
-              style={
-                {
-                  height: isTablet ? 32 : 24,
-                  width: isTablet ? 100 : 64,
-                } as ImageStyle
-              }
-              alt={'Coach logo'}
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBack,
+    );
+
+    return () => backHandler.remove();
+  }, [handleBack]);
+
+  return (
+    <HStack
+      w="full"
+      py="12px"
+      bg={bg}
+      alignItems="center"
+      justifyContent="space-between"
+      px={isTablet() ? '32px' : '16px'}>
+      <Box w={6}>
+        {back && (
+          <TouchableOpacity onPress={handleBack}>
+            <Icon
+              size={24}
+              name="angle-left"
+              color={theme.colors.primary['200']}
             />
-          )}
-
-          {!hideConfig && (
-            <Box position={'absolute'} right={0}>
-              <TouchableOpacity
-                onPress={() => Navigation.navigate(Routes.settings.settings)}>
-                <Icon name={'setting'} color={theme.colors.primary[200]} />
-              </TouchableOpacity>
-            </Box>
-          )}
-        </HStack>
-      </Stack>
-    ),
-    [title, background, hideConfig, hideBack],
+          </TouchableOpacity>
+        )}
+      </Box>
+      <Box>
+        {logo && <Image alt="logo" source={TabletLogo} h="40px" />}
+        {title && (
+          <Text
+            fontSize="16px"
+            fontWeight={'700'}
+            fontFamily="Inter"
+            color={theme.colors.primary['200']}>
+            {title}
+          </Text>
+        )}
+      </Box>
+      <Box w={6}>
+        {setting && (
+          <TouchableOpacity onPress={() => navigate(PathRoutes.settings.main)}>
+            <Icon
+              size={24}
+              name="setting"
+              color={theme.colors.primary['200']}
+            />
+          </TouchableOpacity>
+        )}
+      </Box>
+    </HStack>
   );
 };
 
