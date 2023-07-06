@@ -51,14 +51,18 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
               <VStack alignItems={'flex-end'} space={1}>
                 <StarView
                   maxLength={competency.questions[0].scale}
-                  value={averageAnswersPerCompetence(competency)}
+                  value={Math.floor(averageAnswersPerCompetence(competency))}
                 />
                 <Text
                   fontSize={'LSM'}
                   flex={1}
                   fontWeight={400}
                   color={'gray.600'}>
-                  {tags[averageAnswersPerCompetence(competency) - 1]?.label}
+                  {
+                    tags[
+                      Math.floor(averageAnswersPerCompetence(competency)) - 1
+                    ]?.label
+                  }
                 </Text>
               </VStack>
             </HStack>

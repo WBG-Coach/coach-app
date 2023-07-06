@@ -36,10 +36,10 @@ const FeedbackDetailScreen: React.FC = () => {
         <VStack flex={1}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-              {t('feedback.defineActions.title')}
+              {t('feedback.form.title')}
             </Text>
             <Text mt={2} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-              {t('feedback.defineActions.subtitle')}
+              {t('feedback.form.subtitle')}
             </Text>
 
             <VStack mt={7} space={5}>
@@ -47,10 +47,10 @@ const FeedbackDetailScreen: React.FC = () => {
                 {feedback.competence?.title}
               </Text>
               <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                {t('feedback.defineActions.actionsToImprove')}
+                {t('feedback.form.actionsToImprove')}
               </Text>
               <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                {t('feedback.defineActions.describeActions')}
+                {t('feedback.form.describeActions')}
               </Text>
 
               <TextArea
@@ -61,27 +61,33 @@ const FeedbackDetailScreen: React.FC = () => {
               />
             </VStack>
 
-            <VStack>
-              <HStack alignItems={'center'} mt={6}>
+            {feedback?.images && feedback?.images?.length >= 1 && (
+              <VStack>
+                <HStack alignItems={'center'} mt={6}>
+                  <Text
+                    fontSize={'TXL'}
+                    flex={1}
+                    fontWeight={700}
+                    color={'gray.700'}>
+                    {t('feedback.form.uploadImage')}
+                  </Text>
+                </HStack>
+
                 <Text
-                  fontSize={'TXL'}
-                  flex={1}
-                  fontWeight={700}
-                  color={'gray.700'}>
-                  {t('feedback.defineActions.uploadImage')}
+                  mt={1}
+                  fontSize={'TXS'}
+                  fontWeight={400}
+                  color={'gray.600'}>
+                  {t('feedback.form.sendPicture')}
                 </Text>
-              </HStack>
 
-              <Text mt={1} fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                {t('feedback.defineActions.sendPicture')}
-              </Text>
-
-              <VStack flex={1} space={2} mt={6}>
-                {feedback.images?.map((image: any, index) => (
-                  <ImageCard {...image} key={index} />
-                ))}
+                <VStack flex={1} space={2} mt={6}>
+                  {feedback.images?.map((image: any, index) => (
+                    <ImageCard {...image} key={index} />
+                  ))}
+                </VStack>
               </VStack>
-            </VStack>
+            )}
           </ScrollView>
         </VStack>
       )}

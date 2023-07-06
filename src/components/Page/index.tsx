@@ -5,14 +5,18 @@ import Header, {HeaderProps} from '../Header';
 
 type Props = {
   children: React.ReactNode;
+  noPadding?: boolean;
 } & HeaderProps;
 
-const Page: React.FC<Props> = ({children, ...headerProps}) => {
+const Page: React.FC<Props> = ({children, noPadding, ...headerProps}) => {
   return (
     <>
       <Header {...headerProps} />
 
-      <VStack w="full" flex={1} p={isTablet() ? '32px 64px' : '16px 24px'}>
+      <VStack
+        w="full"
+        flex={1}
+        {...(!noPadding && {p: isTablet() ? '32px 64px' : '16px 24px'})}>
         {children}
       </VStack>
     </>

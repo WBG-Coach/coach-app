@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, HStack} from 'native-base';
+import {Box, HStack, VStack} from 'native-base';
 import {useNavigate, useParams} from 'react-router-native';
 import Page from '../../../components/Page';
 import TeacherHeader from './TeacherHeader';
@@ -10,6 +10,7 @@ import PathRoutes from '../../../routers/paths';
 import TeacherStatsTab from './Tabs/TeacherStats';
 import TabButton from '../../../components/TabButton';
 import SessionList from './Tabs/SessionListTab';
+import {isTablet} from 'react-native-device-info';
 
 type params = {
   id: string;
@@ -23,6 +24,7 @@ const TeacherDetailsScreen: React.FC = () => {
   const [teacher, setTeacher] = useState<TeacherDetailsType>();
   const {currentSchool} = useCoachContext();
   const navigate = useNavigate();
+  const IsTablet = isTablet();
 
   useEffect(() => {
     if (id) {
@@ -42,22 +44,28 @@ const TeacherDetailsScreen: React.FC = () => {
   ];
 
   return (
-    <Page logo setting back>
-      {teacher && currentSchool ? (
-        <TeacherHeader
-          name={teacher.name}
-          image={teacher.image}
-          subject={teacher.subject}
-          school={currentSchool.name}
-          onEditPress={() =>
-            navigate(PathRoutes.teacher.form.replace(':id', teacher.id))
-          }
-        />
-      ) : (
-        <Box w="full" h="110px" bg="gray.100" />
-      )}
+    <Page logo setting back noPadding>
+      <VStack w="full" p={IsTablet ? '32px 64px' : '16px 24px'}>
+        {teacher && currentSchool ? (
+          <TeacherHeader
+            name={teacher.name}
+            image={teacher.image}
+            subject={teacher.subject}
+            school={currentSchool.name}
+            onEditPress={() =>
+              navigate(PathRoutes.teacher.form.replace(':id', teacher.id))
+            }
+          />
+        ) : (
+          <Box w="full" h="110px" bg="gray.100" />
+        )}
+      </VStack>
 
-      <HStack mb={2}>
+      <HStack
+        mb={2}
+        px={IsTablet ? '32px' : '16px'}
+        borderBottomWidth={'2px'}
+        borderBottomColor={'gray.200'}>
         {tabs.map((item, index) => (
           <TabButton
             key={index}
@@ -67,7 +75,14 @@ const TeacherDetailsScreen: React.FC = () => {
           />
         ))}
       </HStack>
-      {tabs[selectedTabIndex].Component}
+
+      <VStack
+        flex={1}
+        w="full"
+        px={IsTablet ? '32px' : '16px'}
+        pb={IsTablet ? '64px' : '24px'}>
+        {tabs[selectedTabIndex].Component}
+      </VStack>
     </Page>
   );
 };

@@ -44,8 +44,8 @@ const CompetenceStats: React.FC = () => {
   }, []);
 
   return (
-    <Page back title="">
-      <VStack px={isTablet ? '32px' : 4} mt={2} flex={1}>
+    <Page back>
+      <VStack px={isTablet ? '32px' : 4} flex={1}>
         {pageData ? (
           <>
             <HStack
@@ -76,17 +76,23 @@ const CompetenceStats: React.FC = () => {
               <TouchableOpacity
                 disabled={currentCompetence <= 0}
                 onPress={() => setCurrentCompetence(currentCompetence - 1)}>
-                <Icon
-                  name={'angle-left'}
-                  color={
-                    currentCompetence <= 0
-                      ? theme.colors.gray['200']
-                      : '#000000'
-                  }
-                />
+                <Center w={'48px'} h={'48px'} alignItems={'flex-start'}>
+                  <Icon
+                    name={'angle-left'}
+                    color={
+                      currentCompetence <= 0
+                        ? theme.colors.gray['200']
+                        : '#000000'
+                    }
+                  />
+                </Center>
               </TouchableOpacity>
               <Center flex={1}>
-                <Text fontSize={'HXS'} fontWeight={500} color={'gray.700'}>
+                <Text
+                  fontSize={'HXS'}
+                  fontWeight={500}
+                  color={'gray.700'}
+                  textAlign={'center'}>
                   {pageData.competences[currentCompetence].title}
                 </Text>
               </Center>
@@ -94,14 +100,16 @@ const CompetenceStats: React.FC = () => {
               <TouchableOpacity
                 disabled={currentCompetence >= pageData.competences.length - 1}
                 onPress={() => setCurrentCompetence(currentCompetence + 1)}>
-                <Icon
-                  name={'angle-right'}
-                  color={
-                    currentCompetence >= pageData.competences.length - 1
-                      ? theme.colors.gray['200']
-                      : '#000000'
-                  }
-                />
+                <Center w={'48px'} h={'48px'} alignItems={'flex-end'}>
+                  <Icon
+                    name={'angle-right'}
+                    color={
+                      currentCompetence >= pageData.competences.length - 1
+                        ? theme.colors.gray['200']
+                        : '#000000'
+                    }
+                  />
+                </Center>
               </TouchableOpacity>
             </HStack>
 

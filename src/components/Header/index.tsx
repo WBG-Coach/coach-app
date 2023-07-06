@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
       <Box w={6}>
         {back && (
           <TouchableOpacity onPress={handleBack}>
-            <Center w={'48px'} h={'48px'}>
+            <Center alignItems={'flex-start'} w={'48px'} h={'48px'}>
               <Icon
                 size={24}
                 name="angle-left"

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Center, Text, VStack} from 'native-base';
-import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {TouchableOpacity} from 'react-native';
 
 type Props = {
   onPress: () => void;
@@ -13,8 +13,8 @@ const TabButton: React.FC<Props> = ({isActive, label, onPress}) => {
   const {t} = useTranslation();
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <VStack position={'relative'} flex={1} py={2}>
+    <TouchableOpacity style={{flex: 1, position: 'relative'}} onPress={onPress}>
+      <VStack py={4}>
         <Center>
           <Text
             fontSize={'TSM'}
@@ -28,7 +28,7 @@ const TabButton: React.FC<Props> = ({isActive, label, onPress}) => {
           <Box
             w={'100%'}
             position={'absolute'}
-            bottom={'-10px'}
+            bottom={'-2px'}
             height={'2px'}
             background={'primary.200'}
           />
