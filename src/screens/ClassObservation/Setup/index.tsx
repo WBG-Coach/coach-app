@@ -7,6 +7,7 @@ import PathRoutes from '../../../routers/paths';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
+import FieldError from '../../../components/FieldError';
 
 const defaultValues = {
   students_count: '',
@@ -67,11 +68,11 @@ const ClassObservationSetup: React.FC = () => {
   return (
     <Formik
       validate={validate}
-      validateOnBlur={false}
-      validateOnChange={false}
+      /* validateOnBlur={false}
+      validateOnChange={false} */
       onSubmit={handleSubmitForm}
       initialValues={state?.session ? state?.session : defaultValues}>
-      {({values, errors, handleSubmit, setFieldValue}) => (
+      {({values, errors, handleSubmit, setFieldValue, submitCount}) => (
         <Page back title={t('classObservation.title')}>
           <ScrollView flexGrow={0}>
             <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
@@ -88,7 +89,7 @@ const ClassObservationSetup: React.FC = () => {
                 </Text>
 
                 <SelectModal
-                  isInvalid={!!errors.class_type}
+                  isInvalid={!!errors.class_type && submitCount >= 1}
                   value={values.class_type}
                   handleSelectValue={value =>
                     setFieldValue('class_type', value)
@@ -102,6 +103,7 @@ const ClassObservationSetup: React.FC = () => {
                   )}
                   bottomTitle={t('classObservation.setup.questions.$0.title')}
                 />
+                {!!errors.class_type && submitCount >= 1 && <FieldError />}
               </VStack>
 
               <VStack space={2}>
@@ -116,7 +118,7 @@ const ClassObservationSetup: React.FC = () => {
                     {label: '30 - 60', value: '30 - 60'},
                     {label: '60+', value: '60+'},
                   ]}
-                  isInvalid={!!errors.students_count}
+                  isInvalid={!!errors.students_count && submitCount >= 1}
                   handleSelectValue={value =>
                     setFieldValue('students_count', value)
                   }
@@ -126,6 +128,7 @@ const ClassObservationSetup: React.FC = () => {
                   value={values.students_count}
                   bottomTitle={t('classObservation.setup.questions.$1.title')}
                 />
+                {!!errors.students_count && submitCount >= 1 && <FieldError />}
               </VStack>
 
               <VStack space={2}>
@@ -162,7 +165,7 @@ const ClassObservationSetup: React.FC = () => {
                     {label: '55 mins', value: '55'},
                     {label: '60 mins', value: '60'},
                   ]}
-                  isInvalid={!!errors.lesson_time}
+                  isInvalid={!!errors.lesson_time && submitCount >= 1}
                   handleSelectValue={value =>
                     setFieldValue('lesson_time', value)
                   }
@@ -170,6 +173,7 @@ const ClassObservationSetup: React.FC = () => {
                   bottomTitle={t('classObservation.setup.questions.$3.title')}
                   value={values.lesson_time}
                 />
+                {!!errors.lesson_time && submitCount >= 1 && <FieldError />}
               </VStack>
 
               <VStack space={2} mb="4px">

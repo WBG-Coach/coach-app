@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Box, HStack, Image, Text, useTheme} from 'native-base';
+import {Box, Center, HStack, Image, Text, useTheme} from 'native-base';
 import {BackHandler, TouchableOpacity} from 'react-native';
 import {TabletLogo} from '../../assets/images/logos';
 import {isTablet} from 'react-native-device-info';
@@ -56,11 +56,13 @@ const Header: React.FC<HeaderProps> = ({
       <Box w={6}>
         {back && (
           <TouchableOpacity onPress={handleBack}>
-            <Icon
-              size={24}
-              name="angle-left"
-              color={theme.colors.primary['200']}
-            />
+            <Center w={'48px'} h={'48px'}>
+              <Icon
+                size={24}
+                name="angle-left"
+                color={theme.colors.primary['200']}
+              />
+            </Center>
           </TouchableOpacity>
         )}
       </Box>

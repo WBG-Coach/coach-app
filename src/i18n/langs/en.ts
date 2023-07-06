@@ -1,4 +1,8 @@
 const enTranslation = {
+  errors: {
+    requiredField: 'This field is required.',
+  },
+
   common: {
     'load-more': 'Load more',
     search: 'Search',
