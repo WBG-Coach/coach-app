@@ -26,6 +26,7 @@ import ClassObservationDetailsScreen from '../screens/SessionDetails/ClassObserv
 import CompetenceStats from '../screens/Teacher/TeacherDetails/Tabs/TeacherStats/CompetenceStats';
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 import {Container, VStack} from 'native-base';
+import AccountCreatedScreen from '../screens/AccountCreated';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -48,7 +49,13 @@ const RouterProvider: React.FC = () => {
         )}
 
         {currentCoach && !currentSchool && (
-          <Route path={PathRoutes.main} Component={SchoolSelectScreen} />
+          <>
+            <Route path={PathRoutes.main} Component={SchoolSelectScreen} />
+            <Route
+              path={PathRoutes.accountCreated}
+              Component={AccountCreatedScreen}
+            />
+          </>
         )}
 
         {currentCoach && currentSchool && (

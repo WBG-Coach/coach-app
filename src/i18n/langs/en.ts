@@ -35,6 +35,13 @@ const enTranslation = {
       'create-account-button': 'Create account',
       success: 'Account created successfully',
     },
+    accountCreated: {
+      title: 'Account created',
+      subtitle: 'Now you can use your account to log in in this device',
+      boxTitle: 'Save your credentials',
+      boxSubtitle:
+        'Take note of your username and password, you’ll need them to access your account again',
+    },
   },
 
   settings: {

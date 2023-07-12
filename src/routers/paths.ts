@@ -3,6 +3,8 @@ const PathRoutes = {
 
   createAccount: '/createAccount',
 
+  accountCreated: '/accountCreated',
+
   settings: {
     main: '/settings',
     changeLanguage: '/settings/changeLanguage',

@@ -22,6 +22,8 @@ import Icon from '../../components/Icon';
 import Page from '../../components/Page';
 import {Formik} from 'formik';
 import Toast from '../../components/Toast';
+import PathRoutes from '../../routers/paths';
+import {useCoachContext} from '../../providers/coach.provider';
 
 export type FormValuesType = {
   name?: string;
@@ -43,6 +45,7 @@ const CreateAccountScreen: React.FC = () => {
   const toast = useToast();
   const {t} = useTranslation();
   const navigate = useNavigate();
+  const {login} = useCoachContext();
   const [profileImage, setProfileImage] = useState<{
     name: string;
     value: string;
@@ -57,8 +60,8 @@ const CreateAccountScreen: React.FC = () => {
       );
     }
     await CoachService.create({...values, image_id});
-
-    navigate(-1);
+    await login(values.username || '', values.password || '');
+    navigate(PathRoutes.accountCreated, {replace: true});
 
     toast.show({
       placement: 'top',

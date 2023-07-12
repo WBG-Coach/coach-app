@@ -20,7 +20,7 @@ const SchoolSelectScreen: React.FC = () => {
   const [schoolList, setSchoolList] = useState<School[]>([]);
 
   const {t} = useTranslation();
-  const {selectSchool} = useCoachContext();
+  const {logout, selectSchool} = useCoachContext();
 
   const loadFirstPageWithFilter = useCallback((value: string) => {
     setSchoolList([]);
@@ -57,7 +57,7 @@ const SchoolSelectScreen: React.FC = () => {
   };
 
   return (
-    <Page setting logo>
+    <Page setting logo onLogout={logout}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
         {t('schoolSelect.title')}
       </Text>

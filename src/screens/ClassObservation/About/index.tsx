@@ -23,21 +23,25 @@ const ClassObservationAbout: React.FC = () => {
 
   const process = [
     {
+      icon: 'sliders-v',
       title: t('classObservation.about.step1.title'),
       estimated: t('classObservation.about.step1.subtitle'),
       description: t('classObservation.about.step1.description'),
     },
     {
+      icon: 'clipboard-notes',
       title: t('classObservation.about.step2.title'),
       estimated: t('classObservation.about.step2.subtitle'),
       description: t('classObservation.about.step2.description'),
     },
     {
+      icon: 'comments',
       title: t('classObservation.about.step3.title'),
       estimated: t('classObservation.about.step3.subtitle'),
       description: t('classObservation.about.step3.description'),
     },
     {
+      icon: 'sign-alt',
       title: t('classObservation.about.step4.title'),
       estimated: t('classObservation.about.step4.subtitle'),
       description: t('classObservation.about.step4.description'),
@@ -54,7 +58,7 @@ const ClassObservationAbout: React.FC = () => {
   return (
     <Page back title={t('classObservation.title')}>
       <VStack flex={1} position={'relative'}>
-        <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
+        <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
           {t('classObservation.about.title')}
         </Text>
 
@@ -79,15 +83,12 @@ const ClassObservationAbout: React.FC = () => {
                   left={'-0px'}
                   position={'absolute'}
                   borderRadius={'500px'}
-                  background={'primary.100'}>
-                  <Icon
-                    name={'university'}
-                    color={theme.colors.primary['200']}
-                  />
+                  background={'primary.0'}>
+                  <Icon name={item.icon as any} color={theme.colors.primary['200']} />
                 </Center>
 
-                <VStack space={1} ml={'50px'}>
-                  <Text fontSize={'TMD'} fontWeight={600} color={'gray.800'}>
+                <VStack space={1} ml={'50px'} pb={6}>
+                  <Text fontSize={'TMD'} fontWeight={700} color={'gray.800'}>
                     {item.title}
                   </Text>
                   <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>

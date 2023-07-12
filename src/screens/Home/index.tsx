@@ -8,17 +8,19 @@ import TeachersList from './TeachersList';
 import {Text, VStack} from 'native-base';
 import Page from '../../components/Page';
 import HomeHeader from './HomeHeader';
+import { useCoachContext } from '../../providers/coach.provider';
 
 const HomeScreen: React.FC = () => {
   const {t} = useTranslation();
   const navigate = useNavigate();
+  const {selectSchool} = useCoachContext();
 
   const onSelectTeacher = (teacher: TeacherItemType) => {
     navigate(PathRoutes.teacher.details.replace(':id', teacher.id));
   };
 
   return (
-    <Page setting logo>
+    <Page setting logo back onBack={() => selectSchool(null)}>
       <HomeHeader />
 
       <HorizontalMenu />

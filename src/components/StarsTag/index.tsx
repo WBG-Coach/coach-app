@@ -12,8 +12,8 @@ const StarsTag: React.FC<Props> = ({value}) => {
 
   return (
     <HStack alignItems={'center'} bg={tag?.background} space={1} py={1} px={2}>
-      <Icon name={tag?.icon as any} size={16} />
-      <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+      <Icon name={tag?.icon as any} size={16} color={tag?.color} />
+      <Text fontSize={'TXS'} fontWeight={400} color={tag?.color}>
         {tag?.label}
       </Text>
     </HStack>

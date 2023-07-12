@@ -13,6 +13,7 @@ export type HeaderProps = {
   logo?: boolean;
   setting?: boolean;
   onBack?: () => void;
+  onLogout?: () => void;
   bg?: string;
 };
 
@@ -23,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({
   logo,
   setting,
   onBack,
+  onLogout,
 }) => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -54,12 +56,12 @@ const Header: React.FC<HeaderProps> = ({
       justifyContent="space-between"
       px={isTablet() ? '32px' : '16px'}>
       <Box w={6}>
-        {back && (
-          <TouchableOpacity onPress={handleBack}>
+        {(back || onLogout) && (
+          <TouchableOpacity onPress={onLogout || handleBack}>
             <Center alignItems={'flex-start'} w={'48px'} h={'48px'}>
               <Icon
                 size={24}
-                name="angle-left"
+                name={onLogout ? 'signout' : 'angle-left'}
                 color={theme.colors.primary['200']}
               />
             </Center>
