@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({
         )}
       </Box>
       <Box>
-        {logo && <Image alt="logo" source={TabletLogo} h="40px" />}
+        {logo && <Image alt="logo" source={TabletLogo} w={'40px'} h={'40px'} />}
         {title && (
           <Text
             fontSize="16px"
