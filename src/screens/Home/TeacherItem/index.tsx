@@ -7,11 +7,12 @@ import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
 
 type Props = {
+  customSubLabel?: string;
   teacher: TeacherItemType;
   onPress: () => void;
 };
 
-const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
+const TeacherItem: React.FC<Props> = ({onPress, teacher, customSubLabel}) => {
   const theme = useTheme();
   const isTablet = Tablet();
   const {t} = useTranslation();
@@ -48,65 +49,87 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher}) => {
             <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
               {teacher.name}
             </Text>
-            <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-              {teacher.last_session_date
-                ? t('home.teachers.last-session', {
-                    date: new Date(teacher.last_session_date).toDateString(),
-                  })
-                : t('home.teachers.no-session')}
-            </Text>
 
-            <HStack space={1}>
-              {teacher.sessionsCount >= 1 ? (
-                <HStack
-                  px={2}
-                  py={1}
-                  space={1}
-                  borderRadius={'4px'}
-                  alignItems={'center'}
-                  background={'primary.100'}>
-                  <Icon name={'clipboard-notes-solid'} size={15} />
-                  <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-                    {t('home.teachers.session_interval', {
-                      postProcess: 'interval',
-                      count: teacher.sessionsCount,
-                    })}
-                  </Text>
-                </HStack>
-              ) : (
-                <HStack
-                  px={2}
-                  py={1}
-                  space={1}
-                  borderRadius={'4px'}
-                  alignItems={'center'}
-                  background={'yellow.100'}>
-                  <Icon
-                    size={15}
-                    name={'favorite-solid'}
-                    color={theme.colors.yellow['300']}
-                  />
-                  <Text fontSize={'TSM'} fontWeight={500} color={'yellow.300'}>
-                    New teacher
-                  </Text>
-                </HStack>
-              )}
+            {customSubLabel !== undefined ? (
+              customSubLabel && (
+                <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'}>
+                  {customSubLabel}
+                </Text>
+              )
+            ) : (
+              <>
+                <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
+                  {teacher.last_session_date
+                    ? t('home.teachers.last-session', {
+                        date: new Date(
+                          teacher.last_session_date,
+                        ).toDateString(),
+                      })
+                    : t('home.teachers.no-session')}
+                </Text>
 
-              {teacher.feedbacksCount >= 1 && (
-                <HStack
-                  px={2}
-                  py={1}
-                  space={1}
-                  borderRadius={'4px'}
-                  alignItems={'center'}
-                  background={'green.100'}>
-                  <Icon name={'comment-verify-solid'} size={15} />
-                  <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
-                    {teacher.feedbacksCount} Feedbacks
-                  </Text>
+                <HStack space={1}>
+                  {teacher.sessionsCount >= 1 ? (
+                    <HStack
+                      px={2}
+                      py={1}
+                      space={1}
+                      borderRadius={'4px'}
+                      alignItems={'center'}
+                      background={'primary.100'}>
+                      <Icon name={'clipboard-notes-solid'} size={15} />
+                      <Text
+                        fontSize={'TSM'}
+                        fontWeight={500}
+                        color={'gray.700'}>
+                        {t('home.teachers.session_interval', {
+                          postProcess: 'interval',
+                          count: teacher.sessionsCount,
+                        })}
+                      </Text>
+                    </HStack>
+                  ) : (
+                    <HStack
+                      px={2}
+                      py={1}
+                      space={1}
+                      borderRadius={'4px'}
+                      alignItems={'center'}
+                      background={'yellow.100'}>
+                      <Icon
+                        size={15}
+                        name={'favorite-solid'}
+                        color={theme.colors.yellow['300']}
+                      />
+                      <Text
+                        fontSize={'TSM'}
+                        fontWeight={500}
+                        color={'yellow.300'}>
+                        New teacher
+                      </Text>
+                    </HStack>
+                  )}
+
+                  {teacher.feedbacksCount >= 1 && (
+                    <HStack
+                      px={2}
+                      py={1}
+                      space={1}
+                      borderRadius={'4px'}
+                      alignItems={'center'}
+                      background={'green.100'}>
+                      <Icon name={'comment-verify-solid'} size={15} />
+                      <Text
+                        fontSize={'TSM'}
+                        fontWeight={500}
+                        color={'gray.700'}>
+                        {teacher.feedbacksCount} Feedbacks
+                      </Text>
+                    </HStack>
+                  )}
                 </HStack>
-              )}
-            </HStack>
+              </>
+            )}
           </VStack>
         </HStack>
         <Icon name={'angle-right'} />

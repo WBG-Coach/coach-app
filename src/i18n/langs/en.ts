@@ -100,6 +100,17 @@ const enTranslation = {
     stats: {
       title: 'Check teacher stats',
       subtitle: 'Select a teacher to see their progress',
+      available: {
+        title: 'Available statistics',
+        subtitle:
+          'Select a teacher to view their evolution through the coaching sessions',
+      },
+      unavailable: {
+        title: 'Unavailable statistics',
+        subtitle:
+          'You need at least 3 coaching sessions completed with those teachers to see the statistics.',
+        label: 'Do {{value}} coaching sessions to unlock',
+      },
     },
   },
 
