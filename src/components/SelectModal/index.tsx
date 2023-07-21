@@ -24,18 +24,18 @@ const SelectModal: React.FC<Props> = ({
 
   return (
     <>
-      <TouchableOpacity onPress={() => setShowModal(true)}>
+      <TouchableOpacity
+        style={{width: '100%'}}
+        onPress={() => setShowModal(true)}>
         <HStack
+          w={'100%'}
           borderWidth={'1px'}
           borderColor={isInvalid ? 'red.200' : 'gray.300'}
           borderRadius={'8px'}
           h={12}
           px={3}
-          alignItems={'center'}>
-          <Text
-            flex={1}
-            fontSize={'LMD'}
-            color={value ? 'gray.700' : 'gray.300'}>
+          alignItems={'center'} justifyContent={'space-between'}>
+          <Text fontSize={'LMD'} color={value ? 'gray.700' : 'gray.300'}>
             {options.find(opt => opt.value === value)?.label || placeholder}
           </Text>
 
