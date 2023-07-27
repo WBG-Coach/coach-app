@@ -40,6 +40,11 @@ const enTranslation = {
         'Take note of your username and password, you will need them to access your account again',
     },
   },
+  logout: {
+    title: 'Are you sure you want to sign out?',
+    'confirm-button': 'Yes',
+    'cancel-button': 'Cancel',
+  },
   settings: {
     title: 'Settings',
     logout: 'Start over',
@@ -70,6 +75,7 @@ const enTranslation = {
       switchSchools: 'Switch schools',
       switchProfile: 'Switch to a different coach profile',
       offlineSync: 'Offline data synchronization',
+      startOver: 'Start over',
       statics: 'Statistics',
       pendingSession: 'Feedback needed',
     },

@@ -9,7 +9,7 @@ import PathRoutes from '../../../routers/paths';
 import {useNavigate} from 'react-router-native';
 
 const HorizontalMenu: React.FC = () => {
-  const {selectSchool} = useCoachContext();
+  const {selectSchool, logout} = useCoachContext();
   const {t} = useTranslation();
   const navigate = useNavigate();
 
@@ -33,6 +33,11 @@ const HorizontalMenu: React.FC = () => {
       icon: 'chart-line',
       label: t('home.menu-items.statics'),
       onPress: () => navigate(PathRoutes.home.stats),
+    },
+    {
+      icon: 'signout',
+      label: t('home.menu-items.startOver'),
+      onPress: logout,
     },
   ];
 
