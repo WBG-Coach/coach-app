@@ -11,8 +11,8 @@ export const SchoolService = {
     let result;
     if (value) {
       result = (await db.executeSql(
-        "SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s WHERE s.name LIKE UPPER(?) || '%' LIMIT ? OFFSET ?",
-        [value, pageSize, (pageNumber - 1) * pageSize],
+        "SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s WHERE s.name LIKE UPPER(?) || '%' OR s.emis_number = ? LIMIT ? OFFSET ?",
+        [value, value, pageSize, (pageNumber - 1) * pageSize],
       )) as any[];
     } else {
       result = (await db.executeSql(

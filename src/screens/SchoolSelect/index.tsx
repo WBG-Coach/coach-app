@@ -73,7 +73,7 @@ const SchoolSelectScreen: React.FC = () => {
         data={schoolList}
         isLoading={isLoading}
         loadNextPage={loadNextPage}
-        emptyMessage={t('schoolSelect.item-description')}
+        emptyMessage={t('schoolSelect.item-description-empty')}
         renderItem={({item, index}) => (
           <SchoolItem
             index={index}

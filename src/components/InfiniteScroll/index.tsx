@@ -48,7 +48,8 @@ const InfiniteScroll = <T extends any>({
             {isLoading ? (
               <Spinner color="blue" size="lg" />
             ) : (
-              !isEnd && (
+              !isEnd &&
+              data.length !== 0 && (
                 <Button variant="outlined" onPress={loadNextPage}>
                   {t('common.load-more')}
                 </Button>

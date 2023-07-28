@@ -66,6 +66,7 @@ const enTranslation = {
     search: 'Search',
     'item-description_interval':
       '(0)[No teachers here];(1)[1 teacher here];(2-inf)[{{count}} teachers here];',
+    'item-description-empty': 'No schools here',
   },
   home: {
     teachersLength_interval:
