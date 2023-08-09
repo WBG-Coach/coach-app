@@ -27,6 +27,7 @@ import CompetenceStats from '../screens/Teacher/TeacherDetails/Tabs/TeacherStats
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 import {VStack} from 'native-base';
 import AccountCreatedScreen from '../screens/AccountCreated';
+import PendingSessionsScreen from '../screens/Home/QuickActions/Pending';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -64,6 +65,10 @@ const RouterProvider: React.FC = () => {
             <Route
               path={PathRoutes.home.newSession}
               Component={QuickNewSessionScreen}
+            />
+            <Route
+              path={PathRoutes.home.pendingSessions}
+              Component={PendingSessionsScreen}
             />
             <Route path={PathRoutes.home.stats} Component={QuickStatsScreen} />
             <Route

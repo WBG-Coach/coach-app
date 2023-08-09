@@ -18,11 +18,16 @@ const ITEMS_PER_PAGE = 20;
 
 type Props = {
   showSearchFilter?: boolean;
+  customProps?: {
+    service: (...params: any) => Promise<any>;
+    TeacherItem: React.FC<React.ComponentProps<typeof TeacherItem>>;
+  };
   hideNewTeacherButton?: boolean;
   onSelectTeacher: (teacher: TeacherItemType) => void;
 };
 
 const TeachersList: React.FC<Props> = ({
+  customProps,
   onSelectTeacher,
   showSearchFilter,
   hideNewTeacherButton,
@@ -36,7 +41,6 @@ const TeachersList: React.FC<Props> = ({
   const [teachersList, setTeachersList] = useState<TeacherItemType[]>([]);
 
   const navigate = useNavigate();
-
   const {t} = useTranslation();
 
   const loadFirstPageWithFilter = useCallback(
@@ -44,13 +48,14 @@ const TeachersList: React.FC<Props> = ({
       setTeachersList([]);
       setIsLoading(true);
       setIsTheEnd(false);
-      TeacherService.findTeachersItemBySchoolId(
+      (customProps?.service || TeacherService.findTeachersItemBySchoolId)(
         value,
         currentSchool?.id || '',
         ITEMS_PER_PAGE,
         1,
       ).then(data => {
         if (data.length < ITEMS_PER_PAGE) {
+          console.log(data);
           setIsTheEnd(true);
         }
         setTeachersList(data);
@@ -66,12 +71,9 @@ const TeachersList: React.FC<Props> = ({
     if (!isLoading && !isTheEnd) {
       setPage(page + 1);
       setIsLoading(true);
-      const data = await TeacherService.findTeachersItemBySchoolId(
-        filter,
-        currentSchool?.id || '',
-        ITEMS_PER_PAGE,
-        page + 1,
-      );
+      const data = await (
+        customProps?.service || TeacherService.findTeachersItemBySchoolId
+      )(filter, currentSchool?.id || '', ITEMS_PER_PAGE, page + 1);
 
       if (data.length < ITEMS_PER_PAGE) {
         setIsTheEnd(true);
@@ -79,6 +81,8 @@ const TeachersList: React.FC<Props> = ({
       setTeachersList(prevData => [...prevData, ...data]);
     }
   };
+
+  const ItemComponent = customProps?.TeacherItem || TeacherItem;
 
   return (
     <>
@@ -106,7 +110,7 @@ const TeachersList: React.FC<Props> = ({
           </Center>
         }
         renderItem={({item}) => (
-          <TeacherItem teacher={item} onPress={() => onSelectTeacher(item)} />
+          <ItemComponent teacher={item} onPress={() => onSelectTeacher(item)} />
         )}
       />
 

@@ -8,7 +8,9 @@ import TeachersList from './TeachersList';
 import {Text, VStack} from 'native-base';
 import Page from '../../components/Page';
 import HomeHeader from './HomeHeader';
-import { useCoachContext } from '../../providers/coach.provider';
+import {useCoachContext} from '../../providers/coach.provider';
+import {isTablet} from 'react-native-device-info';
+import BottomNavigator from './BottomNavigator';
 
 const HomeScreen: React.FC = () => {
   const {t} = useTranslation();
@@ -20,18 +22,22 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <Page setting logo back onBack={() => selectSchool(null)}>
-      <HomeHeader />
+    <Page setting logo back noPadding onBack={() => selectSchool(null)}>
+      <VStack w="full" flex={1} p={isTablet() ? '32px 64px' : '16px 24px'}>
+        <HomeHeader />
 
-      <HorizontalMenu />
+        <HorizontalMenu />
 
-      <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
-        {t('home.teachers.title')}
-      </Text>
+        <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
+          {t('home.teachers.title')}
+        </Text>
 
-      <VStack flex={1} pb={4}>
-        <TeachersList onSelectTeacher={onSelectTeacher} />
+        <VStack flex={1} pb={4}>
+          <TeachersList onSelectTeacher={onSelectTeacher} />
+        </VStack>
       </VStack>
+
+      <BottomNavigator />
     </Page>
   );
 };

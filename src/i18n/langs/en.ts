@@ -115,6 +115,11 @@ const enTranslation = {
         label: 'Do {{value}} coaching sessions to unlock',
       },
     },
+    pending: {
+      title: 'Incomplete sessions',
+      subtitle: 'Complete the feedback sessions with the following teachers',
+      list_subtitle: 'Feedback pending',
+    },
   },
   teacher: {
     form: {
