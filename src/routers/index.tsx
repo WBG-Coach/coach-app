@@ -28,6 +28,7 @@ import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
 import {VStack} from 'native-base';
 import AccountCreatedScreen from '../screens/AccountCreated';
 import PendingSessionsScreen from '../screens/Home/QuickActions/Pending';
+import TLCOnboarding from '../screens/TeacherLearningCircles/Onboarding';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -134,6 +135,10 @@ const RouterProvider: React.FC = () => {
             <Route
               path={PathRoutes.feedbackSession.completed}
               Component={FeedbackSessionCompleted}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.onboarding}
+              Component={TLCOnboarding}
             />
           </>
         )}

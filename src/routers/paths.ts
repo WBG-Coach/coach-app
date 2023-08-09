@@ -19,7 +19,11 @@ const PathRoutes = {
   teacher: {
     details: '/teacher/:id/:tabIndex?',
     form: '/teacher/form/:id',
-    competenceStats: '/teacher/competences/:competence_index/:id'
+    competenceStats: '/teacher/competences/:competence_index/:id',
+  },
+
+  teacherLearningCircles: {
+    onboarding: '/teacherlearningcircles/onboarding',
   },
 
   classObservation: {
