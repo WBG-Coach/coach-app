@@ -84,7 +84,10 @@ const ClassObservationAbout: React.FC = () => {
                   position={'absolute'}
                   borderRadius={'500px'}
                   background={'primary.0'}>
-                  <Icon name={item.icon as any} color={theme.colors.primary['200']} />
+                  <Icon
+                    name={item.icon as any}
+                    color={theme.colors.primary['200']}
+                  />
                 </Center>
 
                 <VStack space={1} ml={'50px'} pb={6}>

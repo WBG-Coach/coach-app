@@ -7,7 +7,11 @@ import {useNavigate} from 'react-router-native';
 
 const bottomItems = [
   {label: 'Home', icon: 'home-alt-solid', route: ''},
-  {label: 'TLC', icon: 'process', route: PathRoutes.home.pendingSessions},
+  {
+    label: 'TLC',
+    icon: 'process',
+    route: PathRoutes.teacherLearningCircles.onboarding,
+  },
   {
     label: 'Pending',
     icon: 'comment-dots',

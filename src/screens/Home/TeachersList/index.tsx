@@ -55,7 +55,6 @@ const TeachersList: React.FC<Props> = ({
         1,
       ).then(data => {
         if (data.length < ITEMS_PER_PAGE) {
-          console.log(data);
           setIsTheEnd(true);
         }
         setTeachersList(data);
@@ -101,7 +100,7 @@ const TeachersList: React.FC<Props> = ({
         isLoading={isLoading}
         loadNextPage={loadNextPage}
         emptyComponent={
-          <Center mt={'80px'}>
+          <Center flex={1}>
             <EmptyStateComponent
               handleCreate={() =>
                 navigate(PathRoutes.teacher.form.replace(':id', 'new'))

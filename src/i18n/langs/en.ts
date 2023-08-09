@@ -96,8 +96,14 @@ const enTranslation = {
       subtitle: 'Select a teacher and start a new observation session',
     },
     stats: {
+      page_title: 'Statistics',
       title: 'Check teacher stats',
       subtitle: 'Select a teacher to see their progress',
+      empty: {
+        title: 'No teacher registered',
+        subtitle:
+          'Add a new teacher and complete 3 coaching sessions to view statistics',
+      },
       available: {
         title: 'Available statistics',
         subtitle:
@@ -112,10 +118,16 @@ const enTranslation = {
         title: 'Unavailable statistics',
         subtitle:
           'You need at least 3 coaching sessions completed with those teachers to see the statistics.',
+        empty: {
+          title: 'All statistics are available',
+          subtitle:
+            'You need at least 3 coaching sessions completed with those teachers to see the statistics.',
+        },
         label: 'Do {{value}} coaching sessions to unlock',
       },
     },
     pending: {
+      page_title: 'Incomplete sessions',
       title: 'Incomplete sessions',
       subtitle: 'Complete the feedback sessions with the following teachers',
       list_subtitle: 'Feedback pending',
@@ -327,6 +339,53 @@ const enTranslation = {
       aboutNextDescription:
         'Stay prepared for Teaching Learning Circles, until then you may create new observations with a teacher by returning to the home screen and selecting a new teacher',
       button: 'Return to home screen',
+    },
+  },
+  tlc: {
+    page_title: 'Teacher Learning Circles',
+    onboarding: {
+      title: 'Getting started',
+      subtitle:
+        'Check out the Teaching Learning Circle steps and start a new session',
+      button: 'Get started',
+
+      process: {
+        step1: {
+          title: 'Check school stats',
+          subtitle: '5 min',
+          description:
+            'View the school statistics to help you decide which unit to choose',
+        },
+        step2: {
+          title: 'Select unit',
+          subtitle: '5 min',
+          description:
+            'Select a unit from the list to work in this Teaching Learning Circle',
+        },
+        step3: {
+          title: 'Unit introduction',
+          subtitle: '15 min',
+          description:
+            'Explain to the teachers what this unit is about and how it can help them be a better teacher',
+        },
+        step4: {
+          title: 'Situational examples',
+          subtitle: '10 min',
+          description:
+            'Explain to the teachers what this unit is about and how it can help them be a better teacher',
+        },
+        step5: {
+          title: 'Situation explanation',
+          subtitle: '10 min',
+          description: 'Explain why those situations were good or bad',
+        },
+        step6: {
+          title: 'Activities',
+          subtitle: '15 min',
+          description:
+            'Do some activities with the teachers to exercise what they learned',
+        },
+      },
     },
   },
   sessionDetails: {title: 'Previous session'},

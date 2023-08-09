@@ -20,7 +20,7 @@ const PendingSessionsScreen: React.FC = () => {
   };
 
   return (
-    <Page back setting logo>
+    <Page back setting title={t('home.pending.page_title')}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
         {t('home.pending.title')}
       </Text>

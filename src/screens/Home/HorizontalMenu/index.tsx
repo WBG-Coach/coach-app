@@ -19,11 +19,11 @@ const HorizontalMenu: React.FC = () => {
       label: t('home.menu-items.newSession'),
       onPress: () => navigate(PathRoutes.home.newSession),
     },
-    // {
-    //   icon: 'comment-dots',
-    //   label: t('home.menu-items.pendingSession'),
-    //   onPress: () => navigate(PathRoutes.home.pendingSessions),
-    // },
+    {
+      icon: 'comment-dots',
+      label: t('home.menu-items.pendingSession'),
+      onPress: () => navigate(PathRoutes.home.pendingSessions),
+    },
     {
       icon: 'university',
       label: t('home.menu-items.switchSchools'),

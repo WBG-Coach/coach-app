@@ -23,7 +23,7 @@ const QuickStatsScreen: React.FC = () => {
   };
 
   return (
-    <Page back setting logo>
+    <Page back setting title={t('home.stats.page_title')}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
         {t('home.stats.title')}
       </Text>

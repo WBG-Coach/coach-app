@@ -36,28 +36,31 @@ const InfiniteScroll = <T extends any>({
             </Text>
           </Center>
         ))}
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        initialNumToRender={20}
-        maxToRenderPerBatch={20}
-        removeClippedSubviews={true}
-        keyExtractor={(_, index) => index.toString()}
-        ListFooterComponent={
-          <Center w="full" h="60px">
-            {isLoading ? (
-              <Spinner color="blue" size="lg" />
-            ) : (
-              !isEnd &&
-              data.length !== 0 && (
-                <Button variant="outlined" onPress={loadNextPage}>
-                  {t('common.load-more')}
-                </Button>
-              )
-            )}
-          </Center>
-        }
-      />
+
+      {data.length >= 1 && (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          initialNumToRender={20}
+          maxToRenderPerBatch={20}
+          removeClippedSubviews={true}
+          keyExtractor={(_, index) => index.toString()}
+          ListFooterComponent={
+            <Center w="full" h="60px">
+              {isLoading ? (
+                <Spinner color="blue" size="lg" />
+              ) : (
+                !isEnd &&
+                data.length !== 0 && (
+                  <Button variant="outlined" onPress={loadNextPage}>
+                    {t('common.load-more')}
+                  </Button>
+                )
+              )}
+            </Center>
+          }
+        />
+      )}
     </Flex>
   );
 };
