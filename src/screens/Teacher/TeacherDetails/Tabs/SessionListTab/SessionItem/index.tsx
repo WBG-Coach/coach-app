@@ -33,8 +33,6 @@ const SessionItem: React.FC<Props> = ({onPress, session, index}) => {
           1,
       );
 
-      console.log(overall)
-
       setOverallRating(overall);
     })();
   }, []);
@@ -57,7 +55,7 @@ const SessionItem: React.FC<Props> = ({onPress, session, index}) => {
           {overallRating !== undefined ? (
             <StarsTag value={overallRating} />
           ) : (
-            <Box w={'104px'} h={'20px'} bg={"gray.200"}/>
+            <Box w={'104px'} h={'20px'} bg={'gray.200'} />
           )}
         </VStack>
         <HStack space={1}>

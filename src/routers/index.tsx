@@ -31,6 +31,11 @@ import PendingSessionsScreen from '../screens/Home/QuickActions/Pending';
 import TLCOnboarding from '../screens/TeacherLearningCircles/Onboarding';
 import TLCCheckingStats from '../screens/TeacherLearningCircles/CheckingStats';
 import TLCUnitSelect from '../screens/TeacherLearningCircles/UnitSelect';
+import TLCIntroduction from '../screens/TeacherLearningCircles/Introduction';
+import TLCSituations from '../screens/TeacherLearningCircles/Situations';
+import TLCExplanation from '../screens/TeacherLearningCircles/Explanation';
+import TLCFinish from '../screens/TeacherLearningCircles/Finish';
+import TLCActivities from '../screens/TeacherLearningCircles/Activities';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -149,6 +154,26 @@ const RouterProvider: React.FC = () => {
             <Route
               path={PathRoutes.teacherLearningCircles.unitSelect}
               Component={TLCUnitSelect}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.introduction}
+              Component={TLCIntroduction}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.situations}
+              Component={TLCSituations}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.explanation}
+              Component={TLCExplanation}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.activities}
+              Component={TLCActivities}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.finish}
+              Component={TLCFinish}
             />
           </>
         )}

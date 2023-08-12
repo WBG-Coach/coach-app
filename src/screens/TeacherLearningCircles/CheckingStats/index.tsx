@@ -2,7 +2,16 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import Page from '../../../components/Page';
 import {useTranslation} from 'react-i18next';
 import LoadingBar from '../LoadingBar';
-import {HStack, Image, Text, VStack} from 'native-base';
+import {
+  Button,
+  Center,
+  FlatList,
+  HStack,
+  Image,
+  Spinner,
+  Text,
+  VStack,
+} from 'native-base';
 import {useCoachContext} from '../../../providers/coach.provider';
 import {chartData} from '../../Teacher/TeacherDetails/Tabs/TeacherStats/common';
 import {getTags} from '../../../components/StarsTag/common';
@@ -10,15 +19,19 @@ import {SchoolService} from '../../../services/school.service';
 import CompetenceService from '../../../services/competence.service';
 import {AnswerService} from '../../../services/answer.service';
 import {Competence} from '../../../types/competence';
+import StarView from '../../../components/StarView';
+import {useNavigate} from 'react-router-native';
+import PathRoutes from '../../../routers/paths';
 
 type competenceWithAnswers = {
   answersAverage: number;
 } & Partial<Competence>;
 
 const TLCCheckingStats: React.FC = () => {
+  const navigate = useNavigate();
   const {currentSchool} = useCoachContext();
   const [schoolData, setSchoolData] = useState({
-    data: [] as competenceWithAnswers[],
+    data: {competences: [] as competenceWithAnswers[], average: 0},
     isLoading: true,
   });
   const {t} = useTranslation();
@@ -63,7 +76,14 @@ const TLCCheckingStats: React.FC = () => {
         }),
       );
 
-      console.log(competencesWithSum);
+      const average =
+        competencesWithSum.reduce((acc, item) => acc + item.answersAverage, 0) /
+        competencesWithSum.length;
+
+      setSchoolData({
+        isLoading: false,
+        data: {competences: competencesWithSum, average},
+      });
     }
   }, []);
 
@@ -71,7 +91,11 @@ const TLCCheckingStats: React.FC = () => {
     refreshSchool();
   }, [refreshSchool]);
 
-  return (
+  return schoolData.isLoading ? (
+    <Center flex={1} w="full">
+      <Spinner color="blue" size="lg" />
+    </Center>
+  ) : (
     <Page
       setting
       back
@@ -94,7 +118,9 @@ const TLCCheckingStats: React.FC = () => {
         py={6}
         alignItems={'center'}>
         <Image
-          source={chartData.find(i => 3 <= i.start)?.image}
+          source={
+            chartData.find(i => schoolData.data.average <= i.start)?.image
+          }
           alt={'Graph'}
         />
         <HStack>
@@ -112,7 +138,7 @@ const TLCCheckingStats: React.FC = () => {
             fontSize={'TMD'}
             fontWeight={500}
             color={'gray.700'}>
-            {tags[4]?.label}
+            {tags[parseInt(schoolData.data.average.toFixed(0))]?.label}
           </Text>
         </HStack>
         <Text
@@ -131,6 +157,37 @@ const TLCCheckingStats: React.FC = () => {
       <Text mt={1} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
         How is the average of the school in each Teaching Practice
       </Text>
+
+      <FlatList
+        data={schoolData.data.competences}
+        renderItem={({item}) => (
+          <HStack
+            flex={1}
+            pt={3}
+            justifyContent={'space-between'}
+            alignItems={'center'}
+            mt={4}>
+            <Text
+              fontSize={'LMD'}
+              fontWeight={500}
+              color={'gray.700'}
+              maxW={'200px'}>
+              {item.title}
+            </Text>
+            <StarView maxLength={5} showLabel value={item.answersAverage} />
+          </HStack>
+        )}
+      />
+
+      <Button
+        pt={4}
+        variant={'solid'}
+        borderRadius={'8px'}
+        color={'white'}
+        background={'primary.200'}
+        onPress={() => navigate(PathRoutes.teacherLearningCircles.unitSelect)}>
+        {t('tlc.checkingStats.button')}
+      </Button>
     </Page>
   );
 };

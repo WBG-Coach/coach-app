@@ -13,6 +13,10 @@ const loadingBarItems: {
     label: 'Unit select',
   },
   {
+    key: 'introduction',
+    label: 'Introduction',
+  },
+  {
     key: 'situations',
     label: 'Situations',
   },

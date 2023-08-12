@@ -1,7 +1,6 @@
 import {isTablet as Tablet} from 'react-native-device-info';
 import {
   Box,
-  Button,
   Center,
   FlatList,
   HStack,
