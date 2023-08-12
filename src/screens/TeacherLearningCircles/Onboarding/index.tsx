@@ -3,9 +3,12 @@ import Page from '../../../components/Page';
 import {Button, Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import Timeline from '../../../components/Timeline';
+import {useNavigate} from 'react-router-native';
+import PathRoutes from '../../../routers/paths';
 
 const TLCOnboarding: React.FC = () => {
   const {t} = useTranslation();
+  const navigate = useNavigate();
 
   const process = [
     {
@@ -62,7 +65,10 @@ const TLCOnboarding: React.FC = () => {
         variant={'solid'}
         borderRadius={'8px'}
         color={'white'}
-        background={'primary.200'}>
+        background={'primary.200'}
+        onPress={() =>
+          navigate(PathRoutes.teacherLearningCircles.checkingStats)
+        }>
         {t('tlc.onboarding.button')}
       </Button>
     </Page>

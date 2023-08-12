@@ -29,6 +29,8 @@ import {VStack} from 'native-base';
 import AccountCreatedScreen from '../screens/AccountCreated';
 import PendingSessionsScreen from '../screens/Home/QuickActions/Pending';
 import TLCOnboarding from '../screens/TeacherLearningCircles/Onboarding';
+import TLCCheckingStats from '../screens/TeacherLearningCircles/CheckingStats';
+import TLCUnitSelect from '../screens/TeacherLearningCircles/UnitSelect';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -139,6 +141,14 @@ const RouterProvider: React.FC = () => {
             <Route
               path={PathRoutes.teacherLearningCircles.onboarding}
               Component={TLCOnboarding}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.checkingStats}
+              Component={TLCCheckingStats}
+            />
+            <Route
+              path={PathRoutes.teacherLearningCircles.unitSelect}
+              Component={TLCUnitSelect}
             />
           </>
         )}

@@ -6,12 +6,20 @@ import Header, {HeaderProps} from '../Header';
 type Props = {
   children: React.ReactNode;
   noPadding?: boolean;
+  beforePageEl?: React.ReactNode;
 } & HeaderProps;
 
-const Page: React.FC<Props> = ({children, noPadding, ...headerProps}) => {
+const Page: React.FC<Props> = ({
+  children,
+  noPadding,
+  beforePageEl,
+  ...headerProps
+}) => {
   return (
     <>
       <Header {...headerProps} />
+
+      {beforePageEl}
 
       <VStack
         w="full"

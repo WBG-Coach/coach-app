@@ -1,4 +1,5 @@
 import {School} from '../types/school';
+import {Session} from '../types/session';
 import {getDBConnection} from './database.service';
 
 export const SchoolService = {
@@ -20,6 +21,30 @@ export const SchoolService = {
         [pageSize, (pageNumber - 1) * pageSize],
       )) as any[];
     }
+
+    return result[0].rows.raw();
+  },
+
+  findSessionFromSchool: async (
+    school_id: string,
+    pageSize: number,
+    pageNumber: number,
+  ): Promise<Session[]> => {
+    const db = await getDBConnection();
+    const result = (await db.executeSql(
+      `
+        SELECT
+          s.*,
+          f.id as feedback_id
+        FROM session as s
+        LEFT JOIN feedback f ON f.session_id = s.id
+        WHERE
+          s.school_id = ?
+        LIMIT ?
+        OFFSET ?
+      `,
+      [school_id, pageSize, (pageNumber - 1) * pageSize],
+    )) as any[];
 
     return result[0].rows.raw();
   },

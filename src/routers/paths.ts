@@ -24,6 +24,13 @@ const PathRoutes = {
 
   teacherLearningCircles: {
     onboarding: '/teacherlearningcircles/onboarding',
+    checkingStats: '/teacherlearningcircles/checkingStats',
+    unitSelect: '/teacherlearningcircles/unitSelect',
+    introduction: '/teacherlearningcircles/introduction',
+    situations: '/teacherlearningcircles/situations',
+    explanation: '/teacherlearningcircles/explanation',
+    activities: '/teacherlearningcircles/activities',
+    finish: '/teacherlearningcircles/finish',
   },
 
   classObservation: {
