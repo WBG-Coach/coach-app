@@ -3,6 +3,7 @@ import {Props} from './types';
 import {FlatList, HStack, Text, VStack, useTheme} from 'native-base';
 import Icon from '../Icon';
 import {itemIcon} from './common';
+import TipBox from './TipBox';
 
 const AvaliativeList: React.FC<Props> = ({items}) => {
   const theme = useTheme();
@@ -35,30 +36,7 @@ const AvaliativeList: React.FC<Props> = ({items}) => {
             </Text>
           </HStack>
 
-          {item.box && (
-            <VStack
-              mt={4}
-              p={3}
-              borderWidth={'1px'}
-              borderColor={'primary.200'}
-              borderRadius={'8px'}>
-              <HStack space={2} alignItems={'center'}>
-                <Icon
-                  name={'question-circle-solid'}
-                  color={theme.colors.primary['200']}
-                  size={18}
-                />
-                <VStack>
-                  <Text fontSize={'LSM'} fontWeight={500} color={'gray.700'}>
-                    {item.box.title}
-                  </Text>
-                  <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                    {item.box.description}
-                  </Text>
-                </VStack>
-              </HStack>
-            </VStack>
-          )}
+          {item.box && <TipBox {...item.box} />}
         </VStack>
       )}
     />

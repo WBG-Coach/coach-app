@@ -7,4 +7,12 @@ export const itemIcon = {
     icon: 'thumbs-down-solid',
     color: (theme: any) => theme.colors.red['300'],
   },
+  comments: {
+    icon: 'comments-solid',
+    color: (theme: any) => theme.colors.gray['700'],
+  },
+  tasks: {
+    icon: 'clipboard-notes-solid',
+    color: (theme: any) => theme.colors.gray['700'],
+  },
 };
