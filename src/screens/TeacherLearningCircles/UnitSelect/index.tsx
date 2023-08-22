@@ -35,11 +35,10 @@ const TLCUnitSelect: React.FC = () => {
       beforePageEl={<LoadingBar />}>
       <VStack flex={1}>
         <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'}>
-          Choose unit
+          {t('tlc.unitSelect.title')}
         </Text>
         <Text mb={4} fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-          Each unit focus on one key teaching practice for teachers to learn
-          from ans with each other
+          {t('tlc.unitSelect.description')}
         </Text>
 
         <FlatList
@@ -85,7 +84,7 @@ const TLCUnitSelect: React.FC = () => {
         onPress={() =>
           navigate(PathRoutes.teacherLearningCircles.introduction)
         }>
-        {t('tlc.checkingStats.button')}
+        {t('tlc.unitSelect.button')}
       </Button>
     </Page>
   );

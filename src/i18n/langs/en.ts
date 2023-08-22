@@ -387,6 +387,57 @@ const enTranslation = {
         },
       },
     },
+
+    checkingStats: {
+      title: 'Overall rating',
+      graphDesc:
+        'This rating is the average of the school in all Teaching Practices',
+      ratingTitle: 'Rating per Teaching Practice',
+      ratingDesc: 'How is the average of the school in each Teaching Practice',
+      button: 'Next',
+    },
+    unitSelect: {
+      title: 'Choose unit',
+      description:
+        'Each unit focus on one key teaching practice for teachers to learn from ans with each other',
+      button: 'Start unit',
+    },
+    introduction: {
+      $1: {
+        title: 'Introduction',
+        description:
+          'This Teacher Learning Circle is about using positive language in the classroom to create an encouraging learning environment for students.',
+        button: 'Next',
+      },
+      $2: {
+        title: 'Why is it useful to use positive language in the classroom?',
+        description:
+          'It is important to create a classroom environment where students can feel emotionally safe and supported. All students feel welcome if the teacher treats them all respectfully.',
+        button: 'Start examples',
+      },
+    },
+    situations: {button: 'Check explanation'},
+    explanation: {
+      title: 'Explanation',
+      description:
+        'Let the teachers know what was bad and what was good in the examples',
+
+      steps: {
+        $1: {
+          title: 'Bad example',
+          description:
+            'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+        },
+        $2: {
+          title: 'Good example',
+          description:
+            'In the second example the teacher sees that the student is finding it difficult to work and then tries to support him by saying positive words and encouraging them.',
+        },
+      },
+      button: 'Next',
+    },
+    activities: {button: 'Next'},
+    finish: {button: 'Finish'},
   },
   sessionDetails: {title: 'Previous session'},
   feedbackSession: {title: 'Coaching session'},

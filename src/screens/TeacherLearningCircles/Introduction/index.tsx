@@ -8,28 +8,26 @@ import PathRoutes from '../../../routers/paths';
 import {FirstStepImage} from '../../../assets/images/tlc/introduction';
 import FirstStepAfter from './AfterComponents/FirstStep';
 
-const steps = [
-  {
-    image: FirstStepImage,
-    title: 'Introduction',
-    subtitle:
-      'This Teacher Learning Circle is about using positive language in the classroom to create an encouraging learning environment for students.',
-    afterComponent: <FirstStepAfter />,
-    buttonLabel: 'tlc.introduction.first-button',
-  },
-  {
-    image: FirstStepImage,
-    title: 'Why is it useful to use positive language in the classroom?',
-    subtitle:
-      'It is important to create a classroom environment where students can feel emotionally safe and supported. All students feel welcome if the teacher treats them all respectfully.',
-    buttonLabel: 'tlc.introduction.second-button',
-  },
-];
-
 const TLCIntroduction = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
   const {t} = useTranslation();
+
+  const steps = [
+    {
+      image: FirstStepImage,
+      title: t('tlc.introduction.$1.title'),
+      subtitle: t('tlc.introduction.$1.description'),
+      afterComponent: <FirstStepAfter />,
+      buttonLabel: t('tlc.introduction.$1.button'),
+    },
+    {
+      image: FirstStepImage,
+      title: t('tlc.introduction.$2.title'),
+      subtitle: t('tlc.introduction.$2.title'),
+      buttonLabel: t('tlc.introduction.$2.button'),
+    },
+  ];
 
   const compData = steps[currentStep];
 
@@ -82,7 +80,7 @@ const TLCIntroduction = () => {
             ? setCurrentStep(currentStep + 1)
             : navigate(PathRoutes.teacherLearningCircles.situations)
         }>
-        {t(compData.buttonLabel)}
+        {compData.buttonLabel}
       </Button>
     </Page>
   );
