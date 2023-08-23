@@ -43,11 +43,13 @@ const SyncService = {
     };
 
     const currentSchool = await StorageService.getCurrentSchool();
+    const lastSync = await StorageService.getLastSync();
 
     const response = await axios.post<SyncData>(
       'https://api-sl.coachdigital.org/sync',
       {
         changes,
+        lastSync,
         model: DeviceInfo.getDeviceId(),
         apiLevel: await DeviceInfo.getApiLevel(),
         deviceId: await DeviceInfo.getUniqueId(),
@@ -60,7 +62,7 @@ const SyncService = {
       throw new Error();
     }
 
-    if (response.data.total > 0) {
+    if (currentSchool && response.data.total > 0) {
       await CoachService.sync(response.data.coaches);
       await TeacherService.sync(response.data.teachers);
     }

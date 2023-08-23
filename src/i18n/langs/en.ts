@@ -85,9 +85,9 @@ const enTranslation = {
   },
   syncDetails: {
     title: 'Setup complete',
-    description:
-      "The device was setup with the basic data from {{value}}. You'll be able to:",
+    description: 'The device was setup with the basic data from',
     start: 'Start using the app',
+    'description-list': "You'll be able to :",
   },
   home: {
     teachersLength_interval:

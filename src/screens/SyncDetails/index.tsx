@@ -1,4 +1,4 @@
-import {Box, Button, Image, Modal, Spinner, Text, VStack} from 'native-base';
+import {Button, Image, Spinner, Text, VStack} from 'native-base';
 
 import Page from '../../components/Page';
 import {useTranslation} from 'react-i18next';
@@ -31,7 +31,7 @@ const SyncDetails: React.FC = () => {
         <Spinner />
       ) : (
         <>
-          <VStack my="auto">
+          <VStack my="auto" maxW="420px" mx="auto">
             <Image
               w="172px"
               h="172px"
@@ -48,15 +48,30 @@ const SyncDetails: React.FC = () => {
               {t('syncDetails.title')}
             </Text>
             <Text mt="4px" color="#576375" fontSize={16} textAlign="center">
-              {t('syncDetails.description', {value: currentSchool?.name})}
+              {t('syncDetails.description')}
             </Text>
-            <Text>- Select Bayshore High in the school list</Text>
-            <Text>- Create new teachers</Text>
+            <Text
+              my="8px"
+              color="#576375"
+              fontSize={20}
+              textAlign="center"
+              bold>
+              {currentSchool?.name}
+            </Text>
+            <Text color="#576375" fontSize={16} textAlign="left">
+              {t('syncDetails.description-list')}
+            </Text>
+            <Text mt="4px" color="#576375">
+              - Select Bayshore High in the school list
+            </Text>
+            <Text color="#576375">- Create new teachers</Text>
             {isConnected && (
               <>
-                <Text>- Select teachers created before</Text>
-                <Text>- View previously created teacher's data</Text>
-                <Text>- View Bayshore High's data</Text>
+                <Text color="#576375">- Select teachers created before</Text>
+                <Text color="#576375">
+                  - View previously created teacher's data
+                </Text>
+                <Text color="#576375">- View Bayshore High's data</Text>
               </>
             )}
           </VStack>
