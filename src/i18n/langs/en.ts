@@ -12,6 +12,13 @@ const enTranslation = {
     },
   },
   splash: {},
+  aboutScan: {
+    title: 'Scan the QR Code',
+    description:
+      "Scan the QR code in the Coach's Manual to setup your School information in the app",
+    scan: 'Scan QR Code',
+    doItLater: 'Do it later',
+  },
   login: {
     'login-button': 'Login',
     'create-account': 'Create account',
@@ -61,12 +68,26 @@ const enTranslation = {
     'sync-error-description': 'Check your connection and try again',
     changeLanguage: {title: 'Select language', button: 'Next'},
   },
+  coachSelect: {
+    title: 'Select your profile',
+    search: 'Search',
+    'new-profile': 'Create new profile',
+    'item-description_interval':
+      '(0)[No sessions here];(1)[1 session here];(2-inf)[{{count}} sessions here];',
+    'item-description-empty': 'No profiles here',
+  },
   schoolSelect: {
     title: 'Select your school',
     search: 'Search',
     'item-description_interval':
       '(0)[No teachers here];(1)[1 teacher here];(2-inf)[{{count}} teachers here];',
     'item-description-empty': 'No schools here',
+  },
+  syncDetails: {
+    title: 'Setup complete',
+    description:
+      "The device was setup with the basic data from {{value}}. You'll be able to:",
+    start: 'Start using the app',
   },
   home: {
     teachersLength_interval:

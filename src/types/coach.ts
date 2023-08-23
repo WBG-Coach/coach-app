@@ -4,8 +4,7 @@ export type Coach = {
   surname?: string;
   image_id?: string;
 
-  username?: string;
-  password?: string;
+  sessionCount?: number;
 
   _status?: string;
   created_at: Date;

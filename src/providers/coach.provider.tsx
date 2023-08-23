@@ -6,17 +6,15 @@ import React, {
   useEffect,
 } from 'react';
 import {StorageService} from '../services/storage.service';
-import {CoachService} from '../services/coach.service';
 import {School} from '../types/school';
 import {Button, HStack, Modal, useToast, Text} from 'native-base';
 import {Coach} from '../types/coach';
-import Toast from '../components/Toast';
 import {useTranslation} from 'react-i18next';
 
 type CoachContextType = {
   currentCoach: Coach | null;
   currentSchool: School | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (coach: Coach) => Promise<void>;
   logout: () => Promise<void>;
   selectSchool: (school: School | null) => void;
   addTeacherInCurrentSchool: () => void;
@@ -36,24 +34,9 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
     StorageService.getCurrentSchool().then(setCurrentSchool);
   }, []);
 
-  const login = async (username: string, password: string) => {
-    const coachLogged = await CoachService.login(username, password);
-    if (coachLogged) {
-      setCurrentCoach(coachLogged);
-      await StorageService.setCurrentCoach(coachLogged);
-    } else {
-      toast.show({
-        placement: 'top',
-        render: () => (
-          <Toast
-            type="error"
-            icon="exclamation-circle-solid"
-            title={t('login.loginError')}
-            description={t('login.invalidUserPassword')}
-          />
-        ),
-      });
-    }
+  const login = async (coachLogged: Coach) => {
+    setCurrentCoach(coachLogged);
+    await StorageService.setCurrentCoach(coachLogged);
   };
 
   const selectSchool = async (school: School | null) => {

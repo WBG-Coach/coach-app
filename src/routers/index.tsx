@@ -36,6 +36,9 @@ import TLCSituations from '../screens/TeacherLearningCircles/Situations';
 import TLCExplanation from '../screens/TeacherLearningCircles/Explanation';
 import TLCFinish from '../screens/TeacherLearningCircles/Finish';
 import TLCActivities from '../screens/TeacherLearningCircles/Activities';
+import AboutScan from '../screens/AboutScan';
+import CoachSelectScreen from '../screens/CoachSelect';
+import SyncDetails from '../screens/SyncDetails';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -53,23 +56,35 @@ const RouterProvider: React.FC = () => {
           Component={CreateAccountScreen}
         />
 
-        {!currentCoach && (
-          <Route path={PathRoutes.main} Component={LoginScreen} />
+        {!currentSchool && (
+          <>
+            <Route path={PathRoutes.main} Component={AboutScan} />
+            <Route
+              path={PathRoutes.selectSchool}
+              Component={SchoolSelectScreen}
+            />
+          </>
         )}
 
-        {currentCoach && !currentSchool && (
+        {currentSchool && !currentCoach && (
           <>
-            <Route path={PathRoutes.main} Component={SchoolSelectScreen} />
+            <Route path={PathRoutes.main} Component={CoachSelectScreen} />
             <Route
-              path={PathRoutes.accountCreated}
-              Component={AccountCreatedScreen}
+              path={PathRoutes.createAccount}
+              Component={CreateAccountScreen}
             />
+            <Route path={PathRoutes.syncDetails} Component={SyncDetails} />
           </>
         )}
 
         {currentCoach && currentSchool && (
           <>
             <Route path={PathRoutes.main} Component={HomeScreen} />
+            <Route
+              path={PathRoutes.accountCreated}
+              Component={AccountCreatedScreen}
+            />
+
             <Route
               path={PathRoutes.home.newSession}
               Component={QuickNewSessionScreen}

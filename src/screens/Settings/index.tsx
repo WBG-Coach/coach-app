@@ -53,7 +53,6 @@ const SettingsScreen: React.FC = () => {
       await SyncService.trySyncData();
       await getSyncData();
     } catch (err) {
-      console.log(err);
       toast.show({
         placement: 'top',
         render: () => (

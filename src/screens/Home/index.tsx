@@ -22,7 +22,7 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <Page setting logo back noPadding onBack={() => selectSchool(null)}>
+    <Page setting logo noPadding>
       <VStack w="full" flex={1} p={isTablet() ? '32px 64px' : '16px 24px'}>
         <HomeHeader />
 

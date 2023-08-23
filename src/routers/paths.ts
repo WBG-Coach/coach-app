@@ -1,9 +1,12 @@
 const PathRoutes = {
   main: '/',
+  selectSchool: '/selectSchool',
 
   createAccount: '/createAccount',
 
   accountCreated: '/accountCreated',
+
+  syncDetails: '/syncDetails',
 
   settings: {
     main: '/settings',
