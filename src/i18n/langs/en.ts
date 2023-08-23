@@ -353,7 +353,6 @@ const enTranslation = {
       activities: 'Activities',
       finish: 'Finish',
     },
-
     onboarding: {
       title: 'Getting started',
       subtitle:
@@ -398,7 +397,6 @@ const enTranslation = {
         },
       },
     },
-
     checkingStats: {
       title: 'Overall rating',
       graphDesc:
@@ -440,7 +438,37 @@ const enTranslation = {
         button: 'Start examples',
       },
     },
-    situations: {button: 'Check explanation'},
+    situations: {
+      title: 'Situational examples',
+      description:
+        'Read out loud the examples below and ask the questions for the teachers',
+
+      steps: {
+        $1: {
+          title: 'Bad example',
+          description:
+            'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and starts telling him that ‘you are not a good student’, ‘you never do your work’ or ‘you cannot do this work’.',
+          box: {
+            title: 'Discuss the following question',
+            description:
+              'How do you think the student will feel? How do you think they will behave?',
+          },
+        },
+
+        $2: {
+          title: 'Good example',
+          description:
+            'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and tells him ‘you are a great student and if you try harder you can do this’',
+          box: {
+            title: 'Discuss the following question',
+            description:
+              'How do you think the student will feel? How do you think they will behave?',
+          },
+        },
+      },
+
+      button: 'Check explanation',
+    },
     explanation: {
       title: 'Explanation',
       description:
@@ -461,7 +489,13 @@ const enTranslation = {
       button: 'Next',
     },
     activities: {button: 'Next'},
-    finish: {button: 'Finish'},
+    finish: {
+      title: 'Rate the activity',
+      description: 'How did it go?',
+      question:
+        'Did they manage to answer correctly? Did they understood the correct use of positive language?',
+      button: 'Finish',
+    },
   },
   sessionDetails: {title: 'Previous session'},
   feedbackSession: {title: 'Coaching session'},

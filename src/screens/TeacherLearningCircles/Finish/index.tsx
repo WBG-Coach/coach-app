@@ -19,14 +19,13 @@ const TLCFinish = () => {
       beforePageEl={<LoadingBar />}>
       <VStack flex={1}>
         <Text fontSize={'HSM'} mb={6} fontWeight={600} color={'gray.700'}>
-          Rate the activity
+          {t('tlc.finish.title')}
         </Text>
         <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-          How did it go?
+          {t('tlc.finish.description')}
         </Text>
         <Text mb={1} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-          Did they manage to answer correctly? Did they understood the correct
-          use of positive language?
+          {t('tlc.finish.question')}
         </Text>
 
         <StarRating size={5} value={0} onPress={answerValue => {}} />
