@@ -106,7 +106,7 @@ const TLCCheckingStats: React.FC = () => {
       </Text>
 
       <Text fontSize={'LMD'} fontWeight={500} mt={6} color={'gray.800'}>
-        Overall rating
+        {t('tlc.checkingStats.title')}
       </Text>
 
       <VStack
@@ -147,15 +147,15 @@ const TLCCheckingStats: React.FC = () => {
           fontSize={'TSM'}
           fontWeight={400}
           color={'gray.600'}>
-          This rating is the average of the school in all Teaching Practices
+          {t('tlc.checkingStats.graphDesc')}
         </Text>
       </VStack>
 
       <Text mt={8} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-        Rating per Teaching Practice
+        {t('tlc.checkingStats.ratingTitle')}
       </Text>
       <Text mt={1} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-        How is the average of the school in each Teaching Practice
+        {t('tlc.checkingStats.ratingDesc')}
       </Text>
 
       <FlatList

@@ -364,6 +364,16 @@ const enTranslation = {
   },
   tlc: {
     page_title: 'Teacher Learning Circles',
+
+    loadingBar: {
+      checkingStats: 'Check stats',
+      unitSelect: 'Unit select',
+      introduction: 'Introduction',
+      situations: 'Situations',
+      explanation: 'Explanation',
+      activities: 'Activities',
+      finish: 'Finish',
+    },
     onboarding: {
       title: 'Getting started',
       subtitle:
@@ -407,6 +417,105 @@ const enTranslation = {
             'Do some activities with the teachers to exercise what they learned',
         },
       },
+    },
+    checkingStats: {
+      title: 'Overall rating',
+      graphDesc:
+        'This rating is the average of the school in all Teaching Practices',
+      ratingTitle: 'Rating per Teaching Practice',
+      ratingDesc: 'How is the average of the school in each Teaching Practice',
+      button: 'Next',
+    },
+    unitSelect: {
+      title: 'Choose unit',
+      description:
+        'Each unit focus on one key teaching practice for teachers to learn from ans with each other',
+      button: 'Start unit',
+    },
+    introduction: {
+      $1: {
+        title: 'Introduction',
+        description:
+          'This Teacher Learning Circle is about using positive language in the classroom to create an encouraging learning environment for students.',
+
+        learn: {
+          title: "In this unit you'll learn:",
+
+          $1: {
+            title: 'Why using positive language is important in a classroom',
+          },
+          $2: {
+            title:
+              'How positive language can be used in the classroom to encourage students',
+          },
+        },
+
+        button: 'Next',
+      },
+      $2: {
+        title: 'Why is it useful to use positive language in the classroom?',
+        description:
+          'It is important to create a classroom environment where students can feel emotionally safe and supported. All students feel welcome if the teacher treats them all respectfully.',
+        button: 'Start examples',
+      },
+    },
+    situations: {
+      title: 'Situational examples',
+      description:
+        'Read out loud the examples below and ask the questions for the teachers',
+
+      steps: {
+        $1: {
+          title: 'Bad example',
+          description:
+            'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and starts telling him that ‘you are not a good student’, ‘you never do your work’ or ‘you cannot do this work’.',
+          box: {
+            title: 'Discuss the following question',
+            description:
+              'How do you think the student will feel? How do you think they will behave?',
+          },
+        },
+
+        $2: {
+          title: 'Good example',
+          description:
+            'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and tells him ‘you are a great student and if you try harder you can do this’',
+          box: {
+            title: 'Discuss the following question',
+            description:
+              'How do you think the student will feel? How do you think they will behave?',
+          },
+        },
+      },
+
+      button: 'Check explanation',
+    },
+    explanation: {
+      title: 'Explanation',
+      description:
+        'Let the teachers know what was bad and what was good in the examples',
+
+      steps: {
+        $1: {
+          title: 'Bad example',
+          description:
+            'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+        },
+        $2: {
+          title: 'Good example',
+          description:
+            'In the second example the teacher sees that the student is finding it difficult to work and then tries to support him by saying positive words and encouraging them.',
+        },
+      },
+      button: 'Next',
+    },
+    activities: {button: 'Next'},
+    finish: {
+      title: 'Rate the activity',
+      description: 'How did it go?',
+      question:
+        'Did they manage to answer correctly? Did they understood the correct use of positive language?',
+      button: 'Finish',
     },
   },
   sessionDetails: {title: 'Previous session'},
