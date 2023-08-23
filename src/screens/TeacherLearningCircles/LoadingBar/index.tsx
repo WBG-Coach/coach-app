@@ -3,10 +3,12 @@ import React, {useEffect, useRef} from 'react';
 import loadingBarItems from './common';
 import {useLocation} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
+import {useTranslation} from 'react-i18next';
 
 const LoadingBar = () => {
   const location = useLocation();
   const flatRef = useRef<any>();
+  const {t} = useTranslation();
   const currentIn =
     Object.keys(PathRoutes.teacherLearningCircles).findIndex(
       key =>
@@ -69,7 +71,7 @@ const LoadingBar = () => {
               fontSize={'TXS'}
               fontWeight={isEqual ? 700 : 400}
               mr={6}>
-              {item.label}
+              {t(`tlc.loadingBar.${item}`)}
             </Text>
           </VStack>
         );

@@ -1,37 +1,13 @@
 import PathRoutes from '../../../routers/paths';
 
-const loadingBarItems: {
-  key: keyof typeof PathRoutes.teacherLearningCircles;
-  label: string;
-}[] = [
-  {
-    key: 'checkingStats',
-    label: 'Check stats',
-  },
-  {
-    key: 'unitSelect',
-    label: 'Unit select',
-  },
-  {
-    key: 'introduction',
-    label: 'Introduction',
-  },
-  {
-    key: 'situations',
-    label: 'Situations',
-  },
-  {
-    key: 'explanation',
-    label: 'Explanation',
-  },
-  {
-    key: 'activities',
-    label: 'Activities',
-  },
-  {
-    key: 'finish',
-    label: 'Finish',
-  },
+const loadingBarItems: Array<keyof typeof PathRoutes.teacherLearningCircles> = [
+  'checkingStats',
+  'unitSelect',
+  'introduction',
+  'situations',
+  'explanation',
+  'activities',
+  'finish',
 ];
 
 export default loadingBarItems;

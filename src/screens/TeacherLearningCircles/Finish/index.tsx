@@ -39,7 +39,7 @@ const TLCFinish = () => {
         color={'white'}
         background={'primary.200'}
         onPress={() => navigate(PathRoutes.main)}>
-        {'tlc.finish.button'}
+        {t('tlc.finish.button')}
       </Button>
     </Page>
   );

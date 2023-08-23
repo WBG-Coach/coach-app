@@ -49,7 +49,7 @@ const TLCExplanation = () => {
         color={'white'}
         background={'primary.200'}
         onPress={() => navigate(PathRoutes.teacherLearningCircles.activities)}>
-        {'tlc.explanation.button'}
+        {t('tlc.explanation.button')}
       </Button>
     </Page>
   );

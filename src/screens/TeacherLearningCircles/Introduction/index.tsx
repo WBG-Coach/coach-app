@@ -24,7 +24,7 @@ const TLCIntroduction = () => {
     {
       image: FirstStepImage,
       title: t('tlc.introduction.$2.title'),
-      subtitle: t('tlc.introduction.$2.title'),
+      subtitle: t('tlc.introduction.$2.description'),
       buttonLabel: t('tlc.introduction.$2.button'),
     },
   ];

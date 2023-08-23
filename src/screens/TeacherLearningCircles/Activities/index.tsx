@@ -196,7 +196,7 @@ const TLCActivities = () => {
             ? setCurrentStep(currentStep + 1)
             : navigate(PathRoutes.teacherLearningCircles.finish)
         }>
-        {'tlc.activities.button'}
+        {t('tlc.activities.button')}
       </Button>
     </Page>
   );

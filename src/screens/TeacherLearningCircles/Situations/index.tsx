@@ -62,7 +62,7 @@ const TLCSituations = () => {
         color={'white'}
         background={'primary.200'}
         onPress={() => navigate(PathRoutes.teacherLearningCircles.explanation)}>
-        {'tlc.situations.button'}
+        {t('tlc.situations.button')}
       </Button>
     </Page>
   );

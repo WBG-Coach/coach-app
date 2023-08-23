@@ -343,6 +343,17 @@ const enTranslation = {
   },
   tlc: {
     page_title: 'Teacher Learning Circles',
+
+    loadingBar: {
+      checkingStats: 'Check stats',
+      unitSelect: 'Unit select',
+      introduction: 'Introduction',
+      situations: 'Situations',
+      explanation: 'Explanation',
+      activities: 'Activities',
+      finish: 'Finish',
+    },
+
     onboarding: {
       title: 'Getting started',
       subtitle:
@@ -407,6 +418,19 @@ const enTranslation = {
         title: 'Introduction',
         description:
           'This Teacher Learning Circle is about using positive language in the classroom to create an encouraging learning environment for students.',
+
+        learn: {
+          title: "In this unit you'll learn:",
+
+          $1: {
+            title: 'Why using positive language is important in a classroom',
+          },
+          $2: {
+            title:
+              'How positive language can be used in the classroom to encourage students',
+          },
+        },
+
         button: 'Next',
       },
       $2: {

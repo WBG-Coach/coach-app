@@ -3,14 +3,14 @@ import React from 'react';
 import Icon from '../../../../../components/Icon';
 import {useTranslation} from 'react-i18next';
 
-const turnItems = [
-  'Why using positive language is important in a classroom',
-  'How positive language can be used in the classroom to encourage students',
-];
-
 const FirstStepAfter = () => {
   const {t} = useTranslation();
   const theme = useTheme();
+
+  const turnItems = [
+    t('tlc.introduction.$1.learn.$1.title'),
+    t('tlc.introduction.$1.learn.$2.title'),
+  ];
 
   return (
     <VStack>
@@ -21,7 +21,7 @@ const FirstStepAfter = () => {
         fontSize={'LLG'}
         fontWeight={500}
         color={'gray.700'}>
-        In this unit you'll learn:
+        {t('tlc.introduction.$1.learn.title')}
       </Text>
 
       {turnItems.map((item, index) => (
