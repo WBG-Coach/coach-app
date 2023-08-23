@@ -21,8 +21,9 @@ export const StorageService = {
     const date = await AsyncStorage.getItem(KEYS.lastSync);
     return date ? moment(new Date(date)).format('LLL') : 'no sync';
   },
-  setLastSync: async (date: Date) => {
-    await AsyncStorage.setItem(KEYS.lastSync, date.toJSON());
+  setLastSync: async (date: Date | null) => {
+    if (!date) await AsyncStorage.removeItem(KEYS.lastSync);
+    else await AsyncStorage.setItem(KEYS.lastSync, date.toJSON());
   },
   getCurrentCoach: async (): Promise<Coach | null> => {
     const coach = await AsyncStorage.getItem(KEYS.currentCoach);

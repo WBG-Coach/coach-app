@@ -49,8 +49,11 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
       setShowStartOver(true);
       return;
     }
+
     await StorageService.setCurrentSchool(null);
     await StorageService.setCurrentCoach(null);
+    await StorageService.setLastSync(null);
+
     setCurrentSchool(null);
     setCurrentCoach(null);
 
