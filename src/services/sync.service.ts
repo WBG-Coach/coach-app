@@ -13,6 +13,8 @@ import {StorageService} from './storage.service';
 import {SyncData} from '../types/sync';
 import {CoachService} from './coach.service';
 import {TeacherService} from './teacher.service';
+import {SessionService} from './session.service';
+import {AnswerService} from './answer.service';
 
 const SyncService = {
   getUnsyncedItemsCount: async (): Promise<{
@@ -65,6 +67,8 @@ const SyncService = {
     if (currentSchool && response.data.total > 0) {
       await CoachService.sync(response.data.coaches);
       await TeacherService.sync(response.data.teachers);
+      await SessionService.sync(response.data.sessions);
+      await AnswerService.sync(response.data.answers);
     }
 
     await SyncService.updateAllToSynced(db);

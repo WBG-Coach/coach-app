@@ -21,4 +21,19 @@ export const AnswerService = {
 
     return result[0].rows.raw();
   },
+
+  sync: async (answers: Answer[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      answers.map(answer => {
+        return db.executeSql(
+          `
+          INSERT OR REPLACE INTO session(id, value, question_id, session_id, _status)
+          VALUES (?, ?, ?, ?, 'synced')
+        `,
+          [answer.id, answer.value, answer.question_id, answer.session_id],
+        );
+      }),
+    );
+  },
 };
