@@ -58,6 +58,27 @@ export const SessionService = {
     );
   },
 
+  syncFeedbacks: async (feedbacks: Feedback[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      feedbacks?.map(feedback => {
+        return db.executeSql(
+          `
+          INSERT OR REPLACE INTO feedback(id, value, competence_id, session_id, school_id, _status)
+          VALUES (?, ?, ?, ?, 'synced')
+        `,
+          [
+            feedback.id,
+            feedback.value,
+            feedback.competence_id,
+            feedback.session_id,
+            feedback.school_id,
+          ],
+        );
+      }),
+    );
+  },
+
   create: async (
     session: Partial<Session>,
     answers: Partial<Answer>[],

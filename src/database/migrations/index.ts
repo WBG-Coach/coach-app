@@ -3,6 +3,7 @@ import {runMigrationV0} from './00';
 import {runMigrationV1} from './01';
 import {runMigrationV2} from './02';
 import {runMigrationV3} from './03';
+import {runMigrationV4} from './04';
 
 // ADD NEW MIGRATIONS HERE
 const MIGRATION_LIST = [
@@ -10,6 +11,7 @@ const MIGRATION_LIST = [
   runMigrationV1,
   runMigrationV2,
   runMigrationV3,
+  runMigrationV4,
 ];
 
 export const runMigrations = async () => {

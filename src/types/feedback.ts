@@ -6,6 +6,7 @@ export type Feedback = {
 
   value: string;
   session_id: string;
+  school_id: string;
   competence_id: string;
 
   competence?: Competence;

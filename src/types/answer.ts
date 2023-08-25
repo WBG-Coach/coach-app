@@ -4,6 +4,7 @@ export type Answer = {
   value: string;
   question_id: string;
   session_id: string;
+  school_id: string;
 
   _status?: string;
   created_at: Date;
