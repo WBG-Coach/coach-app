@@ -48,7 +48,7 @@ const SyncService = {
     const lastSync = await StorageService.getLastSync();
 
     const response = await axios.post<SyncData>(
-      'https://ffca-177-208-184-177.ngrok-free.app/sync',
+      'https://api-sl.coachdigital.org/sync',
       {
         changes,
         lastSync,
