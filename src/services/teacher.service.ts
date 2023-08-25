@@ -132,9 +132,8 @@ export const TeacherService = {
 
   sync: async (teachers: Teacher[]): Promise<void> => {
     const db = await getDBConnection();
-    console.log(JSON.stringify(teachers));
     await Promise.all(
-      teachers.map(teacher => {
+      teachers?.map(teacher => {
         return db.executeSql(
           `
           INSERT OR REPLACE INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, _status)

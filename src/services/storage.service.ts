@@ -17,9 +17,13 @@ export const StorageService = {
   setDatabaseVersion: async (value: string) => {
     await AsyncStorage.setItem(KEYS.databaseVersion, value);
   },
-  getLastSync: async () => {
+  getLastSyncFormated: async () => {
     const date = await AsyncStorage.getItem(KEYS.lastSync);
     return date ? moment(new Date(date)).format('LLL') : 'no sync';
+  },
+  getLastSync: async () => {
+    const date = await AsyncStorage.getItem(KEYS.lastSync);
+    return date;
   },
   setLastSync: async (date: Date | null) => {
     if (!date) await AsyncStorage.removeItem(KEYS.lastSync);

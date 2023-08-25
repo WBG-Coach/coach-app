@@ -29,7 +29,7 @@ export const CoachService = {
   sync: async (coaches: Coach[]): Promise<void> => {
     const db = await getDBConnection();
     await Promise.all(
-      coaches.map(coach => {
+      coaches?.map(coach => {
         return db.executeSql(`
           INSERT OR REPLACE INTO coach(id, name, surname, image_id, _status)
           VALUES ('${coach.id}', '${coach.name}', '${coach.surname}', '${coach.image_id}', 'synced')

@@ -69,10 +69,10 @@ const SyncService = {
       await TeacherService.sync(response.data.teachers);
       await SessionService.sync(response.data.sessions);
       await AnswerService.sync(response.data.answers);
+      await StorageService.setLastSync(new Date());
     }
 
     await SyncService.updateAllToSynced(db);
-    await StorageService.setLastSync(new Date());
   },
 
   updateAllToSynced: async (db: SQLiteDatabase): Promise<void> => {

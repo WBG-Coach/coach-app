@@ -34,7 +34,7 @@ export const SessionService = {
   sync: async (sessions: Session[]): Promise<void> => {
     const db = await getDBConnection();
     await Promise.all(
-      sessions.map(session => {
+      sessions?.map(session => {
         return db.executeSql(
           `
           INSERT OR REPLACE INTO session(id, students_count, subject, lesson_time, objective, school_id, coach_id, key_points, teacher_id, latitude, longitude, _status)

@@ -65,7 +65,7 @@ const SchoolSelectScreen: React.FC = () => {
   };
 
   return (
-    <Page setting logo onLogout={logout}>
+    <Page setting logo back>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
         {t('schoolSelect.title')}
       </Text>

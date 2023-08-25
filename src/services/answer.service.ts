@@ -25,10 +25,10 @@ export const AnswerService = {
   sync: async (answers: Answer[]): Promise<void> => {
     const db = await getDBConnection();
     await Promise.all(
-      answers.map(answer => {
+      answers?.map(answer => {
         return db.executeSql(
           `
-          INSERT OR REPLACE INTO session(id, value, question_id, session_id, _status)
+          INSERT OR REPLACE INTO answer(id, value, question_id, session_id, _status)
           VALUES (?, ?, ?, ?, 'synced')
         `,
           [answer.id, answer.value, answer.question_id, answer.session_id],
