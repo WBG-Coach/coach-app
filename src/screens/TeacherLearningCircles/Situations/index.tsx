@@ -14,7 +14,7 @@ const TLCSituations = () => {
 
   const items: AvaliativeItem[] = [
     {
-      icon: 'badExample',
+      icon: 'comment',
       title: t('tlc.situations.steps.$1.title'),
       description: t('tlc.situations.steps.$1.description'),
       box: {
@@ -23,7 +23,7 @@ const TLCSituations = () => {
       },
     },
     {
-      icon: 'goodExample',
+      icon: 'comment',
       title: t('tlc.situations.steps.$2.title'),
       description: t('tlc.situations.steps.$2.description'),
       box: {

@@ -11,6 +11,10 @@ export const itemIcon = {
     icon: 'comments-solid',
     color: (theme: any) => theme.colors.gray['700'],
   },
+  comment: {
+    icon: 'comment-solid',
+    color: (theme: any) => theme.colors.gray['700'],
+  },
   tasks: {
     icon: 'clipboard-notes-solid',
     color: (theme: any) => theme.colors.gray['700'],

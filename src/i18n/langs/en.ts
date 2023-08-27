@@ -403,6 +403,11 @@ const enTranslation = {
         'This rating is the average of the school in all Teaching Practices',
       ratingTitle: 'Rating per Teaching Practice',
       ratingDesc: 'How is the average of the school in each Teaching Practice',
+      empty: {
+        title: 'No sufficient data for this school',
+        description:
+          'Complete class observations and feedback sessions to unlock the statistics of the school next time',
+      },
       button: 'Next',
     },
     unitSelect: {
@@ -445,7 +450,7 @@ const enTranslation = {
 
       steps: {
         $1: {
-          title: 'Bad example',
+          title: 'Example 1',
           description:
             'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and starts telling him that ‘you are not a good student’, ‘you never do your work’ or ‘you cannot do this work’.',
           box: {
@@ -456,7 +461,7 @@ const enTranslation = {
         },
 
         $2: {
-          title: 'Good example',
+          title: 'Example 2',
           description:
             'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and tells him ‘you are a great student and if you try harder you can do this’',
           box: {
@@ -476,12 +481,12 @@ const enTranslation = {
 
       steps: {
         $1: {
-          title: 'Bad example',
+          title: 'Example 1',
           description:
             'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
         },
         $2: {
-          title: 'Good example',
+          title: 'Example 2',
           description:
             'In the second example the teacher sees that the student is finding it difficult to work and then tries to support him by saying positive words and encouraging them.',
         },

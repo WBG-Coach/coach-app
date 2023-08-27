@@ -22,6 +22,7 @@ import {Competence} from '../../../types/competence';
 import StarView from '../../../components/StarView';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
+import EmptyState from './EmptyState';
 
 type competenceWithAnswers = {
   answersAverage: number;
@@ -91,6 +92,8 @@ const TLCCheckingStats: React.FC = () => {
     refreshSchool();
   }, [refreshSchool]);
 
+  console.log('->', schoolData.data.average);
+
   return schoolData.isLoading ? (
     <Center flex={1} w="full">
       <Spinner color="blue" size="lg" />
@@ -105,79 +108,86 @@ const TLCCheckingStats: React.FC = () => {
         {currentSchool?.name}
       </Text>
 
-      <Text fontSize={'LMD'} fontWeight={500} mt={6} color={'gray.800'}>
-        {t('tlc.checkingStats.title')}
-      </Text>
-
-      <VStack
-        w={'100%'}
-        mt={4}
-        borderRadius={'16px'}
-        bg={'gray.100'}
-        px={4}
-        py={6}
-        alignItems={'center'}>
-        <Image
-          source={
-            chartData.find(i => schoolData.data.average <= i.start)?.image
-          }
-          alt={'Graph'}
-        />
-        <HStack>
-          <Text
-            mt={6}
-            textAlign={'center'}
-            fontSize={'TMD'}
-            fontWeight={500}
-            color={'gray.600'}>
-            {t('teacher.tabs.stats.currentRating') || 'The current rating is:'}{' '}
+      {schoolData.data.average ? (
+        <>
+          {' '}
+          <Text fontSize={'LMD'} fontWeight={500} mt={6} color={'gray.800'}>
+            {t('tlc.checkingStats.title')}
           </Text>
-          <Text
-            mt={6}
-            textAlign={'center'}
-            fontSize={'TMD'}
-            fontWeight={500}
-            color={'gray.700'}>
-            {tags[parseInt(schoolData.data.average.toFixed(0))]?.label}
-          </Text>
-        </HStack>
-        <Text
-          mt={2}
-          textAlign={'center'}
-          fontSize={'TSM'}
-          fontWeight={400}
-          color={'gray.600'}>
-          {t('tlc.checkingStats.graphDesc')}
-        </Text>
-      </VStack>
-
-      <Text mt={8} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-        {t('tlc.checkingStats.ratingTitle')}
-      </Text>
-      <Text mt={1} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-        {t('tlc.checkingStats.ratingDesc')}
-      </Text>
-
-      <FlatList
-        data={schoolData.data.competences}
-        renderItem={({item}) => (
-          <HStack
-            flex={1}
-            pt={3}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            mt={4}>
+          <VStack
+            w={'100%'}
+            mt={4}
+            borderRadius={'16px'}
+            bg={'gray.100'}
+            px={4}
+            py={6}
+            alignItems={'center'}>
+            <Image
+              source={
+                chartData.find(i => schoolData.data.average <= i.start)?.image
+              }
+              alt={'Graph'}
+            />
+            <HStack>
+              <Text
+                mt={6}
+                textAlign={'center'}
+                fontSize={'TMD'}
+                fontWeight={500}
+                color={'gray.600'}>
+                {t('teacher.tabs.stats.currentRating') ||
+                  'The current rating is:'}{' '}
+              </Text>
+              <Text
+                mt={6}
+                textAlign={'center'}
+                fontSize={'TMD'}
+                fontWeight={500}
+                color={'gray.700'}>
+                {tags[parseInt(schoolData.data.average.toFixed(0))]?.label}
+              </Text>
+            </HStack>
             <Text
-              fontSize={'LMD'}
-              fontWeight={500}
-              color={'gray.700'}
-              maxW={'200px'}>
-              {item.title}
+              mt={2}
+              textAlign={'center'}
+              fontSize={'TSM'}
+              fontWeight={400}
+              color={'gray.600'}>
+              {t('tlc.checkingStats.graphDesc')}
             </Text>
-            <StarView maxLength={5} showLabel value={item.answersAverage} />
-          </HStack>
-        )}
-      />
+          </VStack>
+          <Text mt={8} fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+            {t('tlc.checkingStats.ratingTitle')}
+          </Text>
+          <Text mt={1} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
+            {t('tlc.checkingStats.ratingDesc')}
+          </Text>
+          <FlatList
+            data={schoolData.data.competences}
+            renderItem={({item}) => (
+              <HStack
+                flex={1}
+                pt={3}
+                justifyContent={'space-between'}
+                alignItems={'center'}
+                mt={4}>
+                <Text
+                  fontSize={'LMD'}
+                  fontWeight={500}
+                  color={'gray.700'}
+                  maxW={'200px'}>
+                  {item.title}
+                </Text>
+                <StarView maxLength={5} showLabel value={item.answersAverage} />
+              </HStack>
+            )}
+          />
+        </>
+      ) : (
+        <Center flex={1}>
+          <EmptyState />
+        </Center>
+      )}
 
       <Button
         pt={4}
