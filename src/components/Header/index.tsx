@@ -15,6 +15,7 @@ export type HeaderProps = {
   onBack?: () => void;
   onLogout?: () => void;
   bg?: string;
+  color?: string;
 };
 
 const Header: React.FC<HeaderProps> = ({
@@ -25,6 +26,7 @@ const Header: React.FC<HeaderProps> = ({
   setting,
   onBack,
   onLogout,
+  color,
 }) => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -62,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({
               <Icon
                 size={24}
                 name={onLogout ? 'signout' : 'angle-left'}
-                color={theme.colors.primary['200']}
+                color={color || theme.colors.primary['200']}
               />
             </Center>
           </TouchableOpacity>
@@ -75,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({
             fontSize="16px"
             fontWeight={'700'}
             fontFamily="Inter"
-            color={theme.colors.primary['200']}>
+            color={color || theme.colors.primary['200']}>
             {title}
           </Text>
         )}
@@ -86,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({
             <Icon
               size={24}
               name="setting"
-              color={theme.colors.primary['200']}
+              color={color || theme.colors.primary['200']}
             />
           </TouchableOpacity>
         )}

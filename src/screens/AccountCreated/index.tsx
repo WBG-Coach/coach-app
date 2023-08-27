@@ -33,29 +33,9 @@ const AccountCreatedScreen: React.FC = () => {
             color={'gray.600'}>
             {t('login.accountCreated.subtitle')}
           </Text>
-
-          <HStack
-            mt={2}
-            p={3}
-            bg={'violet.0'}
-            borderRadius={'8px'}
-            alignItems={'center'}>
-            <Icon
-              name={'info-circle-solid'}
-              color={theme.colors.violet['200']}
-            />
-
-            <VStack space={0} ml={2}>
-              <Text fontWeight={400} fontSize={'LSM'} color={'gray.700'}>
-                {t('login.accountCreated.boxTitle')}
-              </Text>
-              <Text mt={1} fontWeight={400} fontSize={'TXS'} color={'gray.700'}>
-                {t('login.accountCreated.boxSubtitle')}
-              </Text>
-            </VStack>
-          </HStack>
         </VStack>
       </Center>
+
       <Button onPress={() => navigation(PathRoutes.main, {replace: true})}>
         Go to profile selection
       </Button>

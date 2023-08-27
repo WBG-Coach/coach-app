@@ -6,4 +6,5 @@ export type School = {
   created_at: Date;
   updated_at: Date;
   teachersCount: number;
+  key?: string;
 };

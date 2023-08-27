@@ -130,6 +130,29 @@ export const TeacherService = {
     return result[0].rows.raw()[0];
   },
 
+  sync: async (teachers: Teacher[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      teachers?.map(teacher => {
+        return db.executeSql(
+          `
+          INSERT OR REPLACE INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, _status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, 'synced')
+        `,
+          [
+            teacher.id,
+            teacher.name,
+            teacher.surname,
+            teacher.emis_number,
+            teacher.subject,
+            teacher.school_id,
+            teacher.image_id,
+          ],
+        );
+      }),
+    );
+  },
+
   create: async (teacher: Partial<Teacher>): Promise<void> => {
     const db = await getDBConnection();
     await db.executeSql(

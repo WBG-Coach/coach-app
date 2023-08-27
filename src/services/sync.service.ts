@@ -10,6 +10,11 @@ import DeviceInfo from 'react-native-device-info';
 import GeolocationService from './geolocation.service';
 import {SQLiteDatabase} from 'react-native-sqlite-storage';
 import {StorageService} from './storage.service';
+import {SyncData} from '../types/sync';
+import {CoachService} from './coach.service';
+import {TeacherService} from './teacher.service';
+import {SessionService} from './session.service';
+import {AnswerService} from './answer.service';
 
 const SyncService = {
   getUnsyncedItemsCount: async (): Promise<{
@@ -39,20 +44,36 @@ const SyncService = {
       feedbacks: await SyncService.getPendingFeedbacks(db),
     };
 
-    const response = await axios.post('https://api-sl.coachdigital.org/sync', {
-      changes,
-      model: DeviceInfo.getDeviceId(),
-      apiLevel: await DeviceInfo.getApiLevel(),
-      deviceId: await DeviceInfo.getUniqueId(),
-      ...(await GeolocationService.getLocation()),
-    });
+    const currentSchool = await StorageService.getCurrentSchool();
+    const lastSync = await StorageService.getLastSync();
+
+    const response = await axios.post<SyncData>(
+      'https://api-sl.coachdigital.org/sync',
+      {
+        changes,
+        lastSync,
+        model: DeviceInfo.getDeviceId(),
+        apiLevel: await DeviceInfo.getApiLevel(),
+        deviceId: await DeviceInfo.getUniqueId(),
+        ...(await GeolocationService.getLocation()),
+      },
+      {headers: {token: currentSchool?.key}},
+    );
 
     if (response.status !== 200) {
       throw new Error();
     }
 
+    if (currentSchool && response.data.total > 0) {
+      await CoachService.sync(response.data.coaches);
+      await TeacherService.sync(response.data.teachers);
+      await SessionService.sync(response.data.sessions);
+      await AnswerService.sync(response.data.answers);
+      await SessionService.syncFeedbacks(response.data.feedbacks);
+      await StorageService.setLastSync(new Date());
+    }
+
     await SyncService.updateAllToSynced(db);
-    await StorageService.setLastSync(new Date());
   },
 
   updateAllToSynced: async (db: SQLiteDatabase): Promise<void> => {

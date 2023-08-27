@@ -17,12 +17,17 @@ export const StorageService = {
   setDatabaseVersion: async (value: string) => {
     await AsyncStorage.setItem(KEYS.databaseVersion, value);
   },
-  getLastSync: async () => {
+  getLastSyncFormated: async () => {
     const date = await AsyncStorage.getItem(KEYS.lastSync);
     return date ? moment(new Date(date)).format('LLL') : 'no sync';
   },
-  setLastSync: async (date: Date) => {
-    await AsyncStorage.setItem(KEYS.lastSync, date.toString());
+  getLastSync: async () => {
+    const date = await AsyncStorage.getItem(KEYS.lastSync);
+    return date;
+  },
+  setLastSync: async (date: Date | null) => {
+    if (!date) await AsyncStorage.removeItem(KEYS.lastSync);
+    else await AsyncStorage.setItem(KEYS.lastSync, date.toJSON());
   },
   getCurrentCoach: async (): Promise<Coach | null> => {
     const coach = await AsyncStorage.getItem(KEYS.currentCoach);

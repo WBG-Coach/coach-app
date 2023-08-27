@@ -34,7 +34,7 @@ const SettingsScreen: React.FC = () => {
 
   const getSyncData = useCallback(async () => {
     setLoading(true);
-    setLastSync(await StorageService.getLastSync());
+    setLastSync(await StorageService.getLastSyncFormated());
     setPendingCount(await SyncService.getUnsyncedItemsCount());
     setLoading(false);
   }, []);
@@ -53,7 +53,6 @@ const SettingsScreen: React.FC = () => {
       await SyncService.trySyncData();
       await getSyncData();
     } catch (err) {
-      console.log(err);
       toast.show({
         placement: 'top',
         render: () => (

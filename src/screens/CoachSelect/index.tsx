@@ -1,39 +1,43 @@
 import React, {useCallback, useState} from 'react';
 import {useCoachContext} from '../../providers/coach.provider';
 import InfiniteScroll from '../../components/InfiniteScroll';
-import {SchoolService} from '../../services/school.service';
 import InputText from '../../components/InputText';
 import useDebounce from '../../hooks/debounce';
 import {useTranslation} from 'react-i18next';
-import {School} from '../../types/school';
 import Page from '../../components/Page';
-import SchoolItem from './SchoolItem';
-import {Text} from 'native-base';
+import CoachItem from './CoachItem';
+import {HStack, Text} from 'native-base';
+import {Coach} from '../../types/coach';
+import {CoachService} from '../../services/coach.service';
+import Button from '../../components/Button';
+import Icon from '../../components/Icon';
+import theme from '../../theme';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
 
 const ITEMS_PER_PAGE = 20;
 
-const SchoolSelectScreen: React.FC = () => {
+const CoachSelectScreen: React.FC = () => {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
   const [isTheEnd, setIsTheEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [schoolList, setSchoolList] = useState<School[]>([]);
+  const [coachList, setCoachList] = useState<Coach[]>([]);
+
+  const navigate = useNavigate();
 
   const {t} = useTranslation();
-  const navigate = useNavigate();
-  const {logout, selectSchool} = useCoachContext();
+  const {logout, login} = useCoachContext();
 
   const loadFirstPageWithFilter = useCallback((value: string) => {
-    setSchoolList([]);
+    setCoachList([]);
     setIsLoading(true);
     setIsTheEnd(false);
-    SchoolService.findSchoolItems(value, ITEMS_PER_PAGE, 1).then(data => {
+    CoachService.findCoachItems(value, ITEMS_PER_PAGE, 1).then(data => {
       if (data && data.length < ITEMS_PER_PAGE) {
         setIsTheEnd(true);
       }
-      setSchoolList(data);
+      setCoachList(data);
       setIsLoading(false);
     });
   }, []);
@@ -44,7 +48,8 @@ const SchoolSelectScreen: React.FC = () => {
     if (!isLoading && !isTheEnd) {
       setPage(page + 1);
       setIsLoading(true);
-      const data = await SchoolService.findSchoolItems(
+
+      const data = await CoachService.findCoachItems(
         filter,
         ITEMS_PER_PAGE,
         page + 1,
@@ -54,20 +59,15 @@ const SchoolSelectScreen: React.FC = () => {
         setIsTheEnd(true);
       }
 
-      setSchoolList(prevData => [...prevData, ...data]);
+      setCoachList(prevData => [...prevData, ...data]);
       setIsLoading(false);
     }
   };
 
-  const onSelectSchool = (school: School) => {
-    selectSchool(school);
-    navigate(PathRoutes.main, {replace: true});
-  };
-
   return (
-    <Page setting logo back>
+    <Page setting logo onLogout={logout}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
-        {t('schoolSelect.title')}
+        {t('coachSelect.title')}
       </Text>
 
       <InputText
@@ -78,20 +78,27 @@ const SchoolSelectScreen: React.FC = () => {
       />
 
       <InfiniteScroll
-        data={schoolList}
+        data={coachList}
         isLoading={isLoading}
         loadNextPage={loadNextPage}
-        emptyMessage={t('schoolSelect.item-description-empty')}
+        isEnd={isTheEnd}
+        emptyMessage={t('coachSelect.item-description-empty')}
         renderItem={({item, index}) => (
-          <SchoolItem
-            index={index}
-            school={item}
-            onPress={() => onSelectSchool(item)}
-          />
+          <CoachItem index={index} coach={item} onPress={() => login(item)} />
         )}
       />
+      <Button
+        variant="outlined"
+        onPress={() => navigate(PathRoutes.createAccount)}>
+        <HStack alignItems="center">
+          <Icon name="plus" size={24} color={theme.colors.primary[200]} />
+          <Text ml="8px" color="primary.200" fontSize={16} fontWeight={500}>
+            {t('coachSelect.new-profile')}
+          </Text>
+        </HStack>
+      </Button>
     </Page>
   );
 };
 
-export default SchoolSelectScreen;
+export default CoachSelectScreen;

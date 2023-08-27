@@ -31,6 +31,54 @@ export const SessionService = {
     return result[0].rows.raw();
   },
 
+  sync: async (sessions: Session[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      sessions?.map(session => {
+        return db.executeSql(
+          `
+          INSERT OR REPLACE INTO session(id, students_count, subject, lesson_time, objective, school_id, coach_id, key_points, teacher_id, latitude, longitude, _status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced')
+        `,
+          [
+            session.id,
+            session.students_count,
+            session.subject,
+            session.lesson_time,
+            session.objective,
+            session.school_id,
+            session.coach_id,
+            session.key_points,
+            session.teacher_id,
+            session.latitude,
+            session.longitude,
+          ],
+        );
+      }),
+    );
+  },
+
+  syncFeedbacks: async (feedbacks: Feedback[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      feedbacks?.map(feedback => {
+        return db.executeSql(
+          `
+          INSERT OR REPLACE INTO feedback(id, value, competence_id, session_id, school_id, _status)
+          VALUES (?, ?, ?, ?, 'synced')
+        `,
+          [
+            feedback.id,
+            feedback.value,
+            feedback.competence_id,
+            feedback.session_id,
+            feedback.school_id,
+          ],
+        );
+      }),
+    );
+  },
+
   create: async (
     session: Partial<Session>,
     answers: Partial<Answer>[],

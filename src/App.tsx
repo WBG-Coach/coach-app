@@ -12,7 +12,6 @@ import './i18n';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const {isConnected} = useNetInfo();
 
   const setupApp = useCallback(async () => {
     await runMigrations();
@@ -23,12 +22,6 @@ const App = () => {
   useEffect(() => {
     setupApp();
   }, [setupApp]);
-
-  useEffect(() => {
-    if (!isLoading && isConnected) {
-      SyncService.trySyncData();
-    }
-  }, [isLoading, isConnected]);
 
   const requestPermission = async () => {
     try {

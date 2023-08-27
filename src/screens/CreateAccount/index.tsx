@@ -9,16 +9,13 @@ import {
   useToast,
 } from 'native-base';
 import {createAccountFormValidate} from '../../helpers/validate.helper';
-import InputPassword from '../../components/InputPassword';
 import {CoachService} from '../../services/coach.service';
 import {ImageService} from '../../services/image.service';
 import ImagePicker from '../../components/ImagePicker';
 import InputText from '../../components/InputText';
 import {useNavigate} from 'react-router-native';
-import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Button from '../../components/Button';
-import Icon from '../../components/Icon';
 import Page from '../../components/Page';
 import {Formik} from 'formik';
 import Toast from '../../components/Toast';
@@ -28,17 +25,11 @@ import {useCoachContext} from '../../providers/coach.provider';
 export type FormValuesType = {
   name?: string;
   surname?: string;
-  username?: string;
-  password?: string;
-  confirmPassword?: string;
 };
 
 const initialValues = {
   name: '',
   surname: '',
-  username: '',
-  password: '',
-  confirmPassword: '',
 };
 
 const CreateAccountScreen: React.FC = () => {
@@ -59,8 +50,11 @@ const CreateAccountScreen: React.FC = () => {
         profileImage.value,
       );
     }
-    await CoachService.create({...values, image_id});
-    await login(values.username || '', values.password || '');
+
+    const coach = await CoachService.create({...values, image_id});
+    console.log(coach);
+    await login(coach);
+
     navigate(PathRoutes.accountCreated, {replace: true});
 
     toast.show({
@@ -117,50 +111,6 @@ const CreateAccountScreen: React.FC = () => {
                   value={values.surname}
                   errorMessage={errors.surname}
                   onChangeText={value => setFieldValue('surname', value)}
-                />
-
-                <Text
-                  mb={2}
-                  mt={4}
-                  fontSize={'LMD'}
-                  fontWeight={500}
-                  color={'gray.700'}>
-                  {t('login.createAccount.username')}
-                </Text>
-                <InputText
-                  value={values.username}
-                  errorMessage={errors.username}
-                  onChangeText={value => setFieldValue('username', value)}
-                />
-
-                <Text
-                  mb={2}
-                  mt={4}
-                  fontSize={'LMD'}
-                  fontWeight={500}
-                  color={'gray.700'}>
-                  {t('login.createAccount.password')}
-                </Text>
-                <InputPassword
-                  value={values.password}
-                  errorMessage={errors.password}
-                  onChangeText={value => setFieldValue('password', value)}
-                />
-
-                <Text
-                  mb={2}
-                  mt={4}
-                  fontSize={'LMD'}
-                  fontWeight={500}
-                  color={'gray.700'}>
-                  {t('login.createAccount.confirm-password')}
-                </Text>
-                <InputPassword
-                  value={values.confirmPassword}
-                  errorMessage={errors.confirmPassword}
-                  onChangeText={value =>
-                    setFieldValue('confirmPassword', value)
-                  }
                 />
               </VStack>
             </ScrollView>
