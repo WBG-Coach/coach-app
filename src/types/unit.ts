@@ -30,6 +30,8 @@ export type Situational = {
 };
 
 export type Explanation = {
+  title: string;
+  subtitle?: string;
   evaluativeList?: Evaluative[];
   afterComponent?: {
     title: string;
@@ -38,6 +40,8 @@ export type Explanation = {
 };
 
 export type Activity = {
+  title: string;
+  subtitle?: string;
   evaluativeList?: Evaluative[];
   buttonLabel: string;
   chat?: Chat[];
@@ -57,8 +61,6 @@ export type Message = {
 };
 
 export type Chat = {
-  title: string;
-  description: string;
   messages: Message[];
   box: Box;
 };
