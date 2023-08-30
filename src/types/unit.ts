@@ -5,7 +5,7 @@ export type Unit = {
   description: string;
 
   introduction: Introduction[];
-  situational: Situational;
+  situational: Situational[];
   explanation: Explanation[];
   activities: Activity[];
 };
@@ -13,7 +13,7 @@ export type Unit = {
 export type Introduction = {
   image: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   buttonLabel: string;
   afterComponent?: {
     title: string;
@@ -21,11 +21,33 @@ export type Introduction = {
   };
 };
 
+export type Situational = {
+  title: string;
+  subtitle?: string;
+  evaluativeList?: Evaluative[];
+  chat?: Chat[];
+  buttonLabel: string;
+};
+
+export type Explanation = {
+  evaluativeList?: Evaluative[];
+  afterComponent?: {
+    title: string;
+    items: string[];
+  };
+};
+
+export type Activity = {
+  evaluativeList?: Evaluative[];
+  buttonLabel: string;
+  chat?: Chat[];
+};
+
 export type Evaluative = {
   icon: keyof typeof itemIcon;
   title: string;
   description: string;
-  box: Box;
+  box?: Box;
 };
 
 export type Message = {
@@ -47,22 +69,4 @@ export type Box = {
   icon?: string;
   iconColor?: string;
   bgColor?: string;
-};
-
-export type Situational = {
-  evaluativeList?: Evaluative[];
-  chat?: Chat[];
-};
-
-export type Explanation = {
-  evaluativeList?: Evaluative[];
-  afterComponent?: {
-    title: string;
-    items: string[];
-  };
-};
-
-export type Activity = {
-  evaluativeList?: Evaluative[];
-  chat?: Chat[];
 };

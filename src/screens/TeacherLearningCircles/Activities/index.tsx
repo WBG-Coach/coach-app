@@ -180,6 +180,7 @@ const TLCActivities = () => {
             <Text fontSize={'HSM'} mb={6} fontWeight={600} color={'gray.700'}>
               {pageData.title}
             </Text>
+
             <AvaliativeList items={pageData.items} />
           </>
         )
