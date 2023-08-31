@@ -6,21 +6,7 @@ import {Button, FlatList, HStack, Radio, Text, VStack} from 'native-base';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
 import {TouchableOpacity} from 'react-native';
-
-const unitsMock = [
-  {
-    title: 'Unit 1',
-    subtitle: 'Using Positive language',
-  },
-  {
-    title: 'Unit 2',
-    subtitle: 'Clearly stating the objectives of the lesson',
-  },
-  {
-    title: 'Unit 3',
-    subtitle: 'Checking for understanding',
-  },
-];
+import unitsTLC from '../common';
 
 const TLCUnitSelect: React.FC = () => {
   const [currentUnit, setCurrentUnit] = useState<number>();
@@ -42,7 +28,7 @@ const TLCUnitSelect: React.FC = () => {
         </Text>
 
         <FlatList
-          data={unitsMock}
+          data={unitsTLC}
           renderItem={({item, index}) => (
             <TouchableOpacity onPress={() => setCurrentUnit(index)}>
               <HStack
@@ -56,14 +42,14 @@ const TLCUnitSelect: React.FC = () => {
                     {item.title}
                   </Text>
                   <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                    {item.subtitle}
+                    {item.description}
                   </Text>
                 </VStack>
 
                 <Radio.Group
                   name={'select radio box'}
                   accessibilityLabel="favorite number"
-                  value={currentUnit?.toString()}>
+                  value={currentUnit?.toString() || ''}>
                   <Radio aria-label={item.title} value={index.toString()}>
                     <></>
                   </Radio>
@@ -82,7 +68,12 @@ const TLCUnitSelect: React.FC = () => {
         background={'primary.200'}
         isDisabled={currentUnit === undefined}
         onPress={() =>
-          navigate(PathRoutes.teacherLearningCircles.introduction)
+          navigate(
+            PathRoutes.teacherLearningCircles.introduction.replace(
+              ':unitId',
+              currentUnit?.toString() || '',
+            ),
+          )
         }>
         {t('tlc.unitSelect.button')}
       </Button>

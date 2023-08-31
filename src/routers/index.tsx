@@ -32,13 +32,11 @@ import TLCOnboarding from '../screens/TeacherLearningCircles/Onboarding';
 import TLCCheckingStats from '../screens/TeacherLearningCircles/CheckingStats';
 import TLCUnitSelect from '../screens/TeacherLearningCircles/UnitSelect';
 import TLCIntroduction from '../screens/TeacherLearningCircles/Introduction';
-import TLCSituations from '../screens/TeacherLearningCircles/Situations';
-import TLCExplanation from '../screens/TeacherLearningCircles/Explanation';
 import TLCFinish from '../screens/TeacherLearningCircles/Finish';
-import TLCActivities from '../screens/TeacherLearningCircles/Activities';
 import AboutScan from '../screens/AboutScan';
 import CoachSelectScreen from '../screens/CoachSelect';
 import SyncDetails from '../screens/SyncDetails';
+import TLCDynamicStep from '../screens/TeacherLearningCircles/DynamicStep';
 
 const RouterProvider: React.FC = () => {
   const {currentCoach, currentSchool} = useCoachContext();
@@ -176,15 +174,15 @@ const RouterProvider: React.FC = () => {
             />
             <Route
               path={PathRoutes.teacherLearningCircles.situations}
-              Component={TLCSituations}
+              Component={TLCDynamicStep}
             />
             <Route
               path={PathRoutes.teacherLearningCircles.explanation}
-              Component={TLCExplanation}
+              Component={TLCDynamicStep}
             />
             <Route
               path={PathRoutes.teacherLearningCircles.activities}
-              Component={TLCActivities}
+              Component={TLCDynamicStep}
             />
             <Route
               path={PathRoutes.teacherLearningCircles.finish}

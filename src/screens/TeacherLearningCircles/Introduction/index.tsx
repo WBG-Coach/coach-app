@@ -2,33 +2,29 @@ import React, {useState} from 'react';
 import Page from '../../../components/Page';
 import LoadingBar from '../LoadingBar';
 import {useTranslation} from 'react-i18next';
-import {Button, Center, Image, ScrollView, Text, VStack} from 'native-base';
-import {useNavigate} from 'react-router-native';
+import {
+  Button,
+  Center,
+  HStack,
+  Image,
+  ScrollView,
+  Text,
+  VStack,
+  useTheme,
+} from 'native-base';
+import {useNavigate, useParams} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
-import {FirstStepImage} from '../../../assets/images/tlc/introduction';
-import FirstStepAfter from './AfterComponents/FirstStep';
+import unitsTLC from '../common';
+import Icon from '../../../components/Icon';
 
 const TLCIntroduction = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const {unitId} = useParams<{unitId: string}>();
   const navigate = useNavigate();
   const {t} = useTranslation();
+  const theme = useTheme();
 
-  const steps = [
-    {
-      image: FirstStepImage,
-      title: t('tlc.introduction.$1.title'),
-      subtitle: t('tlc.introduction.$1.description'),
-      afterComponent: <FirstStepAfter />,
-      buttonLabel: t('tlc.introduction.$1.button'),
-    },
-    {
-      image: FirstStepImage,
-      title: t('tlc.introduction.$2.title'),
-      subtitle: t('tlc.introduction.$2.description'),
-      buttonLabel: t('tlc.introduction.$2.button'),
-    },
-  ];
-
+  const steps = unitsTLC[parseInt(unitId || '0')]?.introduction;
   const compData = steps[currentStep];
 
   return (
@@ -65,7 +61,32 @@ const TLCIntroduction = () => {
             {compData.subtitle}
           </Text>
 
-          {compData.afterComponent}
+          {compData.afterComponent && (
+            <VStack>
+              <Text
+                mt={6}
+                mb={3}
+                alignSelf={'center'}
+                fontSize={'LLG'}
+                fontWeight={500}
+                color={'gray.700'}>
+                {compData.afterComponent.title}
+              </Text>
+
+              {compData.afterComponent.items.map((item, index) => (
+                <HStack key={index} space={1}>
+                  <Icon name={'check'} color={theme.colors.green['200']} />
+                  <Text
+                    alignSelf={'center'}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.700'}>
+                    {item}
+                  </Text>
+                </HStack>
+              ))}
+            </VStack>
+          )}
         </ScrollView>
       </VStack>
 
@@ -78,7 +99,12 @@ const TLCIntroduction = () => {
         onPress={() =>
           currentStep !== steps.length - 1
             ? setCurrentStep(currentStep + 1)
-            : navigate(PathRoutes.teacherLearningCircles.situations)
+            : navigate(
+                PathRoutes.teacherLearningCircles.situations.replace(
+                  ':unitId',
+                  unitId || '',
+                ),
+              )
         }>
         {compData.buttonLabel}
       </Button>

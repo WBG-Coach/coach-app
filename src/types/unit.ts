@@ -1,17 +1,32 @@
-import {itemIcon} from '../components/AvaliativeList/common';
+import {ImageSourcePropType} from 'react-native';
+import {EvaluativeItem} from '../components/EvaluativeList/types';
 
 export type Unit = {
   title: string;
   description: string;
 
-  introduction: Introduction[];
-  situational: Situational[];
-  explanation: Explanation[];
-  activities: Activity[];
+  introduction: DynamicPage[];
+  situations: DynamicPage[];
+  explanation: DynamicPage[];
+  activities: DynamicPage[];
+};
+
+export type DynamicPage = {
+  chat?: Chat[];
+  title: string;
+  subtitle?: string;
+  buttonLabel: string;
+  nextRoute?: string;
+  image?: ImageSourcePropType;
+  evaluativeList?: {item: EvaluativeItem; box?: Box}[];
+  afterComponent?: {
+    title: string;
+    items: string[];
+  };
 };
 
 export type Introduction = {
-  image: string;
+  image: ImageSourcePropType;
   title: string;
   subtitle?: string;
   buttonLabel: string;
@@ -24,7 +39,7 @@ export type Introduction = {
 export type Situational = {
   title: string;
   subtitle?: string;
-  evaluativeList?: Evaluative[];
+  evaluativeList?: EvaluativeItem[];
   chat?: Chat[];
   buttonLabel: string;
 };
@@ -32,7 +47,7 @@ export type Situational = {
 export type Explanation = {
   title: string;
   subtitle?: string;
-  evaluativeList?: Evaluative[];
+  evaluativeList?: EvaluativeItem[];
   afterComponent?: {
     title: string;
     items: string[];
@@ -42,16 +57,9 @@ export type Explanation = {
 export type Activity = {
   title: string;
   subtitle?: string;
-  evaluativeList?: Evaluative[];
+  evaluativeList?: EvaluativeItem[];
   buttonLabel: string;
   chat?: Chat[];
-};
-
-export type Evaluative = {
-  icon: keyof typeof itemIcon;
-  title: string;
-  description: string;
-  box?: Box;
 };
 
 export type Message = {

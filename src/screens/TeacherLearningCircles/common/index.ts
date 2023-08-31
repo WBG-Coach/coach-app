@@ -2,9 +2,10 @@ import {
   FirstStepImage,
   SecondStepImage,
 } from '../../../assets/images/tlc/introduction';
+import PathRoutes from '../../../routers/paths';
 import {Unit} from '../../../types/unit';
 
-const units: Unit[] = [
+const unitsTLC: Unit[] = [
   {
     title: 'Unit 1',
     description: 'Using Positive language',
@@ -115,10 +116,12 @@ const units: Unit[] = [
         title: 'Response',
         evaluativeList: [
           {
-            icon: 'comments',
-            title: 'Activity 1',
-            description:
-              'No, the teacher was not supportive of the student. The teacher didn’t use positive words when the student was unable to give the right answer. Because of this the student stopped trying and feels that he cannot have the right answer.',
+            item: {
+              icon: 'comments',
+              title: 'Activity 1',
+              description:
+                'No, the teacher was not supportive of the student. The teacher didn’t use positive words when the student was unable to give the right answer. Because of this the student stopped trying and feels that he cannot have the right answer.',
+            },
             box: {
               title: "What's next?",
               description:
@@ -135,13 +138,16 @@ const units: Unit[] = [
         title: 'Tasks',
         evaluativeList: [
           {
-            icon: 'tasks',
-            title: 'Task 1',
-            description:
-              'Design a lesson plan such that the objective of the lesson is very clearly stated and each activity is connected to the objective.',
+            item: {
+              icon: 'tasks',
+              title: 'Task 1',
+              description:
+                'Design a lesson plan such that the objective of the lesson is very clearly stated and each activity is connected to the objective.',
+            },
           },
         ],
         buttonLabel: 'Rate participation',
+        nextRoute: PathRoutes.teacherLearningCircles.finish,
       },
     ],
     introduction: [
@@ -150,6 +156,13 @@ const units: Unit[] = [
         title: 'Introduction',
         subtitle:
           'This Teacher Learning Circle is about using positive language in the classroom to create an encouraging learning environment for students.',
+        afterComponent: {
+          title: "In this unit you'll learn",
+          items: [
+            'Why using positive language is important in a classroom',
+            'How positive language can be used in the classroom to encourage students',
+          ],
+        },
         buttonLabel: 'Next',
       },
       {
@@ -158,19 +171,23 @@ const units: Unit[] = [
         subtitle:
           'It is important to create a classroom environment where students can feel emotionally safe and supported.  All students feel welcome if the teacher treats them all respectfully.',
         buttonLabel: 'Start examples',
+        nextRoute: PathRoutes.teacherLearningCircles.situations,
       },
     ],
-    situational: [
+    situations: [
       {
         title: 'Situational examples',
         subtitle:
           'Read out loud the examples below and ask the questions for the teachers',
         evaluativeList: [
           {
-            icon: 'comment',
-            title: 'Example 1',
-            description:
-              'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and starts telling him that ‘you are not a good student’, ‘you never do your work’ or ‘you cannot do this work’.',
+            item: {
+              icon: 'comment',
+              title: 'Example 1',
+              description:
+                'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and starts telling him that ‘you are not a good student’, ‘you never do your work’ or ‘you cannot do this work’.',
+            },
+
             box: {
               title: 'Discuss the following question',
               description:
@@ -180,10 +197,12 @@ const units: Unit[] = [
             },
           },
           {
-            icon: 'comment',
-            title: 'Example 2',
-            description:
-              'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and tells him ‘you are a great student and if you try harder you can do this’',
+            item: {
+              icon: 'comment',
+              title: 'Example 2',
+              description:
+                'The teacher teaches a concept to the class and gives them classwork. The teacher notices that one student is not able to do the work assigned to him. The teacher goes to the student and tells him ‘you are a great student and if you try harder you can do this’',
+            },
             box: {
               title: 'Discuss the following question',
               description:
@@ -193,6 +212,7 @@ const units: Unit[] = [
             },
           },
         ],
+        nextRoute: PathRoutes.teacherLearningCircles.explanation,
         buttonLabel: 'Check explanation',
       },
     ],
@@ -201,20 +221,26 @@ const units: Unit[] = [
         title: 'Explanation',
         subtitle:
           'Let the teachers know what was bad and what was good in the examples',
+        buttonLabel: 'Next',
         evaluativeList: [
           {
-            icon: 'badExample',
-            title: 'Example 1',
-            description:
-              'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+            item: {
+              icon: 'badExample',
+              title: 'Example 1',
+              description:
+                'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+            },
           },
           {
-            icon: 'goodExample',
-            title: 'Example 2',
-            description:
-              'In the second example the teacher sees that the student is finding it difficult to work and then tries to support him by saying positive words and encouraging them.',
+            item: {
+              icon: 'goodExample',
+              title: 'Example 2',
+              description:
+                'In the second example the teacher sees that the student is finding it difficult to work and then tries to support him by saying positive words and encouraging them.',
+            },
           },
         ],
+        nextRoute: PathRoutes.teacherLearningCircles.activities,
       },
     ],
   },
@@ -330,16 +356,20 @@ const units: Unit[] = [
         title: 'Response',
         evaluativeList: [
           {
-            icon: 'comments',
-            title: 'Activity 1',
-            description:
-              'No, the teacher was not supportive of the student. The teacher didn’t use positive words when the student was unable to give the right answer. Because of this the student stopped trying and feels that he cannot have the right answer.',
+            item: {
+              icon: 'comments',
+              title: 'Activity 1',
+              description:
+                'No, the teacher was not supportive of the student. The teacher didn’t use positive words when the student was unable to give the right answer. Because of this the student stopped trying and feels that he cannot have the right answer.',
+            },
           },
           {
-            icon: 'comments',
-            title: 'Activity 2',
-            description:
-              'The second example is very good as the teacher first explains the topic, writes it on the board and then asks the students to also write the topic on their copies. The teacher then explains the questions and reminds students that these are both double digit multiplication questions. Then the teacher gives tasks to the students and asks them to perform double digit multiplication. By doing all this, the teacher has made sure the students know what is the objective of the lesson and then also connects each activity to the objective.',
+            item: {
+              icon: 'comments',
+              title: 'Activity 2',
+              description:
+                'The second example is very good as the teacher first explains the topic, writes it on the board and then asks the students to also write the topic on their copies. The teacher then explains the questions and reminds students that these are both double digit multiplication questions. Then the teacher gives tasks to the students and asks them to perform double digit multiplication. By doing all this, the teacher has made sure the students know what is the objective of the lesson and then also connects each activity to the objective.',
+            },
             box: {
               title: "What's next?",
               description:
@@ -356,12 +386,15 @@ const units: Unit[] = [
         title: 'Tasks',
         evaluativeList: [
           {
-            icon: 'comments',
-            title: 'Task 1',
-            description:
-              'Design a lesson plan such that the objective of the lesson is very clearly stated and each activity is connected to the objective.',
+            item: {
+              icon: 'comments',
+              title: 'Task 1',
+              description:
+                'Design a lesson plan such that the objective of the lesson is very clearly stated and each activity is connected to the objective.',
+            },
           },
         ],
+        nextRoute: PathRoutes.teacherLearningCircles.finish,
         buttonLabel: 'Rate participation',
       },
     ],
@@ -372,6 +405,13 @@ const units: Unit[] = [
         subtitle:
           'This unit is about clearly stating the objectives of the lesson and connecting them to the lesson activities.',
         buttonLabel: 'Next',
+        afterComponent: {
+          title: "In this unit you'll learn:",
+          items: [
+            'Why it is important to clearly state the objectives of the lesson',
+            'Different ways how the teacher can clearly state the objectives of the lesson and connect them to the different activities of the lesson.',
+          ],
+        },
       },
       {
         image: SecondStepImage,
@@ -379,35 +419,41 @@ const units: Unit[] = [
           'Why is it useful to clearly state the objectives of the lesson?',
         subtitle:
           'It is important that the students know what is the objective of the day’s lesson.Without knowing the objective, the students will not be able to understand why they are studying the topic and how it is related to the different activities.',
+        nextRoute: PathRoutes.teacherLearningCircles.situations,
         buttonLabel: 'Next',
       },
     ],
-    situational: [
+    situations: [
       {
         title: 'Situational examples',
         subtitle:
           'Read out loud the examples below and ask the questions for the teachers',
         evaluativeList: [
           {
-            icon: 'comment',
-            title: 'Example 1',
-            description:
-              'The teacher enters the classroom and asks the students to open their books on page 11 and start reading. The teacher then tells them that in 15 minutes he will ask them questions about what they are reading and then in the group they will explain what they have read.',
+            item: {
+              icon: 'comment',
+              title: 'Example 1',
+              description:
+                'The teacher enters the classroom and asks the students to open their books on page 11 and start reading. The teacher then tells them that in 15 minutes he will ask them questions about what they are reading and then in the group they will explain what they have read.',
+            },
           },
           {
-            icon: 'comment',
-            title: 'Example 2',
-            description:
-              'The teacher enters the classroom and asks the students to open their books on page 11 and start reading. The teacher then tells them that in 15 minutes he will ask them questions about what they are reading and then in the group they will explain what they have read.',
+            item: {
+              icon: 'comment',
+              title: 'Example 2',
+              description:
+                'The teacher enters the classroom and asks the students to open their books on page 11 and start reading. The teacher then tells them that in 15 minutes he will ask them questions about what they are reading and then in the group they will explain what they have read.',
+            },
             box: {
               title: 'Discuss the following question',
               description:
                 'Do you think the students are very clear about what they are learning?',
-              icon: 'question-circle-solid',
+              icon: 'question-circle',
               iconColor: '#3373CC',
             },
           },
         ],
+        nextRoute: PathRoutes.teacherLearningCircles.explanation,
         buttonLabel: 'Check explanation',
       },
     ],
@@ -416,20 +462,26 @@ const units: Unit[] = [
         title: 'Explanation',
         subtitle:
           'Let the teachers know what was bad and what was good in the examples',
+        buttonLabel: 'Next',
         evaluativeList: [
           {
-            icon: 'badExample',
-            title: 'Example 1',
-            description:
-              'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+            item: {
+              icon: 'badExample',
+              title: 'Example 1',
+              description:
+                'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+            },
           },
           {
-            icon: 'goodExample',
-            title: 'Example 2',
-            description:
-              'In the second example the teacher first says the objective of the lesson and then also writes it on the board. The teacher then assigns the task and connects it with the objective of the lesson. This makes it clear to the students what is the objective of the lesson and how the activity is connected to it.',
+            item: {
+              icon: 'goodExample',
+              title: 'Example 2',
+              description:
+                'In the second example the teacher first says the objective of the lesson and then also writes it on the board. The teacher then assigns the task and connects it with the objective of the lesson. This makes it clear to the students what is the objective of the lesson and how the activity is connected to it.',
+            },
           },
         ],
+        nextRoute: PathRoutes.teacherLearningCircles.activities,
       },
     ],
   },
@@ -545,16 +597,20 @@ const units: Unit[] = [
         title: 'Response',
         evaluativeList: [
           {
-            icon: 'comments',
-            title: 'Activity 1',
-            description:
-              'No, the teacher was not supportive of the student. The teacher didn’t use positive words when the student was unable to give the right answer. Because of this the student stopped trying and feels that he cannot have the right answer.',
+            item: {
+              icon: 'comments',
+              title: 'Activity 1',
+              description:
+                'No, the teacher was not supportive of the student. The teacher didn’t use positive words when the student was unable to give the right answer. Because of this the student stopped trying and feels that he cannot have the right answer.',
+            },
           },
           {
-            icon: 'comments',
-            title: 'Activity 2',
-            description:
-              'The second example is very good as the teacher first explains the topic, writes it on the board and then asks the students to also write the topic on their copies. The teacher then explains the questions and reminds students that these are both double digit multiplication questions. Then the teacher gives tasks to the students and asks them to perform double digit multiplication. By doing all this, the teacher has made sure the students know what is the objective of the lesson and then also connects each activity to the objective.',
+            item: {
+              icon: 'comments',
+              title: 'Activity 2',
+              description:
+                'The second example is very good as the teacher first explains the topic, writes it on the board and then asks the students to also write the topic on their copies. The teacher then explains the questions and reminds students that these are both double digit multiplication questions. Then the teacher gives tasks to the students and asks them to perform double digit multiplication. By doing all this, the teacher has made sure the students know what is the objective of the lesson and then also connects each activity to the objective.',
+            },
             box: {
               title: "What's next?",
               description:
@@ -571,12 +627,15 @@ const units: Unit[] = [
         title: 'Tasks',
         evaluativeList: [
           {
-            icon: 'comments',
-            title: 'Task 1',
-            description:
-              'Design a lesson plan such that the objective of the lesson is very clearly stated and each activity is connected to the objective.',
+            item: {
+              icon: 'comments',
+              title: 'Task 1',
+              description:
+                'Design a lesson plan such that the objective of the lesson is very clearly stated and each activity is connected to the objective.',
+            },
           },
         ],
+        nextRoute: PathRoutes.teacherLearningCircles.finish,
         buttonLabel: 'Rate participation',
       },
     ],
@@ -586,6 +645,13 @@ const units: Unit[] = [
         title: 'Introduction',
         subtitle:
           'This unit is about using questions and other strategies to check for understanding.',
+        afterComponent: {
+          title: "In this unit you'll learn:",
+          items: [
+            'Explain why checking for understanding is important',
+            'Describe a few different strategies to check for understanding',
+          ],
+        },
         buttonLabel: 'Next',
       },
       {
@@ -594,10 +660,11 @@ const units: Unit[] = [
           'Why is it useful to clearly state the objectives of the lesson?',
         subtitle:
           'As teachers, we need to check if students are understanding what we expect them to learn. We need to check learning throughout the lesson because if we wait until the end of the lesson or until students are tested, it is too late to help students if they don’t understand. We will likely end up in a scenario in which only few students follow the lesson while others are distracted and unable to catch up.',
+        nextRoute: PathRoutes.teacherLearningCircles.situations,
         buttonLabel: 'Next',
       },
     ],
-    situational: [
+    situations: [
       {
         title: 'Situational examples',
         subtitle:
@@ -663,13 +730,13 @@ const units: Unit[] = [
               title: 'Investigate how students are thinking',
               description:
                 'A good way to check for understanding reveals what students know (or don’t know) and helps teachers make decisions about what to do next.',
-              bgColor: '#218225',
-              icon: 'check-circle',
-              iconColor: '#F11D0E',
+              bgColor: '#EFFBEF',
+              icon: 'check-circle-solid',
+              iconColor: '#218225',
             },
           },
         ],
-
+        nextRoute: PathRoutes.teacherLearningCircles.explanation,
         buttonLabel: 'Check explanation',
       },
     ],
@@ -678,18 +745,24 @@ const units: Unit[] = [
         title: 'Explanation',
         subtitle:
           'Let the teachers know what was bad and what was good in the examples',
+        nextRoute: PathRoutes.teacherLearningCircles.activities,
+        buttonLabel: 'Next',
         evaluativeList: [
           {
-            icon: 'badExample',
-            title: 'Example 1',
-            description:
-              'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+            item: {
+              icon: 'badExample',
+              title: 'Example 1',
+              description:
+                'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
+            },
           },
           {
-            icon: 'goodExample',
-            title: 'Example 2',
-            description:
-              'In the second example the teacher first says the objective of the lesson and then also writes it on the board. The teacher then assigns the task and connects it with the objective of the lesson. This makes it clear to the students what is the objective of the lesson and how the activity is connected to it.',
+            item: {
+              icon: 'goodExample',
+              title: 'Example 2',
+              description:
+                'In the second example the teacher first says the objective of the lesson and then also writes it on the board. The teacher then assigns the task and connects it with the objective of the lesson. This makes it clear to the students what is the objective of the lesson and how the activity is connected to it.',
+            },
           },
         ],
       },
@@ -697,4 +770,4 @@ const units: Unit[] = [
   },
 ];
 
-export default units;
+export default unitsTLC;

@@ -10,9 +10,10 @@ const LoadingBar = () => {
   const flatRef = useRef<any>();
   const {t} = useTranslation();
   const currentIn =
-    Object.keys(PathRoutes.teacherLearningCircles).findIndex(
-      key =>
-        (PathRoutes.teacherLearningCircles as any)[key] === location.pathname,
+    Object.keys(PathRoutes.teacherLearningCircles).findIndex(key =>
+      location.pathname.includes(
+        (PathRoutes.teacherLearningCircles as any)[key].replace('/:unitId', ''),
+      ),
     ) - 1;
 
   useEffect(() => {

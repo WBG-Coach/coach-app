@@ -3,7 +3,13 @@ import React from 'react';
 import Icon from '../../Icon';
 import {Props} from './types';
 
-const TipBox: React.FC<Props> = ({description, title}) => {
+const TipBox: React.FC<Props> = ({
+  description,
+  title,
+  bgColor,
+  icon,
+  iconColor,
+}) => {
   const theme = useTheme();
 
   return (
@@ -11,12 +17,13 @@ const TipBox: React.FC<Props> = ({description, title}) => {
       my={4}
       p={3}
       borderWidth={'1px'}
-      borderColor={'primary.200'}
-      borderRadius={'8px'}>
+      borderColor={bgColor ? 'transparent' : 'primary.200'}
+      borderRadius={'8px'}
+      {...(bgColor && {bg: bgColor})}>
       <HStack space={2} alignItems={'center'}>
         <Icon
-          name={'question-circle-solid'}
-          color={theme.colors.primary['200']}
+          name={(icon as any) || 'question-circle-solid'}
+          color={iconColor || theme.colors.primary['200']}
           size={18}
         />
         <VStack>
