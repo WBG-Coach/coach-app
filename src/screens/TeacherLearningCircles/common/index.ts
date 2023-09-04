@@ -226,7 +226,7 @@ const unitsTLC: Unit[] = [
           {
             item: {
               icon: 'badExample',
-              title: 'Example 1',
+              title: 'Bad example',
               description:
                 'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
             },
@@ -234,7 +234,7 @@ const unitsTLC: Unit[] = [
           {
             item: {
               icon: 'goodExample',
-              title: 'Example 2',
+              title: 'Good example',
               description:
                 'In the second example the teacher sees that the student is finding it difficult to work and then tries to support him by saying positive words and encouraging them.',
             },
@@ -467,7 +467,7 @@ const unitsTLC: Unit[] = [
           {
             item: {
               icon: 'badExample',
-              title: 'Example 1',
+              title: 'Bad example',
               description:
                 'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
             },
@@ -475,7 +475,7 @@ const unitsTLC: Unit[] = [
           {
             item: {
               icon: 'goodExample',
-              title: 'Example 2',
+              title: 'Good example',
               description:
                 'In the second example the teacher first says the objective of the lesson and then also writes it on the board. The teacher then assigns the task and connects it with the objective of the lesson. This makes it clear to the students what is the objective of the lesson and how the activity is connected to it.',
             },
@@ -751,7 +751,7 @@ const unitsTLC: Unit[] = [
           {
             item: {
               icon: 'badExample',
-              title: 'Example 1',
+              title: 'Bad example',
               description:
                 'In the first exchange, the words that the teacher uses are not supporting and encouraging for the student. The student will not feel good after hearing the words and will not be motivated to work hard. A teacher should try to be supportive to the students so students can work harder.',
             },
@@ -759,7 +759,7 @@ const unitsTLC: Unit[] = [
           {
             item: {
               icon: 'goodExample',
-              title: 'Example 2',
+              title: 'Good example',
               description:
                 'In the second example the teacher first says the objective of the lesson and then also writes it on the board. The teacher then assigns the task and connects it with the objective of the lesson. This makes it clear to the students what is the objective of the lesson and how the activity is connected to it.',
             },
