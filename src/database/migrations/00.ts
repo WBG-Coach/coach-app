@@ -54,8 +54,6 @@ const createCoacherTable = (db: SQLiteDatabase) => {
     CREATE TABLE IF NOT EXISTS coach (
       id TEXT PRIMARY KEY,
       _status TEXT,
-      username TEXT,
-      password TEXT,
       name TEXT null,
       surname TEXT null,
       birthday TIMESTAMP null,

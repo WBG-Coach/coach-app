@@ -33,7 +33,7 @@ const PathRoutes = {
     situations: '/teacherlearningcircles/situations/:unitId',
     explanation: '/teacherlearningcircles/explanation/:unitId',
     activities: '/teacherlearningcircles/activities/:unitId',
-    finish: '/teacherlearningcircles/finish',
+    finish: '/teacherlearningcircles/finish/:unitId',
   },
 
   classObservation: {

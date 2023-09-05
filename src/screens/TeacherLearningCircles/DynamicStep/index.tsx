@@ -47,8 +47,8 @@ const TLCDynamicStep = () => {
 
         {step.evaluativeList && (
           <VStack space={6}>
-            {step.evaluativeList.map(evaluative => (
-              <VStack>
+            {step.evaluativeList.map((evaluative, index) => (
+              <VStack key={index}>
                 <EvaluativeList item={evaluative.item} />
                 {evaluative.box && <TipBox {...evaluative.box} />}
               </VStack>
@@ -58,8 +58,8 @@ const TLCDynamicStep = () => {
 
         {step.chat &&
           step.chat.map((chat, index) => (
-            <VStack>
-              <Chat key={index} messages={chat.messages} />
+            <VStack key={index}>
+              <Chat messages={chat.messages} />
               {chat.box && <TipBox {...chat.box} />}
             </VStack>
           ))}

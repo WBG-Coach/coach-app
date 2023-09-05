@@ -17,8 +17,6 @@ const updateSchool = (db: SQLiteDatabase) => {
 };
 
 const updateCoach = async (db: SQLiteDatabase) => {
-  await db.executeSql(`ALTER TABLE coach DROP COLUMN username`);
-  await db.executeSql(`ALTER TABLE coach DROP COLUMN password`);
   await db.executeSql(`ALTER TABLE coach ADD school_id TEXT null`);
 };
 
