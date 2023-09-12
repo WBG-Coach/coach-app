@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {TeacherItemType} from '../../types/teacher';
 import {useNavigate} from 'react-router-native';
 import HorizontalMenu from './HorizontalMenu';
@@ -8,27 +8,16 @@ import TeachersList from './TeachersList';
 import {Text, VStack} from 'native-base';
 import Page from '../../components/Page';
 import HomeHeader from './HomeHeader';
-import {useCoachContext} from '../../providers/coach.provider';
 import {isTablet} from 'react-native-device-info';
 import BottomNavigator from './BottomNavigator';
-import SyncService from '../../services/sync.service';
-import {useNetInfo} from '@react-native-community/netinfo';
 
 const HomeScreen: React.FC = () => {
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const {selectSchool} = useCoachContext();
-  const {isConnected} = useNetInfo();
 
   const onSelectTeacher = (teacher: TeacherItemType) => {
     navigate(PathRoutes.teacher.details.replace(':id', teacher.id));
   };
-
-  useEffect(() => {
-    if (isConnected) {
-      SyncService.trySyncData();
-    }
-  }, [isConnected]);
 
   return (
     <Page setting logo noPadding>

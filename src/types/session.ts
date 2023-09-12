@@ -1,5 +1,6 @@
 export type Session = {
   id: string;
+  _status?: string;
 
   subject: string;
   objective: string;
@@ -12,9 +13,6 @@ export type Session = {
   school_id: string;
   teacher_id: string;
 
-  feedback_id?: string;
-
-  _status?: string;
   created_at: Date;
   updated_at: Date;
 };

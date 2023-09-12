@@ -36,7 +36,7 @@ const AccountCreatedScreen: React.FC = () => {
         </VStack>
       </Center>
 
-      <Button onPress={() => navigation(PathRoutes.main, {replace: true})}>
+      <Button onPress={() => navigation(PathRoutes.splash, {replace: true})}>
         Go to profile selection
       </Button>
     </Page>

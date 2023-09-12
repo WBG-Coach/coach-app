@@ -1,6 +1,9 @@
 const PathRoutes = {
-  main: '/',
+  splash: '/',
+
   selectSchool: '/selectSchool',
+
+  selectAccount: '/selectAccount',
 
   createAccount: '/createAccount',
 
@@ -14,6 +17,7 @@ const PathRoutes = {
   },
 
   home: {
+    main: '/home',
     pendingSessions: '/pendingSessions',
     newSession: '/quickNewSessionScreen',
     stats: '/quickStatsScreen',

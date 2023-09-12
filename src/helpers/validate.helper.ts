@@ -1,5 +1,5 @@
 import {Keyboard} from 'react-native';
-import {FormValuesType} from '../screens/CreateAccount';
+import {FormValuesType} from '../screens/CoachForm';
 import {LoginFormType} from '../screens/Login';
 
 export const loginFormValidate = (values: LoginFormType) => {

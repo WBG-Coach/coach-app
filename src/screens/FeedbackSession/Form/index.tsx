@@ -53,6 +53,7 @@ const FeedbackSessionForm: React.FC = () => {
             ),
         ),
       );
+
       navigate(PathRoutes.feedbackSession.completed, {replace: true});
     } else {
       setSubmittedWithError(true);

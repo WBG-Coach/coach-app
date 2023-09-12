@@ -1,12 +1,11 @@
 import React from 'react';
-import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
+import {VStack} from 'native-base';
 import {Route, Routes} from 'react-router-native';
-import {useCoachContext} from '../providers/coach.provider';
-import CreateAccountScreen from '../screens/CreateAccount';
+import ChangeLanguageScreen from '../screens/Settings/ChangeLanguage';
+import CoachFormScreen from '../screens/CoachForm';
 import SchoolSelectScreen from '../screens/SchoolSelect';
 import TeacherFormScreen from '../screens/Teacher/TeacherForm';
 import SettingsScreen from '../screens/Settings';
-import LoginScreen from '../screens/Login';
 import HomeScreen from '../screens/Home';
 import PathRoutes from './paths';
 import QuickNewSessionScreen from '../screens/Home/QuickActions/NewSession';
@@ -25,7 +24,6 @@ import FeedbackDetailScreen from '../screens/SessionDetails/FeedbackDetails';
 import ClassObservationDetailsScreen from '../screens/SessionDetails/ClassObservationDetails';
 import CompetenceStats from '../screens/Teacher/TeacherDetails/Tabs/TeacherStats/CompetenceStats';
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
-import {VStack} from 'native-base';
 import AccountCreatedScreen from '../screens/AccountCreated';
 import PendingSessionsScreen from '../screens/Home/QuickActions/Pending';
 import TLCOnboarding from '../screens/TeacherLearningCircles/Onboarding';
@@ -33,163 +31,142 @@ import TLCCheckingStats from '../screens/TeacherLearningCircles/CheckingStats';
 import TLCUnitSelect from '../screens/TeacherLearningCircles/UnitSelect';
 import TLCIntroduction from '../screens/TeacherLearningCircles/Introduction';
 import TLCFinish from '../screens/TeacherLearningCircles/Finish';
-import AboutScan from '../screens/AboutScan';
 import CoachSelectScreen from '../screens/CoachSelect';
 import SyncDetails from '../screens/SyncDetails';
 import TLCDynamicStep from '../screens/TeacherLearningCircles/DynamicStep';
+import SplashScreen from '../screens/SplashScreen';
 
 const RouterProvider: React.FC = () => {
-  const {currentCoach, currentSchool} = useCoachContext();
-
   return (
     <VStack bg="white" flex={1} w="full">
       <Routes>
+        <Route path={PathRoutes.splash} Component={SplashScreen} />
+
         <Route path={PathRoutes.settings.main} Component={SettingsScreen} />
+
         <Route
           path={PathRoutes.settings.changeLanguage}
           Component={ChangeLanguageScreen}
         />
+
+        <Route path={PathRoutes.createAccount} Component={CoachFormScreen} />
+
+        <Route path={PathRoutes.selectSchool} Component={SchoolSelectScreen} />
+
+        <Route path={PathRoutes.syncDetails} Component={SyncDetails} />
+
+        <Route path={PathRoutes.selectAccount} Component={CoachSelectScreen} />
+
+        <Route path={PathRoutes.createAccount} Component={CoachFormScreen} />
+
+        <Route path={PathRoutes.home.main} Component={HomeScreen} />
+
         <Route
-          path={PathRoutes.createAccount}
-          Component={CreateAccountScreen}
+          path={PathRoutes.accountCreated}
+          Component={AccountCreatedScreen}
+        />
+        <Route
+          path={PathRoutes.home.newSession}
+          Component={QuickNewSessionScreen}
+        />
+        <Route
+          path={PathRoutes.home.pendingSessions}
+          Component={PendingSessionsScreen}
         />
 
-        {!currentSchool && (
-          <>
-            <Route path={PathRoutes.main} Component={AboutScan} />
-            <Route
-              path={PathRoutes.selectSchool}
-              Component={SchoolSelectScreen}
-            />
-          </>
-        )}
+        <Route path={PathRoutes.home.stats} Component={QuickStatsScreen} />
 
-        {currentSchool && !currentCoach && (
-          <>
-            <Route path={PathRoutes.main} Component={CoachSelectScreen} />
-            <Route
-              path={PathRoutes.createAccount}
-              Component={CreateAccountScreen}
-            />
-            <Route path={PathRoutes.syncDetails} Component={SyncDetails} />
-          </>
-        )}
+        <Route
+          path={PathRoutes.teacher.details}
+          Component={TeacherDetailsScreen}
+        />
+        <Route
+          path={PathRoutes.teacher.competenceStats}
+          Component={CompetenceStats}
+        />
 
-        {currentCoach && currentSchool && (
-          <>
-            <Route path={PathRoutes.main} Component={HomeScreen} />
-            <Route
-              path={PathRoutes.accountCreated}
-              Component={AccountCreatedScreen}
-            />
+        <Route path={PathRoutes.teacher.form} Component={TeacherFormScreen} />
 
-            <Route
-              path={PathRoutes.home.newSession}
-              Component={QuickNewSessionScreen}
-            />
-            <Route
-              path={PathRoutes.home.pendingSessions}
-              Component={PendingSessionsScreen}
-            />
-            <Route path={PathRoutes.home.stats} Component={QuickStatsScreen} />
-            <Route
-              path={PathRoutes.teacher.details}
-              Component={TeacherDetailsScreen}
-            />
-            <Route
-              path={PathRoutes.teacher.competenceStats}
-              Component={CompetenceStats}
-            />
-            <Route
-              path={PathRoutes.teacher.form}
-              Component={TeacherFormScreen}
-            />
-            <Route
-              path={PathRoutes.classObservation.about}
-              Component={ClassObservationAbout}
-            />
-            {/* <Route
-            path={PathRoutes.classObservation.onboarding}
-            Component={ClassObservationOnboarding}
-          /> */}
-            <Route
-              path={PathRoutes.classObservation.setup}
-              Component={ClassObservationSetup}
-            />
-            <Route
-              path={PathRoutes.classObservation.form}
-              Component={ClassObservationForm}
-            />
-            <Route
-              path={PathRoutes.classObservation.confirmation}
-              Component={ClassObservationConfirmation}
-            />
-            <Route
-              path={PathRoutes.classObservation.completed}
-              Component={ClassObservationCompleted}
-            />
-            <Route
-              path={PathRoutes.session.details}
-              Component={SessionDetailsScreen}
-            />
-            <Route
-              path={PathRoutes.session.classObservation}
-              Component={ClassObservationDetailsScreen}
-            />
-            <Route
-              path={PathRoutes.session.feedback}
-              Component={FeedbackDetailScreen}
-            />
-            <Route
-              path={PathRoutes.feedbackSession.about}
-              Component={FeedbackSessionAbout}
-            />
-            <Route
-              path={PathRoutes.feedbackSession.chooseCompetence}
-              Component={FeedbackSessionChooseCompetence}
-            />
-            <Route
-              path={PathRoutes.feedbackSession.form}
-              Component={FeedbackSessionForm}
-            />
-            <Route
-              path={PathRoutes.feedbackSession.completed}
-              Component={FeedbackSessionCompleted}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.onboarding}
-              Component={TLCOnboarding}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.checkingStats}
-              Component={TLCCheckingStats}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.unitSelect}
-              Component={TLCUnitSelect}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.introduction}
-              Component={TLCIntroduction}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.situations}
-              Component={TLCDynamicStep}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.explanation}
-              Component={TLCDynamicStep}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.activities}
-              Component={TLCDynamicStep}
-            />
-            <Route
-              path={PathRoutes.teacherLearningCircles.finish}
-              Component={TLCFinish}
-            />
-          </>
-        )}
+        <Route
+          path={PathRoutes.classObservation.about}
+          Component={ClassObservationAbout}
+        />
+        <Route
+          path={PathRoutes.classObservation.setup}
+          Component={ClassObservationSetup}
+        />
+        <Route
+          path={PathRoutes.classObservation.form}
+          Component={ClassObservationForm}
+        />
+        <Route
+          path={PathRoutes.classObservation.confirmation}
+          Component={ClassObservationConfirmation}
+        />
+        <Route
+          path={PathRoutes.classObservation.completed}
+          Component={ClassObservationCompleted}
+        />
+        <Route
+          path={PathRoutes.session.details}
+          Component={SessionDetailsScreen}
+        />
+        <Route
+          path={PathRoutes.session.classObservation}
+          Component={ClassObservationDetailsScreen}
+        />
+        <Route
+          path={PathRoutes.session.feedback}
+          Component={FeedbackDetailScreen}
+        />
+        <Route
+          path={PathRoutes.feedbackSession.about}
+          Component={FeedbackSessionAbout}
+        />
+        <Route
+          path={PathRoutes.feedbackSession.chooseCompetence}
+          Component={FeedbackSessionChooseCompetence}
+        />
+        <Route
+          path={PathRoutes.feedbackSession.form}
+          Component={FeedbackSessionForm}
+        />
+        <Route
+          path={PathRoutes.feedbackSession.completed}
+          Component={FeedbackSessionCompleted}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.onboarding}
+          Component={TLCOnboarding}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.checkingStats}
+          Component={TLCCheckingStats}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.unitSelect}
+          Component={TLCUnitSelect}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.introduction}
+          Component={TLCIntroduction}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.situations}
+          Component={TLCDynamicStep}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.explanation}
+          Component={TLCDynamicStep}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.activities}
+          Component={TLCDynamicStep}
+        />
+        <Route
+          path={PathRoutes.teacherLearningCircles.finish}
+          Component={TLCFinish}
+        />
       </Routes>
     </VStack>
   );

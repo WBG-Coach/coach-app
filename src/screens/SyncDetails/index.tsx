@@ -80,7 +80,7 @@ const SyncDetails: React.FC = () => {
             bg="#3373CC"
             mt="auto"
             _text={{fontWeight: 500, fontSize: 16}}
-            onPress={() => navigate(PathRoutes.main, {replace: true})}>
+            onPress={() => navigate(PathRoutes.splash, {replace: true})}>
             {t('syncDetails.start')}
           </Button>
         </>

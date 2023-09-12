@@ -23,7 +23,7 @@ const TLCFinish = () => {
         unit_id: unitId,
         coach_id: currentCoach.id,
       });
-      navigate(PathRoutes.main);
+      navigate(PathRoutes.splash);
     }
   };
 

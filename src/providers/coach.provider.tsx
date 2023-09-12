@@ -6,17 +6,18 @@ import React, {
   useEffect,
 } from 'react';
 import {StorageService} from '../services/storage.service';
-import {School} from '../types/school';
-import {Button, HStack, Modal, useToast, Text} from 'native-base';
-import {Coach} from '../types/coach';
+import {SchoolService} from '../services/school.service';
+import {Button, HStack, Modal, Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
+import {School} from '../types/school';
+import {Coach} from '../types/coach';
 
 type CoachContextType = {
   currentCoach: Coach | null;
   currentSchool: School | null;
-  login: (coach: Coach) => Promise<void>;
   logout: () => Promise<void>;
-  selectSchool: (school: School | null) => void;
+  selectSchool: (school: School | null) => Promise<void>;
+  selectCoach: (coach: Coach | null) => Promise<void>;
   addTeacherInCurrentSchool: () => void;
 };
 
@@ -27,14 +28,8 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [currentSchool, setCurrentSchool] = useState<School | null>(null);
   const [showStartOver, setShowStartOver] = useState(false);
   const {t} = useTranslation();
-  const toast = useToast();
 
-  useEffect(() => {
-    StorageService.getCurrentCoach().then(setCurrentCoach);
-    StorageService.getCurrentSchool().then(setCurrentSchool);
-  }, []);
-
-  const login = async (coachLogged: Coach) => {
+  const selectCoach = async (coachLogged: Coach | null) => {
     setCurrentCoach(coachLogged);
     await StorageService.setCurrentCoach(coachLogged);
   };
@@ -42,6 +37,9 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const selectSchool = async (school: School | null) => {
     setCurrentSchool(school);
     await StorageService.setCurrentSchool(school);
+    if (school) {
+      await SchoolService.insertSchool(school);
+    }
   };
 
   const logout = async () => {
@@ -56,7 +54,6 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
 
     setCurrentSchool(null);
     setCurrentCoach(null);
-
     setShowStartOver(false);
   };
 
@@ -72,8 +69,8 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
   return (
     <CoachContext.Provider
       value={{
-        login,
         logout,
+        selectCoach,
         selectSchool,
         currentCoach,
         currentSchool,
@@ -82,11 +79,11 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
       <Modal isOpen={showStartOver}>
         <Modal.Content bg={'white'} p={4}>
           <Text
-            fontWeight={600}
-            fontSize={'HXS'}
             mb={6}
-            textAlign={'center'}
-            color={'black'}>
+            color={'black'}
+            fontSize={'HXS'}
+            fontWeight={600}
+            textAlign={'center'}>
             {t('logout.title')}
           </Text>
 

@@ -1,10 +1,12 @@
 export type School = {
   id?: string;
+  _status: string;
+
   name: string;
   emis_number: string;
-  _status: string;
+
+  key?: string;
   created_at: Date;
   updated_at: Date;
   teachersCount: number;
-  key?: string;
 };

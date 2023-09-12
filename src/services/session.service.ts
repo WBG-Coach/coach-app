@@ -64,7 +64,7 @@ export const SessionService = {
       feedbacks?.map(feedback => {
         return db.executeSql(
           `
-          INSERT OR REPLACE INTO feedback(id, value, competence_id, session_id, school_id, _status)
+          INSERT OR REPLACE INTO feedback(id, value, competence_id, session_id, _status)
           VALUES (?, ?, ?, ?, 'synced')
         `,
           [
@@ -72,7 +72,6 @@ export const SessionService = {
             feedback.value,
             feedback.competence_id,
             feedback.session_id,
-            feedback.school_id,
           ],
         );
       }),

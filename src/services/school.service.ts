@@ -3,22 +3,17 @@ import {Session} from '../types/session';
 import {getDBConnection} from './database.service';
 
 export const SchoolService = {
-  findSchoolItems: async (
-    value: string,
-    pageSize: number,
-    pageNumber: number,
-  ): Promise<School[]> => {
+  findSchoolItems: async (value: string): Promise<School[]> => {
     const db = await getDBConnection();
     let result;
     if (value) {
       result = (await db.executeSql(
-        "SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s WHERE s.name LIKE UPPER(?) || '%' OR s.emis_number = ? LIMIT ? OFFSET ?",
-        [value, value, pageSize, (pageNumber - 1) * pageSize],
+        "SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s WHERE s.name LIKE UPPER(?) || '%' OR s.emis_number = ?",
+        [value, value],
       )) as any[];
     } else {
       result = (await db.executeSql(
-        'SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s LIMIT ? OFFSET ?',
-        [pageSize, (pageNumber - 1) * pageSize],
+        'SELECT s.*, (SELECT COUNT(*) FROM teacher where school_id = s.id) as teachersCount FROM school as s',
       )) as any[];
     }
 
@@ -47,5 +42,28 @@ export const SchoolService = {
     )) as any[];
 
     return result[0].rows.raw();
+  },
+
+  insertSchool: async ({id, name, emis_number}: School) => {
+    const db = await getDBConnection();
+    const result = (await db.executeSql(
+      `
+        SELECT id
+        FROM school as s
+        WHERE
+          id = ?
+      `,
+      [id],
+    )) as any[];
+
+    if (!result[0] || result[0].rows?.raw().length === 0) {
+      await db.executeSql(
+        `
+        INSERT INTO school(id, name, emis_number, _status)
+        VALUES (?, ?, ?, 'synced')
+        `,
+        [id, name, emis_number],
+      );
+    }
   },
 };

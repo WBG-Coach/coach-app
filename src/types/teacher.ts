@@ -1,13 +1,16 @@
 export type Teacher = {
   id: string;
+
+  nin?: string;
+  pin?: string;
   name?: string;
   surname?: string;
-  birthdate?: Date;
-  image_id?: string;
   subject?: string;
+  birthdate?: Date;
   emis_number?: string;
-  school_id?: string;
 
+  image_id?: string;
+  school_id?: string;
   _status?: string;
   created_at: Date;
   updated_at: Date;

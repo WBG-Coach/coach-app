@@ -27,7 +27,7 @@ const CoachSelectScreen: React.FC = () => {
   const navigate = useNavigate();
 
   const {t} = useTranslation();
-  const {logout, login} = useCoachContext();
+  const {logout, selectCoach} = useCoachContext();
 
   const loadFirstPageWithFilter = useCallback((value: string) => {
     setCoachList([]);
@@ -84,7 +84,11 @@ const CoachSelectScreen: React.FC = () => {
         isEnd={isTheEnd}
         emptyMessage={t('coachSelect.item-description-empty')}
         renderItem={({item, index}) => (
-          <CoachItem index={index} coach={item} onPress={() => login(item)} />
+          <CoachItem
+            index={index}
+            coach={item}
+            onPress={() => selectCoach(item)}
+          />
         )}
       />
       <Button

@@ -32,11 +32,11 @@ const initialValues = {
   surname: '',
 };
 
-const CreateAccountScreen: React.FC = () => {
+const CoachFormScreen: React.FC = () => {
   const toast = useToast();
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const {login} = useCoachContext();
+  const {selectCoach} = useCoachContext();
   const [profileImage, setProfileImage] = useState<{
     name: string;
     value: string;
@@ -53,7 +53,7 @@ const CreateAccountScreen: React.FC = () => {
 
     const coach = await CoachService.create({...values, image_id});
     console.log(coach);
-    await login(coach);
+    await selectCoach(coach);
 
     navigate(PathRoutes.accountCreated, {replace: true});
 
@@ -127,4 +127,4 @@ const CreateAccountScreen: React.FC = () => {
   );
 };
 
-export default CreateAccountScreen;
+export default CoachFormScreen;
