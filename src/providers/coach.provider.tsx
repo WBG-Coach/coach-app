@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from 'react';
+import React, {createContext, useState, useContext, ReactNode} from 'react';
 import {StorageService} from '../services/storage.service';
 import {SchoolService} from '../services/school.service';
 import {Button, HStack, Modal, Text} from 'native-base';
@@ -16,9 +10,8 @@ type CoachContextType = {
   currentCoach: Coach | null;
   currentSchool: School | null;
   logout: () => Promise<void>;
-  selectSchool: (school: School | null) => Promise<void>;
   selectCoach: (coach: Coach | null) => Promise<void>;
-  addTeacherInCurrentSchool: () => void;
+  selectSchool: (school: School | null) => Promise<void>;
 };
 
 const CoachContext = createContext<CoachContextType | null>(null);
@@ -29,9 +22,9 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [showStartOver, setShowStartOver] = useState(false);
   const {t} = useTranslation();
 
-  const selectCoach = async (coachLogged: Coach | null) => {
-    setCurrentCoach(coachLogged);
-    await StorageService.setCurrentCoach(coachLogged);
+  const selectCoach = async (coach: Coach | null) => {
+    setCurrentCoach(coach);
+    await StorageService.setCurrentCoach(coach);
   };
 
   const selectSchool = async (school: School | null) => {
@@ -50,20 +43,10 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
 
     await StorageService.setCurrentSchool(null);
     await StorageService.setCurrentCoach(null);
-    await StorageService.setLastSync(null);
 
-    setCurrentSchool(null);
     setCurrentCoach(null);
+    setCurrentSchool(null);
     setShowStartOver(false);
-  };
-
-  const addTeacherInCurrentSchool = () => {
-    if (currentSchool) {
-      selectSchool({
-        ...currentSchool,
-        teachersCount: currentSchool.teachersCount + 1,
-      });
-    }
   };
 
   return (
@@ -74,7 +57,6 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
         selectSchool,
         currentCoach,
         currentSchool,
-        addTeacherInCurrentSchool,
       }}>
       <Modal isOpen={showStartOver}>
         <Modal.Content bg={'white'} p={4}>
@@ -95,7 +77,7 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
               marginTop={'auto'}
               borderRadius={'8px'}
               background={'primary.200'}
-              onPress={logout}>
+              onPress={() => logout()}>
               {t('logout.confirm-button')}
             </Button>
             <Button

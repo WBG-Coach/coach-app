@@ -35,13 +35,14 @@ const TeacherFormScreen: React.FC = () => {
   const {t} = useTranslation();
   const navigate = useNavigate();
   const params = useParams<{id: string}>();
+  const isNew = params.id === 'new';
+
   const [loading, setLoading] = useState(true);
   const [profileImage, setProfileImage] = useState<{
     id?: string;
     name: string;
     value: string;
   }>();
-  const isNew = params.id === 'new';
 
   useEffect(() => {
     if (params?.id && params?.id !== 'new') {
@@ -66,7 +67,7 @@ const TeacherFormScreen: React.FC = () => {
     }
   }, [params]);
 
-  const {currentSchool, addTeacherInCurrentSchool} = useCoachContext();
+  const {currentSchool} = useCoachContext();
 
   const onSubmit = async (values: FormValuesType) => {
     const image_id = await createOrUpdateImage();
@@ -77,7 +78,6 @@ const TeacherFormScreen: React.FC = () => {
         image_id,
         school_id: currentSchool?.id,
       });
-      addTeacherInCurrentSchool();
     } else {
       await TeacherService.update(params?.id || '', {
         ...values,

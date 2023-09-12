@@ -35,6 +35,8 @@ const enTranslation = {
       surname: 'Last name',
       username: 'Username',
       password: 'Password',
+      pin: 'PIN',
+      nin: 'NIN',
       'confirm-password': 'Confirm password',
       'create-account-button': 'Create account',
       success: 'Account created successfully',
@@ -95,6 +97,7 @@ const enTranslation = {
     'menu-items': {
       newSession: 'Start a new session',
       switchSchools: 'Switch schools',
+      switchCoach: 'Switch coaches',
       switchProfile: 'Switch to a different coach profile',
       offlineSync: 'Offline data synchronization',
       startOver: 'Start over',

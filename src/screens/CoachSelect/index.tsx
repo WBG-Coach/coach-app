@@ -1,12 +1,11 @@
 import React, {useCallback, useState} from 'react';
 import {useCoachContext} from '../../providers/coach.provider';
-import InfiniteScroll from '../../components/InfiniteScroll';
 import InputText from '../../components/InputText';
 import useDebounce from '../../hooks/debounce';
 import {useTranslation} from 'react-i18next';
 import Page from '../../components/Page';
 import CoachItem from './CoachItem';
-import {HStack, Text} from 'native-base';
+import {Center, FlatList, HStack, Spinner, Text} from 'native-base';
 import {Coach} from '../../types/coach';
 import {CoachService} from '../../services/coach.service';
 import Button from '../../components/Button';
@@ -15,57 +14,44 @@ import theme from '../../theme';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
 
-const ITEMS_PER_PAGE = 20;
-
 const CoachSelectScreen: React.FC = () => {
-  const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
-  const [isTheEnd, setIsTheEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [coachList, setCoachList] = useState<Coach[]>([]);
 
   const navigate = useNavigate();
 
   const {t} = useTranslation();
-  const {logout, selectCoach} = useCoachContext();
+  const {selectCoach, currentCoach, currentSchool} = useCoachContext();
 
-  const loadFirstPageWithFilter = useCallback((value: string) => {
-    setCoachList([]);
-    setIsLoading(true);
-    setIsTheEnd(false);
-    CoachService.findCoachItems(value, ITEMS_PER_PAGE, 1).then(data => {
-      if (data && data.length < ITEMS_PER_PAGE) {
-        setIsTheEnd(true);
-      }
-      setCoachList(data);
-      setIsLoading(false);
-    });
-  }, []);
-
-  useDebounce(filter, 300, loadFirstPageWithFilter);
-
-  const loadNextPage = async () => {
-    if (!isLoading && !isTheEnd) {
-      setPage(page + 1);
+  const loadAccounts = useCallback(
+    async (value: string) => {
       setIsLoading(true);
-
-      const data = await CoachService.findCoachItems(
-        filter,
-        ITEMS_PER_PAGE,
-        page + 1,
-      );
-
-      if (data.length < ITEMS_PER_PAGE) {
-        setIsTheEnd(true);
+      if (currentSchool) {
+        setCoachList(await CoachService.findCoachItems(currentSchool, value));
       }
-
-      setCoachList(prevData => [...prevData, ...data]);
       setIsLoading(false);
+    },
+    [currentSchool],
+  );
+
+  useDebounce(filter, 300, loadAccounts);
+
+  const goBack = async () => {
+    if (currentCoach) {
+      navigate(-1);
+    } else {
+      navigate(PathRoutes.selectSchool, {replace: true});
     }
   };
 
+  const onSelect = (coach: Coach) => {
+    selectCoach(coach);
+    navigate(PathRoutes.home.main, {replace: true});
+  };
+
   return (
-    <Page setting logo onLogout={logout}>
+    <Page setting logo back onBack={goBack}>
       <Text fontSize={'HSM'} fontWeight={600} color={'gray.700'} mb={'16px'}>
         {t('coachSelect.title')}
       </Text>
@@ -77,20 +63,30 @@ const CoachSelectScreen: React.FC = () => {
         onChangeText={setFilter}
       />
 
-      <InfiniteScroll
-        data={coachList}
-        isLoading={isLoading}
-        loadNextPage={loadNextPage}
-        isEnd={isTheEnd}
-        emptyMessage={t('coachSelect.item-description-empty')}
-        renderItem={({item, index}) => (
-          <CoachItem
-            index={index}
-            coach={item}
-            onPress={() => selectCoach(item)}
-          />
-        )}
-      />
+      {isLoading ? (
+        <Center mx="20px" flex={1}>
+          <Spinner />
+        </Center>
+      ) : (
+        <FlatList
+          data={coachList}
+          ListEmptyComponent={
+            <Center mx="20px">
+              <Text fontWeight={600} color={'gray.700'}>
+                {t('coachSelect.item-description-empty')}
+              </Text>
+            </Center>
+          }
+          renderItem={({item, index}) => (
+            <CoachItem
+              index={index}
+              coach={item}
+              onPress={() => onSelect(item)}
+            />
+          )}
+        />
+      )}
+
       <Button
         variant="outlined"
         onPress={() => navigate(PathRoutes.createAccount)}>

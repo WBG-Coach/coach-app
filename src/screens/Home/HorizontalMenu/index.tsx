@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Center, FlatList, HStack, Text, VStack, View} from 'native-base';
 import {TouchableOpacity} from 'react-native';
@@ -9,9 +9,15 @@ import PathRoutes from '../../../routers/paths';
 import {useNavigate} from 'react-router-native';
 
 const HorizontalMenu: React.FC = () => {
-  const {logout, selectCoach} = useCoachContext();
+  const {logout, currentCoach, currentSchool} = useCoachContext();
   const {t} = useTranslation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentCoach || !currentSchool) {
+      navigate(PathRoutes.selectSchool, {replace: true});
+    }
+  }, [currentCoach, currentSchool]);
 
   const MENU_ITEMS = [
     {
@@ -25,19 +31,24 @@ const HorizontalMenu: React.FC = () => {
       onPress: () => navigate(PathRoutes.home.pendingSessions),
     },
     {
-      icon: 'university',
-      label: t('home.menu-items.switchSchools'),
-      onPress: logout,
-    },
-    {
       icon: 'chart-line',
       label: t('home.menu-items.statics'),
       onPress: () => navigate(PathRoutes.home.stats),
     },
     {
+      icon: 'university',
+      label: t('home.menu-items.switchSchools'),
+      onPress: () => navigate(PathRoutes.selectSchool),
+    },
+    {
+      icon: 'user',
+      label: t('home.menu-items.switchCoach'),
+      onPress: () => navigate(PathRoutes.selectAccount),
+    },
+    {
       icon: 'signout',
       label: t('home.menu-items.startOver'),
-      onPress: () => selectCoach(null),
+      onPress: logout,
     },
   ];
 
