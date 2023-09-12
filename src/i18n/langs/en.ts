@@ -91,7 +91,7 @@ const enTranslation = {
   },
   home: {
     teachersLength_interval:
-      '(0)[No teachers];(1)[1 teacher being coached];(2-inf)[{{count}} teachers being coached];',
+      'You are coaching in ',
     'menu-items': {
       newSession: 'Start a new session',
       switchSchools: 'Switch schools',

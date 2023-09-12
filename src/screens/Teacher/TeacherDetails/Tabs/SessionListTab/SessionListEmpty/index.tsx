@@ -15,7 +15,12 @@ const SessionListEmpty: React.FC<Props> = ({handleCreate}) => {
   return (
     <VStack alignItems={'center'}>
       <Image source={SessionDefault} alt={'Session default image'} />
-      <Text mt={8} fontSize={'HXS'} fontWeight={600} color={'gray.800'}>
+      <Text
+        textAlign={'center'}
+        mt={8}
+        fontSize={'HXS'}
+        fontWeight={600}
+        color={'gray.800'}>
         {t('teacher.tabs.session.stillNoSession')}
       </Text>
       <Text

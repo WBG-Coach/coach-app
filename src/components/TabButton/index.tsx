@@ -17,6 +17,7 @@ const TabButton: React.FC<Props> = ({isActive, label, onPress}) => {
       <VStack py={4}>
         <Center>
           <Text
+            numberOfLines={1}
             fontSize={'TSM'}
             fontWeight={isActive ? 700 : 500}
             color={isActive ? 'primary.200' : 'gray.700'}>
