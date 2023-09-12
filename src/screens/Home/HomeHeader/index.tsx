@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
 
 const HomeHeader: React.FC = () => {
-  const {currentSchool} = useCoachContext();
+  const {currentSchool, currentCoach} = useCoachContext();
   const {t} = useTranslation();
   const isTablet = Tablet();
 
@@ -17,19 +17,22 @@ const HomeHeader: React.FC = () => {
         h={isTablet ? '64px' : '56px'}
         borderRadius={'500px'}
         background={'primary.100'}>
-        <Icon name={'university'} />
+        <Icon name={'user'} />
       </Center>
 
       <VStack space={1}>
         <Text fontSize={'TMD'} fontWeight={600} color={'gray.800'}>
-          {currentSchool?.name}
+          Hi, {currentCoach?.name}
         </Text>
-        <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-          {t('home.teachersLength_interval', {
-            postProcess: 'interval',
-            count: currentSchool?.teachersCount,
-          })}
-        </Text>
+        <HStack>
+          <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
+            {t('home.teachersLength_interval')}
+          </Text>
+
+          <Text fontSize={'TSM'} fontWeight={600} color={'gray.800'}>
+            {currentSchool?.name}
+          </Text>
+        </HStack>
       </VStack>
     </HStack>
   );

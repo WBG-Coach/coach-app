@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {TeacherService} from '../../../services/teacher.service';
 import {useCoachContext} from '../../../providers/coach.provider';
 import InfiniteScroll from '../../../components/InfiniteScroll';
-import {Center, HStack, Text, useTheme} from 'native-base';
+import {Box, Center, HStack, Text, VStack, useTheme} from 'native-base';
 import {TeacherItemType} from '../../../types/teacher';
 import EmptyStateComponent from '../EmptyState';
 import {useNavigate} from 'react-router-native';
@@ -85,6 +85,40 @@ const TeachersList: React.FC<Props> = ({
 
   return (
     <>
+      <HStack alignItems={'center'}>
+        <VStack flex={1}>
+          <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
+            {t('home.teachers.title')}
+          </Text>
+
+          {!hideNewTeacherButton && teachersList.length > 0 && (
+            <HStack space={1}>
+              <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
+                Teachers in this school:
+              </Text>
+              <Text fontSize={'TSM'} fontWeight={600} color={'gray.800'}>
+                {teachersList.length}
+              </Text>
+            </HStack>
+          )}
+        </VStack>
+
+        {!hideNewTeacherButton && teachersList.length > 0 && (
+          <TouchableOpacity
+            onPress={() =>
+              navigate(PathRoutes.teacher.form.replace(':id', 'new'))
+            }>
+            <HStack alignSelf={'center'} mt={6} space={3} alignItems={'center'}>
+              <Icon
+                name={'plus-circle-solid'}
+                color={theme.colors.primary[200]}
+              />
+              <Text color={'primary.200'}>{t('home.teachers.addNew')}</Text>
+            </HStack>
+          </TouchableOpacity>
+        )}
+      </HStack>
+
       {showSearchFilter && (
         <InputText
           mb={2}
@@ -112,18 +146,6 @@ const TeachersList: React.FC<Props> = ({
           <ItemComponent teacher={item} onPress={() => onSelectTeacher(item)} />
         )}
       />
-
-      {!hideNewTeacherButton && teachersList.length > 0 && (
-        <TouchableOpacity
-          onPress={() =>
-            navigate(PathRoutes.teacher.form.replace(':id', 'new'))
-          }>
-          <HStack alignSelf={'center'} space={3} alignItems={'center'}>
-            <Icon name={'plus'} color={theme.colors.primary[200]} />
-            <Text color={'primary.200'}>{t('home.teachers.addNew')}</Text>
-          </HStack>
-        </TouchableOpacity>
-      )}
     </>
   );
 };
