@@ -14,7 +14,7 @@ import {useNetInfo} from '@react-native-community/netinfo';
 const SyncDetails: React.FC = () => {
   const {t} = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const {currentSchool} = useCoachContext();
+  const {currentSchool, currentCoach} = useCoachContext();
   const navigate = useNavigate();
   const {isConnected} = useNetInfo();
 
@@ -24,6 +24,14 @@ const SyncDetails: React.FC = () => {
       SyncService.trySyncData().then(() => setIsLoading(false));
     }
   }, [isConnected]);
+
+  const goToNextPage = () => {
+    if (currentCoach) {
+      navigate(PathRoutes.home.main, {replace: true});
+    } else {
+      navigate(PathRoutes.selectAccount, {replace: true});
+    }
+  };
 
   return (
     <Page setting>
@@ -38,6 +46,7 @@ const SyncDetails: React.FC = () => {
               mt="45px"
               source={SetupCompleteImg}
               mx="auto"
+              alt="Setup completed"
             />
             <Text
               mt="24px"
@@ -80,7 +89,7 @@ const SyncDetails: React.FC = () => {
             bg="#3373CC"
             mt="auto"
             _text={{fontWeight: 500, fontSize: 16}}
-            onPress={() => navigate(PathRoutes.splash, {replace: true})}>
+            onPress={goToNextPage}>
             {t('syncDetails.start')}
           </Button>
         </>

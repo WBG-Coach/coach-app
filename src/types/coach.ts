@@ -5,13 +5,14 @@ export type Coach = {
 
   name?: string;
   surname?: string;
-  image_id?: string;
-
   nin?: string;
   pin?: string;
 
+  image_id?: string;
+
   sessionCount?: number;
   schools?: School[];
+
   _status?: string;
   created_at: Date;
   updated_at: Date;

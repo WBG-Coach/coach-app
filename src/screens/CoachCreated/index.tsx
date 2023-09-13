@@ -1,19 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Page from '../../components/Page';
-import {Center, HStack, Image, Text, VStack, useTheme} from 'native-base';
 import Button from '../../components/Button';
-import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
-import Icon from '../../components/Icon';
-import {AccountCreatedImg} from '../../assets/images/accountCreated';
 import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-native';
+import SyncService from '../../services/sync.service';
+import {useNetInfo} from '@react-native-community/netinfo';
+import {Center, Image, Spinner, Text, VStack} from 'native-base';
+import {AccountCreatedImg} from '../../assets/images/accountCreated';
 
-const AccountCreatedScreen: React.FC = () => {
+const CoachCreatedScreen: React.FC = () => {
   const {t} = useTranslation();
   const navigation = useNavigate();
-  const theme: any = useTheme();
+  const {isConnected} = useNetInfo();
+  const [isLoading, setIsLoading] = useState(false);
 
-  return (
+  useEffect(() => {
+    if (isConnected) {
+      setIsLoading(true);
+      SyncService.trySyncData()
+        .then(() => setIsLoading(false))
+        .catch(err => console.log(err));
+    }
+  }, [isConnected]);
+
+  return isLoading ? (
+    <Center flex={1}>
+      <Spinner size="lg" />
+    </Center>
+  ) : (
     <Page>
       <Center flex={1}>
         <VStack alignItems={'center'}>
@@ -43,4 +58,4 @@ const AccountCreatedScreen: React.FC = () => {
   );
 };
 
-export default AccountCreatedScreen;
+export default CoachCreatedScreen;

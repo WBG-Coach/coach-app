@@ -9,7 +9,7 @@ import {Teacher} from './teacher';
 
 export type SyncData = {
   coaches: Coach[];
-  coach_schools: CoachSchool[];
+  coachSchools: CoachSchool[];
   sessions: Session[];
   questions: Question[];
   schools: School[];

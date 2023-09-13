@@ -38,7 +38,7 @@ const SyncService = {
     const changes = {
       images: await SyncService.getPendingImages(db),
       coaches: await SyncService.getPendingCoaches(db),
-      coach_schools: await SyncService.getPendingCoachSchools(db),
+      coachSchools: await SyncService.getPendingCoachSchools(db),
       teachers: await SyncService.getPendingTeachers(db),
       sessions: await SyncService.getPendingSessions(db),
       answers: await SyncService.getPendingAnswers(db),
@@ -48,8 +48,10 @@ const SyncService = {
     const currentSchool = await StorageService.getCurrentSchool();
     const lastSync = await StorageService.getLastSync();
 
+    console.log({currentSchool});
+
     const response = await axios.post<SyncData>(
-      'https://f43d-177-208-184-177.ngrok-free.app/sync',
+      'https://api-sl.coachdigital.org/sync',
       {
         changes,
         lastSync,
@@ -67,7 +69,7 @@ const SyncService = {
 
     if (currentSchool && response.data.total > 0) {
       await CoachService.sync(response.data.coaches);
-      await CoachService.syncCoachSchools(response.data.coach_schools);
+      await CoachService.syncCoachSchools(response.data.coachSchools);
       await TeacherService.sync(response.data.teachers);
       await SessionService.sync(response.data.sessions);
       await AnswerService.sync(response.data.answers);
@@ -108,6 +110,8 @@ const SyncService = {
     const results = await db.executeSql(
       "SELECT * FROM coach WHERE _status != 'synced'",
     );
+
+    console.log('COACHES ', results[0].rows.raw());
 
     return results[0].rows.raw();
   },

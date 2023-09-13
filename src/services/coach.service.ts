@@ -84,4 +84,21 @@ export const CoachService = {
       ])) as any[]
     )[0].rows.raw()[0];
   },
+
+  createCoachSchool: async (coach: Coach, school: School) => {
+    const db = await getDBConnection();
+    const response = (await db.executeSql(
+      'SELECT * FROM coach_school WHERE coach_id = ? AND school_id = ?',
+      [coach.id, school.id],
+    )) as any[];
+
+    console.log(response[0].rows.raw());
+
+    if (response[0].rows.raw().length === 0) {
+      await db.executeSql(`
+        INSERT OR REPLACE INTO coach_school(id, coach_id, school_id, _status)
+        VALUES ('${uuid()}', '${coach.id}', '${school.id}', 'pending')
+      `);
+    }
+  },
 };

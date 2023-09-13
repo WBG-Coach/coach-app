@@ -15,27 +15,12 @@ import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
 
 const CoachSelectScreen: React.FC = () => {
+  const {t} = useTranslation();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [coachList, setCoachList] = useState<Coach[]>([]);
-
-  const navigate = useNavigate();
-
-  const {t} = useTranslation();
   const {selectCoach, currentCoach, currentSchool} = useCoachContext();
-
-  const loadAccounts = useCallback(
-    async (value: string) => {
-      setIsLoading(true);
-      if (currentSchool) {
-        setCoachList(await CoachService.findCoachItems(currentSchool, value));
-      }
-      setIsLoading(false);
-    },
-    [currentSchool],
-  );
-
-  useDebounce(filter, 300, loadAccounts);
 
   const goBack = async () => {
     if (currentCoach) {
@@ -49,6 +34,19 @@ const CoachSelectScreen: React.FC = () => {
     selectCoach(coach);
     navigate(PathRoutes.home.main, {replace: true});
   };
+
+  const loadAccounts = useCallback(
+    async (value: string) => {
+      setIsLoading(true);
+      if (currentSchool) {
+        setCoachList(await CoachService.findCoachItems(currentSchool, value));
+      }
+      setIsLoading(false);
+    },
+    [currentSchool],
+  );
+
+  useDebounce(filter, 300, loadAccounts);
 
   return (
     <Page setting logo back onBack={goBack}>

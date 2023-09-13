@@ -24,7 +24,7 @@ import FeedbackDetailScreen from '../screens/SessionDetails/FeedbackDetails';
 import ClassObservationDetailsScreen from '../screens/SessionDetails/ClassObservationDetails';
 import CompetenceStats from '../screens/Teacher/TeacherDetails/Tabs/TeacherStats/CompetenceStats';
 import QuickStatsScreen from '../screens/Home/QuickActions/Stats';
-import AccountCreatedScreen from '../screens/AccountCreated';
+import CoachCreatedScreen from '../screens/CoachCreated';
 import PendingSessionsScreen from '../screens/Home/QuickActions/Pending';
 import TLCOnboarding from '../screens/TeacherLearningCircles/Onboarding';
 import TLCCheckingStats from '../screens/TeacherLearningCircles/CheckingStats';
@@ -63,7 +63,7 @@ const RouterProvider: React.FC = () => {
 
         <Route
           path={PathRoutes.accountCreated}
-          Component={AccountCreatedScreen}
+          Component={CoachCreatedScreen}
         />
         <Route
           path={PathRoutes.home.newSession}
