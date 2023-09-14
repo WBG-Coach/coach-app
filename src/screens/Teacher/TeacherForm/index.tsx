@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Center, ScrollView, Text, VStack, Spinner, useToast} from 'native-base';
+import {
+  Center,
+  ScrollView,
+  Text,
+  VStack,
+  Spinner,
+  useToast,
+  HStack,
+} from 'native-base';
 import {teacherFormValidate} from '../../../helpers/validate.helper';
 import {useCoachContext} from '../../../providers/coach.provider';
 import {TeacherService} from '../../../services/teacher.service';
@@ -20,6 +28,8 @@ export type FormValuesType = {
   subject?: string;
   birthdate?: Date;
   emis_number?: string;
+  pin: string;
+  nin: string;
 };
 
 let initialValues: FormValuesType = {
@@ -28,6 +38,8 @@ let initialValues: FormValuesType = {
   subject: '',
   emis_number: '',
   birthdate: undefined,
+  pin: '',
+  nin: '',
 };
 
 const TeacherFormScreen: React.FC = () => {
@@ -195,6 +207,66 @@ const TeacherFormScreen: React.FC = () => {
                   errorMessage={errors.emis_number}
                   onChangeText={value => setFieldValue('emis_number', value)}
                 />
+
+                <VStack mt={4}>
+                  <HStack>
+                    <Text
+                      flex={1}
+                      fontSize={'LMD'}
+                      fontWeight={500}
+                      color={'gray.700'}>
+                      {t('teacher.form.pin')}
+                    </Text>
+
+                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                      {t('teacher.form.optional')}
+                    </Text>
+                  </HStack>
+                  <Text
+                    mb={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {t('teacher.form.pin_description')}
+                  </Text>
+
+                  <InputText
+                    value={values.pin}
+                    errorMessage={errors.pin}
+                    onChangeText={value => setFieldValue('pin', value)}
+                    placeholder="0000-0-00000"
+                  />
+                </VStack>
+
+                <VStack mt={4}>
+                  <HStack>
+                    <Text
+                      flex={1}
+                      fontSize={'LMD'}
+                      fontWeight={500}
+                      color={'gray.700'}>
+                      {t('teacher.form.nin')}
+                    </Text>
+
+                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                      {t('teacher.form.optional')}
+                    </Text>
+                  </HStack>
+                  <Text
+                    mb={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {t('teacher.form.nin_description')}
+                  </Text>
+
+                  <InputText
+                    value={values.nin}
+                    errorMessage={errors.nin}
+                    onChangeText={value => setFieldValue('nin', value)}
+                    placeholder="0000-0-00000"
+                  />
+                </VStack>
 
                 <Text
                   mb={2}

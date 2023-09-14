@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, Text, VStack, useToast} from 'native-base';
+import {HStack, ScrollView, Text, VStack, useToast} from 'native-base';
 import {createAccountFormValidate} from '../../helpers/validate.helper';
 import {CoachService} from '../../services/coach.service';
 import {ImageService} from '../../services/image.service';
@@ -114,31 +114,65 @@ const CoachFormScreen: React.FC = () => {
                   onChangeText={value => setFieldValue('surname', value)}
                 />
 
-                <Text
-                  mb={2}
-                  mt={4}
-                  fontSize={'LMD'}
-                  fontWeight={500}
-                  color={'gray.700'}>
-                  {t('login.createAccount.pin')}
-                </Text>
-                <InputText
-                  value={values.pin}
-                  onChangeText={value => setFieldValue('pin', value)}
-                />
+                <VStack mt={4}>
+                  <HStack>
+                    <Text
+                      flex={1}
+                      fontSize={'LMD'}
+                      fontWeight={500}
+                      color={'gray.700'}>
+                      {t('login.createAccount.pin')}
+                    </Text>
 
-                <Text
-                  mb={2}
-                  mt={4}
-                  fontSize={'LMD'}
-                  fontWeight={500}
-                  color={'gray.700'}>
-                  {t('login.createAccount.nin')}
-                </Text>
-                <InputText
-                  value={values.nin}
-                  onChangeText={value => setFieldValue('nin', value)}
-                />
+                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                      {t('login.createAccount.optional')}
+                    </Text>
+                  </HStack>
+                  <Text
+                    mb={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {t('login.createAccount.pin_description')}
+                  </Text>
+
+                  <InputText
+                    value={values.pin}
+                    errorMessage={errors.pin}
+                    onChangeText={value => setFieldValue('pin', value)}
+                    placeholder="0000-0-00000"
+                  />
+                </VStack>
+
+                <VStack mt={4}>
+                  <HStack>
+                    <Text
+                      flex={1}
+                      fontSize={'LMD'}
+                      fontWeight={500}
+                      color={'gray.700'}>
+                      {t('login.createAccount.nin')}
+                    </Text>
+
+                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                      {t('login.createAccount.optional')}
+                    </Text>
+                  </HStack>
+                  <Text
+                    mb={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {t('login.createAccount.nin_description')}
+                  </Text>
+
+                  <InputText
+                    value={values.nin}
+                    errorMessage={errors.nin}
+                    onChangeText={value => setFieldValue('nin', value)}
+                    placeholder="0000-0-00000"
+                  />
+                </VStack>
               </VStack>
             </ScrollView>
             <Button

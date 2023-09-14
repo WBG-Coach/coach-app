@@ -36,7 +36,10 @@ const enTranslation = {
       username: 'Username',
       password: 'Password',
       pin: 'PIN',
+      pin_description: 'Personal Identification Number',
       nin: 'NIN',
+      nin_description: 'National Identification Number',
+      optional: 'Optional',
       'confirm-password': 'Confirm password',
       'create-account-button': 'Create account',
       success: 'Account created successfully',
@@ -92,8 +95,7 @@ const enTranslation = {
     'description-list': "You'll be able to :",
   },
   home: {
-    teachersLength_interval:
-      'You are coaching in ',
+    teachersLength_interval: 'You are coaching in ',
     'menu-items': {
       newSession: 'Start a new session',
       switchSchools: 'Switch schools',
@@ -168,6 +170,11 @@ const enTranslation = {
       'new-teacher-button': 'Add teacher',
       'update-teacher-button': 'Edit teacher',
       success: 'Teacher created successfully',
+      pin: 'PIN',
+      pin_description: 'Personal Identification Number',
+      nin: 'NIN',
+      nin_description: 'National Identification Number',
+      optional: 'Optional',
     },
     details: {
       editTeacher: 'Edit teacher',
