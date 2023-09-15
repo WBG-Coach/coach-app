@@ -7,6 +7,7 @@ export type Coach = {
   surname?: string;
   nin?: string;
   pin?: string;
+  birthdate?: Date;
 
   image_id?: string;
 

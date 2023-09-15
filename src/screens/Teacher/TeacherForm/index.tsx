@@ -21,13 +21,16 @@ import Toast from '../../../components/Toast';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import {TouchableOpacity} from 'react-native';
 
 export type FormValuesType = {
   name?: string;
   surname?: string;
   subject?: string;
   birthdate?: Date;
-  emis_number?: string;
   pin: string;
   nin: string;
 };
@@ -36,8 +39,7 @@ let initialValues: FormValuesType = {
   name: '',
   surname: '',
   subject: '',
-  emis_number: '',
-  birthdate: undefined,
+  birthdate: new Date(),
   pin: '',
   nin: '',
 };
@@ -48,6 +50,7 @@ const TeacherFormScreen: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams<{id: string}>();
   const isNew = params.id === 'new';
+  const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [profileImage, setProfileImage] = useState<{
@@ -61,8 +64,8 @@ const TeacherFormScreen: React.FC = () => {
       TeacherService.getTeacherToEdit(params.id).then(teacher => {
         initialValues.name = teacher.name;
         initialValues.surname = teacher.surname;
+        initialValues.birthdate = teacher.birthdate;
         initialValues.subject = teacher.subject || '';
-        initialValues.emis_number = teacher.emis_number || '';
 
         if (teacher.image_id && teacher.image_name && teacher.image_value) {
           setProfileImage({
@@ -198,15 +201,29 @@ const TeacherFormScreen: React.FC = () => {
                   fontSize={'LMD'}
                   fontWeight={500}
                   color={'gray.700'}>
-                  {t('teacher.form.emis_number')}
+                  {t('teacher.form.birthdate')}
                 </Text>
-                <InputText
-                  maxLength={9}
-                  keyboardType="number-pad"
-                  value={values.emis_number}
-                  errorMessage={errors.emis_number}
-                  onChangeText={value => setFieldValue('emis_number', value)}
-                />
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setOpenDatePicker(true);
+                  }}>
+                  <InputText
+                    isReadOnly
+                    value={values.birthdate?.toDateString()}
+                  />
+                </TouchableOpacity>
+
+                {openDatePicker && (
+                  <DateTimePicker
+                    mode="date"
+                    value={values.birthdate || new Date()}
+                    onChange={(_event: DateTimePickerEvent, date?: Date) => {
+                      setFieldValue('birthdate', date);
+                      setOpenDatePicker(false);
+                    }}
+                  />
+                )}
 
                 <VStack mt={4}>
                   <HStack>

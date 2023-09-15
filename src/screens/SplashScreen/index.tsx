@@ -23,12 +23,12 @@ const SplashScreen: React.FC = () => {
         await runMigrations();
         await requestPermission();
 
-        if (isConnected) {
-          await SyncService.trySyncData();
-        }
-
         const currentCoach = await StorageService.getCurrentCoach();
         const currentSchool = await StorageService.getCurrentSchool();
+
+        if (isConnected && currentSchool) {
+          await SyncService.trySyncData();
+        }
 
         selectCoach(currentCoach);
         selectSchool(currentSchool);

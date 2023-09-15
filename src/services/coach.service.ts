@@ -69,8 +69,12 @@ export const CoachService = {
     const db = await getDBConnection();
     const coachId = uuid();
     await db.executeSql(`
-      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, _status)
-      VALUES ('${coachId}', '${coach.name}', '${coach.surname}', '${coach.nin}', '${coach.pin}', '${coach.image_id}','pending')
+      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, _status)
+      VALUES ('${coachId}', '${coach.name}', '${coach.surname}', '${
+      coach.nin
+    }', '${coach.pin}', '${
+      coach.image_id
+    }', '${coach.birthdate?.toJSON()}', 'pending')
     `);
 
     await db.executeSql(`
@@ -91,8 +95,6 @@ export const CoachService = {
       'SELECT * FROM coach_school WHERE coach_id = ? AND school_id = ?',
       [coach.id, school.id],
     )) as any[];
-
-    console.log(response[0].rows.raw());
 
     if (response[0].rows.raw().length === 0) {
       await db.executeSql(`

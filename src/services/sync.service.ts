@@ -48,8 +48,6 @@ const SyncService = {
     const currentSchool = await StorageService.getCurrentSchool();
     const lastSync = await StorageService.getLastSync();
 
-    console.log({currentSchool});
-
     const response = await axios.post<SyncData>(
       'https://api-sl.coachdigital.org/sync',
       {
@@ -110,8 +108,6 @@ const SyncService = {
     const results = await db.executeSql(
       "SELECT * FROM coach WHERE _status != 'synced'",
     );
-
-    console.log('COACHES ', results[0].rows.raw());
 
     return results[0].rows.raw();
   },

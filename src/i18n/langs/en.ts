@@ -162,6 +162,7 @@ const enTranslation = {
   teacher: {
     form: {
       name: 'Name',
+      birthdate: 'Birthdate',
       surname: 'Last name',
       emis_number: 'EMIS number',
       'title-new': 'New teacher',

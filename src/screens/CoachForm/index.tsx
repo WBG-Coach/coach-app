@@ -13,25 +13,32 @@ import {Formik} from 'formik';
 import Toast from '../../components/Toast';
 import PathRoutes from '../../routers/paths';
 import {useCoachContext} from '../../providers/coach.provider';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import {TouchableOpacity} from 'react-native';
 
 export type FormValuesType = {
   name?: string;
   surname?: string;
   pin?: string;
   nin?: string;
+  birthdate?: Date;
 };
 
-const initialValues = {
+const initialValues: FormValuesType = {
   name: '',
   surname: '',
   pin: '',
   nin: '',
+  birthdate: undefined,
 };
 
 const CoachFormScreen: React.FC = () => {
   const toast = useToast();
   const {t} = useTranslation();
   const navigate = useNavigate();
+  const [openDatePicker, setOpenDatePicker] = useState(false);
   const {currentSchool, selectCoach} = useCoachContext();
   const [profileImage, setProfileImage] = useState<{
     name: string;
@@ -113,6 +120,36 @@ const CoachFormScreen: React.FC = () => {
                   errorMessage={errors.surname}
                   onChangeText={value => setFieldValue('surname', value)}
                 />
+
+                <Text
+                  mb={2}
+                  mt={4}
+                  fontSize={'LMD'}
+                  fontWeight={500}
+                  color={'gray.700'}>
+                  {t('teacher.form.birthdate')}
+                </Text>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setOpenDatePicker(true);
+                  }}>
+                  <InputText
+                    isReadOnly
+                    value={values.birthdate?.toDateString()}
+                  />
+                </TouchableOpacity>
+
+                {openDatePicker && (
+                  <DateTimePicker
+                    mode="date"
+                    value={values.birthdate || new Date()}
+                    onChange={(_event: DateTimePickerEvent, date?: Date) => {
+                      setFieldValue('birthdate', date);
+                      setOpenDatePicker(false);
+                    }}
+                  />
+                )}
 
                 <VStack mt={4}>
                   <HStack>

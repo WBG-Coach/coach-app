@@ -1,23 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {TeacherItemType} from '../../types/teacher';
 import {useNavigate} from 'react-router-native';
 import HorizontalMenu from './HorizontalMenu';
-import {useTranslation} from 'react-i18next';
 import PathRoutes from '../../routers/paths';
 import TeachersList from './TeachersList';
-import {Text, VStack} from 'native-base';
+import {VStack} from 'native-base';
 import Page from '../../components/Page';
 import HomeHeader from './HomeHeader';
 import {isTablet} from 'react-native-device-info';
 import BottomNavigator from './BottomNavigator';
+import {useNetInfo} from '@react-native-community/netinfo';
+import SyncService from '../../services/sync.service';
 
 const HomeScreen: React.FC = () => {
-  const {t} = useTranslation();
   const navigate = useNavigate();
+  const {isConnected} = useNetInfo();
 
   const onSelectTeacher = (teacher: TeacherItemType) => {
     navigate(PathRoutes.teacher.details.replace(':id', teacher.id));
   };
+
+  useEffect(() => {
+    SyncService.trySyncData().then(() => console.log('Synced'));
+  }, [isConnected]);
 
   return (
     <Page setting logo noPadding>

@@ -157,7 +157,7 @@ export const TeacherService = {
     const db = await getDBConnection();
     await db.executeSql(
       `
-      INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, _status)
+      INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, birthdate, _status)
       VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
       [
@@ -168,6 +168,7 @@ export const TeacherService = {
         teacher.subject,
         teacher.school_id,
         teacher.image_id,
+        teacher.birthdate?.toJSON(),
       ],
     );
   },
