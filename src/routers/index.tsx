@@ -49,8 +49,6 @@ const RouterProvider: React.FC = () => {
           Component={ChangeLanguageScreen}
         />
 
-        <Route path={PathRoutes.createAccount} Component={CoachFormScreen} />
-
         <Route path={PathRoutes.selectSchool} Component={SchoolSelectScreen} />
 
         <Route path={PathRoutes.syncDetails} Component={SyncDetails} />

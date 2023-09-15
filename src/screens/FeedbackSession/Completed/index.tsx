@@ -8,6 +8,7 @@ import Page from '../../../components/Page';
 import Button from '../../../components/Button';
 import {useNetInfo} from '@react-native-community/netinfo';
 import SyncService from '../../../services/sync.service';
+import PathRoutes from '../../../routers/paths';
 
 const FeedbackSessionCompleted: React.FC = () => {
   const {isConnected} = useNetInfo();
@@ -75,7 +76,7 @@ const FeedbackSessionCompleted: React.FC = () => {
       </Center>
 
       <VStack w={'100%'} pt={3} space={4}>
-        <Button onPress={() => navigate(-999)}>
+        <Button onPress={() => navigate(PathRoutes.home.main, {replace: true})}>
           {t('feedback.completed.button')}
         </Button>
       </VStack>

@@ -109,7 +109,7 @@ const ClassObservationCompleted: React.FC = () => {
           variant={'outline'}
           borderRadius={'8px'}
           borderColor={'white'}
-          onPress={() => navigate(-999)}>
+          onPress={() => navigate(PathRoutes.home.main, {replace: true})}>
           <Text color={'primary.200'}>
             {t('classObservation.observationCompleted.buttonBack')}
           </Text>
