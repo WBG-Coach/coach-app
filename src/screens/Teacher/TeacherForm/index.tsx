@@ -39,7 +39,7 @@ let initialValues: FormValuesType = {
   name: '',
   surname: '',
   subject: '',
-  birthdate: new Date(),
+  birthdate: undefined,
   pin: '',
   nin: '',
 };

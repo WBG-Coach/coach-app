@@ -158,7 +158,7 @@ export const TeacherService = {
     await db.executeSql(
       `
       INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, birthdate, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
       [
         uuid(),
