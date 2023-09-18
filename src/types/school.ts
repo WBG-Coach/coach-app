@@ -5,7 +5,7 @@ export type School = {
   name: string;
   emis_number: string;
 
-  key?: string;
+  schoolKey?: string;
   created_at: Date;
   updated_at: Date;
   teachersCount: number;

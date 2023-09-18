@@ -23,6 +23,7 @@ const SyncService = {
     pendingSessions: number;
   }> => {
     const db = await getDBConnection();
+
     const results = await db.executeSql(`
         SELECT
             (SELECT COUNT(*) FROM teacher where _status != 'synced') AS pendingTeachers,
@@ -49,7 +50,7 @@ const SyncService = {
     const lastSync = await StorageService.getLastSync();
 
     const response = await axios.post<SyncData>(
-      'https://api-sl.coachdigital.org/sync',
+      'https://29b5-177-208-184-177.ngrok-free.app/sync',
       {
         changes,
         lastSync,
@@ -58,7 +59,7 @@ const SyncService = {
         deviceId: await DeviceInfo.getUniqueId(),
         ...(await GeolocationService.getLocation()),
       },
-      {headers: {token: currentSchool?.key}},
+      {headers: {token: currentSchool?.schoolKey}},
     );
 
     if (response.status !== 200) {
