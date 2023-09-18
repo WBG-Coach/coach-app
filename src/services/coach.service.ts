@@ -68,14 +68,21 @@ export const CoachService = {
   ): Promise<Coach> => {
     const db = await getDBConnection();
     const coachId = uuid();
-    await db.executeSql(`
+    await db.executeSql(
+      `
       INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, _status)
-      VALUES ('${coachId}', '${coach.name}', '${coach.surname}', '${
-      coach.nin
-    }', '${coach.pin}', '${
-      coach.image_id
-    }', '${coach.birthdate?.toJSON()}', 'pending')
-    `);
+      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+    `,
+      [
+        coachId,
+        coach.name,
+        coach.surname,
+        coach.nin,
+        coach.pin,
+        coach.image_id,
+        coach.birthdate?.toJSON(),
+      ],
+    );
 
     await db.executeSql(`
       INSERT OR REPLACE INTO coach_school(id, school_id, coach_id, _status)

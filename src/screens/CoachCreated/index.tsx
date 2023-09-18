@@ -20,7 +20,10 @@ const CoachCreatedScreen: React.FC = () => {
       setIsLoading(true);
       SyncService.trySyncData()
         .then(() => setIsLoading(false))
-        .catch(err => console.log(err));
+        .catch(err => {
+          setIsLoading(false);
+          console.log(err);
+        });
     }
   }, [isConnected]);
 
