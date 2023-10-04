@@ -35,6 +35,7 @@ import CoachSelectScreen from '../screens/CoachSelect';
 import SyncDetails from '../screens/SyncDetails';
 import TLCDynamicStep from '../screens/TeacherLearningCircles/DynamicStep';
 import SplashScreen from '../screens/SplashScreen';
+import CoachScriptsScreen from '../screens/CoachScripts';
 
 const RouterProvider: React.FC = () => {
   return (
@@ -50,6 +51,8 @@ const RouterProvider: React.FC = () => {
         />
 
         <Route path={PathRoutes.selectSchool} Component={SchoolSelectScreen} />
+
+        <Route path={PathRoutes.coachScripts} Component={CoachScriptsScreen} />
 
         <Route path={PathRoutes.syncDetails} Component={SyncDetails} />
 

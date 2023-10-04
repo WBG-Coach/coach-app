@@ -103,7 +103,7 @@ const FeedbackSessionAbout: React.FC = () => {
             variant={'outline'}
             borderRadius={'8px'}
             borderColor={'transparent'}
-            onPress={() => navigate(PathRoutes.home.main, {replace: true})}>
+            onPress={() => navigate(PathRoutes.coachScripts)}>
             <Text color={'primary.200'}>
               {t('feedback.mentoringSection.trainingButton')}
             </Text>
