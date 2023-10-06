@@ -11,6 +11,8 @@ const PathRoutes = {
 
   syncDetails: '/syncDetails',
 
+  coachScripts: '/coachScripts',
+
   settings: {
     main: '/settings',
     changeLanguage: '/settings/changeLanguage',

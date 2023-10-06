@@ -1,0 +1,24 @@
+import React from 'react';
+import Page from '../../components/Page';
+import Pdf from 'react-native-pdf';
+import {View} from 'native-base';
+import {Dimensions} from 'react-native';
+
+const CoachScriptsScreen: React.FC = () => {
+  return (
+    <Page title={'Coach Scripts'} back noPadding>
+      <View flex={1}>
+        <Pdf
+          source={{uri: 'bundle-assets://Sierra_Leone_Coach_Manual.pdf'}}
+          style={{
+            flex: 1,
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+          }}
+        />
+      </View>
+    </Page>
+  );
+};
+
+export default CoachScriptsScreen;
