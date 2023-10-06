@@ -1,16 +1,13 @@
-import {Competence} from './competence';
+import {Answer} from './answer';
 import {Image} from './image';
-import {Session} from './session';
 
 export type Feedback = {
   id: string;
 
   value: string;
-  session_id: string;
-  competence_id: string;
+  answer_id: string;
 
-  session?: Session;
-  competence?: Competence;
+  answer?: Answer;
   images?: Image[];
 
   _status?: string;

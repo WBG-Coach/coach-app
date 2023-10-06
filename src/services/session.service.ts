@@ -64,15 +64,10 @@ export const SessionService = {
       feedbacks?.map(feedback => {
         return db.executeSql(
           `
-          INSERT OR REPLACE INTO feedback(id, value, competence_id, session_id, _status)
-          VALUES (?, ?, ?, ?, 'synced')
+          INSERT OR REPLACE INTO feedback(id, value, answer_id, _status)
+          VALUES (?, ?, ?, 'synced')
         `,
-          [
-            feedback.id,
-            feedback.value,
-            feedback.competence_id,
-            feedback.session_id,
-          ],
+          [feedback.id, feedback.value, feedback.answer_id],
         );
       }),
     );
@@ -161,20 +156,16 @@ export const SessionService = {
     return result[0].rows.raw();
   },
 
-  createFeedback: async ({
-    value,
-    competence_id,
-    session_id,
-  }: Partial<Feedback>) => {
+  createFeedback: async ({value, answer_id}: Partial<Feedback>) => {
     const db = await getDBConnection();
     const feedbackId = uuid();
 
     await db.executeSql(
       `
-      INSERT INTO feedback(id, value, competence_id, session_id, _status)
-      VALUES (?, ?, ?, ?, 'pending')
+      INSERT INTO feedback(id, value, answer_id, _status)
+      VALUES (?, ?, ?, 'pending')
     `,
-      [feedbackId, value, competence_id, session_id],
+      [feedbackId, value, answer_id],
     );
 
     return feedbackId;

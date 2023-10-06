@@ -24,7 +24,7 @@ const FeedbackSessionForm: React.FC = () => {
   >([]);
   const {t} = useTranslation();
   const {
-    state: {competence, sessionId},
+    state: {answer},
   } = useLocation();
   const navigate = useNavigate();
   const [showImagePicker, setShowImagePicker] = useState(false);
@@ -38,9 +38,8 @@ const FeedbackSessionForm: React.FC = () => {
     setLoading(true);
     if (actions) {
       const feedbackId = await SessionService.createFeedback({
+        answer_id: answer.id,
         value: actions,
-        session_id: sessionId,
-        competence_id: competence.id,
       });
 
       await Promise.all(
@@ -74,7 +73,7 @@ const FeedbackSessionForm: React.FC = () => {
 
           <VStack mt={7} space={5}>
             <Text fontSize={'18px'} fontWeight={700} color={'gray.700'}>
-              {competence.title}
+              {answer}
             </Text>
             <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
               {t('feedback.form.actionsToImprove')}
