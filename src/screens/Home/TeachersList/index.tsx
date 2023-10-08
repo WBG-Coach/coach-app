@@ -13,6 +13,7 @@ import Icon from '../../../components/Icon';
 import TeacherItem from '../TeacherItem';
 import useDebounce from '../../../hooks/debounce';
 import InputText from '../../../components/InputText';
+import Button from '../../../components/Button';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -104,18 +105,13 @@ const TeachersList: React.FC<Props> = ({
         </VStack>
 
         {!hideNewTeacherButton && teachersList.length > 0 && (
-          <TouchableOpacity
+          <Button
+            variant={'outlined'}
             onPress={() =>
               navigate(PathRoutes.teacher.form.replace(':id', 'new'))
             }>
-            <HStack alignSelf={'center'} mt={6} space={3} alignItems={'center'}>
-              <Icon
-                name={'plus-circle-solid'}
-                color={theme.colors.primary[200]}
-              />
-              <Text color={'primary.200'}>{t('home.teachers.addNew')}</Text>
-            </HStack>
-          </TouchableOpacity>
+            {t('home.teachers.addNew')}
+          </Button>
         )}
       </HStack>
 

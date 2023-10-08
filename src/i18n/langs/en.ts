@@ -100,6 +100,7 @@ const enTranslation = {
       newSession: 'Start a new session',
       switchSchools: 'Switch schools',
       switchCoach: 'Switch coaches',
+      coachScript: 'Coach script',
       switchProfile: 'Switch to a different coach profile',
       offlineSync: 'Offline data synchronization',
       startOver: 'Start over',

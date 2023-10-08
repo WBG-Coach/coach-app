@@ -60,7 +60,7 @@ const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
         <VStack w="full" mt="auto" p="16px" bg="white" borderTopRadius={'20px'}>
           <BottomSheetTooltip content={tooltipData || ''} />
           <Button variant="outlined" onPress={() => setTooltipData(undefined)}>
-            {'Ok'}
+            Ok
           </Button>
         </VStack>
       </Modal>

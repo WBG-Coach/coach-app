@@ -26,6 +26,11 @@ const HorizontalMenu: React.FC = () => {
       onPress: () => navigate(PathRoutes.home.newSession),
     },
     {
+      icon: 'clipboard-notes',
+      label: t('home.menu-items.coachScript'),
+      onPress: () => navigate(PathRoutes.coachScripts),
+    },
+    {
       icon: 'comment-dots',
       label: t('home.menu-items.pendingSession'),
       onPress: () => navigate(PathRoutes.home.pendingSessions),

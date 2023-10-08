@@ -4,6 +4,8 @@ import {TouchableOpacity} from 'react-native';
 import {Props} from './types';
 import Icon from '../Icon';
 
+const StarsLabels = ['Low', 'Mid', 'High'];
+
 const StarRating: React.FC<Props> = ({onPress, size, value}) => {
   const starsLength = Array(size).fill({});
   const theme = useTheme();
@@ -35,17 +37,14 @@ const StarRating: React.FC<Props> = ({onPress, size, value}) => {
     <Center>
       <VStack>
         <HStack space={3} justifyContent="space-around">
-          {starsLength.map((_, index) => renderStars(value, index + 1))}
-        </HStack>
-
-        <HStack justifyContent={'space-between'}>
-          <Text color={'gray.600'} left={0} bottom={0} mr="24px">
-            Needs work
-          </Text>
-
-          <Text color={'gray.600'} left={0} bottom={0} ml="24px">
-            Great work
-          </Text>
+          {starsLength.map((_, index) => (
+            <VStack key={index} alignItems={'center'}>
+              {renderStars(value, index + 1)}
+              <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
+                {size === StarsLabels.length ? StarsLabels[index] : index + 1}
+              </Text>
+            </VStack>
+          ))}
         </HStack>
       </VStack>
     </Center>
