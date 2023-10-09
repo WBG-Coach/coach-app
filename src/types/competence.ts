@@ -10,6 +10,7 @@ export type CompetenceAnalytics = {
   id: string;
   title: string;
   questionsScale: number;
+  questions: Question[];
   sumAnswers: number;
   totalQuestions: number;
 };

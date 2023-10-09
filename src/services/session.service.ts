@@ -1,5 +1,5 @@
 import {Answer} from '../types/answer';
-import {CompetenceAnalytics} from '../types/competence';
+import {Competence, CompetenceAnalytics} from '../types/competence';
 import {Feedback} from '../types/feedback';
 import {Session} from '../types/session';
 import {getDBConnection} from './database.service';
@@ -148,12 +148,24 @@ export const SessionService = {
           (SELECT q.scale FROM question as q WHERE q.competence_id = c.id LIMIT 1) as questionsScale,
           (SELECT COUNT(*) FROM question as q WHERE q.competence_id = c.id) as totalQuestions,
           (SELECT SUM(a.value) FROM answer as a INNER JOIN question as q ON a.question_id = q.id WHERE q.competence_id = c.id AND a.session_id = ?) as sumAnswers
-        FROM competence as c;
+        FROM competence as c
       `,
       [sessionId],
     )) as any[];
 
-    return result[0].rows.raw();
+    const competences: CompetenceAnalytics[] = result[0].rows.raw();
+
+    return Promise.all(
+      competences.map(async competence => ({
+        ...competence,
+        questions: (
+          (await db.executeSql(
+            'SELECT * FROM question as q WHERE q.competence_id = ?',
+            [competence.id],
+          )) as any[]
+        )[0].rows.raw(),
+      })),
+    );
   },
 
   createFeedback: async ({value, answer_id}: Partial<Feedback>) => {
