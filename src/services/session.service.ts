@@ -214,7 +214,7 @@ export const SessionService = {
     await db.executeSql(
       `
       UPDATE session
-      SET feedback_id = ?
+      SET feedback_id = ?, _status = 'pending'
       WHERE id = ?
     `,
       [feedbackId, session_id],
