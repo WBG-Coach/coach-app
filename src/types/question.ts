@@ -6,6 +6,7 @@ export type Question = {
   scale: number;
   description: string;
   tooltip_data: string;
+  competence_id: string;
 
   answers?: Answer[];
 };

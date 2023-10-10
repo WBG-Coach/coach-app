@@ -2,14 +2,12 @@ import React, {useCallback, useState} from 'react';
 import {TeacherService} from '../../../services/teacher.service';
 import {useCoachContext} from '../../../providers/coach.provider';
 import InfiniteScroll from '../../../components/InfiniteScroll';
-import {Box, Center, HStack, Text, VStack, useTheme} from 'native-base';
+import {Center, HStack, Text, VStack} from 'native-base';
 import {TeacherItemType} from '../../../types/teacher';
 import EmptyStateComponent from '../EmptyState';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
-import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import Icon from '../../../components/Icon';
 import TeacherItem from '../TeacherItem';
 import useDebounce from '../../../hooks/debounce';
 import InputText from '../../../components/InputText';
@@ -33,7 +31,6 @@ const TeachersList: React.FC<Props> = ({
   showSearchFilter,
   hideNewTeacherButton,
 }) => {
-  const theme = useTheme();
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('');
   const {currentSchool} = useCoachContext();

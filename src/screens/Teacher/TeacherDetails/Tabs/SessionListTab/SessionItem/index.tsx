@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {SessionService} from '../../../../../../services/session.service';
 import {Box, HStack, Text, VStack, useTheme} from 'native-base';
+import StarsTag from '../../../../../../components/StarsTag';
+import {Session} from '../../../../../../types/session';
+import Icon from '../../../../../../components/Icon';
 import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
-import {Session} from '../../../../../../types/session';
-import StarsTag from '../../../../../../components/StarsTag';
-import Icon from '../../../../../../components/Icon';
 import moment from 'moment';
-import {SessionService} from '../../../../../../services/session.service';
 
 type Props = {
   index: number;
@@ -22,7 +22,9 @@ const SessionItem: React.FC<Props> = ({onPress, session, index}) => {
   useEffect(() => {
     (async () => {
       const competences =
-        await SessionService.getSessionAnswersGroupedByCompetence(session.id);
+        await SessionService.getSessionAnswersCountGroupedByCompetence(
+          session.id,
+        );
 
       const overall = Math.round(
         competences.reduce(

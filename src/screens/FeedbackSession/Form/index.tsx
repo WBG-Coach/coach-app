@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   VStack,
@@ -6,6 +6,8 @@ import {
   TextArea,
   useTheme,
   ScrollView,
+  Center,
+  Spinner,
 } from 'native-base';
 import ImagePickerModal from '../../../components/ImagePickerModal';
 import {SessionService} from '../../../services/session.service';
@@ -17,6 +19,8 @@ import Button from '../../../components/Button';
 import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
 import Page from '../../../components/Page';
+import {Question} from '../../../types/question';
+import {QuestionService} from '../../../services/question.service';
 
 const FeedbackSessionForm: React.FC = () => {
   const [images, setImages] = useState<
@@ -24,9 +28,10 @@ const FeedbackSessionForm: React.FC = () => {
   >([]);
   const {t} = useTranslation();
   const {
-    state: {answer},
+    state: {sessionId, answerId},
   } = useLocation();
   const navigate = useNavigate();
+  const [question, setQuestion] = useState<Question>();
   const [showImagePicker, setShowImagePicker] = useState(false);
   const [actions, setActions] = useState('');
   const [submittedWithError, setSubmittedWithError] = useState(false);
@@ -34,13 +39,20 @@ const FeedbackSessionForm: React.FC = () => {
 
   const theme = useTheme();
 
+  useEffect(() => {
+    QuestionService.findQuestionByAnswerId(answerId).then(setQuestion);
+  }, [answerId]);
+
   const finishCoachSession = async () => {
     setLoading(true);
     if (actions) {
-      const feedbackId = await SessionService.createFeedback({
-        answer_id: answer.id,
-        value: actions,
-      });
+      const feedbackId = await SessionService.createFeedback(
+        {
+          answer_id: answerId,
+          value: actions,
+        },
+        sessionId,
+      );
 
       await Promise.all(
         images.map(
@@ -60,6 +72,14 @@ const FeedbackSessionForm: React.FC = () => {
     setLoading(false);
   };
 
+  if (!question) {
+    return (
+      <Center bg="white" w="full" h="full">
+        <Spinner size="lg" />
+      </Center>
+    );
+  }
+
   return (
     <Page back title={t('feedbackSession.title')}>
       <VStack flex={1}>
@@ -73,7 +93,7 @@ const FeedbackSessionForm: React.FC = () => {
 
           <VStack mt={7} space={5}>
             <Text fontSize={'18px'} fontWeight={700} color={'gray.700'}>
-              {answer}
+              {question.title}
             </Text>
             <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
               {t('feedback.form.actionsToImprove')}

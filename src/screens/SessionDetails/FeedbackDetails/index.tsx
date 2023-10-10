@@ -20,10 +20,12 @@ const FeedbackDetailScreen: React.FC = () => {
   const {state} = useLocation();
   const {t} = useTranslation();
   const session: Session = state.session;
-  const [feedback, setFeedback] = useState<Feedback>();
+  const [feedback, setFeedback] = useState<
+    Feedback & {competence_title: string}
+  >();
 
   useEffect(() => {
-    SessionService.getFeedbackBySession(session.id).then(setFeedback);
+    SessionService.getFeedbackById(session.feedback_id).then(setFeedback);
   }, [session]);
 
   return (
@@ -44,7 +46,7 @@ const FeedbackDetailScreen: React.FC = () => {
 
             <VStack mt={7} space={5}>
               <Text fontSize={'18px'} fontWeight={700} color={'gray.700'}>
-                {feedback.competence?.title}
+                {feedback.competence_title}
               </Text>
               <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
                 {t('feedback.form.actionsToImprove')}

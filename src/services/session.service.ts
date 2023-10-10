@@ -1,5 +1,9 @@
 import {Answer} from '../types/answer';
-import {Competence, CompetenceAnalytics} from '../types/competence';
+import {
+  Competence,
+  CompetenceAnalytics,
+  CompetenceAnswers,
+} from '../types/competence';
 import {Feedback} from '../types/feedback';
 import {Session} from '../types/session';
 import {getDBConnection} from './database.service';
@@ -15,14 +19,10 @@ export const SessionService = {
     const db = await getDBConnection();
     const result = (await db.executeSql(
       `
-        SELECT
-          s.*,
-          f.id as feedback_id
-        FROM session as s
-        LEFT JOIN feedback f ON f.session_id = s.id
-        WHERE
-          s.teacher_id = ?
-        LIMIT ?
+        SELECT s.*
+          FROM session as s
+         WHERE s.teacher_id = ?
+         LIMIT ?
         OFFSET ?
       `,
       [teacher_id, pageSize, (pageNumber - 1) * pageSize],
@@ -139,6 +139,46 @@ export const SessionService = {
 
   getSessionAnswersGroupedByCompetence: async (
     sessionId: string,
+  ): Promise<CompetenceAnswers[]> => {
+    const db = await getDBConnection();
+    const competenciesResult = (await db.executeSql(
+      'SELECT c.* FROM competence as c',
+    )) as any[];
+
+    const competencies = competenciesResult[0].rows.raw();
+
+    return await Promise.all(
+      competencies.map(async (competence: any) => {
+        const answersResult = (await db.executeSql(
+          `SELECT a.* 
+             FROM answer as a 
+       INNER JOIN question as q ON q.id = a.question_id
+            WHERE a.session_id = ? 
+              AND q.competence_id = ?`,
+          [sessionId, competence.id],
+        )) as any[];
+
+        const answers = answersResult[0].rows.raw();
+
+        return {
+          ...competence,
+          answers: await Promise.all(
+            answers.map(async (answer: Answer) => {
+              const questionResult = (await db.executeSql(
+                'SELECT q.* FROM question as q WHERE q.id = ?',
+                [answer.question_id],
+              )) as any[];
+
+              return {...answer, question: questionResult[0].rows.raw()[0]};
+            }),
+          ),
+        };
+      }),
+    );
+  },
+
+  getSessionAnswersCountGroupedByCompetence: async (
+    sessionId: string,
   ): Promise<CompetenceAnalytics[]> => {
     const db = await getDBConnection();
     const result = (await db.executeSql(
@@ -153,22 +193,13 @@ export const SessionService = {
       [sessionId],
     )) as any[];
 
-    const competences: CompetenceAnalytics[] = result[0].rows.raw();
-
-    return Promise.all(
-      competences.map(async competence => ({
-        ...competence,
-        questions: (
-          (await db.executeSql(
-            'SELECT * FROM question as q WHERE q.competence_id = ?',
-            [competence.id],
-          )) as any[]
-        )[0].rows.raw(),
-      })),
-    );
+    return result[0].rows.raw();
   },
 
-  createFeedback: async ({value, answer_id}: Partial<Feedback>) => {
+  createFeedback: async (
+    {value, answer_id}: Partial<Feedback>,
+    session_id: string,
+  ) => {
     const db = await getDBConnection();
     const feedbackId = uuid();
 
@@ -180,10 +211,21 @@ export const SessionService = {
       [feedbackId, value, answer_id],
     );
 
+    await db.executeSql(
+      `
+      UPDATE session
+      SET feedback_id = ?
+      WHERE id = ?
+    `,
+      [feedbackId, session_id],
+    );
+
     return feedbackId;
   },
 
-  getFeedbackBySession: async (sessionId: string): Promise<Feedback> => {
+  getFeedbackById: async (
+    id: string,
+  ): Promise<Feedback & {competence_title: string}> => {
     const db = await getDBConnection();
     const result = (await db.executeSql(
       `
@@ -192,18 +234,15 @@ export const SessionService = {
           c.id as competence_id,
           c.title as competence_title
         FROM feedback as f
-        INNER JOIN competence as c on c.id = f.competence_id
-        WHERE f.session_id = ?
+        INNER JOIN answer as a on a.id = f.answer_id
+        INNER JOIN question as q on q.id = a.question_id
+        INNER JOIN competence as c on c.id = q.competence_id
+        WHERE f.id = ?
       `,
-      [sessionId],
+      [id],
     )) as any[];
 
-    const feedback = result[0].rows.raw().map(
-      ({competence_id, competence_title, ...item}: any): Feedback => ({
-        ...item,
-        competence: {id: competence_id, title: competence_title},
-      }),
-    )[0];
+    const feedback = result[0].rows.raw()[0];
 
     return {
       ...feedback,

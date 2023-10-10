@@ -35,48 +35,52 @@ const SyncService = {
   },
 
   trySyncData: async (): Promise<void> => {
-    const db = await getDBConnection();
-    const changes = {
-      images: await SyncService.getPendingImages(db),
-      coaches: await SyncService.getPendingCoaches(db),
-      coachSchools: await SyncService.getPendingCoachSchools(db),
-      teachers: await SyncService.getPendingTeachers(db),
-      sessions: await SyncService.getPendingSessions(db),
-      answers: await SyncService.getPendingAnswers(db),
-      feedbacks: await SyncService.getPendingFeedbacks(db),
-    };
+    try {
+      const db = await getDBConnection();
+      const changes = {
+        images: await SyncService.getPendingImages(db),
+        coaches: await SyncService.getPendingCoaches(db),
+        coachSchools: await SyncService.getPendingCoachSchools(db),
+        teachers: await SyncService.getPendingTeachers(db),
+        sessions: await SyncService.getPendingSessions(db),
+        answers: await SyncService.getPendingAnswers(db),
+        feedbacks: await SyncService.getPendingFeedbacks(db),
+      };
 
-    const currentSchool = await StorageService.getCurrentSchool();
-    const lastSync = await StorageService.getLastSync();
+      const currentSchool = await StorageService.getCurrentSchool();
+      const lastSync = await StorageService.getLastSync();
 
-    const response = await axios.post<SyncData>(
-      'https://api-sl.coachdigital.org/sync',
-      {
-        changes,
-        lastSync,
-        model: DeviceInfo.getDeviceId(),
-        apiLevel: await DeviceInfo.getApiLevel(),
-        deviceId: await DeviceInfo.getUniqueId(),
-        ...(await GeolocationService.getLocation()),
-      },
-      {headers: {token: currentSchool?.schoolKey}},
-    );
+      const response = await axios.post<SyncData>(
+        'https://444a-177-208-184-177.ngrok-free.app/sync',
+        {
+          changes,
+          lastSync,
+          model: DeviceInfo.getDeviceId(),
+          apiLevel: await DeviceInfo.getApiLevel(),
+          deviceId: await DeviceInfo.getUniqueId(),
+          ...(await GeolocationService.getLocation()),
+        },
+        {headers: {token: currentSchool?.schoolKey}},
+      );
 
-    if (response.status !== 200) {
-      throw new Error();
+      if (response.status !== 200) {
+        throw new Error();
+      }
+
+      if (currentSchool && response.data.total > 0) {
+        await CoachService.sync(response.data.coaches);
+        await CoachService.syncCoachSchools(response.data.coachSchools);
+        await TeacherService.sync(response.data.teachers);
+        await SessionService.sync(response.data.sessions);
+        await AnswerService.sync(response.data.answers);
+        await SessionService.syncFeedbacks(response.data.feedbacks);
+        await StorageService.setLastSync(new Date());
+      }
+
+      await SyncService.updateAllToSynced(db);
+    } catch (err) {
+      console.log({err});
     }
-
-    if (currentSchool && response.data.total > 0) {
-      await CoachService.sync(response.data.coaches);
-      await CoachService.syncCoachSchools(response.data.coachSchools);
-      await TeacherService.sync(response.data.teachers);
-      await SessionService.sync(response.data.sessions);
-      await AnswerService.sync(response.data.answers);
-      await SessionService.syncFeedbacks(response.data.feedbacks);
-      await StorageService.setLastSync(new Date());
-    }
-
-    await SyncService.updateAllToSynced(db);
   },
 
   updateAllToSynced: async (db: SQLiteDatabase): Promise<void> => {

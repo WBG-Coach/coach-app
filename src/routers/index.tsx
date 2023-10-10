@@ -17,7 +17,7 @@ import ClassObservationConfirmation from '../screens/ClassObservation/Confirmati
 import ClassObservationCompleted from '../screens/ClassObservation/Completed';
 import SessionDetailsScreen from '../screens/SessionDetails';
 import FeedbackSessionAbout from '../screens/FeedbackSession/About';
-import FeedbackSessionChooseCompetence from '../screens/FeedbackSession/ChooseCompetence';
+import FeedbackSessionChooseAnswer from '../screens/FeedbackSession/ChooseAnswer';
 import FeedbackSessionForm from '../screens/FeedbackSession/Form';
 import FeedbackSessionCompleted from '../screens/FeedbackSession/Completed';
 import FeedbackDetailScreen from '../screens/SessionDetails/FeedbackDetails';
@@ -126,7 +126,7 @@ const RouterProvider: React.FC = () => {
         />
         <Route
           path={PathRoutes.feedbackSession.chooseCompetence}
-          Component={FeedbackSessionChooseCompetence}
+          Component={FeedbackSessionChooseAnswer}
         />
         <Route
           path={PathRoutes.feedbackSession.form}

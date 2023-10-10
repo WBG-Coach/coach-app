@@ -28,14 +28,10 @@ export const SchoolService = {
     const db = await getDBConnection();
     const result = (await db.executeSql(
       `
-        SELECT
-          s.*,
-          f.id as feedback_id
-        FROM session as s
-        LEFT JOIN feedback f ON f.session_id = s.id
-        WHERE
-          s.school_id = ?
-        LIMIT ?
+        SELECT s.*
+          FROM session as s
+         WHERE s.school_id = ?
+         LIMIT ?
         OFFSET ?
       `,
       [school_id, pageSize, (pageNumber - 1) * pageSize],

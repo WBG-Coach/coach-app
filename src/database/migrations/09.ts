@@ -1,7 +1,7 @@
 import {SQLiteDatabase} from 'react-native-sqlite-storage';
 import {getDBConnection} from '../../services/database.service';
 
-export const runMigrationV8 = async () => {
+export const runMigrationV9 = async () => {
   const db = await getDBConnection();
   await updateFeedbackTable(db);
 };
