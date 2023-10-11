@@ -82,7 +82,7 @@ const ClassObservationSetup: React.FC = () => {
 
             <VStack space={4} mt={6}>
               <VStack space={2}>
-                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
                   {t('classObservation.setup.questions.$0.title')}
                 </Text>
 
@@ -105,7 +105,7 @@ const ClassObservationSetup: React.FC = () => {
               </VStack>
 
               <VStack space={2}>
-                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
                   {t('classObservation.setup.questions.$1.title')}
                 </Text>
 
@@ -130,7 +130,7 @@ const ClassObservationSetup: React.FC = () => {
               </VStack>
 
               <VStack space={2}>
-                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
                   {t('classObservation.setup.questions.$2.title')}
                 </Text>
 
@@ -149,7 +149,7 @@ const ClassObservationSetup: React.FC = () => {
               </VStack>
 
               <VStack space={2}>
-                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
                   {t('classObservation.setup.questions.$3.title')}
                 </Text>
                 <SelectModal
@@ -175,7 +175,7 @@ const ClassObservationSetup: React.FC = () => {
               </VStack>
 
               <VStack space={2} mb="4px">
-                <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+                <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'}>
                   {t('classObservation.setup.questions.$4.title')}
                 </Text>
                 <TextArea

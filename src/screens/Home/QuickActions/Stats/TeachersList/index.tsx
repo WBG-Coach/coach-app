@@ -119,10 +119,10 @@ const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher}) => {
         </Center>
       ) : (
         <>
-          <Text fontSize={'LMD'} fontWeight={500} color={'gray.800'} mt={2}>
+          <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'} mt={2}>
             {t('home.stats.available.title')}
           </Text>
-          <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'} mb={4}>
+          <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'} mb={4}>
             {t('home.stats.available.subtitle')}
           </Text>
           {teachersList.available.length >= 1 ? (
@@ -146,7 +146,7 @@ const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher}) => {
                 />
 
                 <Text
-                  fontSize={'TSM'}
+                  fontSize={'TMD'}
                   textAlign={'center'}
                   fontWeight={700}
                   color={'gray.800'}
@@ -164,10 +164,10 @@ const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher}) => {
               </VStack>
             </Center>
           )}
-          <Text fontSize={'LMD'} fontWeight={500} color={'gray.800'} mt={6}>
+          <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'} mt={6}>
             {t('home.stats.unavailable.title')}
           </Text>
-          <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'}>
+          <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
             {t('home.stats.unavailable.subtitle')}
           </Text>
           {teachersList.unavailable.length >= 1 ? (
@@ -192,7 +192,7 @@ const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher}) => {
                 />
 
                 <Text
-                  fontSize={'TSM'}
+                  fontSize={'TMD'}
                   textAlign={'center'}
                   fontWeight={700}
                   color={'gray.800'}

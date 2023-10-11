@@ -66,7 +66,7 @@ const ClassObservationAbout: React.FC = () => {
           <Box
             w={'4px'}
             left={'18px'}
-            h={'85%'}
+            h={'80%'}
             background={'primary.100'}
             position={'absolute'}
           />
@@ -80,7 +80,7 @@ const ClassObservationAbout: React.FC = () => {
                   w={'40px'}
                   h={'40px'}
                   zIndex={2}
-                  left={'-0px'}
+                  left={0}
                   position={'absolute'}
                   borderRadius={'500px'}
                   background={'primary.0'}>
@@ -94,10 +94,10 @@ const ClassObservationAbout: React.FC = () => {
                   <Text fontSize={'TMD'} fontWeight={700} color={'gray.800'}>
                     {item.title}
                   </Text>
-                  <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                  <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'}>
                     {item.estimated}
                   </Text>
-                  <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'}>
+                  <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
                     {item.description}
                   </Text>
                 </VStack>
