@@ -91,17 +91,20 @@ export const TeacherService = {
     AND
       UPPER(t.name) LIKE UPPER(?) || '%'
     AND
-      EXISTS (
+      NOT EXISTS (
         SELECT 1
         FROM session as s2
-        LEFT JOIN feedback as f2 on f2.session_id = s2.id
-        WHERE s2.teacher_id = t.id AND f2.id IS NULL
+        LEFT JOIN answer as a2 on a2.session_id = s2.id
+        LEFT JOIN feedback as f2 on f2.answer_id = a2.id
+        WHERE f2.id NOT NULL AND s2.teacher_id = t.id
       )
     LIMIT ?
     OFFSET ?;             
       `,
       [school_id, filter, pageSize, (pageNumber - 1) * pageSize],
     )) as any[];
+
+    console.log(result[0].rows.raw());
 
     return result[0].rows.raw();
   },
