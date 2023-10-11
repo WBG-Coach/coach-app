@@ -52,7 +52,7 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher, customSubLabel}) => {
 
             {customSubLabel !== undefined ? (
               customSubLabel && (
-                <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'}>
+                <Text fontSize={'LSM'} fontWeight={400} color={'gray.700'}>
                   {customSubLabel}
                 </Text>
               )

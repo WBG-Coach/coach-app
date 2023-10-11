@@ -26,7 +26,7 @@ const Accordion: React.FC<Props> = ({
             mt="12px"
             mb="16px"
             color="#111417"
-            fontSize="20px"
+            fontSize="HXS"
             fontWeight="700">
             {title}
           </Text>

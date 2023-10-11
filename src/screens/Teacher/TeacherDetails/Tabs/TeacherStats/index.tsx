@@ -201,13 +201,13 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
                           />
                           <Text
                             ml={1}
-                            fontSize={'LSM'}
+                            fontSize={'TSM'}
                             fontWeight={400}
                             color={'gray.700'}>
                             {item.isCrescent ? 'Improved' : 'Needs work'}
                           </Text>
                           <Text
-                            fontSize={'TXS'}
+                            fontSize={'TSM'}
                             fontWeight={400}
                             color={'gray.600'}>
                             {t('teacher.tabs.stats.lastSession') ||

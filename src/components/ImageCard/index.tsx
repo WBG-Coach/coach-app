@@ -53,12 +53,12 @@ const ImageCard: React.FC<Props> = ({
           <VStack ml={2} maxW={'50%'} overflow={'hidden'} space={0.5}>
             <Text
               numberOfLines={1}
-              fontSize={'LMD'}
+              fontSize={'TMD'}
               fontWeight={500}
               color={'gray.700'}>
               {name}
             </Text>
-            <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+            <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
               {moment(new Date(new Date(created_at))).format(
                 'DD MMM, YYYY - HH:mm',
               )}
@@ -71,7 +71,7 @@ const ImageCard: React.FC<Props> = ({
                 size={16}
               />
 
-              <Text fontSize={'TXS'} fontWeight={400} color={'green.300'}>
+              <Text fontSize={'TSM'} fontWeight={400} color={'green.300'}>
                 Image sent
               </Text>
             </HStack>

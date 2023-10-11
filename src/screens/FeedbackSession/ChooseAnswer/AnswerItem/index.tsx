@@ -25,7 +25,7 @@ const AnswerItem: React.FC<Props> = ({
             onPress={() => handleSelectAnswer(answer)}>
             <HStack alignItems={'flex-start'}>
               <VStack flex={1}>
-                <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+                <Text fontSize={'TMD'} fontWeight={500} color={'gray.700'}>
                   {answer.question?.title}
                 </Text>
                 {answer.question?.description && (

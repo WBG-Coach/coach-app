@@ -21,14 +21,14 @@ const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
     <VStack mb="24px">
       <HStack mb={'16px'}>
         <VStack flex={1} mr={1}>
-          <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+          <Text fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
             {question.title}
           </Text>
 
           {question.description && (
             <Text
               mt={'4px'}
-              fontSize={'TXS'}
+              fontSize={'TMD'}
               fontWeight={400}
               color={'gray.600'}>
               {question.description}
