@@ -122,7 +122,7 @@ const FeedbackSessionForm: React.FC = () => {
                 {t('feedback.form.uploadImage')}
               </Text>
               <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
-                {t('feedback.form.optional')}
+                {t('common.optional')}
               </Text>
             </HStack>
 

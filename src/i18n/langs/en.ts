@@ -2,6 +2,7 @@ const enTranslation = {
   errors: {requiredField: 'This field is required.'},
   common: {
     'load-more': 'Load more',
+    optional: 'Optional',
     search: 'Search',
     'image-picker': {
       'upload-image-modal-title': 'Upload as image',
@@ -11,45 +12,37 @@ const enTranslation = {
       'photo-gallery-button': 'Photo gallery',
     },
   },
-  splash: {},
+  components: {
+    starsTag: {
+      notEvaluted: 'Not evaluated',
+      needsWork: 'Needs work',
+      needsAttention: 'Needs attention',
+      almostThere: 'Almost there',
+      doingGreat: 'Doing great',
+    },
+  },
   aboutScan: {
     title: 'Scan the QR Code',
     description:
       "Scan the QR code in the Coach's Manual to setup your School information in the app",
     scan: 'Scan QR Code',
-    doItLater: 'Do it later',
   },
   login: {
-    'login-button': 'Login',
-    'create-account': 'Create account',
-    username: 'Username',
-    password: 'Password',
-    loginError: 'Login error',
-    invalidUserPassword: 'Incorrect username or password',
-    language: 'Language',
-    languageTitle: 'Select your language',
     createAccount: {
       title: 'New account',
       takePhoto: 'Take/Choose photo',
       name: 'First name',
       surname: 'Last name',
-      username: 'Username',
-      password: 'Password',
       pin: 'PIN',
       pin_description: 'Personal Identification Number',
       nin: 'NIN',
       nin_description: 'National Identification Number',
-      optional: 'Optional',
-      'confirm-password': 'Confirm password',
       'create-account-button': 'Create account',
       success: 'Account created successfully',
     },
     accountCreated: {
       title: 'Account created',
       subtitle: 'Now you can use your account to log in to this device',
-      boxTitle: 'Save your credentials',
-      boxSubtitle:
-        'Take note of your username and password, you will need them to access your account again',
     },
   },
   logout: {
@@ -64,7 +57,6 @@ const enTranslation = {
     language: 'Language',
     lastSync: 'Last sync: {{value}}',
     appVersion: 'App version',
-    sync_now: 'Synchronize data now',
     'unsynced-items': 'Unsynchronized items',
     'unsynced-teacher': 'Teachers:',
     'unsynced-session': 'Sessions:',
@@ -75,7 +67,6 @@ const enTranslation = {
   },
   coachSelect: {
     title: 'Select your profile',
-    search: 'Search',
     'new-profile': 'Create new profile',
     'item-description_interval':
       '(0)[No sessions here];(1)[1 session here];(2-inf)[{{count}} sessions here];',
@@ -83,10 +74,8 @@ const enTranslation = {
   },
   schoolSelect: {
     title: 'Select your school',
-    search: 'Search',
     'item-description_interval':
       '(0)[No teachers here];(1)[1 teacher here];(2-inf)[{{count}} teachers here];',
-    'item-description-empty': 'No schools here',
   },
   syncDetails: {
     title: 'Setup complete',
@@ -102,10 +91,8 @@ const enTranslation = {
       switchCoach: 'Switch coaches',
       coachScript: 'Coach script',
       switchProfile: 'Switch to a different coach profile',
-      offlineSync: 'Offline data synchronization',
       startOver: 'Start over',
       statics: 'Statistics',
-      pendingSession: 'Feedback needed',
     },
     teachers: {
       title: 'Teachers',
@@ -125,7 +112,6 @@ const enTranslation = {
     stats: {
       page_title: 'Statistics',
       title: 'Check teacher stats',
-      subtitle: 'Select a teacher to see their progress',
       empty: {
         title: 'No teacher registered',
         subtitle:
@@ -165,7 +151,6 @@ const enTranslation = {
       name: 'Name',
       birthdate: 'Birthdate',
       surname: 'Last name',
-      emis_number: 'EMIS number',
       'title-new': 'New teacher',
       'title-edit': 'Edit teacher',
       subject: 'Principal subject',
@@ -176,7 +161,6 @@ const enTranslation = {
       pin_description: 'Personal Identification Number',
       nin: 'NIN',
       nin_description: 'National Identification Number',
-      optional: 'Optional',
     },
     details: {
       editTeacher: 'Edit teacher',
@@ -190,32 +174,19 @@ const enTranslation = {
         stillNoSession: 'There are no observation sessions recorded',
         stillNoSessionDescription:
           'You may start a new class observation with this teacher',
-        pendingFeedback: 'Pending observation feedback',
-        haventDone:
-          'You have not completed the feedback session for the previous observation with this teacher',
-        startFeedback: 'Start feedback session now',
         selectCoach: 'Select coaching session',
         viewSummary:
           'You may view the summary of the observation or the feedback you provided to the teacher',
-        feedback: {
-          title: 'Feedback session summary',
-          subtitle: 'Feedback provided to the teacher',
-          actions:
-            'These actions to improve teaching practice are agreed on between the teacher and coach',
-          image: 'Image uploaded',
-          imageDescription: 'Check supporting image',
-        },
       },
       stats: {
         title: 'Teacher observation statistics',
-        editTeacher: 'Edit teacher',
         overallRating: 'Overall rating',
         currentRating: 'The current rating is:',
         ratingAverage:
           'This rating is the average of all 5 Teaching Practices in the last observation',
         evolution:
           'This rating is the average of all 5 Teaching Practices in the last observation',
-        comparisio: "Changes in the teacher's ratings over coaching sessions",
+        comparision: "Changes in the teacher's ratings over coaching sessions",
         lastSession: 'since last session',
         seeDetails: 'See details',
         button: 'New class observation',
@@ -225,11 +196,10 @@ const enTranslation = {
             'Complete at least three class observations with feedback sessions to show statistics',
           button: 'New class observation',
         },
-        scale: {high: 'Improved', low: 'Needs work'},
         ratingPerSession: 'Rating per session',
         teacherComparision:
           "Changes in the teacher's ratings over coaching sessions",
-        sessionName: 'Session',
+        sessionName: 'Session {{value}}',
         teacherAt: 'Teacher at {{school}}',
       },
     },
@@ -279,7 +249,6 @@ const enTranslation = {
     setup: {
       title: 'About the lesson',
       subtitle: 'Ask the teacher the following questions',
-      description: 'Ask the teacher the following questions',
       button: 'Next',
       questions: {
         $0: {title: 'Classroom consists of', placeholder: 'Both'},
@@ -363,7 +332,6 @@ const enTranslation = {
         'You may also send a picture of the notes you took during the class observation and coaching session or any other interesting documentation from your observation',
       uploadPhoto: 'Upload a photo',
       button: 'Complete coach session',
-      optional: 'Optional',
     },
     completed: {
       title: 'Coaching session complete',
@@ -386,6 +354,7 @@ const enTranslation = {
       activities: 'Activities',
       finish: 'Finish',
     },
+
     onboarding: {
       title: 'Getting started',
       subtitle:
@@ -537,15 +506,6 @@ const enTranslation = {
   },
   sessionDetails: {title: 'Previous session'},
   feedbackSession: {title: 'Coaching session'},
-  components: {
-    starsTag: {
-      notEvaluted: 'Not evaluated',
-      needsWork: 'Needs work',
-      needsAttention: 'Needs attention',
-      almostThere: 'Almost there',
-      doingGreat: 'Doing great',
-    },
-  },
 };
 
 export default enTranslation;

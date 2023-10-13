@@ -162,7 +162,7 @@ const CoachFormScreen: React.FC = () => {
                     </Text>
 
                     <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                      {t('login.createAccount.optional')}
+                      {t('common.optional')}
                     </Text>
                   </HStack>
                   <Text
@@ -192,7 +192,7 @@ const CoachFormScreen: React.FC = () => {
                     </Text>
 
                     <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                      {t('login.createAccount.optional')}
+                      {t('common.optional')}
                     </Text>
                   </HStack>
                   <Text

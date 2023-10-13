@@ -236,7 +236,7 @@ const TeacherFormScreen: React.FC = () => {
                     </Text>
 
                     <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                      {t('teacher.form.optional')}
+                      {t('common.optional')}
                     </Text>
                   </HStack>
                   <Text
@@ -266,7 +266,7 @@ const TeacherFormScreen: React.FC = () => {
                     </Text>
 
                     <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                      {t('teacher.form.optional')}
+                      {t('common.optional')}
                     </Text>
                   </HStack>
                   <Text

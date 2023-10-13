@@ -156,8 +156,7 @@ const CompetenceCharts: React.FC<Props> = ({competence_id, teacher_id}) => {
                 borderBottomColor={'gray.200'}>
                 <VStack flex={1}>
                   <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-                    {t('teacher.tabs.stats.sessionName') || 'Session'}{' '}
-                    {index + 1}
+                    {t('teacher.tabs.stats.sessionName', {value: index + 1})}
                   </Text>
                   <Text
                     mt={2}
