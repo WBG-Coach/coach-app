@@ -16,7 +16,6 @@ import {SessionService} from '../../../services/session.service';
 import GeolocationService from '../../../services/geolocation.service';
 import {useLocation, useNavigate} from 'react-router-native';
 import {Competence} from '../../../types/competence';
-import {Question} from '../../../types/question';
 import CompetenceView from './CompetenceView';
 import Page from '../../../components/Page';
 import {Answer} from '../../../types/answer';

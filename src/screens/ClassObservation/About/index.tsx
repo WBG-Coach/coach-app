@@ -107,9 +107,11 @@ const ClassObservationAbout: React.FC = () => {
         </HStack>
       </VStack>
 
-      <Button onPress={goToSetupSession}>
-        {t('classObservation.about.start-button')}
-      </Button>
+      <Box pt={3} bg="white">
+        <Button onPress={goToSetupSession}>
+          {t('classObservation.about.start-button')}
+        </Button>
+      </Box>
     </Page>
   );
 };

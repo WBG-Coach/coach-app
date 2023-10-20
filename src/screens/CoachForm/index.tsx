@@ -17,6 +17,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import {TouchableOpacity} from 'react-native';
+import moment from 'moment';
 
 export type FormValuesType = {
   name?: string;
@@ -127,7 +128,7 @@ const CoachFormScreen: React.FC = () => {
                   fontSize={'LMD'}
                   fontWeight={500}
                   color={'gray.700'}>
-                  {t('teacher.form.birthdate')}
+                  {t('login.createAccount.birthdate')}
                 </Text>
 
                 <TouchableOpacity
@@ -136,7 +137,11 @@ const CoachFormScreen: React.FC = () => {
                   }}>
                   <InputText
                     isReadOnly
-                    value={values.birthdate?.toDateString()}
+                    value={
+                      values?.birthdate
+                        ? moment(values?.birthdate).format('MMM DD yyyy')
+                        : undefined
+                    }
                   />
                 </TouchableOpacity>
 

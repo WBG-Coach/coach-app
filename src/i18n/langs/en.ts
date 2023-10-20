@@ -8,13 +8,16 @@ const enTranslation = {
       'upload-image-modal-title': 'Upload as image',
       'upload-image-modal-description':
         'Choose the way you want do send the picture',
+      'upload-image-modal-option-title': 'Upload options',
+      'upload-image-modal-option-description':
+        'Choose the way you want to send the picture of your annotations',
       'take-photo-button': 'Take photo',
       'photo-gallery-button': 'Photo gallery',
     },
   },
   components: {
     starsTag: {
-      notEvaluted: 'Not evaluated',
+      notEvaluted: 'Poor',
       needsWork: 'Needs work',
       needsAttention: 'Needs attention',
       almostThere: 'Almost there',
@@ -36,6 +39,7 @@ const enTranslation = {
       pin: 'PIN',
       pin_description: 'Personal Identification Number',
       nin: 'NIN',
+      birthdate: "Coach's date of birth",
       nin_description: 'National Identification Number',
       'create-account-button': 'Create account',
       success: 'Account created successfully',
@@ -52,7 +56,7 @@ const enTranslation = {
   },
   settings: {
     title: 'Settings',
-    logout: 'Start over',
+    logout: 'Sign out',
     'logout-description': 'Start from the beginning ',
     language: 'Language',
     lastSync: 'Last sync: {{value}}',
@@ -90,8 +94,9 @@ const enTranslation = {
       switchSchools: 'Switch schools',
       switchCoach: 'Switch coaches',
       coachScript: 'Coach script',
+      pendingSession: 'Pending Sessions',
       switchProfile: 'Switch to a different coach profile',
-      startOver: 'Start over',
+      startOver: 'Sign out',
       statics: 'Statistics',
     },
     teachers: {
@@ -124,7 +129,7 @@ const enTranslation = {
         empty: {
           title: 'No statistics available',
           subtitle:
-            'Complete 3 coaching sessions with a teachers to unlock their statistics',
+            "Each teacher's statistics becomes available after three coaching sessions.",
         },
       },
       unavailable: {
@@ -136,7 +141,7 @@ const enTranslation = {
           subtitle:
             'You need at least 3 coaching sessions completed with those teachers to see the statistics.',
         },
-        label: 'Do {{value}} coaching sessions to unlock',
+        label: '{{value}} Additional coaching sessions required',
       },
     },
     pending: {
@@ -149,7 +154,7 @@ const enTranslation = {
   teacher: {
     form: {
       name: 'Name',
-      birthdate: 'Birthdate',
+      birthdate: "Teacher's date of birth",
       surname: 'Last name',
       'title-new': 'New teacher',
       'title-edit': 'Edit teacher',
@@ -179,7 +184,7 @@ const enTranslation = {
           'You may view the summary of the observation or the feedback you provided to the teacher',
       },
       stats: {
-        title: 'Teacher observation statistics',
+        title: "Teacher's stats",
         overallRating: 'Overall rating',
         currentRating: 'The current rating is:',
         ratingAverage:
@@ -279,7 +284,7 @@ const enTranslation = {
       pointsToDiscuss: 'What you want to discuss with the teacher?',
       spaceAdditional:
         'Use this space for additional notes of items that you would like to discuss with the teacher',
-      competenciesRated: '{{count}} of {{total}} competencies rated',
+      competenciesRated: '{{count}} of {{total}} teaching practices rated',
       'keyPoints-placeholder': 'Positive and negative points',
       button: 'Complete observation',
     },

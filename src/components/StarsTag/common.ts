@@ -1,6 +1,6 @@
 export const getTags = (t: (key: string) => string, theme?: any) => [
   {
-    label: t('components.starsTag.notEvaluted') || 'Not evaluated',
+    label: t('components.starsTag.notEvaluted') || 'Poor',
     background: 'primary.0',
     color: theme?.colors.primary['300'],
     icon: 'award-solid',

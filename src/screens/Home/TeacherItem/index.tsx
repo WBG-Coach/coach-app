@@ -123,7 +123,7 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher, customSubLabel}) => {
                         fontSize={'TSM'}
                         fontWeight={500}
                         color={'gray.700'}>
-                        {teacher.feedbacksCount} Feedbacks
+                        {teacher.feedbacksCount} Feedback
                       </Text>
                     </HStack>
                   )}

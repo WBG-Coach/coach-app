@@ -92,8 +92,6 @@ const TLCCheckingStats: React.FC = () => {
     refreshSchool();
   }, [refreshSchool]);
 
-  console.log('->', schoolData.data.average);
-
   return schoolData.isLoading ? (
     <Center flex={1} w="full">
       <Spinner color="blue" size="lg" />
@@ -110,7 +108,6 @@ const TLCCheckingStats: React.FC = () => {
 
       {schoolData.data.average ? (
         <>
-          {' '}
           <Text fontSize={'LMD'} fontWeight={500} mt={6} color={'gray.800'}>
             {t('tlc.checkingStats.title')}
           </Text>

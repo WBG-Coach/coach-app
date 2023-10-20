@@ -191,7 +191,7 @@ const ClassObservationSetup: React.FC = () => {
             </VStack>
           </ScrollView>
 
-          <Box marginTop={'auto'}>
+          <Box marginTop={'auto'} pt={3} bg={'white'}>
             <Button onPress={() => handleSubmit()}>
               {t('classObservation.setup.button')}
             </Button>

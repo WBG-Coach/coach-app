@@ -13,6 +13,7 @@ import Icon from '../Icon';
 import {Props} from './types';
 import RNFS from 'react-native-fs';
 import {TouchableOpacity} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const ImageCard: React.FC<Props> = ({
   name,
@@ -22,7 +23,9 @@ const ImageCard: React.FC<Props> = ({
   value,
 }) => {
   const theme = useTheme();
+  const {t} = useTranslation();
   const [showImage, setShowImage] = useState<string>();
+  const [showOptionBox, setShowOptionBox] = useState(false);
 
   const getImage = async () => {
     let file = value;
@@ -77,25 +80,49 @@ const ImageCard: React.FC<Props> = ({
             </HStack>
           </VStack>
         </HStack>
+
+        <TouchableOpacity onPress={() => setShowOptionBox(true)}>
+          <Icon name={'ellipsis-v'} />
+        </TouchableOpacity>
       </HStack>
 
-      <HStack justifyContent="flex-end">
-        {options.map((option, index) => (
-          <TouchableOpacity key={index} onPress={option.onPress}>
-            <HStack
-              py={4}
-              px={3}
-              alignItems={'center'}
-              justifyContent={'space-between'}>
-              <Text mr={2} fontSize={'LMD'} fontWeight={500} color={'gray.800'}>
-                {option.label}
-              </Text>
-
-              <Icon name={option.icon as any} size={22} />
-            </HStack>
-          </TouchableOpacity>
-        ))}
-      </HStack>
+      <Modal
+        isOpen={showOptionBox}
+        onClose={() => setShowOptionBox(false)}
+        justifyContent="flex-end">
+        <VStack bg="white" w="full" p={4}>
+          <Text fontSize={'HXS'} fontWeight={600} color={'gray.700'}>
+            {t('common.image-picker.upload-image-modal-option-title')}
+          </Text>
+          <Text mt={2} fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
+            {t('common.image-picker.upload-image-modal-option-description')}
+          </Text>
+          <VStack w={'100%'} px={4} py={6}>
+            {options.map((option, index) => (
+              <TouchableOpacity onPress={option.onPress} key={index}>
+                <HStack
+                  alignItems={'center'}
+                  w={'100%'}
+                  py={4}
+                  borderBottomWidth={'1px'}
+                  borderBottomColor={'gray.200'}>
+                  <Text
+                    flex={1}
+                    fontSize={'LMD'}
+                    fontWeight={500}
+                    color={'gray.700'}>
+                    {option.label}
+                  </Text>
+                  <Icon
+                    name={option.icon as any}
+                    color={theme.colors.primary['200']}
+                  />
+                </HStack>
+              </TouchableOpacity>
+            ))}
+          </VStack>
+        </VStack>
+      </Modal>
 
       <Modal
         isOpen={!!showImage}

@@ -75,7 +75,7 @@ const FeedbackSessionCompleted: React.FC = () => {
         </VStack>
       </Center>
 
-      <VStack w={'100%'} pt={3} space={4}>
+      <VStack w={'100%'} pt={3} space={4} bg={'white'}>
         <Button onPress={() => navigate(PathRoutes.home.main, {replace: true})}>
           {t('feedback.completed.button')}
         </Button>

@@ -82,6 +82,7 @@ const FeedbackSessionAbout: React.FC = () => {
           px={isTablet ? '32px' : 4}
           pt={3}
           space={4}
+          bg={'white'}
           borderRadius={'8px 8px 0px 0px'}>
           <Button
             marginTop={'auto'}

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Center, ScrollView, Spinner, Text, VStack} from 'native-base';
+import {Box, Center, ScrollView, Spinner, Text, VStack} from 'native-base';
 import {SessionService} from '../../../services/session.service';
 import {CompetenceAnswers} from '../../../types/competence';
 import {useLocation, useNavigate} from 'react-router-native';
@@ -75,12 +75,11 @@ const FeedbackSessionChooseAnswer: React.FC = () => {
         </VStack>
       </ScrollView>
 
-      <Button
-        marginTop={'auto'}
-        isDisabled={!selectedAnswer}
-        onPress={goToFeedbackForm}>
-        {t('feedback.preparation.button')}
-      </Button>
+      <Box marginTop={'auto'} pt={3} bg={'white'}>
+        <Button isDisabled={!selectedAnswer} onPress={goToFeedbackForm}>
+          {t('feedback.preparation.button')}
+        </Button>
+      </Box>
     </Page>
   );
 };

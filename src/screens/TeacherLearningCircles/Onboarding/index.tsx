@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../../../components/Page';
-import {Button, Text} from 'native-base';
+import {Box, Button, Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import Timeline from '../../../components/Timeline';
 import {useNavigate} from 'react-router-native';
@@ -61,16 +61,18 @@ const TLCOnboarding: React.FC = () => {
 
       <Timeline items={process} />
 
-      <Button
-        variant={'solid'}
-        borderRadius={'8px'}
-        color={'white'}
-        background={'primary.200'}
-        onPress={() =>
-          navigate(PathRoutes.teacherLearningCircles.checkingStats)
-        }>
-        {t('tlc.onboarding.button')}
-      </Button>
+      <Box pt={3} bg={'white'}>
+        <Button
+          variant={'solid'}
+          borderRadius={'8px'}
+          color={'white'}
+          background={'primary.200'}
+          onPress={() =>
+            navigate(PathRoutes.teacherLearningCircles.checkingStats)
+          }>
+          {t('tlc.onboarding.button')}
+        </Button>
+      </Box>
     </Page>
   );
 };
