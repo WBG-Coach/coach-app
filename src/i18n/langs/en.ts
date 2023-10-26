@@ -117,6 +117,10 @@ const enTranslation = {
     stats: {
       page_title: 'Statistics',
       title: 'Check teacher stats',
+      tabs: {
+        available: 'Available statistics',
+        unavailable: 'Unavailable statistics',
+      },
       empty: {
         title: 'No teacher registered',
         subtitle:

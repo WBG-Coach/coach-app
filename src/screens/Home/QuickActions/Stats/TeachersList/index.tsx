@@ -28,9 +28,10 @@ const ITEMS_PER_PAGE = 100;
 
 type Props = {
   onSelectTeacher: (teacher: TeacherItemType) => void;
+  type?: 'available' | 'unavailable';
 };
 
-const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher}) => {
+const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher, type}) => {
   const [isLoading, setIsLoading] = useState(true);
   const {currentSchool} = useCoachContext();
   const navigate = useNavigate();
@@ -119,96 +120,109 @@ const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher}) => {
         </Center>
       ) : (
         <>
-          <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'} mt={2}>
-            {t('home.stats.available.title')}
-          </Text>
-          <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'} mb={4}>
-            {t('home.stats.available.subtitle')}
-          </Text>
-          {teachersList.available.length >= 1 ? (
-            <FlatList
-              style={{flexGrow: 0}}
-              data={teachersList.available}
-              renderItem={({item}) => (
-                <TeacherItem
-                  teacher={item}
-                  onPress={() => onSelectTeacher(item)}
-                  customSubLabel=""
-                />
+          {type === 'available' ? (
+            <>
+              {teachersList.available.length >= 1 ? (
+                <>
+                  <Text
+                    fontSize={'TMD'}
+                    fontWeight={400}
+                    color={'gray.700'}
+                    my={4}>
+                    {t('home.stats.available.subtitle')}
+                  </Text>
+                  <FlatList
+                    style={{flexGrow: 0}}
+                    data={teachersList.available}
+                    renderItem={({item}) => (
+                      <TeacherItem
+                        teacher={item}
+                        onPress={() => onSelectTeacher(item)}
+                        customSubLabel=""
+                      />
+                    )}
+                  />
+                </>
+              ) : (
+                <Center flex={1}>
+                  <VStack alignItems={'center'}>
+                    <Image
+                      source={EmptyIconAvailable}
+                      alt="icon representing a empty state"
+                    />
+
+                    <Text
+                      fontSize={'HXS'}
+                      textAlign={'center'}
+                      fontWeight={700}
+                      color={'gray.800'}
+                      mt={2}>
+                      {t('home.stats.available.empty.title')}
+                    </Text>
+
+                    <Text
+                      fontSize={'TMD'}
+                      textAlign={'center'}
+                      fontWeight={400}
+                      color={'gray.700'}>
+                      {t('home.stats.available.empty.subtitle')}
+                    </Text>
+                  </VStack>
+                </Center>
               )}
-            />
+            </>
           ) : (
-            <Center>
-              <VStack alignItems={'center'}>
-                <Image
-                  source={EmptyIconAvailable}
-                  alt="icon representing a empty state"
-                />
+            <>
+              {teachersList.unavailable.length >= 1 ? (
+                <>
+                  <Text
+                    fontSize={'TMD'}
+                    fontWeight={400}
+                    color={'gray.700'}
+                    my={4}>
+                    {t('home.stats.unavailable.subtitle')}
+                  </Text>
+                  <FlatList
+                    data={teachersList.unavailable}
+                    renderItem={({item}) => (
+                      <TeacherItem
+                        customSubLabel={t('home.stats.unavailable.label', {
+                          value: 3 - item.sessionsCount,
+                        })}
+                        teacher={item}
+                        onPress={() => onSelectTeacher(item)}
+                      />
+                    )}
+                  />
+                </>
+              ) : (
+                <Center>
+                  <VStack alignItems={'center'}>
+                    <Image
+                      source={EmptyIconUnavailable}
+                      alt="icon representing a empty state"
+                    />
 
-                <Text
-                  fontSize={'TMD'}
-                  textAlign={'center'}
-                  fontWeight={700}
-                  color={'gray.800'}
-                  mt={2}>
-                  {t('home.stats.available.empty.title')}
-                </Text>
+                    <Text
+                      fontSize={'HXS'}
+                      textAlign={'center'}
+                      fontWeight={700}
+                      color={'gray.800'}
+                      mt={2}>
+                      {t('home.stats.unavailable.empty.title')}
+                    </Text>
 
-                <Text
-                  fontSize={'TSM'}
-                  textAlign={'center'}
-                  fontWeight={400}
-                  color={'gray.700'}>
-                  {t('home.stats.available.empty.subtitle')}
-                </Text>
-              </VStack>
-            </Center>
-          )}
-          <Text fontSize={'LLG'} fontWeight={500} color={'gray.800'} mt={6}>
-            {t('home.stats.unavailable.title')}
-          </Text>
-          <Text fontSize={'TMD'} fontWeight={400} color={'gray.700'}>
-            {t('home.stats.unavailable.subtitle')}
-          </Text>
-          {teachersList.unavailable.length >= 1 ? (
-            <FlatList
-              data={teachersList.unavailable}
-              renderItem={({item}) => (
-                <TeacherItem
-                  customSubLabel={t('home.stats.unavailable.label', {
-                    value: 3 - item.sessionsCount,
-                  })}
-                  teacher={item}
-                  onPress={() => onSelectTeacher(item)}
-                />
+                    <Text
+                      fontSize={'TMD'}
+                      textAlign={'center'}
+                      fontWeight={400}
+                      color={'gray.700'}>
+                      {t('home.stats.unavailable.empty.subtitle')}
+                    </Text>
+                  </VStack>
+                </Center>
               )}
-            />
-          ) : (
-            <Center>
-              <VStack alignItems={'center'}>
-                <Image
-                  source={EmptyIconUnavailable}
-                  alt="icon representing a empty state"
-                />
-
-                <Text
-                  fontSize={'TMD'}
-                  textAlign={'center'}
-                  fontWeight={700}
-                  color={'gray.800'}
-                  mt={2}>
-                  {t('home.stats.unavailable.empty.title')}
-                </Text>
-
-                <Text
-                  fontSize={'TSM'}
-                  textAlign={'center'}
-                  fontWeight={400}
-                  color={'gray.700'}>
-                  {t('home.stats.unavailable.empty.subtitle')}
-                </Text>
-              </VStack>
-            </Center>
+            </>
           )}
         </>
       )}

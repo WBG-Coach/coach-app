@@ -5,6 +5,7 @@ import {
   FlatList,
   HStack,
   Image,
+  ScrollView,
   Spinner,
   Text,
   useTheme,
@@ -109,8 +110,8 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
               <EmptyStateComponent />
             </Center>
           ) : (
-            <>
-              <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
+            <ScrollView>
+              <Text fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
                 {t('teacher.tabs.stats.overallRating') || 'Overall rating'}
               </Text>
               <VStack
@@ -166,6 +167,7 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
               <FlatList
                 mt={4}
                 data={competences.data}
+                scrollEnabled={false}
                 renderItem={({item, index}) => (
                   <TouchableOpacity
                     onPress={() =>
@@ -265,7 +267,7 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
                   </TouchableOpacity>
                 )}
               />
-            </>
+            </ScrollView>
           )}
         </>
       )}
