@@ -3,11 +3,25 @@ import {getDBConnection} from '../../services/database.service';
 
 export const runMigrationV7 = async () => {
   const db = await getDBConnection();
-  await updateCoach(db);
+  await updateFeedbackTable(db);
 };
 
-const updateCoach = (db: SQLiteDatabase) => {
-  return db.executeSql(`
-    ALTER TABLE coach ADD birthdate TEXT null
+const updateFeedbackTable = async (db: SQLiteDatabase) => {
+  await db.executeSql(`
+    DROP TABLE feedback
+  `);
+
+  await db.executeSql(`
+    CREATE TABLE IF NOT EXISTS feedback (
+      id TEXT PRIMARY KEY,
+      _status TEXT,
+
+      value INTEGER null,
+      
+      answer_id TEXT REFERENCES answer(id),
+      
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
   `);
 };

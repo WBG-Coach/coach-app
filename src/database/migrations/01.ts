@@ -7,38 +7,60 @@ export const runMigrationV1 = async () => {
   await insertQuestions(db);
 };
 
-const insertCompetencies = (db: SQLiteDatabase) => {
-  db.executeSql(`
+const insertCompetencies = async (db: SQLiteDatabase) => {
+  await db.executeSql(`
     INSERT OR REPLACE INTO competence(id, title, _status)
     VALUES
       ('4d15a3be-db2a-4fef-913a-6535bcd9d389', 'Time on learning', 'synced'),
-      ('0f8d1dcb-1d26-4073-a184-80e32012ae1b', 'Supportive learning environment','synced'),
-      ('b9f2de44-2825-4353-a092-e979b7190a28', 'Positive behavioral expectations', 'synced'),
-      ('8860e659-02da-4d99-abe4-135c25f1c26f', 'Effective teaching', 'synced'),
-      ('968d595a-d033-4b6c-9758-943cfb6c412c', 'Positive behavioral expectations', 'synced')
+      ('0f8d1dcb-1d26-4073-a184-80e32012ae1b', 'Positive expectations','synced'),
+      ('b9f2de44-2825-4353-a092-e979b7190a28', 'Creating High Expectations and Inclusive Learning Environment', 'synced'),
+      ('8860e659-02da-4d99-abe4-135c25f1c26f', 'Effective and Engaging Learning Strategies', 'synced'),
+      ('968d595a-d033-4b6c-9758-943cfb6c412c', 'Assessing learning', 'synced')
   `);
 };
 
-const insertQuestions = (db: SQLiteDatabase) => {
-  db.executeSql(`
+const insertQuestions = async  (db: SQLiteDatabase) => {
+  await db.executeSql(`
     INSERT OR REPLACE INTO question(id, title, description, tooltip_data, type, competence_id, scale, _status)
     VALUES
-      ('a235ad6f-382b-4865-94f7-ac5e53736ec6', 'The students are working', 'In the first 10 minutes of the class', '{"title":"Students are not working","subtitle":"Consider that the student isnt participating if they re too distracted or disrupting the class","items":[{"icon":"chart-down","label":"Low","description":"Most students are not working"},{"icon":"heart-rate","label":"Medium","description":"Some students are working"},{"icon":"arrow-growth","label":"High","description":"Most students are working"}]}', 'option', '4d15a3be-db2a-4fef-913a-6535bcd9d389', 3, 'synced'),
-      ('cf1c6bc7-d5ed-4de8-9fb3-fb3c20cca23e', 'The students are working', 'In the second 20 minutes of the class', '{"title":"Students are not working","subtitle":"Consider that the student isnt participating if they re too distracted or disrupting the class","items":[{"icon":"chart-down","label":"Low","description":"Most students are not working"},{"icon":"heart-rate","label":"Medium","description":"Some students are working"},{"icon":"arrow-growth","label":"High","description":"Most students are working"}]}', 'option', '4d15a3be-db2a-4fef-913a-6535bcd9d389', 3, 'synced'),
-      ('9b2391ed-9643-4d8c-a360-58251ea4f0e6', 'The students are working', 'In the third 30 minutes of the class', '{"title":"Students are not working","subtitle":"Consider that the student isnt participating if they re too distracted or disrupting the class","items":[{"icon":"chart-down","label":"Low","description":"Most students are not working"},{"icon":"heart-rate","label":"Medium","description":"Some students are working"},{"icon":"arrow-growth","label":"High","description":"Most students are working"}]}', 'option', '4d15a3be-db2a-4fef-913a-6535bcd9d389', 3, 'synced'),
+      ('c97cfef5-61e6-4667-b97b-8f4e602674ac', 'Students are engaged on given task', 'In the 1st part of the class', '{"title":"","subtitle":"","items":[]}', 'option', '4d15a3be-db2a-4fef-913a-6535bcd9d389', 3, 'synced'),
+      ('a7704226-f4cd-432a-893a-811024b27ad0', 'Students are engaged on given task', 'In the 2nd part of the class', '{"title":"","subtitle":"","items":[]}', 'option', '4d15a3be-db2a-4fef-913a-6535bcd9d389', 3, 'synced'),
+      ('80b6a0fe-9a43-4d06-884c-8ade0b46774b', 'Students are engaged on given task', 'In the 3rd part of the class', '{"title":"","subtitle":"","items":[]}', 'option', '4d15a3be-db2a-4fef-913a-6535bcd9d389', 3, 'synced');
+  `);
+  
+  await db.executeSql(`
+    INSERT OR REPLACE INTO question(id, title, description, tooltip_data, type, competence_id, scale, _status)
+    VALUES
+      ('e668f4cc-e34a-448e-b371-67a6b97c2d3a', 'The teacher acknowledges positive student behaviour.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '0f8d1dcb-1d26-4073-a184-80e32012ae1b', 5, 'synced'),
+      ('2580c928-edc5-4f64-b506-6f47efb8b061', 'The teacher redirects unexpected behaviour and focuses on the expected behaviour.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '0f8d1dcb-1d26-4073-a184-80e32012ae1b', 5, 'synced');
 
-      ('b635e130-7d71-44a8-905b-134ca55adaef', 'All students are treated respectfully', NULL, '{"title":"All students are treated respectfully","subtitle":"Consider the treatment disrespectiful if the teacher shows aggressive behavior or unpolite, by shouting, shaming or with corporal punishment","items":[{"icon":"chart-down","label":"Low","description":"The teacher is disrepectful with the students"},{"icon":"heart-rate","label":"Medium","description":"The teacher isnt clearly disrespectful but isnt polite when talking to the students"},{"icon":"arrow-growth","label":"High","description":"The teacher is polite, referring the students by their names and saying please and thank you"}]}', 'option', '0f8d1dcb-1d26-4073-a184-80e32012ae1b', 5, 'synced'),
-      ('dd3d2cd1-d87e-4f34-b63b-6ffdeebb0170', 'The teacher uses positive language', NULL, '{"title":"The teacher uses positive language","subtitle":"Consider the language negative if the teacher shows frustration or discourage the students when speaking","items":[{"icon":"chart-down","label":"Low","description":"The teacher uses negative languagem with the students"},{"icon":"heart-rate","label":"Medium","description":"The teacher uses some positive languagem, but not frequently"},{"icon":"arrow-growth","label":"High","description":"The teacher uses positive language"}]}', 'option', '0f8d1dcb-1d26-4073-a184-80e32012ae1b', 5, 'synced'),
-      ('830808c5-dc47-462a-8080-c31f953aad02', 'The teacher responds to students’ needs', NULL, '{"title":"The teacher responds to students needs","subtitle":"The students may have needs to work in the class, such as materials or support at a lesson","items":[{"icon":"chart-down","label":"Low","description":"The teacher isnt aware of students needs or isnt proactive to solve them"},{"icon":"heart-rate","label":"Medium","description":"The teacher responds to students needs but dont address the problem at hand"},{"icon":"arrow-growth","label":"High","description":"The teacher quickly responds to students needs and solve them"}]}', 'option', '0f8d1dcb-1d26-4073-a184-80e32012ae1b', 5, 'synced'),
-      ('6779b8e9-da1d-4c3a-8691-53c6233a914d', 'All gender groups are treated fairly in the classroom', NULL, '{"title":"All gender groups are treated fairly in the classroom","subtitle":"A gender group is treated unfairly if the teacher provides different opportunities to participate in activities or have unequal expectations for students behavior","items":[{"icon":"chart-down","label":"Low","description":"The teacher treats gender groups unfairly in the classroom"},{"icon":"heart-rate","label":"Medium","description":"The teacher doesnt treat gender groups unfairly"},{"icon":"arrow-growth","label":"High","description":"The teacher doesnt treat gender groups unfairly and makes it clear why any gender shouldnt be treated unfairly"}]}', 'option', '0f8d1dcb-1d26-4073-a184-80e32012ae1b', 5, 'synced'),
-      
-      ('97a48f96-cd27-4879-8f41-d2f4ff263785', 'A clear behavioral expectations for class activities is set', NULL, '{"title":"A clear behavioral expectations for class activities is set","subtitle":"If the students aren''t well-behaved throughout the lesson, the teacher is supposed to set clear behavor expectation for the students during the class or activity","items":[{"icon":"chart-down","label":"Low","description":"The teacher doesn''t set a clear behavioral expectations for class activities"},{"icon":"heart-rate","label":"Medium","description":"The teacher sets unclear or superficial behavioral expectations for class activities"},{"icon":"arrow-growth","label":"High","description":"The teacher sets clear behavioral expectations for class activities"}]}', 'option', 'b9f2de44-2825-4353-a092-e979b7190a28', 5, 'synced'),
+  `);
 
-      ('c5e34b76-52d9-467b-aa40-bf1beb05df18', 'The objectives of the lesson are explicitly articulated and related to the class', NULL, '{"title":"Questions and other strategies are used to ensure the understanding level","subtitle":"The teacher doesn''t ensure students'' understanding level if they don''t ask questions or if they don''t further check for underderstanding if it''s unclear the uptake","items":[{"icon":"chart-down","label":"Low","description":"The teacher doesn''t ask questions or when they do, there''s no further check for underderstanding"},{"icon":"heart-rate","label":"Medium","description":"The teacher uses questions and other strategies to ensure the understanding level of only few students"},{"icon":"arrow-growth","label":"High","description":"The teacher uses questions and other strategies to ensure the understanding level of most students"}]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
-      ('b7cd82e2-306e-467d-912e-bafde90febb4', 'Questions and other strategies are used to ensure the understanding level', NULL, '{"title":"Most students are monitored during independent/group work","subtitle":"The teacher doesn''t monitor the students if they sit at their desk or remain still while students are working","items":[{"icon":"chart-down","label":"Low","description":"The teacher doesn''t monitor the students during independent or group work"},{"icon":"heart-rate","label":"Medium","description":"The teacher monitor some students during independent or group work"},{"icon":"arrow-growth","label":"High","description":"The teacher monitor most students during independent or group work"}]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
-      ('21ab1281-4d6a-4d9c-850b-5b852fff7c01', 'Most students are monitored during independent/group work', NULL, '{"title":"Most students are monitored during independent/group work","subtitle":"The teacher doesn''t monitor the students if they sit at their desk or remain still while students are working","items":[{"icon":"chart-down","label":"Low","description":"The teacher doesn''t monitor the students during independent or group work"},{"icon":"heart-rate","label":"Medium","description":"The teacher monitor some students during independent or group work"},{"icon":"arrow-growth","label":"High","description":"The teacher monitor most students during independent or group work"}]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
-      ('cb414e34-1681-46ec-8221-812bd849d3cb', 'The teaching is adjusted to the level of the students', NULL, '{"title":"The teaching is adjusted to the level of the students","subtitle":"The teaching isn''t adjusted to the level of the students if the teacher notice that the students are getting the wrong answer but doesn''t re-explain or provide additional opportunities to learn","items":[{"icon":"chart-down","label":"Low","description":"The teacher doesn''t adjust the teaching to the level of the students"},{"icon":"heart-rate","label":"Medium","description":"The teacher slightly adjusts the teaching to the level of the students"},{"icon":"arrow-growth","label":"High","description":"The teacher greatly adjusts the teaching to the level of the students"}]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
+  await db.executeSql(`
+    INSERT OR REPLACE INTO question(id, title, description, tooltip_data, type, competence_id, scale, _status)
+    VALUES
+      ('d4e263c1-5943-489b-87ff-255f28b09762', 'The teacher treats all students respectfully.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', 'b9f2de44-2825-4353-a092-e979b7190a28', 5, 'synced'),
+      ('5d11e5c4-3d00-45b0-b53f-b306da7f1a1d', 'The teacher responds to students'' needs.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', 'b9f2de44-2825-4353-a092-e979b7190a28', 5, 'synced'),
+      ('7a5d1b69-00d4-4b12-8f23-27de65614ebe', 'The teacher acknowledges students'' efforts, rather than focusing only on results, students'' intelligence, or natural abilities.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', 'b9f2de44-2825-4353-a092-e979b7190a28', 5, 'synced'),
+      ('b3d29e0d-a7dc-4aa3-96d4-1294ad6b723e', 'Teacher uses additional learning materials effectively', NULL, '{"title":"","subtitle":"","items":[]}', 'option', 'b9f2de44-2825-4353-a092-e979b7190a28', 5, 'synced'),
+      ('fb64470b-7a59-4fb9-9396-e67f97343434', 'Teacher Manages the Physical arrangement of the classroom to allow all students to learn', NULL, '{"title":"","subtitle":"","items":[]}', 'option', 'b9f2de44-2825-4353-a092-e979b7190a28', 5, 'synced');
+  `);
 
-      ('65adb3a6-4fc7-4f1f-8b4c-4c670658127b', 'The teacher provides critical thinking tasks', NULL, '{"title":"The teacher provides thinking tasks","subtitle":"Classrooms with no thinking tasks include those where students simply listen to the teacher or perform rote tasks","items":[{"icon":"chart-down","label":"Low","description":"The teacher doesn''t provide critical thinking tasks"},{"icon":"heart-rate","label":"Medium","description":"The teacher provides critical thinking tasks but they''re too simple or similar to the teacher''s examples"},{"icon":"arrow-growth","label":"High","description":"The teacher provides detailed critical thinking tasks to apply the learning to new tasks"}]}', 'option', '968d595a-d033-4b6c-9758-943cfb6c412c', 5, 'synced')
+  await db.executeSql(`
+    INSERT OR REPLACE INTO question(id, title, description, tooltip_data, type, competence_id, scale, _status)
+    VALUES
+      ('b9160bc1-7345-4632-961c-124b7427ee75', 'The teacher explicitly articulates the objectives of the lesson and relates classroom activities to the objectives.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
+      ('6f5fcf4f-f462-4faf-b8fd-75066093419a', 'Teacher is teaching using Student-centered activities', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
+      ('e6cd38a4-d86d-4b39-b263-da32a3f71f5a', 'The teacher makes connections in the lesson that related to other content knowledge or students'' daily lives.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
+      ('6f24fafb-7672-4d45-a31f-223e2eae7d6f', 'The teacher uses questions, prompts or other strategies to ensure students'' level of understanding.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced'),
+      ('99914c89-5b84-44ef-8ffb-440f28a17a37', 'The teacher asks open-ended questions. (Critical Thinking)', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '8860e659-02da-4d99-abe4-135c25f1c26f', 5, 'synced');
+  `);
+
+  await db.executeSql(`
+    INSERT OR REPLACE INTO question(id, title, description, tooltip_data, type, competence_id, scale, _status)
+    VALUES
+      ('b1626e4f-94e4-4384-a811-5c18115bc8ab', 'The teacher monitors most students during independent/group work.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '968d595a-d033-4b6c-9758-943cfb6c412c', 5, 'synced'),
+      ('6eb713cb-2887-47e9-8987-afc833cc27bd', 'The teacher adjusts teaching to the level of the students.', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '968d595a-d033-4b6c-9758-943cfb6c412c', 5, 'synced'),
+      ('2856af7b-6855-49b2-b7df-f4e7844182be', 'The teacher provides specific comments or guiding questions to help students clarify misunderstandings ', NULL, '{"title":"","subtitle":"","items":[]}', 'option', '968d595a-d033-4b6c-9758-943cfb6c412c', 5, 'synced');
   `);
 };

@@ -4,7 +4,7 @@ enablePromise(true);
 
 export const getDBConnection = async () => {
   return openDatabase(
-    {name: 'coach', location: 'default'},
+    {name: 'coach-nepal', location: 'default'},
     () => console.log('Database connected!'),
     err => console.log('err! ', err),
   );

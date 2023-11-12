@@ -7,8 +7,8 @@ export const runMigrationV3 = async () => {
 };
 
 const updateSchool = (db: SQLiteDatabase) => {
-  db.executeSql(`
+  return db.executeSql(`
     ALTER TABLE school
-    ADD emis_number TEXT null
+    ADD region TEXT null
   `);
 };

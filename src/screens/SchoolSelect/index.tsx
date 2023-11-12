@@ -62,6 +62,7 @@ const SchoolSelectScreen: React.FC = () => {
   };
 
   const onRead = async (e: BarCodeReadEvent) => {
+    console.log(e.data)
     const school: School = JSON.parse(e.data);
 
     await selectSchool(school);

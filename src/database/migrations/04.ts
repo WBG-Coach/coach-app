@@ -3,12 +3,19 @@ import {getDBConnection} from '../../services/database.service';
 
 export const runMigrationV4 = async () => {
   const db = await getDBConnection();
-  await updateSchool(db);
+  await createTLCTable(db);
 };
 
-const updateSchool = (db: SQLiteDatabase) => {
+const createTLCTable = (db: SQLiteDatabase) => {
   return db.executeSql(`
-    ALTER TABLE school
-    ADD region TEXT null
+  CREATE TABLE IF NOT EXISTS TLC_evaluation (
+    id TEXT PRIMARY KEY,
+    unit_id TEXT null,
+    coach_id TEXT REFERENCES coach(id),
+    evaluation TEXT null,
+    _status TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  )
   `);
 };
