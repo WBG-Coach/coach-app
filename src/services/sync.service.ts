@@ -15,6 +15,7 @@ import {CoachService} from './coach.service';
 import {TeacherService} from './teacher.service';
 import {SessionService} from './session.service';
 import {AnswerService} from './answer.service';
+import {API_URL} from '@env';
 
 const SyncService = {
   getUnsyncedItemsCount: async (): Promise<{
@@ -51,7 +52,7 @@ const SyncService = {
       const lastSync = await StorageService.getLastSync();
 
       const response = await axios.post<SyncData>(
-        'https://api-sl.coachdigital.org/sync',
+        API_URL,
         {
           changes,
           lastSync,

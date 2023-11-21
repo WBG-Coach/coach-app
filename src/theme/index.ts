@@ -4,31 +4,31 @@ const theme = extendTheme({
   fontConfig: {
     Inter: {
       100: {
-        normal: 'Inter-Light',
-        italic: 'Inter-LightItalic',
+        normal: 'NotoSans-Light',
+        italic: 'NotoSans-LightItalic',
       },
       200: {
-        normal: 'Inter-Light',
-        italic: 'Inter-LightItalic',
+        normal: 'NotoSans-Light',
+        italic: 'NotoSans-LightItalic',
       },
       300: {
-        normal: 'Inter-Light',
-        italic: 'Inter-LightItalic',
+        normal: 'NotoSans-Light',
+        italic: 'NotoSans-LightItalic',
       },
       400: {
-        normal: 'Inter-Regular',
-        italic: 'Inter-Italic',
+        normal: 'NotoSans-Regular',
+        italic: 'NotoSans-Italic',
       },
       500: {
-        normal: 'Inter-Medium',
+        normal: 'NotoSans-Medium',
       },
       600: {
-        normal: 'Inter-SemiBold',
-        italic: 'Inter-SemiBoldItalic',
+        normal: 'NotoSans-SemiBold',
+        italic: 'NotoSans-SemiBoldItalic',
       },
       700: {
-        normal: 'Inter-Bold',
-        italic: 'Inter-BoldItalic',
+        normal: 'NotoSans-Bold',
+        italic: 'NotoSans-BoldItalic',
       },
     },
   },

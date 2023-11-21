@@ -22,7 +22,7 @@ const HomeHeader: React.FC = () => {
 
       <VStack space={1}>
         <Text fontSize={'TMD'} fontWeight={600} color={'gray.800'}>
-          Hi, {currentCoach?.name}
+          {t('home.salutation')}, {currentCoach?.name}
         </Text>
         <HStack>
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>

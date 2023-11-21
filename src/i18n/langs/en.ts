@@ -15,6 +15,11 @@ const enTranslation = {
       'photo-gallery-button': 'Photo gallery',
     },
   },
+  bottom_navigator: {
+    home: 'Home',
+    tlc: 'TLC',
+    pending: 'Pending',
+  },
   components: {
     starsTag: {
       notEvaluted: 'Poor',
@@ -88,6 +93,7 @@ const enTranslation = {
     'description-list': "You'll be able to :",
   },
   home: {
+    salutation: 'Hi',
     teachersLength_interval: 'You are coaching in ',
     'menu-items': {
       newSession: 'Start a new session',
@@ -105,6 +111,7 @@ const enTranslation = {
       'no-session': 'No sessions yet. Start coaching!',
       'last-session': 'Last session entered on {{date}}',
       session_interval: '(1)[1 Observation];(2-inf)[{{count}} Observations];',
+      teachers_count: 'Teachers in this school:',
     },
     emptyState: {
       title: 'No teacher registered',
