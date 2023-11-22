@@ -16,6 +16,12 @@ fi
 # Navega para o diretório raiz do projeto Android
 cd ../..
 
+echo "Diretório atual:"
+pwd
+
+echo "Listando arquivos no diretório atual:"
+ls -l
+
 # Substitui a string no arquivo build.gradle
 # Utiliza o comando sed para a substituição
 sed -i '' "s/applicationId 'com.coachappsl'/applicationId 'com.coachappnp'/" build.gradle
