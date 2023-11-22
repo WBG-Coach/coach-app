@@ -5,18 +5,25 @@ import {TouchableOpacity} from 'react-native';
 import PathRoutes from '../../../routers/paths';
 import {useNavigate} from 'react-router-native';
 import {useTranslation} from 'react-i18next';
+import {FEATURE_FLAG_TLC} from '@env';
 
 const BottomNavigator: React.FC = () => {
   const navigate = useNavigate();
   const {t} = useTranslation();
 
+  console.log({FEATURE_FLAG_TLC});
+
   const bottomItems = [
     {label: t('bottom_navigator.home'), icon: 'home-alt-solid', route: ''},
-    {
-      label: t('bottom_navigator.tlc'),
-      icon: 'process',
-      route: PathRoutes.teacherLearningCircles.onboarding,
-    },
+    ...(!!FEATURE_FLAG_TLC
+      ? [
+          {
+            label: t('bottom_navigator.tlc'),
+            icon: 'process',
+            route: PathRoutes.teacherLearningCircles.onboarding,
+          },
+        ]
+      : []),
     {
       label: t('bottom_navigator.pending'),
       icon: 'comment-dots',

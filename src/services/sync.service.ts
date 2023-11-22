@@ -51,6 +51,8 @@ const SyncService = {
       const currentSchool = await StorageService.getCurrentSchool();
       const lastSync = await StorageService.getLastSync();
 
+      console.log({API_URL});
+
       const response = await axios.post<SyncData>(
         API_URL,
         {
