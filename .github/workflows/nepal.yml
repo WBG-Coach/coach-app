@@ -26,6 +26,9 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
+      - name: Add chmod
+        run: chmod +x ./scripts/switch-to-nepal.sh
+
       - name: Switch to Nepal's config
         run: ./scripts/switch-to-nepal.sh
 
