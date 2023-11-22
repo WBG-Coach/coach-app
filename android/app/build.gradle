@@ -84,7 +84,7 @@ android {
 
     namespace 'com.coachappsl'
     defaultConfig {
-        applicationId 'com.coachappsl'
+        applicationId 'com.coachappnp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

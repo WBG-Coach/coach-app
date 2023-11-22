@@ -16,6 +16,8 @@ import {TeacherService} from './teacher.service';
 import {SessionService} from './session.service';
 import {AnswerService} from './answer.service';
 import {API_URL} from '@env';
+import CompetenceService from './competence.service';
+import {QuestionService} from './question.service';
 
 const SyncService = {
   getUnsyncedItemsCount: async (): Promise<{
@@ -71,6 +73,8 @@ const SyncService = {
       }
 
       if (currentSchool && response.data.total > 0) {
+        await CompetenceService.sync(response.data.competencies);
+        await QuestionService.sync(response.data.questions);
         await CoachService.sync(response.data.coaches);
         await CoachService.syncCoachSchools(response.data.coachSchools);
         await TeacherService.sync(response.data.teachers);

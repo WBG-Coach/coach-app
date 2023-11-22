@@ -29,7 +29,7 @@ const CompetenceService = {
       })),
     );
   },
-  
+
   listCompetenciesWithQuestions: async (): Promise<Competence[]> => {
     const db = await getDBConnection();
     const results = await db.executeSql(`
@@ -51,16 +51,28 @@ const CompetenceService = {
       (list, {competence_id, competence_title, ...question}) => {
         const competence = list.find(i => i.id === competence_id);
         if (competence) {
-          competence?.questions.push(question);
+          competence?.questions.push(question as any);
           return list;
         }
 
         return [
           ...list,
           {id: competence_id, title: competence_title, questions: [question]},
-        ];
+        ] as any[];
       },
       [] as Competence[],
+    );
+  },
+
+  sync: async (competencies: Competence[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      competencies?.map(competence => {
+        return db.executeSql(`
+          INSERT OR REPLACE INTO competence(id, title, _status)
+          VALUES ('${competence.id}', '${competence.title}', 'synced')
+        `);
+      }),
     );
   },
 };

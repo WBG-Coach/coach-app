@@ -30,4 +30,16 @@ export const QuestionService = {
 
     return result[0].rows.raw()[0];
   },
+
+  sync: async (questions: Question[]): Promise<void> => {
+    const db = await getDBConnection();
+    await Promise.all(
+      questions?.map(question => {
+        return db.executeSql(`
+          INSERT OR REPLACE INTO question(id, type, title, description, scale, _status)
+          VALUES ('${question.id}', 'option', '${question.title}', '${question.description}', '${question.scale}', 'synced')
+        `);
+      }),
+    );
+  },
 };
