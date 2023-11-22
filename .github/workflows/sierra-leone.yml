@@ -1,4 +1,4 @@
-name: Build Android APK and upload to Play Store
+name: SIERA LEONE Build
 
 on:
   push:

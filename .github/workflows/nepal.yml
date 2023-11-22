@@ -1,4 +1,4 @@
-name: Build Android APK and upload to Play Store
+name: NEPAL Build
 
 on:
   push:
