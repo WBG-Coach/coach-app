@@ -12,6 +12,7 @@ jobs:
     env:
       API_URL: https://coachdigital.org/sl/api
       COUNTRY: sl
+      SHOW_TLC: true
 
     steps:
       - name: Checkout 🛎️
