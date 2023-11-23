@@ -7,6 +7,7 @@ import Icon from '../../../../../../components/Icon';
 import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import moment from 'moment';
+import i18n from '../../../../../../i18n';
 
 type Props = {
   index: number;
@@ -18,6 +19,7 @@ const SessionItem: React.FC<Props> = ({onPress, session, index}) => {
   const theme = useTheme();
   const {t} = useTranslation();
   const [overallRating, setOverallRating] = useState<number>();
+  const currentLanguage = i18n.languages[0];
 
   useEffect(() => {
     (async () => {
@@ -51,7 +53,9 @@ const SessionItem: React.FC<Props> = ({onPress, session, index}) => {
             {t('teacher.tabs.session.session')} {index + 1}
           </Text>
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.500'}>
-            {moment(session.created_at).format('DD MMM, YYYY - HH:mm')}
+            {moment(session.created_at)
+              .lang(currentLanguage)
+              .format('DD MMM, YYYY - HH:mm')}
           </Text>
 
           {overallRating !== undefined ? (

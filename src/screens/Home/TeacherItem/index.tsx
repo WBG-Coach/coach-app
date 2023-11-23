@@ -5,6 +5,8 @@ import {TeacherItemType} from '../../../types/teacher';
 import {TouchableOpacity} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import Icon from '../../../components/Icon';
+import moment from 'moment';
+import i18n from '../../../i18n';
 
 type Props = {
   customSubLabel?: string;
@@ -16,6 +18,7 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher, customSubLabel}) => {
   const theme = useTheme();
   const isTablet = Tablet();
   const {t} = useTranslation();
+  const currentLanguage = i18n.languages[0];
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -61,9 +64,9 @@ const TeacherItem: React.FC<Props> = ({onPress, teacher, customSubLabel}) => {
                 <Text fontSize={'TSM'} fontWeight={500} color={'gray.700'}>
                   {teacher.last_session_date
                     ? t('home.teachers.last-session', {
-                        date: new Date(
-                          teacher.last_session_date,
-                        ).toDateString(),
+                        date: moment(teacher.last_session_date).format(
+                          'DD MMM, YYYY - HH:mm',
+                        ),
                       })
                     : t('home.teachers.no-session')}
                 </Text>

@@ -9,7 +9,7 @@ export const resources: {[lang: string]: {translation: any; label: string}} = {
   en: {translation: enTranslation, label: 'English (US)'},
   pt: {translation: ptTranslation, label: 'Krio'},
   kr: {translation: ptTranslation, label: 'Portuguese (BR)'},
-  np: {translation: npTranslation, label: 'Nepali'},
+  ne: {translation: npTranslation, label: 'Nepali'},
 };
 
 i18n
