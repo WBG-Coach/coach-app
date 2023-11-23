@@ -21,10 +21,10 @@ import Toast from '../../../components/Toast';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
+
 import {TouchableOpacity} from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import i18n from '../../../i18n';
 
 export type FormValuesType = {
   name?: string;
@@ -50,6 +50,7 @@ const TeacherFormScreen: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams<{id: string}>();
   const isNew = params.id === 'new';
+  const currentLanguage = i18n.languages[0];
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const [loading, setLoading] = useState(true);
@@ -214,16 +215,20 @@ const TeacherFormScreen: React.FC = () => {
                   />
                 </TouchableOpacity>
 
-                {openDatePicker && (
-                  <DateTimePicker
-                    mode="date"
-                    value={values.birthdate || new Date()}
-                    onChange={(_event: DateTimePickerEvent, date?: Date) => {
-                      setFieldValue('birthdate', date);
-                      setOpenDatePicker(false);
-                    }}
-                  />
-                )}
+                <DatePicker
+                  modal
+                  locale={currentLanguage}
+                  open={openDatePicker}
+                  date={values.birthdate || new Date()}
+                  onConfirm={date => {
+                    setFieldValue('birthdate', date);
+                    console.log(date);
+                    setOpenDatePicker(false);
+                  }}
+                  onCancel={() => {
+                    setOpenDatePicker(false);
+                  }}
+                />
 
                 <VStack mt={4}>
                   <HStack>
