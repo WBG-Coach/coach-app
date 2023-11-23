@@ -21,6 +21,7 @@ const SyncDetails: React.FC = () => {
   useEffect(() => {
     if (isConnected) {
       setIsLoading(true);
+      console.log('aaaa');
       SyncService.trySyncData()
         .then(() => setIsLoading(false))
         .finally(() => setIsLoading(false));

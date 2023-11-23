@@ -36,9 +36,16 @@ export const QuestionService = {
     await Promise.all(
       questions?.map(question => {
         return db.executeSql(`
-        INSERT OR REPLACE INTO question(id, type, title, description, competence_id, scale, _status)
-          VALUES ('${question.id}', 'option', '${question.title}', '${question.description}', '${question.competence_id}','${question.scale}', 'synced')
-        `);
+        INSERT OR REPLACE INTO question(id, title, description, tooltip_data, type, competence_id, scale, _status)
+        VALUES
+          ('${question.id}', '${question.title.replaceAll("'", "''")}', ${
+          question.description
+            ? `'${question.description.replaceAll("'", "''")}'`
+            : 'NULL'
+        }, '${question.tooltip_data}', 'option', '${question.competence_id}', ${
+          question.scale
+        }, 'synced');
+     `);
       }),
     );
   },

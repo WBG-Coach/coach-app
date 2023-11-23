@@ -53,10 +53,10 @@ const SyncService = {
       const currentSchool = await StorageService.getCurrentSchool();
       const lastSync = await StorageService.getLastSync();
 
-      console.log({API_URL});
+      console.log('API URL ->', API_URL);
 
       const response = await axios.post<SyncData>(
-        API_URL,
+        `${API_URL}/sync`,
         {
           changes,
           lastSync,

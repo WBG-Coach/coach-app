@@ -22,6 +22,7 @@ const SplashScreen: React.FC = () => {
     setIsLoading(true);
     try {
       if (!isLoading) {
+        console.log('CURRENT COUNTRY ->', COUNTRY);
         if (COUNTRY === 'sl') await runMigrationsSL();
         if (COUNTRY === 'np') await runMigrationsNP();
 
