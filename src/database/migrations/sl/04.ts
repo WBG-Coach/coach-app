@@ -1,14 +1,14 @@
 import {SQLiteDatabase} from 'react-native-sqlite-storage';
-import {getDBConnection} from '../../services/database.service';
+import {getDBConnection} from '../../../services/database.service';
 
-export const runMigrationV3 = async () => {
+export const runMigrationV4 = async () => {
   const db = await getDBConnection();
   await updateSchool(db);
 };
 
 const updateSchool = (db: SQLiteDatabase) => {
-  db.executeSql(`
+  return db.executeSql(`
     ALTER TABLE school
-    ADD emis_number TEXT null
+    ADD region TEXT null
   `);
 };

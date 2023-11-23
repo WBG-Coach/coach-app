@@ -2,13 +2,15 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Center, Image, Spinner} from 'native-base';
 import {LoginLogo} from '../../assets/images/logos';
 import {PermissionsAndroid} from 'react-native';
-import {runMigrations} from '../../database/migrations';
+import {runMigrationsSL} from '../../database/migrations/sl';
 import SyncService from '../../services/sync.service';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
 import {StorageService} from '../../services/storage.service';
 import {useCoachContext} from '../../providers/coach.provider';
+import {COUNTRY} from '@env';
+import {runMigrationsNP} from '../../database/migrations/np';
 
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +22,9 @@ const SplashScreen: React.FC = () => {
     setIsLoading(true);
     try {
       if (!isLoading) {
-        await runMigrations();
+        if (COUNTRY === 'sl') await runMigrationsSL();
+        if (COUNTRY === 'np') await runMigrationsNP();
+
         await requestPermission();
 
         const currentCoach = await StorageService.getCurrentCoach();

@@ -1,4 +1,4 @@
-import {StorageService} from '../../services/storage.service';
+import {StorageService} from '../../../services/storage.service';
 import {runMigrationV0} from './00';
 import {runMigrationV1} from './01';
 import {runMigrationV2} from './02';
@@ -13,7 +13,7 @@ import {runMigrationV10} from './10';
 import {runMigrationV11} from './11';
 
 // ADD NEW MIGRATIONS HERE
-const MIGRATION_LIST = [
+const SL_MIGRATION_LIST = [
   runMigrationV0,
   runMigrationV1,
   runMigrationV2,
@@ -28,22 +28,22 @@ const MIGRATION_LIST = [
   runMigrationV11,
 ];
 
-export const runMigrations = async () => {
+export const runMigrationsSL = async () => {
   const version = parseInt(
     (await StorageService.getDatabaseVersion()) || '0',
     10,
   );
 
   try {
-    for (let index = version; index < MIGRATION_LIST.length; index++) {
-      await MIGRATION_LIST[index]();
-      console.log(`Migration ${index} - DONE`);
+    for (let index = version; index < SL_MIGRATION_LIST.length; index++) {
+      await SL_MIGRATION_LIST[index]();
+      console.log(`Migration SL ${index} - DONE`);
     }
 
-    await StorageService.setDatabaseVersion(String(MIGRATION_LIST.length));
+    await StorageService.setDatabaseVersion(String(SL_MIGRATION_LIST.length));
   } catch (error) {
     console.log({error});
   }
 
-  console.log('DATABASE SYNCED');
+  console.log('DATABASE SL SYNCED');
 };

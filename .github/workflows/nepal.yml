@@ -9,6 +9,9 @@ jobs:
   beta-android:
     name: Build Android APK and upload to Play Store
     runs-on: ubuntu-latest
+    env:
+      API_URL: https://coachdigital.org/np/api
+      COUNTRY: np
 
     steps:
       - name: Checkout 🛎️
@@ -22,6 +25,12 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: 'gradle'
+
+      - name: Add chmod
+        run: chmod +x ./scripts/switch-to-nepal.sh
+
+      - name: Switch to Nepal's config
+        run: ./scripts/switch-to-nepal.sh
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
