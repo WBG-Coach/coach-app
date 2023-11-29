@@ -19,6 +19,7 @@ const enTranslation = {
     home: 'Home',
     tlc: 'TLC',
     pending: 'Pending',
+    cop: 'COP',
   },
   components: {
     starsTag: {
@@ -356,6 +357,108 @@ const enTranslation = {
       aboutNextDescription:
         'Stay prepared for Teaching Learning Circles, until then you may create new observations with a teacher by returning to the home screen and selecting a new teacher',
       button: 'Return to home screen',
+    },
+  },
+  cop: {
+    start: {
+      page_title: 'Community of Practice',
+      title: 'Getting started',
+      subtitle:
+        'The CoP is the third step of Coach. It is conducted by the Head Teacher and can be supported by Lead Teachers. ',
+      description:
+        'Check out the Community of Practice (CoP) steps and start a new session:',
+      button: 'Start Community of Practice',
+
+      process: {
+        $1: {
+          title: 'Set a agenda',
+          subtitle: '',
+          description: 'Schedule a meeting with all teachers of the school.',
+        },
+        $2: {
+          title: 'Check stats',
+          subtitle: '5min',
+          description:
+            'View the summary of the statistics of the observations. Each coach will have different statistics once they are based on the observations.',
+        },
+        $3: {
+          title: 'Sharing insights',
+          subtitle: '10-20min',
+          description: 'Share insights from the observations',
+        },
+        $4: {
+          title: 'Discuss positives',
+          subtitle: '10-20min',
+          description:
+            'Discuss the Teaching Practices that had highlights during evaluations.',
+        },
+        $5: {
+          title: 'Discuss areas of improvement ',
+          subtitle: '10-20min',
+          description:
+            'Discuss the Teaching Practices that teachers should improve.',
+        },
+        $6: {
+          title: 'Next steps',
+          subtitle: '5min',
+          description:
+            'Reflect on strategies teachers can apply in the classroom.',
+        },
+      },
+    },
+    stats: {
+      page_title: 'Community of Practice',
+      title: 'Statistics summary',
+      subtitle:
+        'The CoP is the third step of Coach. It is conducted by the Head Teacher and can be supported by Lead Teachers.',
+      button: 'Continue',
+
+      chart: {
+        title: 'School average score',
+        average_title: 'The average school rating is:',
+        average_subitle:
+          'This rating is the average of all Teaching Practices observed in the school',
+      },
+
+      keys: {
+        title: 'Key teaching pratices',
+        subtitle:
+          'Key teaching practices are the ones with highest and lowest scores in the school',
+
+        tab_positive: 'Positives',
+        tab_negative: 'Needs improvement',
+      },
+    },
+    insights: {
+      page_title: 'Community of Practice',
+      title: 'Sharing insights',
+      feedback: {
+        title: 'What insights you had',
+        placeholder: "e.g. teachers usually don't check for understanding",
+      },
+    },
+    positives: {
+      page_title: 'Community of Practice',
+      title: 'Sharing insights',
+      feedback: {
+        title: 'What insights you had',
+        placeholder: "e.g. teachers usually don't check for understanding",
+      },
+    },
+    improvements: {
+      page_title: 'Community of Practice',
+      title: 'Sharing insights',
+      feedback: {
+        title: 'What insights you had',
+        placeholder: "e.g. teachers usually don't check for understanding",
+      },
+    },
+    finish: {
+      page_title: 'Community of Practice',
+      title: 'Community of Practice complete',
+      description:
+        'Congratulations, you just completed the Community of Practice!',
+      button: 'Finish',
     },
   },
   tlc: {

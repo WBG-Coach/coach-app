@@ -5,23 +5,37 @@ import {TouchableOpacity} from 'react-native';
 import PathRoutes from '../../../routers/paths';
 import {useNavigate} from 'react-router-native';
 import {useTranslation} from 'react-i18next';
-import {SHOW_TLC} from '@env';
+import {COUNTRY} from '@env';
 
 const BottomNavigator: React.FC = () => {
   const navigate = useNavigate();
   const {t} = useTranslation();
 
+  const CountriesItems: {
+    [x: string]: [{label: string; icon: string; route: string}];
+  } = {
+    np: [
+      {
+        label: t('bottom_navigator.cop'),
+        icon: 'process',
+        route: PathRoutes.teacherLearningCircles.onboarding,
+      },
+    ],
+
+    sl: [
+      {
+        label: t('bottom_navigator.tlc'),
+        icon: 'process',
+        route: PathRoutes.teacherLearningCircles.onboarding,
+      },
+    ],
+  };
+
+  console.log('COUNTRY ->', COUNTRY);
+
   const bottomItems = [
     {label: t('bottom_navigator.home'), icon: 'home-alt-solid', route: ''},
-    ...(!!SHOW_TLC
-      ? [
-          {
-            label: t('bottom_navigator.tlc'),
-            icon: 'process',
-            route: PathRoutes.teacherLearningCircles.onboarding,
-          },
-        ]
-      : []),
+    ...(CountriesItems as any)[COUNTRY],
     {
       label: t('bottom_navigator.pending'),
       icon: 'comment-dots',

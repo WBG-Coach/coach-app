@@ -219,10 +219,10 @@ const TeacherFormScreen: React.FC = () => {
                   modal
                   locale={currentLanguage}
                   open={openDatePicker}
+                  mode="date"
                   date={values.birthdate || new Date()}
                   onConfirm={date => {
                     setFieldValue('birthdate', date);
-                    console.log(date);
                     setOpenDatePicker(false);
                   }}
                   onCancel={() => {

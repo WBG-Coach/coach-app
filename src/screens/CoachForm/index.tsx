@@ -13,11 +13,11 @@ import {Formik} from 'formik';
 import Toast from '../../components/Toast';
 import PathRoutes from '../../routers/paths';
 import {useCoachContext} from '../../providers/coach.provider';
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-date-picker';
+
 import {TouchableOpacity} from 'react-native';
 import moment from 'moment';
+import i18n from '../../i18n';
 
 export type FormValuesType = {
   name?: string;
@@ -41,6 +41,7 @@ const CoachFormScreen: React.FC = () => {
   const navigate = useNavigate();
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const {currentSchool, selectCoach} = useCoachContext();
+  const currentLanguage = i18n.languages[0];
   const [profileImage, setProfileImage] = useState<{
     name: string;
     value: string;
@@ -145,16 +146,20 @@ const CoachFormScreen: React.FC = () => {
                   />
                 </TouchableOpacity>
 
-                {openDatePicker && (
-                  <DateTimePicker
-                    mode="date"
-                    value={values.birthdate || new Date()}
-                    onChange={(_event: DateTimePickerEvent, date?: Date) => {
-                      setFieldValue('birthdate', date);
-                      setOpenDatePicker(false);
-                    }}
-                  />
-                )}
+                <DatePicker
+                  modal
+                  locale={currentLanguage}
+                  open={openDatePicker}
+                  mode="date"
+                  date={values.birthdate || new Date()}
+                  onConfirm={date => {
+                    setFieldValue('birthdate', date);
+                    setOpenDatePicker(false);
+                  }}
+                  onCancel={() => {
+                    setOpenDatePicker(false);
+                  }}
+                />
 
                 <VStack mt={4}>
                   <HStack>
