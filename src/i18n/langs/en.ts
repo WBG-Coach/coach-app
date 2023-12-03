@@ -360,7 +360,7 @@ const enTranslation = {
     },
   },
   cop: {
-    start: {
+    onboarding: {
       page_title: 'Community of Practice',
       title: 'Getting started',
       subtitle:
@@ -406,7 +406,7 @@ const enTranslation = {
         },
       },
     },
-    stats: {
+    checkingStats: {
       page_title: 'Community of Practice',
       title: 'Statistics summary',
       subtitle:
@@ -435,22 +435,42 @@ const enTranslation = {
       feedback: {
         title: 'What insights you had',
         placeholder: "e.g. teachers usually don't check for understanding",
+        upload_title: 'Upload an image',
+        upload_description:
+          'Send a picture of the annotations you made in this step',
       },
     },
     positives: {
       page_title: 'Community of Practice',
-      title: 'Sharing insights',
+      title: 'Good strategies',
       feedback: {
-        title: 'What insights you had',
-        placeholder: "e.g. teachers usually don't check for understanding",
+        title: 'What was positive',
+        placeholder: 'e.g. teachers always try to respond to student’s needs',
+        upload_title: 'Upload an image',
+        upload_description:
+          'Send a picture of the annotations you made in this step',
       },
     },
     improvements: {
       page_title: 'Community of Practice',
-      title: 'Sharing insights',
+      title: 'Areas of improvement',
       feedback: {
-        title: 'What insights you had',
-        placeholder: "e.g. teachers usually don't check for understanding",
+        title: 'What needs improvement',
+        placeholder: 'e.g. teachers should explain better the lessons',
+        upload_title: 'Upload an image',
+        upload_description:
+          'Send a picture of the annotations you made in this step',
+      },
+    },
+    next_steps: {
+      page_title: 'Community of Practice',
+      title: 'Next steps',
+      feedback: {
+        title: 'What strategies teachers can apply in the classroom',
+        placeholder: 'e.g. teachers should bring more examples in each step',
+        upload_title: 'Upload an image',
+        upload_description:
+          'Send a picture of the annotations you made in this step',
       },
     },
     finish: {

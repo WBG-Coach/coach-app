@@ -18,7 +18,7 @@ const BottomNavigator: React.FC = () => {
       {
         label: t('bottom_navigator.cop'),
         icon: 'process',
-        route: PathRoutes.teacherLearningCircles.onboarding,
+        route: PathRoutes.communityOfPractice.onboarding,
       },
     ],
 
@@ -30,8 +30,6 @@ const BottomNavigator: React.FC = () => {
       },
     ],
   };
-
-  console.log('COUNTRY ->', COUNTRY);
 
   const bottomItems = [
     {label: t('bottom_navigator.home'), icon: 'home-alt-solid', route: ''},

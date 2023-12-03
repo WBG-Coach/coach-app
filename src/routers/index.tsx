@@ -36,6 +36,10 @@ import SyncDetails from '../screens/SyncDetails';
 import TLCDynamicStep from '../screens/TeacherLearningCircles/DynamicStep';
 import SplashScreen from '../screens/SplashScreen';
 import CoachScriptsScreen from '../screens/CoachScripts';
+import COPOnboarding from '../screens/CommunityOfPractice/Onboarding';
+import COPCheckingStats from '../screens/CommunityOfPractice/CheckingStats';
+import COPExercise from '../screens/CommunityOfPractice/Exercise';
+import COPFinish from '../screens/CommunityOfPractice/Finish';
 
 const RouterProvider: React.FC = () => {
   return (
@@ -167,6 +171,34 @@ const RouterProvider: React.FC = () => {
         <Route
           path={PathRoutes.teacherLearningCircles.finish}
           Component={TLCFinish}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.onboarding}
+          Component={COPOnboarding}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.checkingStats}
+          Component={COPCheckingStats}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.insights}
+          Component={e => <COPExercise type={'insights'} {...e} />}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.positives}
+          Component={e => <COPExercise type={'positives'} {...e} />}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.improvements}
+          Component={e => <COPExercise type={'improvements'} {...e} />}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.next_steps}
+          Component={e => <COPExercise type={'next_steps'} {...e} />}
+        />
+        <Route
+          path={PathRoutes.communityOfPractice.finish}
+          Component={COPFinish}
         />
       </Routes>
     </VStack>

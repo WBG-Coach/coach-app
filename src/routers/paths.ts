@@ -42,6 +42,16 @@ const PathRoutes = {
     finish: '/teacherlearningcircles/finish/:unitId',
   },
 
+  communityOfPractice: {
+    onboarding: '/communityOfPractice/onboarding',
+    checkingStats: '/communityOfPractice/checkingStats',
+    insights: '/communityOfPractice/insights',
+    positives: '/communityOfPractice/positives',
+    improvements: '/communityOfPractice/improvements',
+    next_steps: '/communityOfPractice/next_steps',
+    finish: '/communityOfPractice/finish',
+  },
+
   classObservation: {
     about: '/classObservation/about/:teacherId',
     onboarding: '/classObservation/onboarding',

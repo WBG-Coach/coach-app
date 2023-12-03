@@ -40,19 +40,25 @@ export const ImageService = {
     externalId: string = '',
   ): Promise<string> => {
     if (!imageValue.startsWith(IMAGE_PREFIX)) {
-      const newImg = await RNC.Image.compress(imageValue, {
-        maxWidth: 100,
-        maxHeight: 100,
-        quality: 0.8,
-      });
+      let base64 = '';
 
-      const base64 = IMAGE_PREFIX + (await RNFS.readFile(newImg, 'base64'));
+      if (imageValue) {
+        const newImg = await RNC.Image.compress(imageValue, {
+          maxWidth: 100,
+          maxHeight: 100,
+          quality: 0.8,
+        });
+
+        base64 = IMAGE_PREFIX + (await RNFS.readFile(newImg, 'base64'));
+      }
 
       const db = await getDBConnection();
 
       await db.executeSql(`
         UPDATE image
-        SET name = '${imageName}', value = '${base64}', external_id = '${externalId}', _status = 'pending'
+        SET ${imageName && `name = '${imageName}',`} ${
+        imageValue && `value = '${base64}',`
+      } ${externalId && `external_id = '${externalId}',`}  _status = 'pending'
         WHERE id = '${id}'
       `);
     }

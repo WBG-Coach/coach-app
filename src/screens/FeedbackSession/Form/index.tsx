@@ -26,13 +26,13 @@ const FeedbackSessionForm: React.FC = () => {
   const [images, setImages] = useState<
     {name: string; value: string; created_at: number}[]
   >([]);
+  const [showImagePicker, setShowImagePicker] = useState(false);
   const {t} = useTranslation();
   const {
     state: {sessionId, answerId},
   } = useLocation();
   const navigate = useNavigate();
   const [question, setQuestion] = useState<Question>();
-  const [showImagePicker, setShowImagePicker] = useState(false);
   const [actions, setActions] = useState('');
   const [submittedWithError, setSubmittedWithError] = useState(false);
   const [loading, setLoading] = useState(false);

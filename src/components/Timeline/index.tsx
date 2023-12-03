@@ -50,9 +50,13 @@ const Timeline: React.FC<Props> = ({items}) => {
                 <Text fontSize={'TMD'} fontWeight={700} color={'gray.800'}>
                   {item.title}
                 </Text>
-                <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                  {item.estimated}
-                </Text>
+
+                {item.estimated && (
+                  <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                    {item.estimated}
+                  </Text>
+                )}
+
                 <Text fontSize={'TSM'} fontWeight={400} color={'gray.700'}>
                   {item.description}
                 </Text>
