@@ -24,5 +24,7 @@ ls -l
 
 # Substitui a string no arquivo build.gradle
 # Utiliza o comando sed para a substituição
-sed -i '' "s/applicationId 'com.coachappsl'/applicationId 'com.coachappnp'/" build.gradle
+sed -i "s/applicationId 'com.coachappsl'/applicationId 'com.coachappnp'/" build.gradle
+sed -i "s/namespace 'com.coachappsl'/namespace 'com.coachappnp'/" build.gradle
+
 
