@@ -21,11 +21,13 @@ import Button from '../../../components/Button';
 import Toast from '../../../components/Toast';
 import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
-import {Formik, useFormik, useFormikContext} from 'formik';
+import {Formik, useFormik} from 'formik';
+import {COUNTRY} from '@env';
 
 import {TouchableOpacity} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import i18n from '../../../i18n';
+import moment from 'moment';
 
 export type FormValuesType = {
   name?: string;
@@ -81,18 +83,22 @@ const TeacherFormScreen: React.FC = () => {
     toast.show({
       placement: 'top',
       render: () => (
-        <Toast title={t('teacher.form.success')} icon="check-circle-solid" />
+        <Toast
+          title={
+            isNew ? t('teacher.form.success') : t('teacher.form.success_update')
+          }
+          icon="check-circle-solid"
+        />
       ),
     });
 
     navigate(-1);
   };
 
-  const {values, errors, handleSubmit, setFieldValue, setValues, resetForm} =
-    useFormik({
-      initialValues,
-      onSubmit,
-    });
+  const {values, errors, handleSubmit, setFieldValue} = useFormik({
+    initialValues,
+    onSubmit,
+  });
 
   useEffect(() => {
     if (params?.id && params?.id !== 'new') {
@@ -101,6 +107,8 @@ const TeacherFormScreen: React.FC = () => {
         initialValues.surname = teacher.surname;
         initialValues.birthdate = teacher.birthdate;
         initialValues.subject = teacher.subject || '';
+        initialValues.pin = teacher?.pin || '';
+        initialValues.nin = teacher?.nin || '';
 
         if (teacher.image_id && teacher.image_name && teacher.image_value) {
           setProfileImage({
@@ -113,6 +121,12 @@ const TeacherFormScreen: React.FC = () => {
         setLoading(false);
       });
     } else {
+      initialValues.name = '';
+      initialValues.surname = '';
+      initialValues.birthdate = undefined;
+      initialValues.subject = '';
+      initialValues.pin = '';
+      initialValues.nin = '';
       setLoading(false);
     }
   }, [params]);
@@ -142,18 +156,30 @@ const TeacherFormScreen: React.FC = () => {
     );
   }
 
-  const subjectOptions = [
-    t('teacher.subjects.$1'),
-    t('teacher.subjects.$2'),
-    t('teacher.subjects.$3'),
-    t('teacher.subjects.$4'),
-    t('teacher.subjects.$5'),
-    t('teacher.subjects.$6'),
-    t('teacher.subjects.$7'),
-    t('teacher.subjects.$8'),
-    t('teacher.subjects.$9'),
-    t('teacher.subjects.$10'),
-  ];
+  const subjectOptions =
+    COUNTRY === 'np'
+      ? [
+          t(`teacher.subjects.np.$1`),
+          t(`teacher.subjects.np.$2`),
+          t(`teacher.subjects.np.$3`),
+          t(`teacher.subjects.np.$4`),
+          t(`teacher.subjects.np.$5`),
+          t(`teacher.subjects.np.$6`),
+          t(`teacher.subjects.np.$7`),
+          t(`teacher.subjects.np.$8`),
+        ]
+      : [
+          t(`teacher.subjects.sl.$1`),
+          t(`teacher.subjects.sl.$2`),
+          t(`teacher.subjects.sl.$3`),
+          t(`teacher.subjects.sl.$4`),
+          t(`teacher.subjects.sl.$5`),
+          t(`teacher.subjects.sl.$6`),
+          t(`teacher.subjects.sl.$7`),
+          t(`teacher.subjects.sl.$8`),
+          t(`teacher.subjects.sl.$9`),
+          t(`teacher.subjects.sl.$10`),
+        ];
 
   return (
     <Page
@@ -193,6 +219,7 @@ const TeacherFormScreen: React.FC = () => {
                 color={'gray.700'}>
                 {t('teacher.form.surname')}
               </Text>
+
               <InputText
                 value={values.surname}
                 errorMessage={errors.surname}
@@ -214,16 +241,25 @@ const TeacherFormScreen: React.FC = () => {
                 }}>
                 <InputText
                   isReadOnly
-                  value={values.birthdate?.toDateString()}
+                  {...(values.birthdate && {
+                    value: moment(new Date(values?.birthdate)).format(
+                      'DD MMM, YYYY',
+                    ),
+                  })}
                 />
               </TouchableOpacity>
 
               <DatePicker
                 modal
+                title={t('teacher.form.birthdate_title')}
+                confirmText={t('teacher.form.birthdate_confirm')}
+                cancelText={t('teacher.form.birthdate_cancel')}
                 locale={currentLanguage}
                 open={openDatePicker}
                 mode="date"
-                date={values.birthdate || new Date()}
+                date={
+                  values.birthdate ? new Date(values.birthdate) : new Date()
+                }
                 onConfirm={date => {
                   setFieldValue('birthdate', date);
                   setOpenDatePicker(false);
@@ -232,6 +268,37 @@ const TeacherFormScreen: React.FC = () => {
                   setOpenDatePicker(false);
                 }}
               />
+              {COUNTRY === 'sl' && (
+                <VStack mt={4}>
+                  <HStack>
+                    <Text
+                      flex={1}
+                      fontSize={'LMD'}
+                      fontWeight={500}
+                      color={'gray.700'}>
+                      {t('teacher.form.pin')}
+                    </Text>
+
+                    <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
+                      {t('common.optional')}
+                    </Text>
+                  </HStack>
+
+                  <Text
+                    mb={2}
+                    fontSize={'TSM'}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {t('teacher.form.pin_description')}
+                  </Text>
+                  <InputText
+                    value={values.pin}
+                    errorMessage={errors.pin}
+                    onChangeText={value => setFieldValue('pin', value)}
+                    placeholder="0000-0-00000"
+                  />
+                </VStack>
+              )}
 
               <VStack mt={4}>
                 <HStack>
@@ -240,7 +307,9 @@ const TeacherFormScreen: React.FC = () => {
                     fontSize={'LMD'}
                     fontWeight={500}
                     color={'gray.700'}>
-                    {t('teacher.form.pin')}
+                    {COUNTRY === 'np'
+                      ? t('teacher.form.teacher_code')
+                      : t('teacher.form.nin')}
                   </Text>
 
                   <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
@@ -252,37 +321,9 @@ const TeacherFormScreen: React.FC = () => {
                   fontSize={'TSM'}
                   fontWeight={400}
                   color={'gray.600'}>
-                  {t('teacher.form.pin_description')}
-                </Text>
-
-                <InputText
-                  value={values.pin}
-                  errorMessage={errors.pin}
-                  onChangeText={value => setFieldValue('pin', value)}
-                  placeholder="0000-0-00000"
-                />
-              </VStack>
-
-              <VStack mt={4}>
-                <HStack>
-                  <Text
-                    flex={1}
-                    fontSize={'LMD'}
-                    fontWeight={500}
-                    color={'gray.700'}>
-                    {t('teacher.form.nin')}
-                  </Text>
-
-                  <Text fontSize={'TXS'} fontWeight={400} color={'gray.700'}>
-                    {t('common.optional')}
-                  </Text>
-                </HStack>
-                <Text
-                  mb={2}
-                  fontSize={'TSM'}
-                  fontWeight={400}
-                  color={'gray.600'}>
-                  {t('teacher.form.nin_description')}
+                  {COUNTRY === 'np'
+                    ? t('teacher.form.teacher_code_description')
+                    : t('teacher.form.nin_description')}
                 </Text>
 
                 <InputText

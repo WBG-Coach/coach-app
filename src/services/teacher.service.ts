@@ -118,8 +118,11 @@ export const TeacherService = {
           t.name as name,
           t.surname as surname,
           t.subject as subject,
+          t.birthdate as birthdate,
           t.emis_number as emis_number,
           i.id as image_id,
+          t.pin as pin,
+          t.nin as nin,
           i.name as image_name,
           i.value as image_value
         FROM teacher as t 
@@ -139,8 +142,8 @@ export const TeacherService = {
       teachers?.map(teacher => {
         return db.executeSql(
           `
-          INSERT OR REPLACE INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, pin, nin, _status)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced')
+          INSERT OR REPLACE INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, pin, nin, birthdate, _status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced')
         `,
           [
             teacher.id,
@@ -152,6 +155,7 @@ export const TeacherService = {
             teacher.image_id,
             teacher.pin,
             teacher.nin,
+            teacher.birthdate,
           ],
         );
       }),
@@ -160,10 +164,16 @@ export const TeacherService = {
 
   create: async (teacher: Partial<Teacher>): Promise<void> => {
     const db = await getDBConnection();
+
+    console.log('--->', {
+      ...teacher,
+      birthdate: teacher.birthdate?.toJSON().toString(),
+    });
+
     await db.executeSql(
       `
-      INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, birthdate, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+      INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, birthdate, pin, nin, _status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
       [
         uuid(),
@@ -173,17 +183,24 @@ export const TeacherService = {
         teacher.subject,
         teacher.school_id,
         teacher.image_id,
-        teacher.birthdate?.toJSON(),
+        teacher.birthdate?.toJSON().toString(),
+        teacher.pin,
+        teacher.nin,
       ],
     );
   },
 
   update: async (id: string, teacher: Partial<Teacher>): Promise<void> => {
     const db = await getDBConnection();
+    console.log(teacher);
     await db.executeSql(
       `
       UPDATE teacher
-      SET name = '${teacher.name}', surname = '${
+      SET ${
+        teacher.birthdate &&
+        `birthdate = '${new Date(teacher.birthdate).toJSON().toString()}',`
+      } pin = '${teacher.pin}', nin = '${teacher.nin}',
+       name = '${teacher.name}', surname = '${
         teacher.surname
       }', emis_number = '${teacher.emis_number || ''}', subject = '${
         teacher.subject

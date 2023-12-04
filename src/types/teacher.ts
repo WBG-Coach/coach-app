@@ -38,6 +38,8 @@ export type TeacherToEditType = {
   surname: string;
   subject?: string;
   birthdate?: Date;
+  pin?: string;
+  nin?: string;
   image_id?: string;
   image_name?: string;
   image_value?: string;
