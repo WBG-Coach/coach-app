@@ -22,7 +22,7 @@ const npTranslation = {
       doingGreat: 'हुनुहुन्छ',
     },
   },
-  bottom_navigator: {home: 'घर', tlc: 'TLC', pending: 'पेन्डिङ', cop: 'COP'},
+  bottom_navigator: {home: 'घर', tlc: 'TLC', pending: 'पेन्डिङ', cop: 'सीओपी'},
   aboutScan: {
     title: 'QR कोड स्क्यान गर्नुहोस्',
     description: 'मेन्टर म्यानुअलमा रहेको QR कोड स्क्यान गर्नुहोस्',
@@ -106,7 +106,7 @@ const npTranslation = {
       addNew: 'नयाँ शिक्षक थप्नुहोस्',
       'no-session': 'अझै कुनै सत्र छैन। मेन्टरिङसुरु गर्नुहोस्!',
       'last-session': 'अघिल्लो सत्र {{date}} मा प्रविष्ट गरिएको थियो',
-      session_interval: '(1)[1 अवलोकन];(2-inf)[{{count}} अवलोकनहरू];',
+      session_interval: '(1)[1 अवलोकन];(2-inf)[{{count}} अवलोकनहरू]',
       teachers_count: 'यस विद्यालयका शिक्षकहरू:',
     },
     emptyState: {
