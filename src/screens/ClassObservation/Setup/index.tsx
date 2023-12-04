@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import Page from '../../../components/Page';
 import {Formik} from 'formik';
 import FieldError from '../../../components/FieldError';
+import {COUNTRY} from '@env';
 
 const ClassObservationSetup: React.FC = () => {
   const {state} = useLocation();
@@ -44,18 +45,30 @@ const ClassObservationSetup: React.FC = () => {
     t('classObservation.setup.questions.$1.options.$3'),
   ];
 
-  const subjectOptions = [
-    t('teacher.subjects.$1'),
-    t('teacher.subjects.$2'),
-    t('teacher.subjects.$3'),
-    t('teacher.subjects.$4'),
-    t('teacher.subjects.$5'),
-    t('teacher.subjects.$6'),
-    t('teacher.subjects.$7'),
-    t('teacher.subjects.$8'),
-    t('teacher.subjects.$9'),
-    t('teacher.subjects.$10'),
-  ];
+  const subjectOptions =
+    COUNTRY === 'np'
+      ? [
+          t(`teacher.subjects.np.$1`),
+          t(`teacher.subjects.np.$2`),
+          t(`teacher.subjects.np.$3`),
+          t(`teacher.subjects.np.$4`),
+          t(`teacher.subjects.np.$5`),
+          t(`teacher.subjects.np.$6`),
+          t(`teacher.subjects.np.$7`),
+          t(`teacher.subjects.np.$8`),
+        ]
+      : [
+          t(`teacher.subjects.sl.$1`),
+          t(`teacher.subjects.sl.$2`),
+          t(`teacher.subjects.sl.$3`),
+          t(`teacher.subjects.sl.$4`),
+          t(`teacher.subjects.sl.$5`),
+          t(`teacher.subjects.sl.$6`),
+          t(`teacher.subjects.sl.$7`),
+          t(`teacher.subjects.sl.$8`),
+          t(`teacher.subjects.sl.$9`),
+          t(`teacher.subjects.sl.$10`),
+        ];
 
   const defaultValues = {
     students_count: '',
