@@ -413,14 +413,14 @@ const npTranslation = {
         },
         $3: {
           title: 'जानकारी दिनुहोस्',
-          subtitle: '10-20 मिनेट',
+          subtitle: '१०-२० मिनेट',
           description: 'अवलोकनहरूबाट अन्तर्दृष्टि साझा गर्नुहोस्',
         },
         $4: {
           title: 'सकारात्मक जानकारी छलफल गर्नुहोस्',
-          subtitle: '10-20 मिनेट',
+          subtitle: '१०-२० मिनेट',
           description:
-            'Discuss the Teaching Practices that had highlights during evaluations.',
+            'मूल्याङ्कनका क्रममा हाइलाइट भएका शिक्षण अभ्यासहरूबारे छलफल गर्नुहोस्',
         },
         $5: {
           title: 'सुधारका क्षेत्रहरूमा छलफल गर्नुहोस्,
@@ -461,25 +461,25 @@ const npTranslation = {
     },
     insights: {
       page_title: 'सिकाइ सञ्जाल',
-      title: 'Sharing insights',
+      title: 'आफ्नो बिचार साझा गर्नु होस्',
       feedback: {
-        title: 'What insights you had',
+        title: 'तपाईंको बुझाई के रहयो ?',
         placeholder: "उदाहरणका लागि शिक्षकहरू बोल्न खोज्नुहोस्",
       },
     },
     positives: {
       page_title: 'सिकाइ सञ्जाल',
-      title: 'Sharing insights',
+      title: 'आफ्नो बिचार साझा गर्नु होस्',
       feedback: {
-        title: 'What insights you had',
+        title: 'तपाईंको बुझाई के रहयो ?',
         placeholder: "उदाहरणका लागि शिक्षकहरू बोल्न खोज्नुहोस्,
       },
     },
     improvements: {
       page_title: 'सिकाइ सञ्जाल',
-      title: 'Sharing insights',
+      title: 'आफ्नो बिचार साझा गर्नु होस्',
       feedback: {
-        title: 'What insights you had',
+        title: 'तपाईंको बुझाई के रहयो ?',
         placeholder: "उदाहरणका लागि शिक्षकहरू बोल्न खोज्नुहोस्",
       },
     },
