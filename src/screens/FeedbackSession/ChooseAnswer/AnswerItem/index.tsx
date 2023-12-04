@@ -3,6 +3,7 @@ import {Props} from './types';
 import {HStack, VStack, Text, Center, Box} from 'native-base';
 import {TouchableOpacity} from 'react-native';
 import Icon from '../../../../components/Icon';
+import {useTranslation} from 'react-i18next';
 
 const AnswerItem: React.FC<Props> = ({
   title,
@@ -10,6 +11,8 @@ const AnswerItem: React.FC<Props> = ({
   selectedAnswer,
   handleSelectAnswer,
 }) => {
+  const {t} = useTranslation();
+
   return (
     <VStack borderWidth={'1px'} borderColor={'gray.200'} borderRadius={'8px'}>
       <HStack py={'8px'} px={'16px'} bg={'gray.100'}>
@@ -26,11 +29,11 @@ const AnswerItem: React.FC<Props> = ({
             <HStack alignItems={'flex-start'}>
               <VStack flex={1}>
                 <Text fontSize={'TMD'} fontWeight={500} color={'gray.700'}>
-                  {answer.question?.title}
+                  {t(answer.question?.title || '')}
                 </Text>
                 {answer.question?.description && (
                   <Text fontSize={'TSM'} fontWeight={400} color={'gray.600'}>
-                    {answer.question?.description}
+                    {t(answer.question?.description || '')}
                   </Text>
                 )}
                 <HStack alignItems="center" mt="4px">

@@ -4,6 +4,7 @@ import QuestionItem from './QuestionItem';
 import {VStack} from 'native-base';
 import {Props} from './types';
 import Accordion from '../../../../components/Accordion';
+import {useTranslation} from 'react-i18next';
 
 const CompetenceAccordion: React.FC<Props> = ({
   onComplete,
@@ -11,6 +12,7 @@ const CompetenceAccordion: React.FC<Props> = ({
   competence,
   initialAnswers,
 }) => {
+  const {t} = useTranslation();
   const [isOpen, setIsOpen] = useState(true);
   const [isFinished, setIsFinished] = useState(initialAnswers ? true : false);
   const [answers, setAnswers] = useState<{[key: string]: number}>(
@@ -58,7 +60,7 @@ const CompetenceAccordion: React.FC<Props> = ({
     <Accordion
       isOpen={isOpen}
       check={isFinished}
-      title={`${(index || 0) + 1}. ${competence.title}`}
+      title={`${(index || 0) + 1}. ${t('Time on learning')}`}
       onClickHeader={() => isFinished && setIsOpen(!isOpen)}>
       <VStack>{competence.questions.map(renderQuestion)}</VStack>
     </Accordion>

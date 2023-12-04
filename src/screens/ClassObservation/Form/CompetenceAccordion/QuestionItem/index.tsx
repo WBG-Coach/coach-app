@@ -6,6 +6,7 @@ import {TouchableOpacity} from 'react-native';
 import Icon from '../../../../../components/Icon';
 import StarRating from '../../../../../components/StarRating';
 import Button from '../../../../../components/Button';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   question: Question;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
+  const {t} = useTranslation();
   const [internalValue, setInternalValue] = useState(initialValue || 0);
   const [tooltipData, setTooltipData] = useState<string>();
 
@@ -22,7 +24,7 @@ const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
       <HStack mb={'16px'}>
         <VStack flex={1} mr={1}>
           <Text fontSize={'LLG'} fontWeight={500} color={'gray.700'}>
-            {question.title}
+            {t(question.title)}
           </Text>
 
           {question.description && (
@@ -31,7 +33,7 @@ const QuestionItem: React.FC<Props> = ({initialValue, question, onAnswer}) => {
               fontSize={'TMD'}
               fontWeight={400}
               color={'gray.600'}>
-              {question.description}
+              {t(question.description)}
             </Text>
           )}
         </VStack>

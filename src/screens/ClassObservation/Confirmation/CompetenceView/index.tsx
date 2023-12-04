@@ -79,7 +79,7 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
 
               <VStack p={4}>
                 <Text fontSize={'TMD'} fontWeight={700} color={'gray.700'}>
-                  {competency.title}
+                  {t(competency.title)}
                 </Text>
 
                 <VStack mt={4} space={4}>
@@ -90,14 +90,14 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
                           fontSize={'TSM'}
                           fontWeight={400}
                           color={'gray.700'}>
-                          {question.title}
+                          {t(question.title)}
                         </Text>
                         {question.description && (
                           <Text
                             fontSize={'TSM'}
                             fontWeight={400}
                             color={'gray.600'}>
-                            {question.description}
+                            {t(question.description)}
                           </Text>
                         )}
                       </VStack>

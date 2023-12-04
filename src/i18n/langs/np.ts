@@ -652,6 +652,53 @@ const npTranslation = {
   errors: {
     requiredField: 'यो प्रश्नको जवाफ अनिवार्य छ।',
   },
+
+  'Time on learning': 'सिक्ने समय',
+  'Students are engaged on given task':
+    'विद्यार्थीहरू दिइएको कार्यमा संलग्न छन्',
+  'In the 1st part of the class': 'कक्षाको पहिलो भागमा',
+  'In the 2nd part of the class': 'कक्षा २ मा',
+  'In the 3rd part of the class': 'कक्षा ३ मा',
+
+  'Positive expectations': 'सकारात्मक अपेक्षाहरू',
+  'The teacher acknowledges positive student behaviour.':
+    'शिक्षकले विद्यार्थीको सकारात्मक व्यवहारलाई स्वीकार गर्छन्',
+  'The teacher redirects unexpected behaviour and focuses on the expected behaviour.':
+    'शिक्षकले अप्रत्याशित व्यवहारलाई पुन: निर्देशित गर्दछ र अपेक्षित व्यवहारमा ध्यान केन्द्रित गर्दछ।',
+
+  'Creating High Expectations and Inclusive Learning Environment':
+    'उच्च अपेक्षाहरू र समावेशी सिकाइ वातावरण सिर्जना गर्दै',
+  'The teacher treats all students respectfully.':
+    'शिक्षकले सबै विद्यार्थीहरूलाई आदरपूर्वक व्यवहार गर्नुहुन्छ।',
+  "The teacher responds to students' needs.":
+    'शिक्षकले विद्यार्थीहरूको आवश्यकतालाई जवाफ दिन्छ।',
+  "The teacher acknowledges students' efforts, rather than focusing only on results, students' intelligence, or natural abilities.":
+    'शिक्षकले नतिजा, विद्यार्थीको बौद्धिकता वा प्राकृतिक क्षमताहरूमा मात्र ध्यान केन्द्रित गर्नुको सट्टा विद्यार्थीहरूको प्रयासलाई स्वीकार गर्छन्',
+  'Teacher uses additional learning materials effectively':
+    'शिक्षकले अतिरिक्त सिकाइ सामग्रीहरू प्रभावकारी रूपमा प्रयोग गर्छन्',
+  'Teacher Manages the Physical arrangement of the classroom to allow all students to learn':
+    'शिक्षकले सबै विद्यार्थीहरूलाई सिक्न अनुमति दिन कक्षाकोठाको भौतिक व्यवस्थाको व्यवस्थापन गर्छ',
+
+  'Effective and Engaging Learning Strategies':
+    'प्रभावकारी र आकर्षक सिकाइ रणनीतिहरू',
+  'The teacher explicitly articulates the objectives of the lesson and relates classroom activities to the objectives.':
+    'शिक्षकले स्पष्टताले पाठको उद्देश्यहरू स्पष्ट पार्छ र कक्षाकोठा गतिविधिहरूलाई उद्देश्यहरूसँग सम्बन्धित गर्दछ',
+  'Teacher is teaching using Student-centered activities':
+    'शिक्षकले विद्यार्थी-केन्द्रित गतिविधिहरू प्रयोग गरेर पढाइरहनुभएको छ',
+  "The teacher makes connections in the lesson that related to other content knowledge or students' daily lives.":
+    'शिक्षकले पाठमा जडानहरू बनाउँदछ जुन अन्य सामग्री ज्ञान वा विद्यार्थीहरूको दैनिक जीवनसँग सम्बन्धित छ।',
+  "The teacher uses questions, prompts or other strategies to ensure students' level of understanding.":
+    'शिक्षकले विद्यार्थीहरूको समझको स्तर सुनिश्चित गर्न प्रश्नहरू, संकेतहरू वा अन्य रणनीतिहरू प्रयोग गर्छन्।',
+  'The teacher asks open-ended questions. (Critical Thinking)':
+    'शिक्षकले खुल्ला प्रश्नहरू सोध्छन्। (महत्वपूर्ण सोचाइ)',
+
+  'Assessing learning': 'सिकाइ मूल्याङ्कन',
+  'The teacher monitors most students during independent/group work.':
+    'शिक्षकले धेरैजसो विद्यार्थीहरूलाई स्वतन्त्र/समूह कार्यको क्रममा निगरानी गर्छन्',
+  'The teacher adjusts teaching to the level of the students.':
+    'शिक्षकले विद्यार्थीको स्तरमा पढाइ समायोजन गर्दछ।',
+  'The teacher provides specific comments or guiding questions to help students clarify misunderstandings ':
+    'शिक्षकले विद्यार्थीहरूलाई गलतफहमीहरू स्पष्ट गर्न मद्दत गर्न विशेष टिप्पणीहरू वा मार्गदर्शन प्रश्नहरू प्रदान गर्छन्',
 };
 
 export default npTranslation;
