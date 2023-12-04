@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
+import {COUNTRY} from '@env';
 import enTranslation from './langs/en';
 import ptTranslation from './langs/pt';
 import npTranslation from './langs/np';
@@ -18,7 +19,7 @@ i18n
   .init({
     compatibilityJSON: 'v3',
     resources,
-    fallbackLng: 'en',
+    fallbackLng: COUNTRY === 'np' ? 'ne' : 'en',
     interpolation: {
       escapeValue: false,
     },
