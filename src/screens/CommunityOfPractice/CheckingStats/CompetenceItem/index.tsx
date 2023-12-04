@@ -2,8 +2,10 @@ import React from 'react';
 import {Props} from './types';
 import {HStack, Text, VStack, useTheme} from 'native-base';
 import Icon from '../../../../components/Icon';
+import {useTranslation} from 'react-i18next';
 
 const CompetenceItem: React.FC<Props> = ({answersAverage, title}) => {
+  const {t} = useTranslation();
   const theme = useTheme();
 
   return (
@@ -21,7 +23,7 @@ const CompetenceItem: React.FC<Props> = ({answersAverage, title}) => {
         </Text>
       </HStack>
       <Text fontSize={'LMD'} fontWeight={500} color={'gray.700'}>
-        {title}
+        {t(title as any)}
       </Text>
     </VStack>
   );
