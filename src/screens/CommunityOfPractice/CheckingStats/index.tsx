@@ -156,7 +156,7 @@ const COPCheckingStats: React.FC = () => {
                 fontSize={'TMD'}
                 fontWeight={700}
                 color={'gray.700'}>
-                {schoolData?.data?.average}/5
+                {schoolData?.data?.average.toFixed(1)}/5
               </Text>
             </HStack>
             <Text
