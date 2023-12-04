@@ -139,8 +139,8 @@ export const TeacherService = {
       teachers?.map(teacher => {
         return db.executeSql(
           `
-          INSERT OR REPLACE INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, _status)
-          VALUES (?, ?, ?, ?, ?, ?, ?, 'synced')
+          INSERT OR REPLACE INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, pin, nin, _status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced')
         `,
           [
             teacher.id,
@@ -150,6 +150,8 @@ export const TeacherService = {
             teacher.subject,
             teacher.school_id,
             teacher.image_id,
+            teacher.pin,
+            teacher.nin,
           ],
         );
       }),

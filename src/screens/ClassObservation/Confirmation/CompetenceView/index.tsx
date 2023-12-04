@@ -10,6 +10,14 @@ import {
   sumAnswersPerQuestions,
 } from '../../../../helpers/session.helper';
 
+const averageConverter = {
+  1: 1,
+  2: 1,
+  3: 1,
+  4: 2,
+  5: 3,
+};
+
 type Props = {competences: Competence[]};
 
 const CompetenceView: React.FC<Props> = ({competences}) => {
@@ -26,82 +34,91 @@ const CompetenceView: React.FC<Props> = ({competences}) => {
       </Text>
 
       <VStack space={6} mt={6} mb="8px">
-        {competences.map((competency, i) => (
-          <VStack
-            key={i}
-            borderWidth={'1px'}
-            borderRadius={'16px'}
-            borderColor={'gray.200'}>
-            <HStack
-              py={3}
-              px={4}
-              alignItems={'center'}
-              background={'gray.200'}
-              borderTopLeftRadius={'16px'}
-              borderTopRightRadius={'16px'}>
-              <Text
-                flex={1}
-                fontSize={'TSM'}
-                fontWeight={400}
-                color={'gray.700'}>
-                {t(
-                  'classObservation.formConfirmation.competenceView.overallRating',
-                )}
-              </Text>
-              <VStack alignItems={'flex-end'} space={1}>
-                <StarView
-                  maxLength={competency.questions[0].scale}
-                  value={Math.floor(averageAnswersPerCompetence(competency))}
-                />
+        {competences.map((competency, i) => {
+          const average = Math.floor(averageAnswersPerCompetence(competency));
+          return (
+            <VStack
+              key={i}
+              borderWidth={'1px'}
+              borderRadius={'16px'}
+              borderColor={'gray.200'}>
+              <HStack
+                py={3}
+                px={4}
+                alignItems={'center'}
+                background={'gray.200'}
+                borderTopLeftRadius={'16px'}
+                borderTopRightRadius={'16px'}>
                 <Text
-                  fontSize={'LSM'}
                   flex={1}
+                  fontSize={'TSM'}
                   fontWeight={400}
-                  color={'gray.600'}>
-                  {
-                    tags[
-                      Math.floor(averageAnswersPerCompetence(competency)) - 1
-                    ]?.label
-                  }
+                  color={'gray.700'}>
+                  {t(
+                    'classObservation.formConfirmation.competenceView.overallRating',
+                  )}
                 </Text>
-              </VStack>
-            </HStack>
+                <VStack alignItems={'flex-end'} space={1}>
+                  <StarView
+                    maxLength={competency.questions[0].scale}
+                    value={
+                      competency.questions[0].scale === 3
+                        ? (averageConverter as any)[average]
+                        : average
+                    }
+                  />
+                  <Text
+                    fontSize={'LSM'}
+                    flex={1}
+                    fontWeight={400}
+                    color={'gray.600'}>
+                    {tags[average - 1]?.label}
+                  </Text>
+                </VStack>
+              </HStack>
 
-            <VStack p={4}>
-              <Text fontSize={'TMD'} fontWeight={700} color={'gray.700'}>
-                {competency.title}
-              </Text>
+              <VStack p={4}>
+                <Text fontSize={'TMD'} fontWeight={700} color={'gray.700'}>
+                  {competency.title}
+                </Text>
 
-              <VStack mt={4} space={4}>
-                {competency.questions.map((question: Question) => (
-                  <HStack key={question.id} alignItems={'center'}>
-                    <VStack flex={1} space={1} mr={2}>
-                      <Text
-                        fontSize={'TSM'}
-                        fontWeight={400}
-                        color={'gray.700'}>
-                        {question.title}
-                      </Text>
-                      {question.description && (
+                <VStack mt={4} space={4}>
+                  {competency.questions.map((question: Question) => (
+                    <HStack key={question.id} alignItems={'center'}>
+                      <VStack flex={1} space={1} mr={2}>
                         <Text
                           fontSize={'TSM'}
                           fontWeight={400}
-                          color={'gray.600'}>
-                          {question.description}
+                          color={'gray.700'}>
+                          {question.title}
                         </Text>
-                      )}
-                    </VStack>
+                        {question.description && (
+                          <Text
+                            fontSize={'TSM'}
+                            fontWeight={400}
+                            color={'gray.600'}>
+                            {question.description}
+                          </Text>
+                        )}
+                      </VStack>
 
-                    <StarView
-                      maxLength={question.scale}
-                      value={sumAnswersPerQuestions(question) || 0}
-                    />
-                  </HStack>
-                ))}
+                      <StarView
+                        maxLength={question.scale}
+                        value={
+                          question.scale === 3
+                            ? (averageConverter as any)[
+                                sumAnswersPerQuestions(question)
+                              ]
+                            : sumAnswersPerQuestions(question) || 0
+                        }
+                      />
+                    </HStack>
+                  ))}
+                </VStack>
               </VStack>
             </VStack>
-          </VStack>
-        ))}
+          );
+        })}
       </VStack>
     </ScrollView>
   );

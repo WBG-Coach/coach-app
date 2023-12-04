@@ -3,8 +3,15 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {GraphEmptyState} from '../../../../../../assets/images/globals';
 import Icon from '../../../../../../components/Icon';
+import {useNavigate} from 'react-router-native';
+import PathRoutes from '../../../../../../routers/paths';
 
-const EmptyStateComponent: React.FC = () => {
+type Props = {
+  teacherId: string;
+};
+
+const EmptyStateComponent: React.FC<Props> = ({teacherId}) => {
+  const navigate = useNavigate();
   const {t} = useTranslation();
   const theme = useTheme();
 
@@ -35,7 +42,11 @@ const EmptyStateComponent: React.FC = () => {
       </Text>
 
       <Button
-        onPress={() => {}}
+        onPress={() =>
+          navigate(
+            PathRoutes.classObservation.about.replace(':teacherId', teacherId),
+          )
+        }
         mt={8}
         variant={'solid'}
         borderRadius={'8px'}

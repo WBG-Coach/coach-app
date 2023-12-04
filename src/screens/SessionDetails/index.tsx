@@ -75,7 +75,7 @@ const SessionDetailsScreen: React.FC = () => {
               fontSize={'TMD'}
               fontWeight={400}
               color={'gray.600'}>
-              {getTags(t)[parseInt(averageAnswers.toFixed(0), 10)]?.label}
+              {getTags(t)[Math.floor(averageAnswers) - 1]?.label}
             </Text>
           </VStack>
         ) : (

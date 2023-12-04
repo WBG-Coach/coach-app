@@ -1,6 +1,12 @@
 import {Competence} from '../types/competence';
 import {Question} from '../types/question';
 
+const averageConverter = {
+  1: 1,
+  2: 4,
+  3: 5,
+};
+
 export const averageAnswersFromCompetences = (competences: Competence[]) => {
   return (
     competences.reduce(
@@ -21,7 +27,12 @@ export const averageAnswersPerCompetence = (competence: Competence) => {
 export const sumAnswersPerQuestions = (question: Question) => {
   return (
     question.answers?.reduce((sum, answer) => {
-      return sum + parseInt(answer.value, 10);
+      return (
+        sum +
+        (question.scale === 3
+          ? (averageConverter as any)[parseInt(answer.value, 10)]
+          : parseInt(answer.value, 10))
+      );
     }, 0) || 0
   );
 };

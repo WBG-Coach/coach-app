@@ -289,12 +289,29 @@ const enTranslation = {
             $2: 'Only boys',
             $3: 'Only girls',
           },
+          counters: {
+            $1: '1 - 10',
+            $2: '10 - 30',
+            $3: '30 - 60',
+            $4: '60+',
+          },
         },
         $2: {title: 'What is the subject?', placeholder: 'Math'},
         $3: {
           title: 'How long will the lesson last?',
           placeholder: '30 min',
+          options: {
+            $1: '25 mins',
+            $2: '30 mins',
+            $3: '35 mins',
+            $4: '40 mins',
+            $5: '45 mins',
+            $6: '50 mins',
+            $7: '55 mins',
+            $8: '60 mins',
+          },
         },
+
         $4: {
           title: 'What are the objectives of the lesson?',
           placeholder: "Teacher's description of what is to be taught",

@@ -107,7 +107,7 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
         <>
           {competences.data && competences.data[0].answersValue.length < 3 ? (
             <Center flex={1}>
-              <EmptyStateComponent />
+              <EmptyStateComponent teacherId={teacherId} />
             </Center>
           ) : (
             <ScrollView>

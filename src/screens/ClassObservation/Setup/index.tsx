@@ -45,6 +45,24 @@ const ClassObservationSetup: React.FC = () => {
     t('classObservation.setup.questions.$1.options.$3'),
   ];
 
+  const studentsOptions = [
+    t('classObservation.setup.questions.$1.counters.$1'),
+    t('classObservation.setup.questions.$1.counters.$2'),
+    t('classObservation.setup.questions.$1.counters.$3'),
+    t('classObservation.setup.questions.$1.counters.$4'),
+  ];
+
+  const timeOptions = [
+    t('classObservation.setup.questions.$3.options.$1'),
+    t('classObservation.setup.questions.$3.options.$2'),
+    t('classObservation.setup.questions.$3.options.$3'),
+    t('classObservation.setup.questions.$3.options.$4'),
+    t('classObservation.setup.questions.$3.options.$5'),
+    t('classObservation.setup.questions.$3.options.$6'),
+    t('classObservation.setup.questions.$3.options.$7'),
+    t('classObservation.setup.questions.$3.options.$8'),
+  ];
+
   const subjectOptions =
     COUNTRY === 'np'
       ? [
@@ -123,12 +141,10 @@ const ClassObservationSetup: React.FC = () => {
                 </Text>
 
                 <SelectModal
-                  options={[
-                    {label: '1 - 10', value: '1 - 10'},
-                    {label: '10 - 30', value: '10 - 30'},
-                    {label: '30 - 60', value: '30 - 60'},
-                    {label: '60+', value: '60+'},
-                  ]}
+                  options={studentsOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
                   isInvalid={!!errors.students_count && submitCount >= 1}
                   handleSelectValue={value =>
                     setFieldValue('students_count', value)
@@ -166,21 +182,17 @@ const ClassObservationSetup: React.FC = () => {
                   {t('classObservation.setup.questions.$3.title')}
                 </Text>
                 <SelectModal
-                  options={[
-                    {label: '25 mins', value: '25'},
-                    {label: '30 mins', value: '30'},
-                    {label: '35 mins', value: '35'},
-                    {label: '40 mins', value: '40'},
-                    {label: '45 mins', value: '45'},
-                    {label: '50 mins', value: '50'},
-                    {label: '55 mins', value: '55'},
-                    {label: '60 mins', value: '60'},
-                  ]}
+                  options={timeOptions.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
                   isInvalid={!!errors.lesson_time && submitCount >= 1}
                   handleSelectValue={value =>
                     setFieldValue('lesson_time', value)
                   }
-                  placeholder={'25 mins'}
+                  placeholder={t(
+                    'classObservation.setup.questions.$3.placeholder',
+                  )}
                   bottomTitle={t('classObservation.setup.questions.$3.title')}
                   value={values.lesson_time}
                 />
