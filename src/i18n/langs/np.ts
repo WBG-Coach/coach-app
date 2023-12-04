@@ -391,104 +391,104 @@ const npTranslation = {
   },
   cop: {
     start: {
-      page_title: 'Community of Practice',
-      title: 'Getting started',
+      page_title: 'सिकाइ सञ्जाल',
+      title: 'सुरु गरौं',
       subtitle:
-        'The CoP is the third step of Coach. It is conducted by the Head Teacher and can be supported by Lead Teachers. ',
+        'CoP कोच को तेस्रो चरण हो। यो मुख्य शिक्षक द्वारा संचालित छ र प्रमुख शिक्षकहरु द्वारा समर्थित हुन सक्छ।',
       description:
-        'Check out the Community of Practice (CoP) steps and start a new session:',
-      button: 'Start Community of Practice',
+        'अभ्यास समुदाय (CoP) चरणहरू हेर्नुहोस् र नयाँ सत्र सुरु गर्नुहोस्:',
+      button: 'सिकाइ सञ्जाल सुरु गर्नुहोस्',
 
       process: {
         $1: {
-          title: 'Set a agenda',
+          title: 'एजेन्डा सेट गर्नुहोस्',
           subtitle: '',
-          description: 'Schedule a meeting with all teachers of the school.',
+          description: 'विद्यालयका सबै शिक्षकहरूसँग बैठकको तालिका बनाउनुहोस्।',
         },
         $2: {
-          title: 'Check stats',
-          subtitle: '5min',
+          title: 'तथ्याङ्क जाँच गर्नुहोस्',
+          subtitle: '५ मिनेट',
           description:
-            'View the summary of the statistics of the observations. Each coach will have different statistics once they are based on the observations.',
+            'अवलोकनको तथ्याङ्कको सारांश हेर्नुहोस्। प्रत्येक प्रशिक्षकको अवलोकनमा आधारित भएपछि फरक तथ्याङ्क हुनेछ।',
         },
         $3: {
-          title: 'Sharing insights',
-          subtitle: '10-20min',
-          description: 'Share insights from the observations',
+          title: 'जानकारी दिनुहोस्',
+          subtitle: '10-20 मिनेट',
+          description: 'अवलोकनहरूबाट अन्तर्दृष्टि साझा गर्नुहोस्',
         },
         $4: {
-          title: 'Discuss positives',
-          subtitle: '10-20min',
+          title: 'सकारात्मक जानकारी छलफल गर्नुहोस्',
+          subtitle: '10-20 मिनेट',
           description:
             'Discuss the Teaching Practices that had highlights during evaluations.',
         },
         $5: {
-          title: 'Discuss areas of improvement ',
-          subtitle: '10-20min',
+          title: 'सुधारका क्षेत्रहरूमा छलफल गर्नुहोस्,
+          subtitle: 'सुधारका क्षेत्रहरूमा छलफल गर्नुहोस्',
           description:
-            'Discuss the Teaching Practices that teachers should improve.',
+            'शिक्षकहरूले सुधार गर्नुपर्ने शिक्षण अभ्यासहरूबारे छलफल गर्नुहोस्।',
         },
         $6: {
-          title: 'Next steps',
-          subtitle: '5min',
+          title: 'अर्को चरणमा जानुहोस्',
+          subtitle: '५ मिनेट',
           description:
-            'Reflect on strategies teachers can apply in the classroom.',
+            'शिक्षकहरूले कक्षाकोठामा लागू गर्न सक्ने रणनीतिहरू प्रतिबिम्बित गर्नुहोस्।',
         },
       },
     },
     stats: {
-      page_title: 'Community of Practice',
-      title: 'Statistics summary',
+      page_title: 'सिकाइ सञ्जाल',
+      title: 'तथ्याङ्क सारांश',
       subtitle:
-        'The CoP is the third step of Coach. It is conducted by the Head Teacher and can be supported by Lead Teachers.',
-      button: 'Continue',
+        'CoP Mentor को तेस्रो चरण हो। यो मुख्य शिक्षक द्वारा संचालित छ र प्रमुख शिक्षकहरु द्वारा समर्थित हुन सक्छ।',
+      button: 'अर्को चरण जारी राख्नुहोस्',
 
       chart: {
-        title: 'School average score',
-        average_title: 'The average school rating is:',
+        title: 'विद्यालयको औसत अंक',
+        average_title: 'औसत विद्यालय मूल्याङ्कन हो:',
         average_subitle:
-          'This rating is the average of all Teaching Practices observed in the school',
+          'यो मूल्याङ्कन विद्यालयमा अवलोकन गरिएका सबै शिक्षण अभ्यासहरूको औसत हो',
       },
 
       keys: {
-        title: 'Key teaching pratices',
+        title: 'मुख्य शिक्षण अभ्यासहरू',
         subtitle:
-          'Key teaching practices are the ones with highest and lowest scores in the school',
+          'मुख्य शिक्षण अभ्यासहरू विद्यालयमा उच्चतम र न्यून अंक प्राप्त गर्नेहरू हुन्',
 
-        tab_positive: 'Positives',
-        tab_negative: 'Needs improvement',
+        tab_positive: 'सकारात्मक',
+        tab_negative: 'सुधार चाहिन्छ',
       },
     },
     insights: {
-      page_title: 'Community of Practice',
+      page_title: 'सिकाइ सञ्जाल',
       title: 'Sharing insights',
       feedback: {
         title: 'What insights you had',
-        placeholder: "e.g. teachers usually don't check for understanding",
+        placeholder: "उदाहरणका लागि शिक्षकहरू बोल्न खोज्नुहोस्",
       },
     },
     positives: {
-      page_title: 'Community of Practice',
+      page_title: 'सिकाइ सञ्जाल',
       title: 'Sharing insights',
       feedback: {
         title: 'What insights you had',
-        placeholder: "e.g. teachers usually don't check for understanding",
+        placeholder: "उदाहरणका लागि शिक्षकहरू बोल्न खोज्नुहोस्,
       },
     },
     improvements: {
-      page_title: 'Community of Practice',
+      page_title: 'सिकाइ सञ्जाल',
       title: 'Sharing insights',
       feedback: {
         title: 'What insights you had',
-        placeholder: "e.g. teachers usually don't check for understanding",
+        placeholder: "उदाहरणका लागि शिक्षकहरू बोल्न खोज्नुहोस्",
       },
     },
     finish: {
-      page_title: 'Community of Practice',
-      title: 'Community of Practice complete',
+      page_title: 'सिकाइ सञ्जाल',
+      title: 'सिकाइ सञ्जाल पूरा भयो',
       description:
-        'Congratulations, you just completed the Community of Practice!',
-      button: 'Finish',
+        'बधाई छ, तपाईंले भर्खरै समुदायको अभ्यास पूरा गर्नुभयो!',
+      button: 'समाप्त गर्नुहोस्',
     },
   },
   tlc: {
