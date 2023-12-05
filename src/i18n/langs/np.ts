@@ -22,7 +22,7 @@ const npTranslation = {
       doingGreat: 'हुनुहुन्छ',
     },
   },
-  bottom_navigator: {home: 'घर', tlc: 'TLC', pending: 'पेन्डिङ', cop: 'सीओपी'},
+  bottom_navigator: {home: 'गृह पृष्ठ', tlc: 'TLC', pending: 'पेन्डिङ', cop: 'सीओपी'},
   aboutScan: {
     title: 'QR कोड स्क्यान गर्नुहोस्',
     description: 'मेन्टर म्यानुअलमा रहेको QR कोड स्क्यान गर्नुहोस्',
@@ -68,7 +68,7 @@ const npTranslation = {
     'unsynced-items': 'अद्यावधिक नभएको सूची',
     'sync-error-title': 'डाटा समक्रमण गर्न असमर्थ',
     logout: 'साइन आउट गर्नुहोस्',
-    'unsynced-session': 'बैठक:',
+    'unsynced-session': 'सत्र:',
     'sync-error-description':
       'आफ्नो इन्टरनेट जाँच गर्नुहोस् र फेरि प्रयास गर्नुहोस्',
   },
