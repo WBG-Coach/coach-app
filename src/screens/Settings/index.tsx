@@ -23,7 +23,7 @@ const pendingCountInit = {
 
 const SettingsScreen: React.FC = () => {
   const [pendingCount, setPendingCount] = useState(pendingCountInit);
-  const {logout, currentCoach, currentSchool} = useCoachContext();
+  const {logout, currentCoach} = useCoachContext();
   const [lastSync, setLastSync] = useState('');
   const [loading, setLoading] = useState(true);
   const currentLanguage = i18n.languages[0];
@@ -42,12 +42,6 @@ const SettingsScreen: React.FC = () => {
   useEffect(() => {
     getSyncData();
   }, [getSyncData]);
-
-  useEffect(() => {
-    if (!currentCoach || !currentSchool) {
-      navigate(PathRoutes.selectSchool, {replace: true});
-    }
-  }, [currentCoach, currentSchool]);
 
   const trySync = async () => {
     setLoading(true);
