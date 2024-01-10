@@ -41,9 +41,9 @@ export const runMigrationsSL = async () => {
     }
 
     await StorageService.setDatabaseVersion(String(SL_MIGRATION_LIST.length));
+    console.log('DATABASE SL SYNCED');
   } catch (error) {
     console.log({error});
+    console.log("DATABASE SL DIDN'T SYNC");
   }
-
-  console.log('DATABASE SL SYNCED');
 };
