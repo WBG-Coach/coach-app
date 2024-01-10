@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Coach} from '../types/coach';
 import {School} from '../types/school';
 import moment from 'moment';
+import {COUNTRY} from '@env';
 
 const KEYS = {
-  databaseVersion: 'DATABASE_VERSION',
+  databaseVersion: `DATABASE_VERSION_${COUNTRY}`,
   lastSync: 'LAST_SYNC',
   currentCoach: 'CURRENT_COACH',
   currentSchool: 'CURRENT_SCHOOL',
