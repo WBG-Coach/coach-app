@@ -81,6 +81,14 @@ const enTranslation = {
       subtitle: 'Now you can use your account to log in to this device',
     },
   },
+  signup: {
+    success: {
+      title: 'Profile created',
+      subtitle:
+        'Now you can register your school and start coaching the teachers',
+      button: 'Go to school selection',
+    },
+  },
   logout: {
     title: 'Are you sure you want to sign out?',
     'confirm-button': 'Yes',
