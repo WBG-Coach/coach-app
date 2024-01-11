@@ -21,7 +21,7 @@ const OTPScreen: React.FC = () => {
       //throw a error if the coach not exists; throw new Error();
 
       //send user to OTP page
-      navigate(PathRoutes.selectSchool);
+      navigate(PathRoutes.selectSchool, {replace: true});
     } catch (err) {
       console.log(err);
       setOTPCode(otp => ({value: otp?.value || '', hasError: true}));
