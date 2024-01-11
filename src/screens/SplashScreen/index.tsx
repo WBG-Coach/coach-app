@@ -38,10 +38,10 @@ const SplashScreen: React.FC = () => {
         selectCoach(currentCoach);
         selectSchool(currentSchool);
 
-        if (!currentCoach) {
-          navigate(PathRoutes.login.main, {replace: true});
-        } else if (!currentSchool) {
+        if (!currentSchool) {
           navigate(PathRoutes.selectSchool, {replace: true});
+        } else if (!currentCoach) {
+          navigate(PathRoutes.selectAccount, {replace: true});
         } else {
           navigate(PathRoutes.home.main, {replace: true});
         }
