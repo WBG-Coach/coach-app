@@ -37,9 +37,9 @@ export const runMigrationsNP = async () => {
     }
 
     await StorageService.setDatabaseVersion(String(NP_MIGRATION_LIST.length));
+    console.log('DATABASE SYNCED');
   } catch (error) {
     console.log({error});
+    console.log("DATABASE DIDN'T SYNC");
   }
-
-  console.log('DATABASE SYNCED');
 };
