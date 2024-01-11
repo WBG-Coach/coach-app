@@ -37,6 +37,25 @@ const enTranslation = {
     scan: 'Scan QR Code',
   },
   login: {
+    main: {
+      welcome: 'Welcome to Coach!',
+      user_id: 'User ID',
+      user_id_placeholder: 'Email ID or Phone number',
+      error:
+        'User not found. Try logging in using phone number or create an account.',
+      button: 'Login',
+      create_account: "Don't have an account?",
+      create_account_button: ' Register now',
+    },
+    otp: {
+      title: 'Enter the 4-digit code sent to you at',
+      error: 'Incorrect code. Please try again.',
+      button: 'Verify',
+      not_receive_code: "Didn't receive a verification code?",
+      resend_code: 'Resend code',
+      change_email: 'Change email',
+    },
+
     createAccount: {
       title: 'New account',
       takePhoto: 'Take/Choose photo',

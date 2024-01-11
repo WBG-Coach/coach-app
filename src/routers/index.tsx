@@ -40,6 +40,10 @@ import COPOnboarding from '../screens/CommunityOfPractice/Onboarding';
 import COPCheckingStats from '../screens/CommunityOfPractice/CheckingStats';
 import COPExercise from '../screens/CommunityOfPractice/Exercise';
 import COPFinish from '../screens/CommunityOfPractice/Finish';
+import LoginScreen from '../screens/Login/Main';
+import OTPScreen from '../screens/Login/OTP';
+import SignupScreen from '../screens/SignUp/Main';
+import SignupSuccessScreen from '../screens/SignUp/Success';
 
 const RouterProvider: React.FC = () => {
   return (
@@ -52,6 +56,17 @@ const RouterProvider: React.FC = () => {
         <Route
           path={PathRoutes.settings.changeLanguage}
           Component={ChangeLanguageScreen}
+        />
+
+        <Route path={PathRoutes.login.main} Component={LoginScreen} />
+
+        <Route path={PathRoutes.login.otp} Component={OTPScreen} />
+
+        <Route path={PathRoutes.signup.main} Component={SignupScreen} />
+
+        <Route
+          path={PathRoutes.signup.success}
+          Component={SignupSuccessScreen}
         />
 
         <Route path={PathRoutes.selectSchool} Component={SchoolSelectScreen} />

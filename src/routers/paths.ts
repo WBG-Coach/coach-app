@@ -18,6 +18,16 @@ const PathRoutes = {
     changeLanguage: '/settings/changeLanguage',
   },
 
+  login: {
+    main: '/login',
+    otp: '/login/:id',
+  },
+
+  signup: {
+    main: '/signup',
+    success: '/signup/success',
+  },
+
   home: {
     main: '/home',
     pendingSessions: '/pendingSessions',
