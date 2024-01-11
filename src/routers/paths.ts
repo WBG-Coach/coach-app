@@ -21,6 +21,7 @@ const PathRoutes = {
   login: {
     main: '/login',
     otp: '/login/:id',
+    fastLogin: '/fastlogin',
   },
 
   signup: {

@@ -22,7 +22,12 @@ const npTranslation = {
       doingGreat: 'हुनुहुन्छ',
     },
   },
-  bottom_navigator: {home: 'गृह पृष्ठ', tlc: 'TLC', pending: 'पेन्डिङ', cop: 'सिकाइ सञ्जाल'},
+  bottom_navigator: {
+    home: 'गृह पृष्ठ',
+    tlc: 'TLC',
+    pending: 'पेन्डिङ',
+    cop: 'सिकाइ सञ्जाल',
+  },
   aboutScan: {
     title: 'QR कोड स्क्यान गर्नुहोस्',
     description: 'मेन्टर म्यानुअलमा रहेको QR कोड स्क्यान गर्नुहोस्',
@@ -46,6 +51,12 @@ const npTranslation = {
       not_receive_code: 'सत्यापन कोड प्राप्त गरेनन्?',
       resend_code: 'कोड पुन: पठाउनुहोस्',
       change_email: 'इमेल परिवर्तन गर्नुहोस्',
+    },
+    fastlogin: {
+      welcome: 'फेरि स्वागत छ!',
+      title: 'तपाईं पहिले तपाईंले लगइन गरेका थिए भने',
+      button: 'को रूपमा लगइन गर्नुहोस्',
+      change_coach_button: 'कोच परिवर्तन गर्नुहोस्',
     },
     createAccount: {
       title: 'नयाँ खाता',
@@ -420,8 +431,7 @@ const npTranslation = {
       title: 'सुरु गरौं',
       subtitle:
         'सिकाइ सञ्जाल मेन्टर को तेस्रो चरण हो। यो मुख्य शिक्षक द्वारा संचालित छ र प्रमुख शिक्षकहरु द्वारा समर्थित हुन सक्छ।',
-      description:
-        'सिकाइ सञ्जाल चरणहरू हेर्नुहोस् र नयाँ सत्र सुरु गर्नुहोस्:',
+      description: 'सिकाइ सञ्जाल चरणहरू हेर्नुहोस् र नयाँ सत्र सुरु गर्नुहोस्:',
       button: 'सिकाइ सञ्जाल सुरु गर्नुहोस्',
 
       process: {

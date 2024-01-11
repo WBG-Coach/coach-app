@@ -55,7 +55,12 @@ const enTranslation = {
       resend_code: 'Resend code',
       change_email: 'Change email',
     },
-
+    fastlogin: {
+      welcome: 'Welcome back!',
+      title: 'You were previously logged in as',
+      button: 'Login as',
+      change_coach_button: 'Change coach',
+    },
     createAccount: {
       title: 'New account',
       takePhoto: 'Take/Choose photo',
@@ -64,6 +69,8 @@ const enTranslation = {
       pin: 'PIN',
       pin_description: 'Personal Identification Number',
       nin: 'NIN',
+      email: 'Email',
+      phone: 'Phone',
       birthdate: "Coach's date of birth",
       nin_description: 'National Identification Number',
       'create-account-button': 'Create account',
