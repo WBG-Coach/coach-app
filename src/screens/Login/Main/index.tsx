@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
 import Icon from '../../../components/Icon';
 import {useTranslation} from 'react-i18next';
+import {CoachService} from '../../../services/coach.service';
 
 const LoginScreen: React.FC = () => {
   const [UserID, setUserID] = useState<{value: string; hasError: boolean}>();
@@ -15,13 +16,14 @@ const LoginScreen: React.FC = () => {
   const {t} = useTranslation();
   const theme = useTheme();
 
-  const handleSubmitLogin = () => {
+  const handleSubmitLogin = async () => {
     try {
-      //do logic to login coach
-      //throw a error if the coach not exists; throw new Error();
+      if (UserID?.value) {
+        await CoachService.sendEmailOTP(UserID?.value.toLowerCase().trim());
 
-      //send user to OTP page
-      navigate(PathRoutes.login.otp.replace(':id', UserID?.value as string));
+        //send user to OTP page
+        navigate(PathRoutes.login.otp.replace(':id', UserID.value));
+      }
     } catch (err) {
       setUserID(user => ({value: user?.value || '', hasError: true}));
       console.log(err);
@@ -32,7 +34,7 @@ const LoginScreen: React.FC = () => {
     <Page setting>
       <Center flex={1}>
         <VStack>
-          <Image source={LoginLogo} alt={'Logo of country'} />
+          <Image source={LoginLogo} alt={'Logo of country'} mx="auto" />
 
           <Text mt={6} fontSize={'HSM'} fontWeight={600} color={'gray.800'}>
             {t('login.main.welcome')}

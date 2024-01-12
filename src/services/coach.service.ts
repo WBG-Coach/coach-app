@@ -1,8 +1,10 @@
+import axios from 'axios';
 import {Coach} from '../types/coach';
 import {CoachSchool} from '../types/coach_school';
 import {School} from '../types/school';
 import {getDBConnection} from './database.service';
 import {v4 as uuid} from 'uuid';
+import {API_URL} from '@env';
 
 export const CoachService = {
   findCoachItems: async (
@@ -109,5 +111,18 @@ export const CoachService = {
         VALUES ('${uuid()}', '${coach.id}', '${school.id}', 'pending')
       `);
     }
+  },
+
+  sendEmailOTP: async (email: string) => {
+    return await axios.post(`${API_URL}/auth/otp`, {
+      email,
+    });
+  },
+
+  verifyOTP: async (email: string, code: string) => {
+    return await axios.post<{coach: Coach}>(`${API_URL}/auth/otp/verify`, {
+      email,
+      code,
+    });
   },
 };
