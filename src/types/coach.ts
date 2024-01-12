@@ -8,6 +8,8 @@ export type Coach = {
   nin?: string;
   pin?: string;
   birthdate?: Date;
+  phone?: string;
+  email?: string;
 
   image_id?: string;
 

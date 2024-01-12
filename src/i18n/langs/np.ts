@@ -64,6 +64,8 @@ const npTranslation = {
       surname: 'थार',
       pin_description: 'व्यक्तिगत पहिचान नम्बर',
       pin: 'पिन',
+      email: 'इमेल',
+      phone: 'फोन',
       birthdate: 'मेन्टरको जन्म मिति',
       'create-account-button': 'खाता बनाउनुहोस्',
       success: 'खाता सफलतापूर्वक बनाईएको छ',

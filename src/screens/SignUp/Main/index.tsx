@@ -54,8 +54,14 @@ const SignupScreen: React.FC = () => {
       );
     }
 
-    navigate(PathRoutes.signup.success);
-    //do logic to save user in database
+    if (values && values.email) {
+      await CoachService.create({} as any, {
+        ...values,
+        image_id,
+      });
+
+      navigate(PathRoutes.login.otp.replace(':id', values.email));
+    }
   };
 
   return (

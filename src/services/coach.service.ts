@@ -72,8 +72,8 @@ export const CoachService = {
     const coachId = uuid();
     await db.executeSql(
       `
-      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, email, phone, _status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
       [
         coachId,
@@ -83,13 +83,22 @@ export const CoachService = {
         coach.pin,
         coach.image_id,
         coach.birthdate?.toJSON(),
+        coach.email,
+        coach.phone,
       ],
     );
 
-    await db.executeSql(`
-      INSERT OR REPLACE INTO coach_school(id, school_id, coach_id, _status)
-      VALUES ('${uuid()}', '${currentSchool.id}', '${coachId}', 'pending')
-    `);
+    if (currentSchool.id) {
+      await db.executeSql(`
+        INSERT OR REPLACE INTO coach_school(id, school_id, coach_id, _status)
+        VALUES ('${uuid()}', '${currentSchool.id}', '${coachId}', 'pending')
+      `);
+    }
+
+    await axios.post<{coach: Coach}>(`${API_URL}/coach/signup`, {
+      id: coachId,
+      ...coach,
+    });
 
     return (
       (await db.executeSql('SELECT c.* FROM coach as c WHERE c.id = ?', [

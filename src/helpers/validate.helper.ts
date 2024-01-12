@@ -25,6 +25,9 @@ export const createAccountFormValidate = (values: FormValuesType) => {
   if (!values.surname) {
     errors.surname = 'Required';
   }
+  if (!values.email) {
+    errors.email = 'Required';
+  }
   return errors;
 };
 
