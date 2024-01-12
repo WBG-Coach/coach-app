@@ -133,6 +133,7 @@ const SignupScreen: React.FC = () => {
                 </Text>
                 <InputText
                   value={values.phone}
+                  keyboardType="phone-pad"
                   errorMessage={errors.phone}
                   onChangeText={value => setFieldValue('phone', value)}
                 />

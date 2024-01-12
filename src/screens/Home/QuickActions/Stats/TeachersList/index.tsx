@@ -113,7 +113,7 @@ const TeachersListWithSessions: React.FC<Props> = ({onSelectTeacher, type}) => {
               mt={8}>
               <HStack alignItems={'center'} space={2}>
                 <Icon name={'plus'} color={theme.colors.white} />
-                <Text>Add new teacher</Text>
+                <Text>{t('home.teachers.addNew')}</Text>
               </HStack>
             </Button>
           </VStack>

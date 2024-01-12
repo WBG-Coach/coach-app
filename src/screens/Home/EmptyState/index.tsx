@@ -37,7 +37,7 @@ const EmptyStateComponent: React.FC<Props> = ({handleCreate}) => {
       <Button onPress={handleCreate} mt={8}>
         <HStack alignItems={'center'} space={2}>
           <Icon name={'plus'} color={theme.colors.white} />
-          <Text>Add new teacher</Text>
+          <Text>{t('home.teachers.addNew')}</Text>
         </HStack>
       </Button>
     </VStack>
