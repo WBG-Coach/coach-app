@@ -14,8 +14,12 @@ const HorizontalMenu: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!currentCoach || !currentSchool) {
-      navigate(PathRoutes.selectSchool, {replace: true});
+    if (!currentCoach) {
+      navigate(PathRoutes.login.main, {replace: true});
+    } else {
+      if (!currentSchool) {
+        navigate(PathRoutes.selectSchool, {replace: true});
+      }
     }
   }, [currentCoach, currentSchool]);
 

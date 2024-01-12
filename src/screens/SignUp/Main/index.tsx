@@ -103,6 +103,7 @@ const SignupScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('login.createAccount.surname')}
                 </Text>
+
                 <InputText
                   value={values.surname}
                   errorMessage={errors.surname}
@@ -117,10 +118,13 @@ const SignupScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('login.createAccount.email')}
                 </Text>
+
                 <InputText
                   value={values.email}
                   errorMessage={errors.email}
-                  onChangeText={value => setFieldValue('email', value)}
+                  onChangeText={value =>
+                    setFieldValue('email', value.toLowerCase().trim())
+                  }
                 />
 
                 <Text
@@ -131,6 +135,7 @@ const SignupScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('login.createAccount.phone')}
                 </Text>
+
                 <InputText
                   value={values.phone}
                   keyboardType="phone-pad"

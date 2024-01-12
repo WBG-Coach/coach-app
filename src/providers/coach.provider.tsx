@@ -5,6 +5,8 @@ import {Button, HStack, Modal, Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import {School} from '../types/school';
 import {Coach} from '../types/coach';
+import {useNavigate} from 'react-router-native';
+import PathRoutes from '../routers/paths';
 
 type CoachContextType = {
   currentCoach: Coach | null;
@@ -20,6 +22,7 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [currentCoach, setCurrentCoach] = useState<Coach | null>(null);
   const [currentSchool, setCurrentSchool] = useState<School | null>(null);
   const [showStartOver, setShowStartOver] = useState(false);
+  const navigate = useNavigate();
   const {t} = useTranslation();
 
   const selectCoach = async (coach: Coach | null) => {
@@ -43,10 +46,13 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
 
     await StorageService.setCurrentSchool(null);
     await StorageService.setCurrentCoach(null);
+    await SchoolService.cleanData();
 
     setCurrentCoach(null);
     setCurrentSchool(null);
     setShowStartOver(false);
+
+    navigate(PathRoutes.splash, {replace: true});
   };
 
   return (
