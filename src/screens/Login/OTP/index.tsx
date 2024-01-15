@@ -59,7 +59,7 @@ const OTPScreen: React.FC = () => {
           </Text>
 
           <PinInput
-            length={4}
+            length={6}
             isInvalid={OTPCode?.hasError}
             onChangeText={value => setOTPCode({hasError: false, value})}
           />

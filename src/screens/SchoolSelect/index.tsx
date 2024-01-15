@@ -12,16 +12,13 @@ import {useTranslation} from 'react-i18next';
 import PathRoutes from '../../routers/paths';
 import Header from '../../components/Header';
 import {School} from '../../types/school';
-import Icon from '../../components/Icon';
 import Page from '../../components/Page';
 import {Dimensions} from 'react-native';
 import SchoolItem from './SchoolItem';
 import {
   Box,
   Button,
-  Center,
   FlatList,
-  HStack,
   Image,
   Modal,
   Spinner,
@@ -33,15 +30,12 @@ const SchoolSelectScreen: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [goToSync, setGoToSync] = useState(false);
-  const [showProfileModal, setShowProfileModal] = useState(false);
   const [schoolList, setSchoolList] = useState<School[]>([]);
 
   const {t} = useTranslation();
   const navigate = useNavigate();
   const {height, width} = Dimensions.get('screen');
-  const {selectSchool, selectCoach, currentSchool, currentCoach} =
-    useCoachContext();
+  const {selectSchool, currentSchool, currentCoach} = useCoachContext();
 
   const loadSchools = useCallback(async (value: string) => {
     setIsLoading(true);
@@ -54,11 +48,8 @@ const SchoolSelectScreen: React.FC = () => {
   const onSelectSchool = async (school: School) => {
     await selectSchool(school);
 
-    if (currentCoach) {
-      setShowProfileModal(true);
-    } else {
-      navigate(PathRoutes.selectAccount, {replace: true});
-    }
+    await createCoachSchool();
+    navigate(PathRoutes.home.main, {replace: true});
   };
 
   const onRead = async (e: BarCodeReadEvent) => {
@@ -67,37 +58,15 @@ const SchoolSelectScreen: React.FC = () => {
     await selectSchool(school);
 
     setIsOpen(false);
-
-    if (currentCoach) {
-      setShowProfileModal(true);
-      setGoToSync(true);
-    } else {
-      navigate(PathRoutes.syncDetails, {replace: true});
-    }
-  };
-
-  const goToCoachSelect = () => {
-    selectCoach(null);
-
-    if (goToSync) {
-      navigate(PathRoutes.syncDetails, {replace: true});
-    } else {
-      navigate(PathRoutes.selectAccount, {replace: true});
-    }
+    await createCoachSchool();
+    navigate(PathRoutes.syncDetails, {replace: true});
   };
 
   const createCoachSchool = async () => {
-    setShowProfileModal(false);
     setIsLoading(true);
 
     if (currentCoach && currentSchool) {
       await CoachService.createCoachSchool(currentCoach, currentSchool);
-    }
-
-    if (goToSync) {
-      navigate(PathRoutes.syncDetails, {replace: true});
-    } else {
-      navigate(PathRoutes.home.main, {replace: true});
     }
   };
 
@@ -216,61 +185,6 @@ const SchoolSelectScreen: React.FC = () => {
             pt="20px">
             <Header back onBack={() => setIsOpen(false)} color="#fff" setting />
           </Box>
-        </VStack>
-      </Modal>
-      <Modal isOpen={showProfileModal}>
-        <VStack
-          borderRadius="2xl"
-          p="16px"
-          maxW="320px"
-          w="90%"
-          mx="auto"
-          my="auto"
-          bg="#fff">
-          <Text fontSize="20px" fontWeight="bold" mb="20px" color="#111417">
-            {'Is that you?'}
-          </Text>
-
-          <Center
-            mx="auto"
-            mb="16px"
-            w={'56px'}
-            h={'56px'}
-            borderRadius={'500px'}
-            background={'primary.100'}>
-            <Icon name={'user'} />
-          </Center>
-
-          <Text
-            fontSize="16px"
-            color="#111417"
-            mx="auto">{`You were previously logged in as`}</Text>
-          <Text
-            fontWeight="bold"
-            fontSize="16px"
-            color="#111417"
-            mx="auto"
-            mb="16px">{`${currentCoach?.name} ${currentCoach?.surname}`}</Text>
-          <Text
-            mx="auto"
-            fontSize="16px"
-            color="#111417"
-            mb="24px">{`Would you like to continue?`}</Text>
-          <HStack ml="auto">
-            <Button
-              onPress={goToCoachSelect}
-              bg="#ffffff"
-              mr="8px"
-              _text={{color: '#3373CC'}}>
-              Switch profile
-            </Button>
-            <Button
-              onPress={createCoachSchool}
-              borderRadius={'8px'}
-              bg="#3373CC">
-              Continue
-            </Button>
-          </HStack>
         </VStack>
       </Modal>
     </Page>
