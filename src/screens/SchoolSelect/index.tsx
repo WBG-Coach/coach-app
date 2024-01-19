@@ -2,21 +2,15 @@ import React, {useCallback, useState} from 'react';
 import {useCoachContext} from '../../providers/coach.provider';
 import {SchoolService} from '../../services/school.service';
 import {CoachService} from '../../services/coach.service';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import {BarCodeReadEvent} from 'react-native-camera';
 import {QrCodeImg} from '../../assets/images/scan';
 import InputText from '../../components/InputText';
 import {useNavigate} from 'react-router-native';
 import useDebounce from '../../hooks/debounce';
 import {useTranslation} from 'react-i18next';
 import PathRoutes from '../../routers/paths';
-import Header from '../../components/Header';
 import {School} from '../../types/school';
 import Page from '../../components/Page';
-import {Dimensions} from 'react-native';
-import SchoolItem from './SchoolItem';
 import {
-  Box,
   Button,
   FlatList,
   Image,
@@ -25,6 +19,8 @@ import {
   Text,
   VStack,
 } from 'native-base';
+import QrReader from '../../components/QrReader';
+import SchoolItem from './SchoolItem';
 
 const SchoolSelectScreen: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -34,7 +30,6 @@ const SchoolSelectScreen: React.FC = () => {
 
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const {height, width} = Dimensions.get('screen');
   const {selectSchool, currentSchool, currentCoach} = useCoachContext();
 
   const loadSchools = useCallback(async (value: string) => {
@@ -52,13 +47,14 @@ const SchoolSelectScreen: React.FC = () => {
     navigate(PathRoutes.home.main, {replace: true});
   };
 
-  const onRead = async (e: BarCodeReadEvent) => {
-    const school: School = JSON.parse(e.data);
+  const onRead = async (data: string) => {
+    const school: School = JSON.parse(data);
 
     await selectSchool(school);
-
     setIsOpen(false);
+
     await createCoachSchool();
+
     navigate(PathRoutes.syncDetails, {replace: true});
   };
 
@@ -135,56 +131,13 @@ const SchoolSelectScreen: React.FC = () => {
         {t('aboutScan.scan')}
       </Button>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <VStack position="relative">
-          <QRCodeScanner onRead={onRead} cameraStyle={{height}} />
-
-          <Box
-            w={width / 2}
-            h={width / 2}
-            right={width / 4}
-            borderWidth="2px"
-            position="absolute"
-            borderColor="#fff"
-            top={height / 2 - width / 4}></Box>
-          <Box
-            position="absolute"
-            bg="rgba(0,0,0,0.4)"
-            w={width}
-            top={0}
-            right={0}
-            h={height / 2 - width / 4}></Box>
-          <Box
-            position="absolute"
-            bg="rgba(0,0,0,0.4)"
-            w={width}
-            bottom={0}
-            right={0}
-            h={height / 2 - width / 4 - 48}></Box>
-          <Box
-            position="absolute"
-            bg="rgba(0,0,0,0.4)"
-            w={width / 4}
-            top={height / 2 - width / 4}
-            right={0}
-            h={width / 2}></Box>
-          <Box
-            position="absolute"
-            bg="rgba(0,0,0,0.4)"
-            w={width / 4}
-            top={height / 2 - width / 4}
-            left={0}
-            h={width / 2}></Box>
-
-          <Box
-            bg="rgba(0,0,0,0.4)"
-            position="absolute"
-            top={0}
-            left={0}
-            right={0}
-            pt="20px">
-            <Header back onBack={() => setIsOpen(false)} color="#fff" setting />
-          </Box>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} flex={1}>
+        <VStack flex={1} w="full">
+          <QrReader
+            onBack={() => navigate(-1)}
+            onRead={onRead}
+            onClickSetting={() => {}}
+          />
         </VStack>
       </Modal>
     </Page>
