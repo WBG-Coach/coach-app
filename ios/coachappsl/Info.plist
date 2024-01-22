@@ -35,8 +35,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Coach Digital needs access to files.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Coach Digital needs access to your Camera.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Coach Digital needs access.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Coach Digital needs access.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.otf</string>
@@ -86,21 +92,14 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
-	<key>NSCameraUsageDescription</key>
-	<string>Coach Digital needs access to your Camera.</string>
-
-
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Coach Digital needs access.</string>
-
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Coach Digital needs access.</string>
-
 </dict>
 </plist>
