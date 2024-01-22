@@ -4,7 +4,7 @@ import {CoachSchool} from '../types/coach_school';
 import {School} from '../types/school';
 import {getDBConnection} from './database.service';
 import {v4 as uuid} from 'uuid';
-import {API_URL} from '@env';
+import {API_URL, COUNTRY} from '@env';
 
 export const CoachService = {
   findCoachItems: async (
@@ -70,23 +70,41 @@ export const CoachService = {
   ): Promise<Coach> => {
     const db = await getDBConnection();
     const coachId = uuid();
-    await db.executeSql(
-      `
+    if (COUNTRY === 'np') {
+      await db.executeSql(
+        `
       INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, email, phone, _status)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
-      [
-        coachId,
-        coach.name,
-        coach.surname,
-        coach.nin,
-        coach.pin,
-        coach.image_id,
-        coach.birthdate?.toJSON(),
-        coach.email,
-        coach.phone,
-      ],
-    );
+        [
+          coachId,
+          coach.name,
+          coach.surname,
+          coach.nin,
+          coach.pin,
+          coach.image_id,
+          coach.birthdate?.toJSON(),
+          coach.email,
+          coach.phone,
+        ],
+      );
+    } else {
+      await db.executeSql(
+        `
+      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, _status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+    `,
+        [
+          coachId,
+          coach.name,
+          coach.surname,
+          coach.nin,
+          coach.pin,
+          coach.image_id,
+          coach.birthdate?.toJSON(),
+        ],
+      );
+    }
 
     if (currentSchool.id) {
       await db.executeSql(`
@@ -95,16 +113,22 @@ export const CoachService = {
       `);
     }
 
-    await axios.post<{coach: Coach}>(`${API_URL}/coach/signup`, {
-      id: coachId,
-      ...coach,
-    });
-
     return (
       (await db.executeSql('SELECT c.* FROM coach as c WHERE c.id = ?', [
         coachId,
       ])) as any[]
     )[0].rows.raw()[0];
+  },
+
+  signup: async (
+    currentSchool: School,
+    coach: Partial<Coach>,
+  ): Promise<Coach> => {
+    const newCoach = await CoachService.create(currentSchool, coach);
+
+    await axios.post<{coach: Coach}>(`${API_URL}/coach/signup`, newCoach);
+
+    return newCoach;
   },
 
   createCoachSchool: async (coach: Coach, school: School) => {

@@ -1,19 +1,6 @@
 import {Keyboard} from 'react-native';
 import {FormValuesType} from '../screens/CoachForm';
-import {LoginFormType} from '../screens/Login';
-
-export const loginFormValidate = (values: LoginFormType) => {
-  let errors: any = {};
-  Keyboard.dismiss();
-
-  if (!values.username) {
-    errors.username = 'Required';
-  }
-  if (!values.password) {
-    errors.password = 'Required';
-  }
-  return errors;
-};
+import {COUNTRY} from '@env';
 
 export const createAccountFormValidate = (values: FormValuesType) => {
   let errors: any = {};
@@ -25,7 +12,7 @@ export const createAccountFormValidate = (values: FormValuesType) => {
   if (!values.surname) {
     errors.surname = 'Required';
   }
-  if (!values.email) {
+  if (COUNTRY === 'np' && !values.email) {
     errors.email = 'Required';
   }
   return errors;

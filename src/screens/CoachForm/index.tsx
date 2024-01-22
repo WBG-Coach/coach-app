@@ -18,6 +18,7 @@ import DatePicker from 'react-native-date-picker';
 import {TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import i18n from '../../i18n';
+import {Coach} from '../../types/coach';
 
 export type FormValuesType = {
   name?: string;

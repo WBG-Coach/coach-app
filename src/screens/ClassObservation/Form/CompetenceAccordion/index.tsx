@@ -60,7 +60,7 @@ const CompetenceAccordion: React.FC<Props> = ({
     <Accordion
       isOpen={isOpen}
       check={isFinished}
-      title={`${(index || 0) + 1}. ${t('Time on learning')}`}
+      title={competence.title}
       onClickHeader={() => isFinished && setIsOpen(!isOpen)}>
       <VStack>{competence.questions.map(renderQuestion)}</VStack>
     </Accordion>

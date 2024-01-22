@@ -55,7 +55,7 @@ const SignupScreen: React.FC = () => {
     }
 
     if (values && values.email) {
-      await CoachService.create({} as any, {
+      await CoachService.signup({} as any, {
         ...values,
         image_id,
       });

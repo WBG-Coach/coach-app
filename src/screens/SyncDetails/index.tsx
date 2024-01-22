@@ -21,7 +21,6 @@ const SyncDetails: React.FC = () => {
   useEffect(() => {
     if (isConnected) {
       setIsLoading(true);
-      console.log('aaaa');
       SyncService.trySyncData()
         .then(() => setIsLoading(false))
         .finally(() => setIsLoading(false));
@@ -81,7 +80,9 @@ const SyncDetails: React.FC = () => {
               <>
                 <Text color="#576375">{t('syncDetails.list_2')}</Text>
                 <Text color="#576375">{t('syncDetails.list_3')}</Text>
-                <Text color="#576375">{t('syncDetails.list_4')}</Text>
+                <Text color="#576375">
+                  {t('syncDetails.list_4', {value: currentSchool?.name})}
+                </Text>
               </>
             )}
           </VStack>

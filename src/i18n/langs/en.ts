@@ -131,7 +131,7 @@ const enTranslation = {
     list_1: '- Create new teachers',
     list_2: '- Select teachers created before',
     list_3: "- View previously created teacher's data",
-    list_4: "- View Bayshore High's data",
+    list_4: '- View {{ value }} data',
   },
   home: {
     salutation: 'Hi',
