@@ -1,6 +1,6 @@
 {
   "name": "coachappsl",
-  "version": "1.4.2",
+  "version": "1.4.5",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -42,6 +42,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^13.9.0",
+    "react-native-vision-camera": "^3.8.2",
     "react-router-native": "^6.14.0",
     "uuid": "^9.0.0"
   },

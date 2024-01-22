@@ -1,7 +1,7 @@
 import React from 'react';
 import {CoachProvider} from './providers/coach.provider';
-import {NativeBaseProvider} from 'native-base';
-import {NativeRouter} from 'react-router-native';
+import {NativeBaseProvider, VStack} from 'native-base';
+import {NativeRouter, Routes} from 'react-router-native';
 import RouterProvider from './routers';
 import theme from './theme';
 import 'moment/locale/ne';
@@ -18,11 +18,11 @@ const App = () => {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <CoachProvider>
-        <NativeRouter>
+      <NativeRouter>
+        <CoachProvider>
           <RouterProvider />
-        </NativeRouter>
-      </CoachProvider>
+        </CoachProvider>
+      </NativeRouter>
     </NativeBaseProvider>
   );
 };

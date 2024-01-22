@@ -64,6 +64,8 @@ const npTranslation = {
       surname: 'थार',
       pin_description: 'व्यक्तिगत पहिचान नम्बर',
       pin: 'पिन',
+      email: 'इमेल',
+      phone: 'फोन',
       birthdate: 'मेन्टरको जन्म मिति',
       'create-account-button': 'खाता बनाउनुहोस्',
       success: 'खाता सफलतापूर्वक बनाईएको छ',
@@ -114,7 +116,7 @@ const npTranslation = {
     title: 'आफ्नो प्रोफाइल चयन गर्नुहोस्',
     'item-description-empty': 'यहाँ कुनै प्रोफाइल छैन',
     'item-description_interval':
-      'यहाँ कुनै सत्र छैन, यहाँ 1 सत्र छ, यहाँ 2 सत्रहरू छन्',
+      '(0)[यहाँ कुनै क्रियाकलापहरू छैनन्।];(1)[यहाँ 1 क्रियाकलाप हरियोस्।];(2-inf)[{{count}} यहाँ क्रियाकलापहरू हरियोस्।];',
   },
   schoolSelect: {
     title: 'आफ्नो विद्यालय चयन गर्नुहोस्',
@@ -126,6 +128,12 @@ const npTranslation = {
     description: 'आधारभूत डेटा संग device सेटअप गरिएको थियो',
     start: 'एप प्रयोग गर्न सुरु गर्नुहोस्',
     'description-list': 'तपाईं सक्षम हुनुहुनेछ',
+
+    list_0: '- स्कूल सूचीमा Bayshore High छान्नुहोस्',
+    list_1: '- नयाँ शिक्षकहरू बनाउनुहोस्',
+    list_2: '- पहिले बनाएका शिक्षकहरू छान्नुहोस्',
+    list_3: '- पहिले बनाएका शिक्षकहरूको डाटा हेर्नुहोस्',
+    list_4: '- Bayshore High को डाटा हेर्नुहोस्',
   },
   home: {
     salutation: 'नमस्ते',
@@ -713,6 +721,8 @@ const npTranslation = {
   },
   sessionDetails: {
     title: 'अघिल्लो सत्र',
+    feedback: 'प्रतिपुष्टि',
+    observation: 'अवलोकन',
   },
   errors: {
     requiredField: 'यो प्रश्नको जवाफ अनिवार्य छ।',

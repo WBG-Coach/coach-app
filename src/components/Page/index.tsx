@@ -2,6 +2,7 @@ import React from 'react';
 import {VStack} from 'native-base';
 import {isTablet} from 'react-native-device-info';
 import Header, {HeaderProps} from '../Header';
+import {SafeAreaView} from 'react-native';
 
 type Props = {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const Page: React.FC<Props> = ({
   ...headerProps
 }) => {
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <Header {...headerProps} />
 
       {beforePageEl}
@@ -27,7 +28,7 @@ const Page: React.FC<Props> = ({
         {...(!noPadding && {p: isTablet() ? '32px 64px' : '16px 24px'})}>
         {children}
       </VStack>
-    </>
+    </SafeAreaView>
   );
 };
 

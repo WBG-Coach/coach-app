@@ -54,8 +54,14 @@ const SignupScreen: React.FC = () => {
       );
     }
 
-    navigate(PathRoutes.signup.success);
-    //do logic to save user in database
+    if (values && values.email) {
+      await CoachService.create({} as any, {
+        ...values,
+        image_id,
+      });
+
+      navigate(PathRoutes.login.otp.replace(':id', values.email));
+    }
   };
 
   return (
@@ -97,6 +103,7 @@ const SignupScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('login.createAccount.surname')}
                 </Text>
+
                 <InputText
                   value={values.surname}
                   errorMessage={errors.surname}
@@ -111,10 +118,13 @@ const SignupScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('login.createAccount.email')}
                 </Text>
+
                 <InputText
                   value={values.email}
                   errorMessage={errors.email}
-                  onChangeText={value => setFieldValue('email', value)}
+                  onChangeText={value =>
+                    setFieldValue('email', value.toLowerCase().trim())
+                  }
                 />
 
                 <Text
@@ -125,8 +135,10 @@ const SignupScreen: React.FC = () => {
                   color={'gray.700'}>
                   {t('login.createAccount.phone')}
                 </Text>
+
                 <InputText
                   value={values.phone}
+                  keyboardType="phone-pad"
                   errorMessage={errors.phone}
                   onChangeText={value => setFieldValue('phone', value)}
                 />

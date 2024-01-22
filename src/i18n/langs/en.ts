@@ -126,6 +126,12 @@ const enTranslation = {
     description: 'The device was setup with the basic data from',
     start: 'Start using the app',
     'description-list': "You'll be able to :",
+
+    list_0: '- Select Bayshore High in the school list',
+    list_1: '- Create new teachers',
+    list_2: '- Select teachers created before',
+    list_3: "- View previously created teacher's data",
+    list_4: "- View Bayshore High's data",
   },
   home: {
     salutation: 'Hi',
@@ -712,7 +718,11 @@ const enTranslation = {
       button: 'Finish',
     },
   },
-  sessionDetails: {title: 'Previous session'},
+  sessionDetails: {
+    title: 'Previous session',
+    feedback: 'Feedback',
+    observation: 'Observation',
+  },
   feedbackSession: {title: 'Coaching session'},
 };
 

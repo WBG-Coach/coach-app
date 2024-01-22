@@ -68,8 +68,6 @@ const SettingsScreen: React.FC = () => {
     setLoading(false);
   };
 
-  console.log(lastSync);
-
   const options = [
     {
       hide: false,

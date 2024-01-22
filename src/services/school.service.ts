@@ -3,6 +3,11 @@ import {Session} from '../types/session';
 import {getDBConnection} from './database.service';
 
 export const SchoolService = {
+  cleanData: async (): Promise<void> => {
+    const db = await getDBConnection();
+    await db.executeSql('DELETE FROM school');
+  },
+
   findSchoolItems: async (value: string): Promise<School[]> => {
     const db = await getDBConnection();
     let result;

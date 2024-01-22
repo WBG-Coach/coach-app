@@ -74,16 +74,14 @@ const SyncDetails: React.FC = () => {
               {t('syncDetails.description-list')}
             </Text>
             <Text mt="4px" color="#576375">
-              - Select Bayshore High in the school list
+              {t('syncDetails.list_0')}
             </Text>
-            <Text color="#576375">- Create new teachers</Text>
+            <Text color="#576375">{t('syncDetails.list_1')}</Text>
             {isConnected && (
               <>
-                <Text color="#576375">- Select teachers created before</Text>
-                <Text color="#576375">
-                  - View previously created teacher's data
-                </Text>
-                <Text color="#576375">- View Bayshore High's data</Text>
+                <Text color="#576375">{t('syncDetails.list_2')}</Text>
+                <Text color="#576375">{t('syncDetails.list_3')}</Text>
+                <Text color="#576375">{t('syncDetails.list_4')}</Text>
               </>
             )}
           </VStack>

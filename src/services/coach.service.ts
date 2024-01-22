@@ -1,8 +1,10 @@
+import axios from 'axios';
 import {Coach} from '../types/coach';
 import {CoachSchool} from '../types/coach_school';
 import {School} from '../types/school';
 import {getDBConnection} from './database.service';
 import {v4 as uuid} from 'uuid';
+import {API_URL} from '@env';
 
 export const CoachService = {
   findCoachItems: async (
@@ -70,8 +72,8 @@ export const CoachService = {
     const coachId = uuid();
     await db.executeSql(
       `
-      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
+      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, email, phone, _status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
       [
         coachId,
@@ -81,13 +83,22 @@ export const CoachService = {
         coach.pin,
         coach.image_id,
         coach.birthdate?.toJSON(),
+        coach.email,
+        coach.phone,
       ],
     );
 
-    await db.executeSql(`
-      INSERT OR REPLACE INTO coach_school(id, school_id, coach_id, _status)
-      VALUES ('${uuid()}', '${currentSchool.id}', '${coachId}', 'pending')
-    `);
+    if (currentSchool.id) {
+      await db.executeSql(`
+        INSERT OR REPLACE INTO coach_school(id, school_id, coach_id, _status)
+        VALUES ('${uuid()}', '${currentSchool.id}', '${coachId}', 'pending')
+      `);
+    }
+
+    await axios.post<{coach: Coach}>(`${API_URL}/coach/signup`, {
+      id: coachId,
+      ...coach,
+    });
 
     return (
       (await db.executeSql('SELECT c.* FROM coach as c WHERE c.id = ?', [
@@ -109,5 +120,18 @@ export const CoachService = {
         VALUES ('${uuid()}', '${coach.id}', '${school.id}', 'pending')
       `);
     }
+  },
+
+  sendEmailOTP: async (email: string) => {
+    return await axios.post(`${API_URL}/auth/otp`, {
+      email,
+    });
+  },
+
+  verifyOTP: async (email: string, code: string) => {
+    return await axios.post<{coach: Coach}>(`${API_URL}/auth/otp/verify`, {
+      email,
+      code,
+    });
   },
 };

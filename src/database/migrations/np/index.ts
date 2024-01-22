@@ -9,6 +9,7 @@ import {runMigrationV6} from './06';
 import {runMigrationV7} from './07';
 import {runMigrationV8} from './08';
 import {runMigrationV9} from './09';
+import {runMigrationV10} from './10';
 
 // ADD NEW MIGRATIONS HERE
 const NP_MIGRATION_LIST = [
@@ -22,6 +23,7 @@ const NP_MIGRATION_LIST = [
   runMigrationV7,
   runMigrationV8,
   runMigrationV9,
+  runMigrationV10,
 ];
 
 export const runMigrationsNP = async () => {

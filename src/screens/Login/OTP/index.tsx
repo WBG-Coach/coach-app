@@ -7,6 +7,8 @@ import PinInput from '../../../components/PinInput';
 import PathRoutes from '../../../routers/paths';
 import Icon from '../../../components/Icon';
 import {useTranslation} from 'react-i18next';
+import {CoachService} from '../../../services/coach.service';
+import {useCoachContext} from '../../../providers/coach.provider';
 
 const OTPScreen: React.FC = () => {
   const [OTPCode, setOTPCode] = useState<{hasError: boolean; value: string}>();
@@ -14,22 +16,28 @@ const OTPScreen: React.FC = () => {
   const {t} = useTranslation();
   const theme = useTheme();
   const {id} = useParams();
+  const {selectCoach} = useCoachContext();
 
-  const handleVerifyCode = () => {
+  const handleVerifyCode = async () => {
     try {
-      //do logic to verify code OTPCode.value
-      //throw a error if the coach not exists; throw new Error();
-
-      //send user to OTP page
-      navigate(PathRoutes.selectSchool, {replace: true});
+      if (id && OTPCode?.value) {
+        const {data} = await CoachService.verifyOTP(
+          id.toLowerCase().trim(),
+          OTPCode.value,
+        );
+        selectCoach(data.coach);
+        navigate(PathRoutes.selectSchool, {replace: true});
+      }
     } catch (err) {
       console.log(err);
       setOTPCode(otp => ({value: otp?.value || '', hasError: true}));
     }
   };
 
-  const handleResendCode = () => {
-    //do logic to resend code
+  const handleResendCode = async () => {
+    if (id) {
+      await CoachService.sendEmailOTP(id.toLowerCase().trim());
+    }
   };
 
   return (
@@ -51,7 +59,7 @@ const OTPScreen: React.FC = () => {
           </Text>
 
           <PinInput
-            length={4}
+            length={6}
             isInvalid={OTPCode?.hasError}
             onChangeText={value => setOTPCode({hasError: false, value})}
           />

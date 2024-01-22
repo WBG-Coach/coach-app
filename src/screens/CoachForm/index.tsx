@@ -24,6 +24,8 @@ export type FormValuesType = {
   surname?: string;
   pin?: string;
   nin?: string;
+  phone?: string;
+  email?: string;
   birthdate?: Date;
 };
 
