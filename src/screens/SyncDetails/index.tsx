@@ -73,7 +73,7 @@ const SyncDetails: React.FC = () => {
               {t('syncDetails.description-list')}
             </Text>
             <Text mt="4px" color="#576375">
-              {t('syncDetails.list_0')}
+              {t('syncDetails.list_0', {value: currentSchool?.name})}
             </Text>
             <Text color="#576375">{t('syncDetails.list_1')}</Text>
             {isConnected && (

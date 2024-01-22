@@ -127,7 +127,7 @@ const enTranslation = {
     start: 'Start using the app',
     'description-list': "You'll be able to :",
 
-    list_0: '- Select Bayshore High in the school list',
+    list_0: '- Select {{ value }} in the school list',
     list_1: '- Create new teachers',
     list_2: '- Select teachers created before',
     list_3: "- View previously created teacher's data",
