@@ -65,9 +65,27 @@ const TeacherHeader: React.FC<Props> = ({
         {name}
       </Text>
 
-      <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
-        {t('teacher.details.description', {subject, school})}
-      </Text>
+      <HStack justifyContent={'space-between'} space={2}>
+        <VStack>
+          <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+            {t('teacher.details.subject')}
+            Principal Subject
+          </Text>
+          <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
+            {subject}
+          </Text>
+        </VStack>
+
+        <VStack alignItems={'flex-start'}>
+          <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
+            {t('teacher.details.school')}
+            School
+          </Text>
+          <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
+            {school}
+          </Text>
+        </VStack>
+      </HStack>
     </VStack>
   );
 };

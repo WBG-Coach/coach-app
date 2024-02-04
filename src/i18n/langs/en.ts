@@ -226,6 +226,8 @@ const enTranslation = {
       nin_description: 'National Identification Number',
     },
     details: {
+      subject: 'Principal Subject',
+      school: 'School',
       editTeacher: 'Edit teacher',
       description: '{{subject}} teacher at {{school}}',
     },

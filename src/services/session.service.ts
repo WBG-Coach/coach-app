@@ -20,9 +20,10 @@ export const SessionService = {
     const result = (await db.executeSql(
       `
         SELECT s.*
-          FROM session as s
-         WHERE s.teacher_id = ?
-         LIMIT ?
+        FROM session as s
+        WHERE s.teacher_id = ?
+        ORDER BY created_at DESC
+        LIMIT ?
         OFFSET ?
       `,
       [teacher_id, pageSize, (pageNumber - 1) * pageSize],

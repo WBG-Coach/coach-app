@@ -227,6 +227,8 @@ const npTranslation = {
       nin_description: 'शिक्षकको कोड',
     },
     details: {
+      subject: 'मुख्य विषय',
+      school: 'बिद्यालय',
       editTeacher: 'शिक्षक सम्पादन गर्नुहोस्',
       description: '{{subject}} मा {{school}} शिक्षक',
     },
