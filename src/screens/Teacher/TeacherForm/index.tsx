@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Center,
   ScrollView,
@@ -7,7 +7,6 @@ import {
   Spinner,
   useToast,
   HStack,
-  View,
 } from 'native-base';
 import {teacherFormValidate} from '../../../helpers/validate.helper';
 import {useCoachContext} from '../../../providers/coach.provider';
@@ -167,6 +166,7 @@ const TeacherFormScreen: React.FC = () => {
           t(`teacher.subjects.np.$6`),
           t(`teacher.subjects.np.$7`),
           t(`teacher.subjects.np.$8`),
+          t(`teacher.subjects.np.$9`),
         ]
       : [
           t(`teacher.subjects.sl.$1`),

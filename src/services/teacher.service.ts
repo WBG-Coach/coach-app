@@ -35,6 +35,7 @@ export const TeacherService = {
           t.school_id = ?
         AND
           UPPER(t.name) LIKE UPPER(?) || '%'
+        ORDER BY t.created_at DESC
         LIMIT ?
         OFFSET ?
       `,
@@ -165,15 +166,10 @@ export const TeacherService = {
   create: async (teacher: Partial<Teacher>): Promise<void> => {
     const db = await getDBConnection();
 
-    console.log('--->', {
-      ...teacher,
-      birthdate: teacher.birthdate?.toJSON().toString(),
-    });
-
-    await db.executeSql(
+    const result = await db.executeSql(
       `
-      INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, birthdate, pin, nin, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
+      INSERT INTO teacher(id, name, surname, emis_number, subject, school_id, image_id, birthdate, pin, nin, created_at, _status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `,
       [
         uuid(),
@@ -186,8 +182,11 @@ export const TeacherService = {
         teacher.birthdate?.toJSON().toString(),
         teacher.pin,
         teacher.nin,
+        new Date().toJSON(),
       ],
     );
+
+    console.log({result});
   },
 
   update: async (id: string, teacher: Partial<Teacher>): Promise<void> => {

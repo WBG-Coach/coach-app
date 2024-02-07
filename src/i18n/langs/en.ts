@@ -135,7 +135,7 @@ const enTranslation = {
   },
   home: {
     salutation: 'Hi',
-    teachersLength_interval: 'You are coaching in ',
+    teachersLength_interval: 'Coaching in:',
     'menu-items': {
       newSession: 'Start a new session',
       switchSchools: 'Switch schools',
@@ -150,7 +150,7 @@ const enTranslation = {
       title: 'Teachers',
       addNew: 'Add new teacher',
       'no-session': 'No sessions yet. Start coaching!',
-      'last-session': 'Last session entered on {{date}}',
+      'last-session': 'Updated {{date}}',
       session_interval: '(1)[1 Observation];(2-inf)[{{count}} Observations];',
       teachers_count: 'Teachers in this school:',
     },
@@ -277,7 +277,8 @@ const enTranslation = {
         $5: 'Health Physical and Creative Arts',
         $6: 'Mother Tongue and Local Subjects',
         $7: 'Hamro serofero',
-        $8: 'Other',
+        $8: 'Nepali',
+        $9: 'Other',
       },
       sl: {
         $1: 'Arabic',

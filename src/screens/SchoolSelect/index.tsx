@@ -48,10 +48,11 @@ const SchoolSelectScreen: React.FC = () => {
   };
 
   const onRead = async (data: string) => {
+    setIsOpen(false);
+
     const school: School = JSON.parse(data);
 
     await selectSchool(school);
-    setIsOpen(false);
 
     await createCoachSchool();
 

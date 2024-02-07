@@ -55,6 +55,7 @@ const TeachersList: React.FC<Props> = ({
         if (data.length < ITEMS_PER_PAGE) {
           setIsTheEnd(true);
         }
+        console.log(data[0]);
         setTeachersList(data);
         setIsLoading(false);
       });

@@ -69,17 +69,15 @@ const TeacherHeader: React.FC<Props> = ({
         <VStack>
           <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
             {t('teacher.details.subject')}
-            Principal Subject
           </Text>
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
-            {subject}
+            {subject ? t(subject) : '-'}
           </Text>
         </VStack>
 
         <VStack alignItems={'flex-start'}>
           <Text fontSize={'TXS'} fontWeight={400} color={'gray.600'}>
             {t('teacher.details.school')}
-            School
           </Text>
           <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
             {school}

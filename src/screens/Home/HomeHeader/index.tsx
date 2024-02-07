@@ -21,18 +21,17 @@ const HomeHeader: React.FC = () => {
       </Center>
 
       <VStack space={1}>
-        <Text fontSize={'TMD'} fontWeight={600} color={'gray.800'}>
+        <Text fontSize={'20px'} fontWeight={600} color={'gray.800'}>
           {t('home.salutation')}, {currentCoach?.name}
         </Text>
-        <HStack>
-          <Text fontSize={'TSM'} fontWeight={400} color={'gray.800'}>
-            {t('home.teachersLength_interval')}
-          </Text>
 
-          <Text fontSize={'TSM'} fontWeight={600} color={'gray.800'}>
-            {currentSchool?.name}
-          </Text>
-        </HStack>
+        <Text fontSize={'14px'} fontWeight={400} color={'gray.800'}>
+          {t('home.teachersLength_interval')}
+        </Text>
+
+        <Text fontSize={'14px'} fontWeight={600} color={'gray.800'}>
+          {currentSchool?.name}
+        </Text>
       </VStack>
     </HStack>
   );
