@@ -1,4 +1,4 @@
-package com.coachappsl;
+package com.coachappnp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

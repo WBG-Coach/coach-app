@@ -82,9 +82,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.coachappsl'
+    namespace 'com.coachappnp'
     defaultConfig {
-        applicationId 'com.coachappsl'
+        applicationId 'com.coachappnp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -98,6 +98,15 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
+        // release{
+        //     v2SigningEnabled true
+        //     storeFile file("C:/Users/hp/AndroidStudioProjects/JKS/Uttam Mama/Coach App/coachappnp.jks")
+        //     storePassword 'coachappnp'
+        //     keyAlias 'coachappnp'
+        //     keyPassword 'coachappnp'
+        //     storeType 'jks'
+        // }
     }
     buildTypes {
         debug {
