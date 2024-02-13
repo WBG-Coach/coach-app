@@ -1,4 +1,4 @@
-package com.coachappsl;
+package com.coachappnp;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -16,5 +16,5 @@ pwd
 echo "Listando arquivos no diretório atual:"
 ls -l
 
-sed -i "s/applicationId 'com.coachappsl'/applicationId 'com.coachappnp'/" build.gradle
+sed -i "s/applicationId 'com.coachappnp'/applicationId 'com.coachappnp'/" build.gradle
 
