@@ -99,14 +99,6 @@ android {
             keyPassword 'android'
         }
 
-        // release{
-        //     v2SigningEnabled true
-        //     storeFile file("C:/Users/hp/AndroidStudioProjects/JKS/Uttam Mama/Coach App/coachappnp.jks")
-        //     storePassword 'coachappnp'
-        //     keyAlias 'coachappnp'
-        //     keyPassword 'coachappnp'
-        //     storeType 'jks'
-        // }
     }
     buildTypes {
         debug {
