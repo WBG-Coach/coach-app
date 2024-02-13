@@ -14,12 +14,14 @@ import {runMigrationsNP} from '../../database/migrations/np';
 import {useCameraPermission} from 'react-native-vision-camera';
 import Geolocation from '@react-native-community/geolocation';
 
+
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
   const {isConnected} = useNetInfo();
   const [isLoading, setIsLoading] = useState(false);
   const {selectCoach, selectSchool} = useCoachContext();
   const {hasPermission, requestPermission} = useCameraPermission();
+
 
   const setupApp = useCallback(async () => {
     setIsLoading(true);
