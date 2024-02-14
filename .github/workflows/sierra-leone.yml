@@ -12,7 +12,7 @@ jobs:
     env:
       API_URL: https://coachdigital.org/sl/api
       COUNTRY: sl
-      SHOW_TLC: true
+      LOGIN_MODE: PASSWORD
 
     steps:
       - name: Checkout 🛎️

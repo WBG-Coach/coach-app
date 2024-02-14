@@ -12,6 +12,7 @@ jobs:
     env:
       API_URL: https://coachdigital.org/np/api
       COUNTRY: np
+      LOGIN_MODE: OTP
 
     steps:
       - name: Checkout 🛎️

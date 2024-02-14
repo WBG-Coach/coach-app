@@ -26,7 +26,6 @@ const SplashScreen: React.FC = () => {
       if (!isLoading) {
         await runMigrations();
         await runSeeds();
-
         await requestAllPermission();
 
         const currentCoach = await StorageService.getCurrentCoach();
