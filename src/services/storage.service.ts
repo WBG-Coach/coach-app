@@ -5,7 +5,8 @@ import moment from 'moment';
 import {COUNTRY} from '@env';
 
 const KEYS = {
-  databaseVersion: `DATABASE_VERSION_${COUNTRY}`,
+  databaseVersion: `V2_LOCAL_DATABASE_VERSION`,
+  sownSeeds: `SOWN_SEEDS`,
   lastSync: 'LAST_SYNC',
   currentCoach: 'CURRENT_COACH',
   currentSchool: 'CURRENT_SCHOOL',
@@ -17,6 +18,12 @@ export const StorageService = {
   },
   setDatabaseVersion: async (value: string) => {
     await AsyncStorage.setItem(KEYS.databaseVersion, value);
+  },
+  getSownSeeds: () => {
+    return AsyncStorage.getItem(KEYS.sownSeeds);
+  },
+  setSownSeeds: async (value: string) => {
+    await AsyncStorage.setItem(KEYS.sownSeeds, value);
   },
   getLastSyncFormated: async () => {
     const date = await AsyncStorage.getItem(KEYS.lastSync);

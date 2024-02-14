@@ -1,18 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Center, Image, Spinner} from 'native-base';
 import {LoginLogo} from '../../assets/images/logos';
-import {PermissionsAndroid} from 'react-native';
-import {runMigrationsSL} from '../../database/migrations/sl';
+import {runMigrations} from '../../database/migrations';
 import SyncService from '../../services/sync.service';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
 import {StorageService} from '../../services/storage.service';
 import {useCoachContext} from '../../providers/coach.provider';
-import {COUNTRY} from '@env';
-import {runMigrationsNP} from '../../database/migrations/np';
+import {LOGIN_MODE, COUNTRY, SEEDS} from '@env';
 import {useCameraPermission} from 'react-native-vision-camera';
-import Geolocation from '@react-native-community/geolocation';
+import {runSeeds} from '../../database/seeds';
 
 const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -23,11 +21,11 @@ const SplashScreen: React.FC = () => {
 
   const setupApp = useCallback(async () => {
     setIsLoading(true);
+
     try {
       if (!isLoading) {
-        console.log('CURRENT COUNTRY ->', COUNTRY);
-        if (COUNTRY === 'sl') await runMigrationsSL();
-        if (COUNTRY === 'np') await runMigrationsNP();
+        await runMigrations();
+        await runSeeds();
 
         await requestAllPermission();
 
@@ -41,7 +39,7 @@ const SplashScreen: React.FC = () => {
         selectCoach(currentCoach);
         selectSchool(currentSchool);
 
-        if (COUNTRY === 'np') {
+        if (LOGIN_MODE === 'OTP') {
           if (!currentCoach) {
             navigate(PathRoutes.login.main, {replace: true});
           } else if (!currentSchool) {
@@ -60,11 +58,10 @@ const SplashScreen: React.FC = () => {
         }
       }
     } catch {}
-  }, [isConnected]);
+  }, []);
 
   const requestAllPermission = async () => {
     try {
-      // Geolocation.requestAuthorization();
       if (!hasPermission) {
         await requestPermission();
       }

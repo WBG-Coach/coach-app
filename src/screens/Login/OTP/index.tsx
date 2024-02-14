@@ -44,7 +44,11 @@ const OTPScreen: React.FC = () => {
     <Page back>
       <VStack flex={1} p={4} alignItems={'center'}>
         <VStack>
-          <Text fontSize={'TMD'} fontWeight={400} color={'gray.800'}>
+          <Text
+            fontSize={'TMD'}
+            fontWeight={400}
+            color={'gray.800'}
+            textAlign="center">
             {t('login.otp.title')}
           </Text>
 
@@ -85,7 +89,12 @@ const OTPScreen: React.FC = () => {
             </Text>
           </Button>
 
-          <Text fontSize={'LMD'} fontWeight={500} color={'gray.800'} mt={8}>
+          <Text
+            mt={8}
+            fontSize={'LMD'}
+            fontWeight={500}
+            color={'gray.800'}
+            textAlign="center">
             {t('login.otp.not_receive_code')}
           </Text>
 

@@ -201,6 +201,7 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
                                 : theme.colors.red['200']
                             }
                           />
+
                           <Text
                             ml={1}
                             fontSize={'TSM'}
@@ -208,6 +209,7 @@ const TeacherStatsTab: React.FC<Props> = ({teacherId}) => {
                             color={'gray.700'}>
                             {item.isCrescent ? 'Improved' : 'Needs work'}
                           </Text>
+
                           <Text
                             fontSize={'TSM'}
                             fontWeight={400}

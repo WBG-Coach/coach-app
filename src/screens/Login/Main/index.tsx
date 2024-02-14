@@ -1,23 +1,23 @@
+import {useState} from 'react';
 import {
+  Text,
+  Image,
+  VStack,
   Center,
   HStack,
-  Image,
-  KeyboardAvoidingView,
-  Text,
-  VStack,
   useTheme,
+  KeyboardAvoidingView,
 } from 'native-base';
+import {Platform} from 'react-native';
+import Icon from '../../../components/Icon';
 import Page from '../../../components/Page';
-import {LoginLogo} from '../../../assets/images/logos';
-import InputText from '../../../components/InputText';
+import {useTranslation} from 'react-i18next';
 import Button from '../../../components/Button';
-import {useState} from 'react';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../../routers/paths';
-import Icon from '../../../components/Icon';
-import {useTranslation} from 'react-i18next';
+import InputText from '../../../components/InputText';
+import {LoginLogo} from '../../../assets/images/logos';
 import {CoachService} from '../../../services/coach.service';
-import {Platform} from 'react-native';
 
 const LoginScreen: React.FC = () => {
   const [UserID, setUserID] = useState<{value: string; hasError: boolean}>();
@@ -34,7 +34,6 @@ const LoginScreen: React.FC = () => {
       }
     } catch (err) {
       setUserID(user => ({value: user?.value || '', hasError: true}));
-      console.log(err);
     }
   };
 

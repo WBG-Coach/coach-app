@@ -25,8 +25,8 @@ const PinInput: React.FC<Props> = ({
         {len.map((_, index) => (
           <Center
             key={index}
-            width={'50px'}
-            height={'56px'}
+            width={'44px'}
+            height={'48px'}
             flexDir={'row'}
             borderWidth={1}
             bg={'gray.0'}
