@@ -44,7 +44,6 @@ import LoginScreen from '../screens/Login/Main';
 import OTPScreen from '../screens/Login/OTP';
 import SignupScreen from '../screens/SignUp/Main';
 import SignupSuccessScreen from '../screens/SignUp/Success';
-import FastLoginScreen from '../screens/Login/FastLogin';
 
 const RouterProvider: React.FC = () => {
   return (
@@ -62,8 +61,6 @@ const RouterProvider: React.FC = () => {
         <Route path={PathRoutes.login.main} Component={LoginScreen} />
 
         <Route path={PathRoutes.login.otp} Component={OTPScreen} />
-
-        <Route path={PathRoutes.login.fastLogin} Component={FastLoginScreen} />
 
         <Route path={PathRoutes.signup.main} Component={SignupScreen} />
 

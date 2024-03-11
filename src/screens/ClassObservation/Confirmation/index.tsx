@@ -69,7 +69,7 @@ const ClassObservationConfirmation: React.FC = () => {
         question_id => ({question_id, value: answers[question_id]}),
       );
 
-      const sessionId = await SessionService.create(
+      const sessionId = await SessionService.createLocalSession(
         {
           students_count: session.students_count,
           subject: session.subject,

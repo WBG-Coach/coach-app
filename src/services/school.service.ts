@@ -45,7 +45,7 @@ export const SchoolService = {
     return result[0].rows.raw();
   },
 
-  insertSchool: async ({id, name, emis_number, key}: School) => {
+  insertASchoolFromServer: async ({id, name, emis_number, key}: School) => {
     const db = await getDBConnection();
     const result = (await db.executeSql(
       `
@@ -57,11 +57,11 @@ export const SchoolService = {
       [id],
     )) as any[];
 
-    if (!result[0] || result[0].rows?.raw().length === 0) {
+    if (!result[0] || result[0]?.rows?.raw().length === 0) {
       await db.executeSql(
         `
-        INSERT INTO school(id, name, emis_number, key, _status)
-        VALUES (?, ?, ?, ?, 'synced')
+          INSERT OR REPLACE INTO school(id, name, emis_number, schoolKey, _status)
+          VALUES (?, ?, ?, ?, 'synced')
         `,
         [id, name, emis_number, key],
       );

@@ -42,8 +42,8 @@ const createSchoolTable = (db: SQLiteDatabase) => {
       _status TEXT,
 
       name TEXT,
-      key TEXT null,
       region TEXT null,
+      schoolKey TEXT null,
       emis_number TEXT null,
       
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -67,7 +67,6 @@ const createCoacherTable = (db: SQLiteDatabase) => {
       phone TEXT null,
       surname TEXT null,
       birthdate TEXT null,
-      birthday TIMESTAMP null,
       image_id TEXT REFERENCES image(id),
 
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

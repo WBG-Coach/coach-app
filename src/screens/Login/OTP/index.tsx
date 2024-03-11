@@ -9,29 +9,39 @@ import Icon from '../../../components/Icon';
 import {useTranslation} from 'react-i18next';
 import {CoachService} from '../../../services/coach.service';
 import {useCoachContext} from '../../../providers/coach.provider';
+import CompetenceService from '../../../services/competence.service';
+import {QuestionService} from '../../../services/question.service';
+import {StorageService} from '../../../services/storage.service';
 
 const OTPScreen: React.FC = () => {
   const [OTPCode, setOTPCode] = useState<{hasError: boolean; value: string}>();
+  const {loginOTP} = useCoachContext();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {t} = useTranslation();
   const theme = useTheme();
   const {id} = useParams();
-  const {selectCoach} = useCoachContext();
 
   const handleVerifyCode = async () => {
+    setIsLoading(true);
     try {
       if (id && OTPCode?.value) {
         const {data} = await CoachService.verifyOTP(
           id.toLowerCase().trim(),
           OTPCode.value,
         );
-        selectCoach(data.coach);
+
+        await loginOTP(data.coach);
+        await CompetenceService.sync(data.competencies);
+        await QuestionService.sync(data.questions);
+        await StorageService.setLastSync(new Date());
+
         navigate(PathRoutes.selectSchool, {replace: true});
       }
     } catch (err) {
-      console.log(err);
       setOTPCode(otp => ({value: otp?.value || '', hasError: true}));
     }
+    setIsLoading(false);
   };
 
   const handleResendCode = async () => {
@@ -53,12 +63,12 @@ const OTPScreen: React.FC = () => {
           </Text>
 
           <Text
-            fontSize={'TXL'}
-            fontWeight={700}
-            color={'primary.200'}
             mt={1}
             mb={8}
-            alignSelf={'center'}>
+            fontSize={'TXL'}
+            fontWeight={700}
+            alignSelf={'center'}
+            color={'primary.200'}>
             {id}
           </Text>
 
@@ -81,7 +91,11 @@ const OTPScreen: React.FC = () => {
             </HStack>
           )}
 
-          <Button mt={8} onPress={handleVerifyCode} disabled={!OTPCode?.value}>
+          <Button
+            mt={8}
+            isLoading={isLoading}
+            onPress={handleVerifyCode}
+            disabled={!OTPCode?.value}>
             <Text
               color={!OTPCode?.value ? 'gray.600' : 'gray.0'}
               fontWeight={500}>

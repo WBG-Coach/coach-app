@@ -1,4 +1,5 @@
-import {School} from './school';
+import {CoachSchool} from './coach_school';
+import {Session} from './session';
 
 export type Coach = {
   id: string;
@@ -13,10 +14,12 @@ export type Coach = {
 
   image_id?: string;
 
-  sessionCount?: number;
-  schools?: School[];
+  sessions?: Session[];
+  coachSchools?: CoachSchool[];
 
   _status?: string;
   created_at: Date;
   updated_at: Date;
+
+  sessionCount?: number;
 };

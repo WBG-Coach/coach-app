@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router-native';
 import PathRoutes from '../../routers/paths';
 import {StorageService} from '../../services/storage.service';
 import {useCoachContext} from '../../providers/coach.provider';
-import {LOGIN_MODE, COUNTRY, SEEDS} from '@env';
+import {LOGIN_MODE} from '@env';
 import {useCameraPermission} from 'react-native-vision-camera';
 import {runSeeds} from '../../database/seeds';
 

@@ -7,11 +7,15 @@ import {School} from '../types/school';
 import {Coach} from '../types/coach';
 import {useNavigate} from 'react-router-native';
 import PathRoutes from '../routers/paths';
+import {CoachService} from '../services/coach.service';
+import {CoachSchool} from '../types/coach_school';
+import {SessionService} from '../services/session.service';
 
 type CoachContextType = {
   currentCoach: Coach | null;
   currentSchool: School | null;
   logout: () => Promise<void>;
+  loginOTP: (coach: Coach) => Promise<void>;
   selectCoach: (coach: Coach | null) => Promise<void>;
   selectSchool: (school: School | null) => Promise<void>;
 };
@@ -30,12 +34,45 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
     await StorageService.setCurrentCoach(coach);
   };
 
+  const loginOTP = async (coach: Coach) => {
+    setCurrentCoach(coach);
+
+    await CoachService.insertOrUpdateCoach(coach);
+
+    if (coach.coachSchools) {
+      await Promise.all(
+        coach.coachSchools.map(async ({school}: CoachSchool) => {
+          if (school) {
+            await SchoolService.insertASchoolFromServer(school);
+          }
+        }),
+      );
+
+      await Promise.all(
+        coach.coachSchools.map(coachSchool =>
+          CoachService.insertOrUpdateCoachSchool(coachSchool),
+        ),
+      );
+    }
+
+    if (coach.sessions) {
+      await SessionService.insertSessionsFromServer(coach.sessions);
+    }
+
+    await StorageService.setCurrentCoach(coach);
+  };
+
   const selectSchool = async (school: School | null) => {
+    if (school) {
+      await SchoolService.insertASchoolFromServer(school);
+
+      if (currentCoach) {
+        await CoachService.assignCoachToSchool(currentCoach, school);
+      }
+    }
+
     setCurrentSchool(school);
     await StorageService.setCurrentSchool(school);
-    if (school) {
-      await SchoolService.insertSchool(school);
-    }
   };
 
   const logout = async () => {
@@ -59,6 +96,7 @@ const CoachProvider: React.FC<{children: ReactNode}> = ({children}) => {
     <CoachContext.Provider
       value={{
         logout,
+        loginOTP,
         selectCoach,
         selectSchool,
         currentCoach,

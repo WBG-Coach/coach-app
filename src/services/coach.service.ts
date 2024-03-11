@@ -1,12 +1,29 @@
 import axios from 'axios';
+import {API_URL} from '@env';
 import {Coach} from '../types/coach';
-import {CoachSchool} from '../types/coach_school';
 import {School} from '../types/school';
-import {getDBConnection} from './database.service';
 import {v4 as uuid} from 'uuid';
-import {API_URL, COUNTRY} from '@env';
+import {getDBConnection} from './database.service';
+import {CoachSchool} from '../types/coach_school';
+import {Competence} from '../types/competence';
+import {Question} from '../types/question';
 
 export const CoachService = {
+  getById: async (id: string): Promise<Coach> => {
+    const db = await getDBConnection();
+    const result = (await db.executeSql(
+      `
+        SELECT
+          c.*
+        FROM coach as c
+        WHERE c.id = ?
+      `,
+      [id],
+    )) as any[];
+
+    return result[0].rows.raw()[0];
+  },
+
   findCoachItems: async (
     currentSchool: School,
     value: string,
@@ -40,110 +57,10 @@ export const CoachService = {
     return result[0].rows.raw();
   },
 
-  sync: async (coaches: Coach[]): Promise<void> => {
-    const db = await getDBConnection();
-    await Promise.all(
-      coaches?.map(coach => {
-        return db.executeSql(`
-          INSERT OR REPLACE INTO coach(id, name, surname, image_id, _status)
-          VALUES ('${coach.id}', '${coach.name}', '${coach.surname}', '${coach.image_id}', 'synced')
-        `);
-      }),
-    );
-  },
+  signup: async (coach: Partial<Coach>): Promise<Coach> => {
+    const response = await axios.post<Coach>(`${API_URL}/coach/signup`, coach);
 
-  syncCoachSchools: async (coachSchools: CoachSchool[]): Promise<void> => {
-    const db = await getDBConnection();
-    await Promise.all(
-      coachSchools?.map(coachSchool => {
-        return db.executeSql(`
-          INSERT OR REPLACE INTO coach_school(id, coach_id, school_id, _status)
-          VALUES ('${coachSchool.id}', '${coachSchool.coach_id}', '${coachSchool.school_id}', 'synced')
-        `);
-      }),
-    );
-  },
-
-  create: async (
-    currentSchool: School,
-    coach: Partial<Coach>,
-  ): Promise<Coach> => {
-    const db = await getDBConnection();
-    const coachId = uuid();
-    if (COUNTRY === 'np') {
-      await db.executeSql(
-        `
-      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, email, phone, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')
-    `,
-        [
-          coachId,
-          coach.name,
-          coach.surname,
-          coach.nin,
-          coach.pin,
-          coach.image_id,
-          coach.birthdate?.toJSON(),
-          coach.email,
-          coach.phone,
-        ],
-      );
-    } else {
-      await db.executeSql(
-        `
-      INSERT OR REPLACE INTO coach(id, name, surname, nin, pin, image_id, birthdate, _status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
-    `,
-        [
-          coachId,
-          coach.name,
-          coach.surname,
-          coach.nin,
-          coach.pin,
-          coach.image_id,
-          coach.birthdate?.toJSON(),
-        ],
-      );
-    }
-
-    if (currentSchool.id) {
-      await db.executeSql(`
-        INSERT OR REPLACE INTO coach_school(id, school_id, coach_id, _status)
-        VALUES ('${uuid()}', '${currentSchool.id}', '${coachId}', 'pending')
-      `);
-    }
-
-    return (
-      (await db.executeSql('SELECT c.* FROM coach as c WHERE c.id = ?', [
-        coachId,
-      ])) as any[]
-    )[0].rows.raw()[0];
-  },
-
-  signup: async (
-    currentSchool: School,
-    coach: Partial<Coach>,
-  ): Promise<Coach> => {
-    const newCoach = await CoachService.create(currentSchool, coach);
-
-    await axios.post<{coach: Coach}>(`${API_URL}/coach/signup`, newCoach);
-
-    return newCoach;
-  },
-
-  createCoachSchool: async (coach: Coach, school: School) => {
-    const db = await getDBConnection();
-    const response = (await db.executeSql(
-      'SELECT * FROM coach_school WHERE coach_id = ? AND school_id = ?',
-      [coach.id, school.id],
-    )) as any[];
-
-    if (response[0].rows.raw().length === 0) {
-      await db.executeSql(`
-        INSERT OR REPLACE INTO coach_school(id, coach_id, school_id, _status)
-        VALUES ('${uuid()}', '${coach.id}', '${school.id}', 'pending')
-      `);
-    }
+    return response.data;
   },
 
   sendEmailOTP: async (email: string) => {
@@ -153,9 +70,70 @@ export const CoachService = {
   },
 
   verifyOTP: async (email: string, code: string) => {
-    return await axios.post<{coach: Coach}>(`${API_URL}/auth/otp/verify`, {
+    return await axios.post<{
+      coach: Coach;
+      competencies: Competence[];
+      questions: Question[];
+    }>(`${API_URL}/auth/otp/verify`, {
       email,
       code,
     });
+  },
+
+  createNewLocalCoach: async (newCoach: Partial<Coach>): Promise<Coach> => {
+    const id = uuid();
+    await CoachService.insertOrUpdateCoach({...newCoach, id});
+    return CoachService.getById(id);
+  },
+
+  insertOrUpdateCoach: async ({
+    id,
+    nin,
+    pin,
+    name,
+    email,
+    phone,
+    surname,
+    birthdate,
+    image_id,
+  }: Partial<Coach>): Promise<void> => {
+    const db = await getDBConnection();
+    await db.executeSql(
+      `
+      INSERT OR REPLACE INTO coach(id, nin, pin, name, email, phone, surname, birthdate, image_id, _status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced')
+    `,
+      [id, nin, pin, name, email, phone, surname, birthdate, image_id],
+    );
+  },
+
+  insertOrUpdateCoachSchool: async ({
+    coach,
+    school,
+  }: CoachSchool): Promise<void> => {
+    if (coach && school) {
+      await CoachService.assignCoachToSchool(coach, school);
+    }
+  },
+
+  assignCoachToSchool: async (coach: Coach, school: School): Promise<void> => {
+    const db = await getDBConnection();
+
+    const result = (await db.executeSql(
+      `
+        SELECT id
+        FROM coach_school as s
+        WHERE
+        coach_id = ? AND school_id = ?
+      `,
+      [coach.id, school.id],
+    )) as any[];
+
+    if (!result[0] || result[0].rows?.raw().length === 0) {
+      db.executeSql(`
+      INSERT OR REPLACE INTO coach_school(id, coach_id, school_id, _status)
+      VALUES ('${uuid()}', '${coach.id}', '${school.id}', 'pending')
+    `);
+    }
   },
 };

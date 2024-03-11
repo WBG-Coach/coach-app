@@ -40,6 +40,7 @@ const SyncService = {
   trySyncData: async (): Promise<void> => {
     try {
       const db = await getDBConnection();
+
       const changes = {
         images: await SyncService.getPendingImages(db),
         coaches: await SyncService.getPendingCoaches(db),
@@ -52,8 +53,6 @@ const SyncService = {
 
       const currentSchool = await StorageService.getCurrentSchool();
       const lastSync = await StorageService.getLastSync();
-
-      console.log('API URL ->', API_URL);
 
       const response = await axios.post<SyncData>(
         `${API_URL}/sync`,
@@ -75,8 +74,6 @@ const SyncService = {
       if (currentSchool && response.data.total > 0) {
         await CompetenceService.sync(response.data.competencies);
         await QuestionService.sync(response.data.questions);
-        await CoachService.sync(response.data.coaches);
-        await CoachService.syncCoachSchools(response.data.coachSchools);
         await TeacherService.sync(response.data.teachers);
         await SessionService.sync(response.data.sessions);
         await AnswerService.sync(response.data.answers);

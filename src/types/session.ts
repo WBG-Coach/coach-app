@@ -1,3 +1,6 @@
+import {Answer} from './answer';
+import {Feedback} from './feedback';
+
 export type Session = {
   id: string;
   _status?: string;
@@ -13,6 +16,9 @@ export type Session = {
   school_id: string;
   teacher_id: string;
   feedback_id: string;
+
+  feedback?: Feedback;
+  answers?: Answer[];
 
   created_at: Date;
   updated_at: Date;

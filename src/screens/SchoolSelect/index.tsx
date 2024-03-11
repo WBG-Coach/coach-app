@@ -11,13 +11,13 @@ import PathRoutes from '../../routers/paths';
 import {School} from '../../types/school';
 import Page from '../../components/Page';
 import {
-  Button,
-  FlatList,
-  Image,
-  Modal,
-  Spinner,
   Text,
+  Modal,
+  Image,
+  Button,
   VStack,
+  Spinner,
+  FlatList,
 } from 'native-base';
 import QrReader from '../../components/QrReader';
 import SchoolItem from './SchoolItem';
@@ -30,7 +30,7 @@ const SchoolSelectScreen: React.FC = () => {
 
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const {selectSchool, currentSchool, currentCoach} = useCoachContext();
+  const {selectSchool, currentSchool} = useCoachContext();
 
   const loadSchools = useCallback(async (value: string) => {
     setIsLoading(true);
@@ -43,27 +43,20 @@ const SchoolSelectScreen: React.FC = () => {
   const onSelectSchool = async (school: School) => {
     await selectSchool(school);
 
-    await createCoachSchool();
     navigate(PathRoutes.home.main, {replace: true});
   };
 
   const onRead = async (data: string) => {
-    setIsOpen(false);
+    try {
+      setIsOpen(false);
 
-    const school: School = JSON.parse(data);
+      const school: School = JSON.parse(data);
 
-    await selectSchool(school);
+      await selectSchool(school);
 
-    await createCoachSchool();
-
-    navigate(PathRoutes.syncDetails, {replace: true});
-  };
-
-  const createCoachSchool = async () => {
-    setIsLoading(true);
-
-    if (currentCoach && currentSchool) {
-      await CoachService.createCoachSchool(currentCoach, currentSchool);
+      navigate(PathRoutes.syncDetails, {replace: true});
+    } catch (err) {
+      console.log({err});
     }
   };
 

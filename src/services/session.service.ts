@@ -61,6 +61,7 @@ export const SessionService = {
 
   syncFeedbacks: async (feedbacks: Feedback[]): Promise<void> => {
     const db = await getDBConnection();
+
     await Promise.all(
       feedbacks?.map(feedback => {
         return db.executeSql(
@@ -74,7 +75,7 @@ export const SessionService = {
     );
   },
 
-  create: async (
+  createLocalSession: async (
     session: Partial<Session>,
     answers: Partial<Answer>[],
   ): Promise<string> => {
@@ -197,7 +198,7 @@ export const SessionService = {
     return result[0].rows.raw();
   },
 
-  createFeedback: async (
+  createLocalFeedback: async (
     {value, answer_id}: Partial<Feedback>,
     session_id: string,
   ) => {
@@ -249,5 +250,62 @@ export const SessionService = {
       ...feedback,
       images: await ImageService.getImagesByExternalId(feedback.id),
     };
+  },
+
+  insertSessionsFromServer: async (sessions: Session[]) => {
+    const db = await getDBConnection();
+
+    await Promise.all(
+      sessions?.map(async session => {
+        await db.executeSql(
+          `
+          INSERT OR REPLACE INTO session(id, students_count, subject, lesson_time, objective, school_id, coach_id, key_points, teacher_id, latitude, longitude, _status)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced')
+        `,
+          [
+            session.id,
+            session.students_count,
+            session.subject,
+            session.lesson_time,
+            session.objective,
+            session.school_id,
+            session.coach_id,
+            session.key_points,
+            session.teacher_id,
+            session.latitude,
+            session.longitude,
+          ],
+        );
+
+        if (session.answers) {
+          await Promise.all(
+            session.answers?.map(
+              async answer =>
+                await db.executeSql(
+                  `
+                  INSERT OR REPLACE INTO answer(id, session_id, question_id, value, _status)
+                  VALUES (?, ?, ?, ?, 'synced')
+                `,
+                  [answer.id, session.id, answer.question_id, answer.value],
+                ),
+            ),
+          );
+        }
+
+        if (session.feedback) {
+          return db.executeSql(
+            `
+              INSERT OR REPLACE INTO feedback(id, value, answer_id, _status)
+              VALUES (?, ?, ?, 'synced')
+            `,
+            [
+              session.feedback.id,
+              session.feedback.value,
+              session.feedback.answer_id,
+            ],
+          );
+        }
+      }),
+    );
   },
 };

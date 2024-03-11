@@ -46,7 +46,7 @@ const FeedbackSessionForm: React.FC = () => {
   const finishCoachSession = async () => {
     setLoading(true);
     if (actions) {
-      const feedbackId = await SessionService.createFeedback(
+      const feedbackId = await SessionService.createLocalFeedback(
         {
           answer_id: answerId,
           value: actions,
