@@ -42,9 +42,9 @@ export const QuestionService = {
           question.description
             ? `'${question.description.replaceAll("'", "''")}'`
             : 'NULL'
-        }, '${question.tooltip_data}', 'option', '${question.competence_id}', ${
-          question.scale
-        }, 'synced');
+        }, '${question.tooltip_data.replaceAll("'", "''")}', 'option', '${
+          question.competence_id
+        }', ${question.scale}, 'synced');
      `);
       }),
     );

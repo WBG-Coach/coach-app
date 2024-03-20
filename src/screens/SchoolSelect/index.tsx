@@ -30,7 +30,7 @@ const SchoolSelectScreen: React.FC = () => {
 
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const {selectSchool, currentSchool} = useCoachContext();
+  const {selectSchool, currentSchool, currentCoach} = useCoachContext();
 
   const loadSchools = useCallback(async (value: string) => {
     setIsLoading(true);
@@ -42,8 +42,13 @@ const SchoolSelectScreen: React.FC = () => {
 
   const onSelectSchool = async (school: School) => {
     await selectSchool(school);
+    console.log('AQUI');
 
-    navigate(PathRoutes.home.main, {replace: true});
+    if (currentCoach) {
+      navigate(PathRoutes.home.main, {replace: true});
+    } else {
+      navigate(PathRoutes.selectAccount, {replace: true});
+    }
   };
 
   const onRead = async (data: string) => {

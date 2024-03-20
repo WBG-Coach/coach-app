@@ -11,13 +11,13 @@ import GeolocationService from './geolocation.service';
 import {SQLiteDatabase} from 'react-native-sqlite-storage';
 import {StorageService} from './storage.service';
 import {SyncData} from '../types/sync';
-import {CoachService} from './coach.service';
 import {TeacherService} from './teacher.service';
 import {SessionService} from './session.service';
 import {AnswerService} from './answer.service';
 import {API_URL} from '@env';
 import CompetenceService from './competence.service';
 import {QuestionService} from './question.service';
+import {CoachService} from './coach.service';
 
 const SyncService = {
   getUnsyncedItemsCount: async (): Promise<{
@@ -37,19 +37,22 @@ const SyncService = {
     return results[0].rows.raw()[0];
   },
 
-  trySyncData: async (): Promise<void> => {
+  trySyncData: async (firstSync = false): Promise<void> => {
     try {
       const db = await getDBConnection();
 
       const changes = {
-        images: await SyncService.getPendingImages(db),
-        coaches: await SyncService.getPendingCoaches(db),
-        coachSchools: await SyncService.getPendingCoachSchools(db),
-        teachers: await SyncService.getPendingTeachers(db),
-        sessions: await SyncService.getPendingSessions(db),
-        answers: await SyncService.getPendingAnswers(db),
-        feedbacks: await SyncService.getPendingFeedbacks(db),
+        images: firstSync ? [] : await SyncService.getPendingImages(db),
+        coaches: firstSync ? [] : await SyncService.getPendingCoaches(db),
+        coachSchools: firstSync
+          ? []
+          : await SyncService.getPendingCoachSchools(db),
+        teachers: firstSync ? [] : await SyncService.getPendingTeachers(db),
+        sessions: firstSync ? [] : await SyncService.getPendingSessions(db),
+        answers: firstSync ? [] : await SyncService.getPendingAnswers(db),
+        feedbacks: firstSync ? [] : await SyncService.getPendingFeedbacks(db),
       };
+      console.log('2');
 
       const currentSchool = await StorageService.getCurrentSchool();
       const lastSync = await StorageService.getLastSync();
@@ -68,7 +71,7 @@ const SyncService = {
       );
 
       if (response.status !== 200) {
-        throw new Error();
+        throw new Error('Fail to sync');
       }
 
       if (currentSchool && response.data.total > 0) {
@@ -83,7 +86,7 @@ const SyncService = {
 
       await SyncService.updateAllToSynced(db);
     } catch (err) {
-      console.log({err});
+      console.log(JSON.stringify(err));
     }
   },
 

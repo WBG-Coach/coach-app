@@ -13,6 +13,7 @@ jobs:
       API_URL: https://coachdigital.org/sl/api
       COUNTRY: sl
       LOGIN_MODE: PASSWORD
+      SEEDS: SEED_SL_INSERT_COMPETENCIES,SEED_SL_INSERT_QUESTIONS
 
     steps:
       - name: Checkout 🛎️
